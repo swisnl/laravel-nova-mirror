@@ -2,6 +2,7 @@
 
 namespace Laravel\Nova\Tests\Controller;
 
+use Laravel\Nova\Fields\Image;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Tests\Fixtures\File;
@@ -198,6 +199,36 @@ class FileFieldControllerTest extends IntegrationTest
         $response->assertStatus(200);
         $this->assertEquals('test-avatar', File::first()->avatar);
         $this->assertEquals('test-name', File::first()->name);
+    }
+
+    public function test_extra_file_information_can_be_stored_using_helpers()
+    {
+        $_SERVER['nova.fileResource.imageField'] = function ($request) {
+            return Image::make('Avatar')
+                    ->disk('local')
+                    ->path('avatars')
+                    ->storeAs(function ($request) {
+                        return 'avatar.png';
+                    })
+                    ->storeOriginalNameIn('original_name')
+                    ->storeSizeIn('size')
+                    ->prunable();
+        };
+
+        Storage::fake();
+
+        $response = $this->withExceptionHandling()
+                        ->postJson('/nova-api/files', [
+                            'avatar' => UploadedFile::fake()->image('avatar.png'),
+                        ]);
+
+        unset($_SERVER['nova.fileResource.imageField']);
+
+        $response->assertStatus(201);
+        Storage::disk()->assertExists('avatars/avatar.png');
+
+        $file = File::first();
+        $this->assertEquals('avatars/avatar.png', $file->avatar);
     }
 
     public function test_file_fields_are_deleted_when_resource_is_deleted()

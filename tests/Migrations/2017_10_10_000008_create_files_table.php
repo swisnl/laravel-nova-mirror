@@ -17,6 +17,8 @@ class CreateFilesTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('avatar')->nullable();
+            $table->string('original_name')->nullable();
+            $table->string('size')->nullable();
             $table->timestamps();
         });
     }

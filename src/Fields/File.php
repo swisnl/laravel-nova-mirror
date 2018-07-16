@@ -46,6 +46,20 @@ class File extends Field implements DeletableContract
     public $downloadResponseCallback;
 
     /**
+     * The file storage path.
+     *
+     * @var string
+     */
+    public $storagePath = '/';
+
+    /**
+     * The callback that should be used to determine the file's storage name.
+     *
+     * @var callable|null
+     */
+    public $storeAsCallback;
+
+    /**
      * The name of the disk the file uses by default.
      *
      * @var string
@@ -123,10 +137,27 @@ class File extends Field implements DeletableContract
         $this->storageCallback = $storageCallback ?? function ($request, $model) {
             if ($request->{$this->attribute}) {
                 return $this->mergeExtraStorageColumns($request, [
-                    $this->attribute => $request->{$this->attribute}->store('/', $this->disk)
+                    $this->attribute => $this->storeFile($request),
                 ]);
             }
         };
+    }
+
+    /**
+     * Store the file on disk.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return string
+     */
+    protected function storeFile($request)
+    {
+        if ($this->storeAsCallback) {
+            return $request->{$this->attribute}->storeAs(
+                $this->storagePath, call_user_func($this->storeAsCallback, $request), $this->disk
+            );
+        }
+
+        return $request->{$this->attribute}->store($this->storagePath, $this->disk);
     }
 
     /**
@@ -191,6 +222,32 @@ class File extends Field implements DeletableContract
     public function store(callable $storageCallback)
     {
         $this->storageCallback = $storageCallback;
+
+        return $this;
+    }
+
+    /**
+     * Set the file's storage path.
+     *
+     * @param  string  $path
+     * @return string
+     */
+    public function path($path)
+    {
+        $this->storagePath = $path;
+
+        return $this;
+    }
+
+    /**
+     * Specify the callback that should be used to determine the file's storage name.
+     *
+     * @param  callable  $storeAsCallback
+     * @return $this
+     */
+    public function storeAs(callable $storeAsCallback)
+    {
+        $this->storeAsCallback = $storeAsCallback;
 
         return $this;
     }

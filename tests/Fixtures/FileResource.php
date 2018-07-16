@@ -33,10 +33,14 @@ class FileResource extends Resource
      */
     public function fields(Request $request)
     {
+        if (isset($_SERVER['nova.fileResource.imageField'])) {
+            $field = $_SERVER['nova.fileResource.imageField']($request);
+        }
+
         return [
             ID::make('ID', 'id'),
 
-            Image::make('Avatar', 'avatar', null, function ($request, $model) {
+            $field ?? Image::make('Avatar', 'avatar', null, function ($request, $model) {
                 return $request->avatar->storeAs('avatars', 'avatar.png');
             })->rules('required')->delete(function ($request) {
                 $_SERVER['__nova.fileDeleted'] = true;
