@@ -1,16 +1,12 @@
 <template>
-    <span>{{ localizedDateTime }}</span>
+    <span class="whitespace-no-wrap">{{ localizedDateTime }}</span>
 </template>
 
 <script>
-import {
-    InteractsWithDates,
-} from 'laravel-nova'
+import { InteractsWithDates } from 'laravel-nova'
 
 export default {
-    mixins: [
-        InteractsWithDates,
-    ],
+    mixins: [InteractsWithDates],
 
     props: ['resourceName', 'field'],
 
@@ -20,7 +16,7 @@ export default {
          */
         localizedDateTime() {
             return this.localizeDateTimeField(this.field)
-        }
-    }
+        },
+    },
 }
 </script>
