@@ -82,6 +82,8 @@
     </script>
 
     <!-- Scripts -->
+    <script src="/nova/manifest.js"></script>
+    <script src="/nova/vendor.js"></script>
     <script src="/nova/app.js"></script>
 
     <!-- Build Nova Instance -->
