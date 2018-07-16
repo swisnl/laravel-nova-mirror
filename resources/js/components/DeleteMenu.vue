@@ -1,0 +1,196 @@
+<template>
+    <dropdown
+        direction="rtl"
+        width="250"
+        class="dropdown-alt ml-3"
+    >
+        <icon type="delete" class="text-80" />
+
+        <div class="px-6 py-3" slot="menu">
+            <!-- Delete Menu -->
+            <button dusk="delete-selected-button" class="text-left w-full leading-normal text-sm dim text-90 my-2" @click="confirmDeleteSelectedResources"
+                v-if="authorizedToDeleteSelectedResources || allMatchingSelected">
+                    {{ viaManyToMany ? 'Detach' : 'Delete' }} Selected ({{ selectedResourcesCount }})
+            </button>
+
+            <!-- Restore Resources -->
+            <button dusk="restore-selected-button" class="text-left w-full leading-normal text-sm dim text-90 my-2" @click="confirmRestore"
+                v-if="softDeletes &&
+                      ! viaManyToMany &&
+                      (softDeletedResourcesSelected || allMatchingSelected) &&
+                      (authorizedToRestoreSelectedResources || allMatchingSelected)">
+                Restore Selected ({{ selectedResourcesCount }})
+            </button>
+
+            <!-- Force Delete Resources -->
+            <button dusk="force-delete-selected-button" class="text-left w-full leading-normal text-sm dim text-90 my-2" @click="confirmForceDeleteSelectedResources"
+                v-if="softDeletes && ! viaManyToMany &&
+                      (authorizedToForceDeleteSelectedResources || allMatchingSelected)">
+                Force Delete Selected ({{ selectedResourcesCount }})
+            </button>
+
+            <portal to="modals">
+                <transition name="fade">
+                    <delete-resource-modal
+                        v-if="deleteSelectedModalOpen"
+                        @confirm="deleteSelectedResources"
+                        @close="closeDeleteSelectedModal"
+                        :mode="viaManyToMany ? 'detach' : 'delete'"
+                    />
+                </transition>
+
+                <transition name="fade">
+                    <delete-resource-modal
+                        v-if="forceDeleteSelectedModalOpen"
+                        @confirm="forceDeleteSelectedResources"
+                        @close="closeForceDeleteSelectedModal"
+                        mode="delete"
+                    >
+                       <div slot-scope="{ uppercaseMode, mode }" class="p-8">
+                           <heading :level="2" class="mb-6">Force {{ uppercaseMode }} Resource</heading>
+                           <p class="text-80 leading-normal">Are you sure you want to force {{ mode }} the selected resources?</p>
+                       </div>
+                   </delete-resource-modal>
+                </transition>
+
+                <transition name="fade">
+                    <restore-resource-modal
+                        v-if="restoreModalOpen"
+                        @confirm="restoreSelectedResources"
+                        @close="closeRestoreModal"
+                    />
+                </transition>
+            </portal>
+        </div>
+    </dropdown>
+</template>
+
+<script>
+export default {
+    props: [
+        'softDeletes',
+        'resources',
+        'selectedResources',
+        'viaManyToMany',
+        'allMatchingResourceCount',
+        'allMatchingSelected',
+
+        'authorizedToDeleteSelectedResources',
+        'authorizedToForceDeleteSelectedResources',
+        'authorizedToDeleteAnyResources',
+        'authorizedToForceDeleteAnyResources',
+        'authorizedToRestoreSelectedResources',
+        'authorizedToRestoreAnyResources',
+    ],
+
+    data: () => ({
+        deleteSelectedModalOpen: false,
+        forceDeleteSelectedModalOpen: false,
+        restoreModalOpen: false,
+    }),
+
+    /**
+     * Mount the component.
+     */
+    mounted() {
+        document.addEventListener('keydown', this.handleEscape)
+    },
+
+    /**
+     * Prepare the component to tbe destroyed.
+     */
+    destroyed() {
+        document.removeEventListener('keydown', this.handleEscape)
+    },
+
+    methods: {
+        confirmDeleteSelectedResources() {
+            this.deleteSelectedModalOpen = true
+        },
+
+        confirmForceDeleteSelectedResources() {
+            this.forceDeleteSelectedModalOpen = true
+        },
+
+        confirmRestore() {
+            this.restoreModalOpen = true
+        },
+
+        closeDeleteSelectedModal() {
+            this.deleteSelectedModalOpen = false
+        },
+
+        closeForceDeleteSelectedModal() {
+            this.forceDeleteSelectedModalOpen = false
+        },
+
+        closeRestoreModal() {
+            this.restoreModalOpen = false
+        },
+
+        /**
+         * Delete the selected resources.
+         */
+        deleteSelectedResources() {
+            if (this.allMatchingSelected) {
+                this.$emit('deleteAllMatching')
+            }
+
+            this.$emit('deleteSelected')
+        },
+
+        /**
+         * Force delete the selected resources.
+         */
+        forceDeleteSelectedResources() {
+            if (this.allMatchingSelected) {
+                this.$emit('forceDeleteAllMatching')
+            }
+
+            this.$emit('forceDeleteSelected')
+        },
+
+        /**
+         * Restore the selected resources.
+         */
+        restoreSelectedResources() {
+            if (this.allMatchingSelected) {
+                this.$emit('restoreAllMatching')
+            }
+
+            this.$emit('restoreSelected')
+        },
+
+        /**
+         * Handle the escape key press event.
+         */
+        handleEscape(e) {
+            if (this.show && e.keyCode == 27) {
+                this.close()
+            }
+        },
+
+        /**
+         * Close the modal.
+         */
+        close() {
+            this.$emit('close')
+        },
+    },
+
+    computed: {
+        selectedResourcesCount() {
+            return this.allMatchingSelected
+                ? this.allMatchingResourceCount
+                : this.selectedResources.length
+        },
+
+        /**
+         * Determine if any soft deleted resources are selected.
+         */
+        softDeletedResourcesSelected() {
+            return Boolean(_.find(this.selectedResources, resource => resource.softDeleted))
+        },
+    },
+}
+</script>

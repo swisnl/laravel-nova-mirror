@@ -1,0 +1,16 @@
+/vendor
+/laravel
+/node_modules
+package-lock.json
+composer.phar
+composer.lock
+.DS_Store
+Thumbs.db
+phpunit.xml
+/coverage
+mix-manifest.json
+yarn-error.log
+public/css/app.css
+public/js/app.js
+public/js/app.js
+webpack.mix.js

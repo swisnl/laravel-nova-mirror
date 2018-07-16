@@ -1,0 +1,58 @@
+{
+    "name": "laravel/nova",
+    "description": "A wonderful administration interface for Laravel.",
+    "keywords": [
+        "laravel",
+        "admin"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Taylor Otwell",
+            "email": "taylor@laravel.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "cakephp/chronos": "~1.0",
+        "illuminate/support": "~5.6",
+        "moontoast/math": "^1.1",
+        "spatie/once": "^1.1",
+        "symfony/finder": "~4.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "~1.0",
+        "orchestra/database": "3.6.*",
+        "orchestra/testbench": "3.6.*",
+        "phpunit/phpunit": "~7.0",
+        "predis/predis": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laravel\\Nova\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Laravel\\Nova\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Laravel\\Nova\\NovaCoreServiceProvider"
+            ],
+            "aliases": {
+                "Nova": "Laravel\\Nova\\Nova"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
