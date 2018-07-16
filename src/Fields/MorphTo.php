@@ -314,16 +314,18 @@ class MorphTo extends Field
     /**
      * Format the given morphable resource.
      *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @param  mixed  $resource
      * @param  string  $relatedResource
      * @return array
      */
-    public function formatMorphableResource($resource, $relatedResource)
+    public function formatMorphableResource(NovaRequest $request, $resource, $relatedResource)
     {
-        return [
+        return array_filter([
+            'avatar' => $resource->resolveAvatarUrl($request),
             'value' => $resource->getKey(),
             'display' => call_user_func($this->displayFor($relatedResource), $resource),
-        ];
+        ]);
     }
 
     /**

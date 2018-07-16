@@ -224,15 +224,17 @@ class BelongsToMany extends Field implements DeletableContract, ListableField
     /**
      * Format the given attachable resource.
      *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @param  mixed  $resource
      * @return array
      */
-    public function formatAttachableResource($resource)
+    public function formatAttachableResource(NovaRequest $request, $resource)
     {
-        return [
+        return array_filter([
+            'avatar' => $resource->resolveAvatarUrl($request),
             'value' => $resource->getKey(),
             'display' => call_user_func($this->display, $resource),
-        ];
+        ]);
     }
 
     /**

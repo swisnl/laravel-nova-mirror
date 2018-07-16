@@ -30,8 +30,8 @@ class MorphableController extends Controller
             'resources' => $field->buildMorphableQuery($request, $relatedResource, $withTrashed)->get()
                                 ->mapInto($relatedResource)
                                 ->filter->authorizedToAdd($request, $request->model())
-                                ->map(function ($resource) use ($field, $relatedResource) {
-                                    return $field->formatMorphableResource($resource, $relatedResource);
+                                ->map(function ($resource) use ($request, $field, $relatedResource) {
+                                    return $field->formatMorphableResource($request, $resource, $relatedResource);
                                 })->sortBy('display')->values(),
             'withTrashed' => $withTrashed,
             'softDeletes' => $relatedResource::softDeletes(),
