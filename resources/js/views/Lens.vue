@@ -352,25 +352,27 @@ export default {
          * Get the resources based on the current page, search, filters, etc.
          */
         getResources() {
-            // this.loading = true
-            this.clearResourceSelections()
+            this.$nextTick(() => {
+                // this.loading = true
+                this.clearResourceSelections()
 
-            return Minimum(
-                Nova.request().get('/nova-api/' + this.resourceName + '/lens/' + this.lens, {
-                    params: this.resourceRequestQueryString,
+                return Minimum(
+                    Nova.request().get('/nova-api/' + this.resourceName + '/lens/' + this.lens, {
+                        params: this.resourceRequestQueryString,
+                    })
+                ).then(({ data }) => {
+                    this.resources = []
+
+                    this.resourceResponse = data
+                    this.resources = data.resources
+                    this.softDeletes = data.softDeletes
+
+                    this.loading = false
+
+                    if (this.shouldShowCheckBoxes) {
+                        this.getAllMatchingResourceCount()
+                    }
                 })
-            ).then(({ data }) => {
-                this.resources = []
-
-                this.resourceResponse = data
-                this.resources = data.resources
-                this.softDeletes = data.softDeletes
-
-                this.loading = false
-
-                if (this.shouldShowCheckBoxes) {
-                    this.getAllMatchingResourceCount()
-                }
             })
         },
 

@@ -3,6 +3,7 @@
         <template slot="field">
             <input
                 :id="field.name"
+                :dusk="field.attribute"
                 type="search"
                 v-model="value"
                 class="w-full form-control form-input form-input-bordered"
