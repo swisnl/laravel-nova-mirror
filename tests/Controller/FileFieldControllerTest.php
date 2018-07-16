@@ -210,8 +210,8 @@ class FileFieldControllerTest extends IntegrationTest
                     ->storeAs(function ($request) {
                         return 'avatar.png';
                     })
-                    ->storeOriginalNameIn('original_name')
-                    ->storeSizeIn('size')
+                    ->storeOriginalName('original_name')
+                    ->storeSize('size')
                     ->prunable();
         };
 

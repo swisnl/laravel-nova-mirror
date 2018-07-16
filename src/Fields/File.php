@@ -297,7 +297,7 @@ class File extends Field implements DeletableContract
      * @param  string  $column
      * @return $this
      */
-    public function storeOriginalNameIn($column)
+    public function storeOriginalName($column)
     {
         $this->originalNameColumn = $column;
 
@@ -310,7 +310,7 @@ class File extends Field implements DeletableContract
      * @param  string  $column
      * @return $this
      */
-    public function storeSizeIn($column)
+    public function storeSize($column)
     {
         $this->sizeColumn = $column;
 
