@@ -264,18 +264,6 @@ export default {
         trashed: '',
     }),
 
-    watch: {
-        /**
-         * Retrieve updated resource capabilities when the route changes.
-         */
-        $route: function() {
-            this.softDeletes = false
-            this.getAuthorizationToRelate()
-            this.getActions()
-            this.getFilters()
-        },
-    },
-
     /**
      * Mount the component and retrieve its initial data.
      */
