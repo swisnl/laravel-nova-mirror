@@ -353,7 +353,6 @@ export default {
          */
         getResources() {
             this.$nextTick(() => {
-                // this.loading = true
                 this.clearResourceSelections()
 
                 return Minimum(
@@ -369,9 +368,7 @@ export default {
 
                     this.loading = false
 
-                    if (this.shouldShowCheckBoxes) {
-                        this.getAllMatchingResourceCount()
-                    }
+                    this.getAllMatchingResourceCount()
                 })
             })
         },
