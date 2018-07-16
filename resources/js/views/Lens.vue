@@ -274,7 +274,7 @@ export default {
         this.initializeOrderingFromQueryString()
 
         this.getResources()
-        this.getAuthorizationToRelate()
+        // this.getAuthorizationToRelate()
         this.getActions()
         this.getFilters()
 
@@ -364,29 +364,29 @@ export default {
         /**
          * Get the relatable authorization status for the resource.
          */
-        getAuthorizationToRelate() {
-            if (!this.authorizedToCreate) {
-                return
-            }
-            if (!this.viaResource) {
-                return (this.authorizedToRelate = true)
-            }
-            Nova.request()
-                .get(
-                    '/nova-api/' +
-                        this.resourceName +
-                        '/relate-authorization' +
-                        '?viaResource=' +
-                        this.viaResource +
-                        '&viaResourceId=' +
-                        this.viaResourceId +
-                        '&viaRelationship=' +
-                        this.viaRelationship
-                )
-                .then(response => {
-                    this.authorizedToRelate = response.data.authorized
-                })
-        },
+        // getAuthorizationToRelate() {
+        //     if (!this.authorizedToCreate) {
+        //         return
+        //     }
+        //     if (!this.viaResource) {
+        //         return (this.authorizedToRelate = true)
+        //     }
+        //     Nova.request()
+        //         .get(
+        //             '/nova-api/' +
+        //                 this.resourceName +
+        //                 '/relate-authorization' +
+        //                 '?viaResource=' +
+        //                 this.viaResource +
+        //                 '&viaResourceId=' +
+        //                 this.viaResourceId +
+        //                 '&viaRelationship=' +
+        //                 this.viaRelationship
+        //         )
+        //         .then(response => {
+        //             this.authorizedToRelate = response.data.authorized
+        //         })
+        // },
 
         /**
          * Get the actions available for the current resource.
