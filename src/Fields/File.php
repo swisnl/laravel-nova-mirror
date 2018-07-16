@@ -46,6 +46,13 @@ class File extends Field implements DeletableContract
     public $downloadResponseCallback;
 
     /**
+     * The name of the disk the file uses by default.
+     *
+     * @var string
+     */
+    public $disk;
+
+    /**
      * The file storage path.
      *
      * @var string
@@ -58,13 +65,6 @@ class File extends Field implements DeletableContract
      * @var callable|null
      */
     public $storeAsCallback;
-
-    /**
-     * The name of the disk the file uses by default.
-     *
-     * @var string
-     */
-    public $disk;
 
     /**
      * The column where the file's original name should be stored.
