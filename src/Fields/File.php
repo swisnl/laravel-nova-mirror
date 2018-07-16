@@ -151,13 +151,13 @@ class File extends Field implements DeletableContract
      */
     protected function storeFile($request)
     {
-        if ($this->storeAsCallback) {
-            return $request->{$this->attribute}->storeAs(
-                $this->storagePath, call_user_func($this->storeAsCallback, $request), $this->disk
-            );
+        if (! $this->storeAsCallback) {
+            return $request->{$this->attribute}->store($this->storagePath, $this->disk);
         }
 
-        return $request->{$this->attribute}->store($this->storagePath, $this->disk);
+        return $request->{$this->attribute}->storeAs(
+            $this->storagePath, call_user_func($this->storeAsCallback, $request), $this->disk
+        );
     }
 
     /**
