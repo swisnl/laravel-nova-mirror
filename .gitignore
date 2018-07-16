@@ -10,7 +10,4 @@ phpunit.xml
 /coverage
 mix-manifest.json
 yarn-error.log
-public/css/app.css
-public/js/app.js
-public/js/app.js
 webpack.mix.js
