@@ -233,15 +233,17 @@ class BelongsTo extends Field
     /**
      * Format the given associatable resource.
      *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @param  mixed  $resource
      * @return array
      */
-    public function formatAssociatableResource($resource)
+    public function formatAssociatableResource(NovaRequest $request, $resource)
     {
-        return [
-            'value' => $resource->getKey(),
+        return array_filter([
+            'avatar' => $resource->resolveAvatarUrl($request),
             'display' => call_user_func($this->display, $resource),
-        ];
+            'value' => $resource->getKey(),
+        ]);
     }
 
     /**
