@@ -47,8 +47,7 @@ class NovaServiceProvider extends ServiceProvider
         ], 'nova-config');
 
         $this->publishes([
-            __DIR__.'/../public/js/app.js' => public_path('nova/app.js'),
-            __DIR__.'/../public/css/app.css' => public_path('nova/app.css'),
+            __DIR__.'/../public' => public_path('nova'),
         ], 'nova-assets');
 
         $this->publishes([
