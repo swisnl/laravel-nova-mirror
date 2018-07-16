@@ -53,6 +53,20 @@ class File extends Field implements DeletableContract
     public $disk;
 
     /**
+     * The column where the file's original name should be stored.
+     *
+     * @var string
+     */
+    public $originalNameColumn;
+
+    /**
+     * The column where the file's size should be stored.
+     *
+     * @var string
+     */
+    public $sizeColumn;
+
+    /**
      * The text alignment for the field's text in tables.
      *
      * @var string
@@ -92,6 +106,8 @@ class File extends Field implements DeletableContract
         })->delete(function () {
             if ($this->value) {
                 Storage::disk($this->disk)->delete($this->value);
+
+                return $this->columnsThatShouldBeDeleted();
             }
         });
     }
@@ -106,9 +122,51 @@ class File extends Field implements DeletableContract
     {
         $this->storageCallback = $storageCallback ?? function ($request, $model) {
             if ($request->{$this->attribute}) {
-                return $request->{$this->attribute}->store('/', $this->disk);
+                return $this->mergeExtraStorageColumns($request, [
+                    $this->attribute => $request->{$this->attribute}->store('/', $this->disk)
+                ]);
             }
         };
+    }
+
+    /**
+     * Merge the specified extra file information columns into the storable attributes.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  array  $attributes
+     * @return array
+     */
+    protected function mergeExtraStorageColumns($request, array $attributes)
+    {
+        if ($this->originalNameColumn) {
+            $attributes[$this->originalNameColumn] = $request->{$this->attribute}->getClientOriginalName();
+        }
+
+        if ($this->sizeColumn) {
+            $attributes[$this->sizeColumn] = $request->{$this->attribute}->getSize();
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * Get an array of the columns that should be deleted and their values.
+     *
+     * @return array
+     */
+    protected function columnsThatShouldBeDeleted()
+    {
+        $attributes = [$this->attribute => null];
+
+        if ($this->originalNameColumn) {
+            $attributes[$this->originalNameColumn] = null;
+        }
+
+        if ($this->sizeColumn) {
+            $attributes[$this->sizeColumn] = null;
+        }
+
+        return $attributes;
     }
 
     /**
@@ -172,6 +230,32 @@ class File extends Field implements DeletableContract
     public function download(callable $downloadResponseCallback)
     {
         $this->downloadResponseCallback = $downloadResponseCallback;
+
+        return $this;
+    }
+
+    /**
+     * Specify the column where the file's original name should be stored.
+     *
+     * @param  string  $column
+     * @return $this
+     */
+    public function storeOriginalNameIn($column)
+    {
+        $this->originalNameColumn = $column;
+
+        return $this;
+    }
+
+    /**
+     * Specify the column where the file size should be stored.
+     *
+     * @param  string  $column
+     * @return $this
+     */
+    public function storeSizeIn($column)
+    {
+        $this->sizeColumn = $column;
 
         return $this;
     }
