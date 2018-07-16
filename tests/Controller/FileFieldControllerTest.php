@@ -229,6 +229,8 @@ class FileFieldControllerTest extends IntegrationTest
 
         $file = File::first();
         $this->assertEquals('avatars/avatar.png', $file->avatar);
+        $this->assertEquals('avatar.png', $file->original_name);
+        $this->assertEquals(91, $file->size);
     }
 
     public function test_file_fields_are_deleted_when_resource_is_deleted()
