@@ -38,7 +38,7 @@
                                     }
                                 }"
                                 @click.native="closeSearch"
-                                class="flex items-center text-90 hover:text-primary block py-2 px-3 no-underline font-normal"
+                                class="flex items-center text-90 hover:bg-20 block py-2 px-3 no-underline font-normal"
                                 :class="{
                                     'bg-white': highlightedResultIndex != item.index,
                                     'bg-20': highlightedResultIndex == item.index,

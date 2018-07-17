@@ -46512,7 +46512,7 @@ var render = function() {
                           "router-link",
                           {
                             staticClass:
-                              "flex items-center text-90 hover:text-primary block py-2 px-3 no-underline font-normal",
+                              "flex items-center text-90 hover:bg-20 block py-2 px-3 no-underline font-normal",
                             class: {
                               "bg-white":
                                 _vm.highlightedResultIndex != item.index,
