@@ -10,26 +10,26 @@
             <input
                 ref="input"
                 @input.stop="search"
+                @keydown.stop=""
+                @keydown.enter.stop="goToCurrentlySelectedResource"
                 @keydown.esc.stop="closeSearch"
                 @focus="openSearch"
                 @keydown.down.prevent="move(1)"
                 @keydown.up.prevent="move(-1)"
                 v-model="searchTerm"
                 type="search"
-                class="form-control form-input form-input-bordered w-search" placeholder="Global search"
+                placeholder="Global search"
+                class="form-control form-input form-input-bordered w-search"
             />
 
-            <div v-if="shouldShowResults" class="overflow-hidden absolute border border-60 rounded-lg shadow-lg w-full mt-2">
+            <div v-if="shouldShowResults" class="overflow-hidden absolute rounded-lg shadow-lg w-full mt-2">
                 <div v-for="group in formattedResults">
-                    <h3 class="text-sm uppercase tracking-wide text-80 bg-30 p-3 border-b border-50">
+                    <h3 class="text-xs uppercase tracking-wide text-80 bg-40 py-2 px-3">
                         {{ group.resourceName }}
                     </h3>
 
                     <ul class="list-reset">
-                        <li
-                            v-for="item in group.items"
-                            class="border-b border-50"
-                        >
+                        <li v-for="item in group.items">
                             <router-link :to="{
                                     name: 'detail',
                                     params: {
@@ -38,10 +38,10 @@
                                     }
                                 }"
                                 @click.native="closeSearch"
-                                class="flex items-center hover:bg-primary hover:text-white block p-3 no-underline text-sm font-bold"
+                                class="flex items-center text-90 hover:text-primary block py-2 px-3 no-underline font-normal"
                                 :class="{
-                                    'bg-white text-primary': highlightedResultIndex != item.index,
-                                    'bg-primary text-white': highlightedResultIndex == item.index,
+                                    'bg-white': highlightedResultIndex != item.index,
+                                    'bg-20': highlightedResultIndex == item.index,
                                 }"
                             >
                                 <img v-if="item.avatar" :src="item.avatar" class="h-8 w-8 rounded-full mr-3" />
@@ -99,7 +99,7 @@ const stubResults = [
 
 export default {
     data: () => ({
-        open: false,
+        currentlySearching: false,
         searchTerm: '',
         results: [],
         highlightedResultIndex: 0,
@@ -108,14 +108,14 @@ export default {
     methods: {
         openSearch() {
             this.clearSearch()
-            this.open = true
+            this.currentlySearching = true
             this.clearResults()
         },
 
         closeSearch() {
             this.clearSearch()
             this.$refs.input.blur()
-            this.open = false
+            this.currentlySearching = false
         },
 
         clearSearch() {
@@ -174,13 +174,26 @@ export default {
                 // this.updateScrollPosition()
             }
         },
+
+        goToCurrentlySelectedResource() {
+            this.closeSearch()
+
+            const resource = _.find(
+                this.indexedResults,
+                res => res.index == this.highlightedResultIndex
+            )
+
+            this.$router.push({
+                name: 'detail',
+                params: {
+                    resourceName: resource.resourceName,
+                    resourceId: resource.resourceId,
+                },
+            })
+        },
     },
 
     computed: {
-        currentlySearching() {
-            return this.open == true
-        },
-
         hasResults() {
             return this.results.length > 0
         },

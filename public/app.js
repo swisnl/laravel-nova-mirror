@@ -46230,7 +46230,7 @@ var stubResults = [{
 exports.default = {
     data: function data() {
         return {
-            open: false,
+            currentlySearching: false,
             searchTerm: '',
             results: [],
             highlightedResultIndex: 0
@@ -46240,13 +46240,13 @@ exports.default = {
     methods: {
         openSearch: function openSearch() {
             this.clearSearch();
-            this.open = true;
+            this.currentlySearching = true;
             this.clearResults();
         },
         closeSearch: function closeSearch() {
             this.clearSearch();
             this.$refs.input.blur();
-            this.open = false;
+            this.currentlySearching = false;
         },
         clearSearch: function clearSearch() {
             this.searchTerm = '';
@@ -46326,13 +46326,27 @@ exports.default = {
                 this.highlightedResultIndex = newIndex;
                 // this.updateScrollPosition()
             }
+        },
+        goToCurrentlySelectedResource: function goToCurrentlySelectedResource() {
+            var _this2 = this;
+
+            this.closeSearch();
+
+            var resource = _.find(this.indexedResults, function (res) {
+                return res.index == _this2.highlightedResultIndex;
+            });
+
+            this.$router.push({
+                name: 'detail',
+                params: {
+                    resourceName: resource.resourceName,
+                    resourceId: resource.resourceId
+                }
+            });
         }
     },
 
     computed: {
-        currentlySearching: function currentlySearching() {
-            return this.open == true;
-        },
         hasResults: function hasResults() {
             return this.results.length > 0;
         },
@@ -46353,13 +46367,13 @@ exports.default = {
             }).uniqBy('resourceName').value();
         },
         formattedResults: function formattedResults() {
-            var _this2 = this;
+            var _this3 = this;
 
             return _.map(this.formattedGroups, function (group) {
                 return {
                     resourceName: group.resourceName,
                     resourceTitle: group.resourceTitle,
-                    items: _.filter(_this2.indexedResults, function (item) {
+                    items: _.filter(_this3.indexedResults, function (item) {
                         return item.resourceName == group.resourceName;
                     })
                 };
@@ -46413,6 +46427,19 @@ var render = function() {
           ],
           keydown: [
             function($event) {
+              $event.stopPropagation()
+            },
+            function($event) {
+              if (
+                !("button" in $event) &&
+                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+              ) {
+                return null
+              }
+              $event.stopPropagation()
+              return _vm.goToCurrentlySelectedResource($event)
+            },
+            function($event) {
               if (
                 !("button" in $event) &&
                 _vm._k($event.keyCode, "esc", 27, $event.key, "Escape")
@@ -46455,7 +46482,7 @@ var render = function() {
             "div",
             {
               staticClass:
-                "overflow-hidden absolute border border-60 rounded-lg shadow-lg w-full mt-2"
+                "overflow-hidden absolute rounded-lg shadow-lg w-full mt-2"
             },
             _vm._l(_vm.formattedResults, function(group) {
               return _c("div", [
@@ -46463,7 +46490,7 @@ var render = function() {
                   "h3",
                   {
                     staticClass:
-                      "text-sm uppercase tracking-wide text-80 bg-30 p-3 border-b border-50"
+                      "text-xs uppercase tracking-wide text-80 bg-40 py-2 px-3"
                   },
                   [
                     _vm._v(
@@ -46480,18 +46507,16 @@ var render = function() {
                   _vm._l(group.items, function(item) {
                     return _c(
                       "li",
-                      { staticClass: "border-b border-50" },
                       [
                         _c(
                           "router-link",
                           {
                             staticClass:
-                              "flex items-center hover:bg-primary hover:text-white block p-3 no-underline text-sm font-bold",
+                              "flex items-center text-90 hover:text-primary block py-2 px-3 no-underline font-normal",
                             class: {
-                              "bg-white text-primary":
+                              "bg-white":
                                 _vm.highlightedResultIndex != item.index,
-                              "bg-primary text-white":
-                                _vm.highlightedResultIndex == item.index
+                              "bg-20": _vm.highlightedResultIndex == item.index
                             },
                             attrs: {
                               to: {
