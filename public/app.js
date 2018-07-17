@@ -19779,6 +19779,14 @@ exports.default = {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 /* 337 */
@@ -19847,13 +19855,26 @@ var render = function() {
                               fn: function(ref) {
                                 var option = ref.option
                                 var selected = ref.selected
-                                return _c("div", {}, [
-                                  _vm._v(
-                                    "\n                        " +
-                                      _vm._s(option.display) +
-                                      "\n                    "
-                                  )
-                                ])
+                                return _c(
+                                  "div",
+                                  { staticClass: "flex items-center" },
+                                  [
+                                    option.avatar
+                                      ? _c("div", { staticClass: "mr-3" }, [
+                                          _c("img", {
+                                            staticClass:
+                                              "w-8 h-8 rounded-full block",
+                                            attrs: { src: option.avatar }
+                                          })
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(
+                                      "\n\n                        " +
+                                        _vm._s(option.display) +
+                                        "\n                    "
+                                    )
+                                  ]
+                                )
                               }
                             }
                           ])
@@ -19862,10 +19883,25 @@ var render = function() {
                           _vm.selectedResource
                             ? _c(
                                 "div",
-                                { attrs: { slot: "default" }, slot: "default" },
+                                {
+                                  staticClass: "flex",
+                                  attrs: { slot: "default" },
+                                  slot: "default"
+                                },
                                 [
+                                  _vm.selectedResource.avatar
+                                    ? _c("div", [
+                                        _c("img", {
+                                          staticClass:
+                                            "w-8 h-8 rounded-full block",
+                                          attrs: {
+                                            src: _vm.selectedResource.avatar
+                                          }
+                                        })
+                                      ])
+                                    : _vm._e(),
                                   _vm._v(
-                                    "\n                        " +
+                                    "\n\n                        " +
                                       _vm._s(_vm.selectedResource.display) +
                                       "\n                    "
                                   )
@@ -39066,11 +39102,10 @@ var render = function() {
                         [
                           _vm.selectedResource.avatar
                             ? _c("div", [
-                                _vm._v(
-                                  "\n                    " +
-                                    _vm._s(_vm.selectedResource.avatar) +
-                                    "\n                "
-                                )
+                                _c("img", {
+                                  staticClass: "w-8 h-8 rounded-full block",
+                                  attrs: { src: _vm.selectedResource.avatar }
+                                })
                               ])
                             : _vm._e(),
                           _vm._v(
@@ -40359,6 +40394,11 @@ exports.default = {
 //
 //
 //
+//
+//
+//
+//
+//
 
 /***/ }),
 /* 886 */
@@ -40482,13 +40522,26 @@ var render = function() {
                           fn: function(ref) {
                             var option = ref.option
                             var selected = ref.selected
-                            return _c("div", {}, [
-                              _vm._v(
-                                "\n                    " +
-                                  _vm._s(option.display) +
-                                  "\n                "
-                              )
-                            ])
+                            return _c(
+                              "div",
+                              { staticClass: "flex items-center" },
+                              [
+                                option.avatar
+                                  ? _c("div", { staticClass: "mr-3" }, [
+                                      _c("img", {
+                                        staticClass:
+                                          "w-8 h-8 rounded-full block",
+                                        attrs: { src: option.avatar }
+                                      })
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(
+                                  "\n\n                    " +
+                                    _vm._s(option.display) +
+                                    "\n                "
+                                )
+                              ]
+                            )
                           }
                         }
                       ])
@@ -40497,10 +40550,24 @@ var render = function() {
                       _vm.selectedResource
                         ? _c(
                             "div",
-                            { attrs: { slot: "default" }, slot: "default" },
+                            {
+                              staticClass: "flex",
+                              attrs: { slot: "default" },
+                              slot: "default"
+                            },
                             [
+                              _vm.selectedResource.avatar
+                                ? _c("div", [
+                                    _c("img", {
+                                      staticClass: "w-8 h-8 rounded-full block",
+                                      attrs: {
+                                        src: _vm.selectedResource.avatar
+                                      }
+                                    })
+                                  ])
+                                : _vm._e(),
                               _vm._v(
-                                "\n                    " +
+                                "\n\n                    " +
                                   _vm._s(_vm.selectedResource.display) +
                                   "\n                "
                               )

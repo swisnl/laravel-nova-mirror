@@ -23,8 +23,8 @@
                         searchBy='display'
                         class="mb-3"
                     >
-                        <div slot="default" v-if="selectedResource" class="flex">
-                            <div v-if="selectedResource.avatar">
+                        <div slot="default" v-if="selectedResource" class="flex items-center">
+                            <div v-if="selectedResource.avatar" class="mr-3">
                                 <img :src="selectedResource.avatar" class="w-8 h-8 rounded-full block" />
                             </div>
 
