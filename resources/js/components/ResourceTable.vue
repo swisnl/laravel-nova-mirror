@@ -25,11 +25,11 @@
                         :uri-key="field.attribute"
                         v-if="field.sortable"
                     >
-                        {{ field.name }}
+                        {{ field.indexName }}
                     </sortable-icon>
 
                     <span v-else>
-                        {{ field.name }}
+                        {{ field.indexName }}
                     </span>
                 </th>
 

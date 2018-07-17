@@ -410,6 +410,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
         return array_merge([
             'component' => $this->component(),
             'prefixComponent' => true,
+            'indexName' => $this->name,
             'name' => $this->name,
             'attribute' => $this->attribute,
             'value' => $this->value,
