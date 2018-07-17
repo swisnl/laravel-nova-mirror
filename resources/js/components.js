@@ -19,6 +19,7 @@ import DropdownMenu from '@/components/DropdownMenu'
 import DropdownTrigger from '@/components/DropdownTrigger'
 import Bold from '@/components/Icons/Editor/Bold'
 import FullScreen from '@/components/Icons/Editor/FullScreen'
+import GlobalSearch from '@/components/GlobalSearch'
 import Image from '@/components/Icons/Editor/Image'
 import Italic from '@/components/Icons/Editor/Italic'
 import Link from '@/components/Icons/Editor/Link'
@@ -86,6 +87,7 @@ Vue.component('filter-selector', FilterSelector)
 Vue.component('form-label', Label)
 Vue.component('heading', Heading)
 Vue.component('help-text', HelpText)
+Vue.component('global-search', GlobalSearch)
 Vue.component('icon', Icon)
 Vue.component('icon-force-delete', ForceDelete)
 Vue.component('icon-delete', Delete)

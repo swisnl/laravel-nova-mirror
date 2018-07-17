@@ -35,9 +35,12 @@
             <!-- Content -->
             <div class="content">
                 <div class="flex items-center relative shadow h-header bg-white z-50 px-6">
-                    <div class="font-bold text-90">
+{{--
+                    <div class="font-bold text-90 mr-3">
                         {{ Config::get('nova.name') }}
                     </div>
+ --}}
+                    <global-search></global-search>
 
                     <div class="ml-auto text-80">
                         <dropdown width="200" direction="rtl" active-class="" class="h-9 flex items-center" style="right: 20px">
