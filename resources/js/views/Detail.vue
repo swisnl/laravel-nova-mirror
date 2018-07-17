@@ -151,6 +151,12 @@ export default {
         forceDeleteModalOpen: false,
     }),
 
+    watch: {
+        resourceId: function() {
+            this.initializeComponent()
+        },
+    },
+
     /**
      * Bind the keydown even listener when the component is created
      */
@@ -209,12 +215,12 @@ export default {
                 .catch(error => {
                     if (error.response.status >= 500) {
                         Nova.$emit('error', error.response.data.message)
-                        return;
+                        return
                     }
 
                     if (error.response.status === 403) {
                         this.$router.push({ name: '403' })
-                        return;
+                        return
                     }
 
                     this.$toasted.show('This resource no longer exists', { type: 'error' })

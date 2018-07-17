@@ -12,6 +12,8 @@
                 @input.stop="search"
                 @keydown.esc.stop="closeSearch"
                 @focus="openSearch"
+                @keydown.down.prevent="move(1)"
+                @keydown.up.prevent="move(-1)"
                 v-model="searchTerm"
                 type="search"
                 class="form-control form-input form-input-bordered w-search" placeholder="Global search"
@@ -35,12 +37,14 @@
                                         resourceId: item.resourceId,
                                     }
                                 }"
-                                class="hover:bg-primary hover:text-white block p-3 no-underline text-sm font-bold"
+                                @click.native="closeSearch"
+                                class="flex items-center hover:bg-primary hover:text-white block p-3 no-underline text-sm font-bold"
                                 :class="{
                                     'bg-white text-primary': highlightedResultIndex != item.index,
                                     'bg-primary text-white': highlightedResultIndex == item.index,
                                 }"
                             >
+                                <img v-if="item.avatar" :src="item.avatar" class="h-8 w-8 rounded-full mr-3" />
                                 {{ item.label }}
                             </router-link>
                         </li>
@@ -60,30 +64,36 @@ const stubResults = [
         resourceName: 'posts',
         resourceTitle: 'Posts',
         resourceId: 1,
+        url: 'http://nova-app.test/nova/resources/posts/1',
     },
     {
         label: 'Second Post',
         resourceName: 'posts',
         resourceTitle: 'Posts',
         resourceId: 2,
+        url: 'http://nova-app.test/nova/resources/posts/2',
     },
     {
         label: 'Third Post',
         resourceName: 'posts',
         resourceTitle: 'Posts',
         resourceId: 3,
+        url: 'http://nova-app.test/nova/resources/posts/3',
     },
     {
         label: 'Taylor Otwell',
         resourceName: 'users',
         resourceTitle: 'Users',
         resourceId: 1,
+        url: 'http://nova-app.test/nova/resources/users/1',
     },
     {
         label: 'David Hemphill',
         resourceName: 'users',
         resourceTitle: 'Users',
         resourceId: 2,
+        url: 'http://nova-app.test/nova/resources/users/2',
+        avatar: 'https://www.gravatar.com/avatar/2821f93cef33ccd01b1262ac41f87d9c?s=300',
     },
 ]
 
@@ -92,7 +102,7 @@ export default {
         open: false,
         searchTerm: '',
         results: [],
-        highlightedResultIndex: 3,
+        highlightedResultIndex: 0,
     }),
 
     methods: {
@@ -117,17 +127,23 @@ export default {
         },
 
         search(event) {
-            this.fetchResults(event.target.value)
+            this.highlightedResultIndex = 0
+
+            this.debouncer(() => {
+                this.fetchResults(event.target.value)
+            }, 500)
         },
 
         async fetchResults(searchTerm) {
-            // Something like this from the server
-            // const { data: results } = await Nova.request(this.searchEndpoint, {
-            //     params: { q: searchTerm },
-            // })
+            this.results = []
 
-            // But we'll fake it for now
             try {
+                // Something like this from the server
+                // const { data: results } = await Nova.request(this.searchEndpoint, {
+                //     params: { q: searchTerm },
+                // })
+
+                // But we'll fake it for now
                 const {
                     data: { results },
                 } = await Minimum(
@@ -136,19 +152,28 @@ export default {
                     }, 3000)
                 )
 
-                console.log(results)
-
                 this.results = results
             } catch (e) {
                 throw e
             }
         },
-    },
 
-    // Delete this
-    created() {
-        this.open = true
-        this.results = stubResults
+        /**
+         * Debounce function for the search handler
+         */
+        debouncer: _.debounce(callback => callback(), 500),
+
+        /**
+         * Move the highlighted results
+         */
+        move(offset) {
+            let newIndex = this.highlightedResultIndex + offset
+
+            if (newIndex >= 0 && newIndex < this.results.length) {
+                this.highlightedResultIndex = newIndex
+                // this.updateScrollPosition()
+            }
+        },
     },
 
     computed: {
@@ -172,16 +197,25 @@ export default {
 
         formattedGroups() {
             return _.chain(this.indexedResults)
-                .map(item => item.resourceName)
-                .uniq()
+                .map(item => {
+                    return {
+                        resourceName: item.resourceName,
+                        resourceTitle: item.resourceTitle,
+                    }
+                })
+                .uniqBy('resourceName')
                 .value()
         },
 
         formattedResults() {
             return _.map(this.formattedGroups, group => {
                 return {
-                    resourceName: group,
-                    items: _.filter(this.indexedResults, item => item.resourceName == group),
+                    resourceName: group.resourceName,
+                    resourceTitle: group.resourceTitle,
+                    items: _.filter(
+                        this.indexedResults,
+                        item => item.resourceName == group.resourceName
+                    ),
                 }
             })
         },

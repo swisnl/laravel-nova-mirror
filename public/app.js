@@ -17612,6 +17612,12 @@ exports.default = {
         };
     },
 
+    watch: {
+        resourceId: function resourceId() {
+            this.initializeComponent();
+        }
+    },
+
     /**
      * Bind the keydown even listener when the component is created
      */
@@ -46136,28 +46142,38 @@ var stubResults = [{
     label: 'First Post',
     resourceName: 'posts',
     resourceTitle: 'Posts',
-    resourceId: 1
+    resourceId: 1,
+    url: 'http://nova-app.test/nova/resources/posts/1'
 }, {
     label: 'Second Post',
     resourceName: 'posts',
     resourceTitle: 'Posts',
-    resourceId: 2
+    resourceId: 2,
+    url: 'http://nova-app.test/nova/resources/posts/2'
 }, {
     label: 'Third Post',
     resourceName: 'posts',
     resourceTitle: 'Posts',
-    resourceId: 3
+    resourceId: 3,
+    url: 'http://nova-app.test/nova/resources/posts/3'
 }, {
     label: 'Taylor Otwell',
     resourceName: 'users',
     resourceTitle: 'Users',
-    resourceId: 1
+    resourceId: 1,
+    url: 'http://nova-app.test/nova/resources/users/1'
 }, {
     label: 'David Hemphill',
     resourceName: 'users',
     resourceTitle: 'Users',
-    resourceId: 2
+    resourceId: 2,
+    url: 'http://nova-app.test/nova/resources/users/2',
+    avatar: 'https://www.gravatar.com/avatar/2821f93cef33ccd01b1262ac41f87d9c?s=300'
 }]; //
+//
+//
+//
+//
 //
 //
 //
@@ -46217,7 +46233,7 @@ exports.default = {
             open: false,
             searchTerm: '',
             results: [],
-            highlightedResultIndex: 3
+            highlightedResultIndex: 0
         };
     },
 
@@ -46239,7 +46255,13 @@ exports.default = {
             this.results = [];
         },
         search: function search(event) {
-            this.fetchResults(event.target.value);
+            var _this = this;
+
+            this.highlightedResultIndex = 0;
+
+            this.debouncer(function () {
+                _this.fetchResults(event.target.value);
+            }, 500);
         },
         fetchResults: function () {
             var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(searchTerm) {
@@ -46249,18 +46271,18 @@ exports.default = {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                _context.prev = 0;
-                                _context.next = 3;
+                                this.results = [];
+
+                                _context.prev = 1;
+                                _context.next = 4;
                                 return (0, _laravelNova.Minimum)(new _promise2.default(function (resolve, reject) {
                                     resolve({ data: { results: stubResults } });
                                 }, 3000));
 
-                            case 3:
+                            case 4:
                                 _ref2 = _context.sent;
                                 results = _ref2.data.results;
 
-
-                                console.log(results);
 
                                 this.results = results;
                                 _context.next = 12;
@@ -46268,7 +46290,7 @@ exports.default = {
 
                             case 9:
                                 _context.prev = 9;
-                                _context.t0 = _context['catch'](0);
+                                _context.t0 = _context['catch'](1);
                                 throw _context.t0;
 
                             case 12:
@@ -46276,7 +46298,7 @@ exports.default = {
                                 return _context.stop();
                         }
                     }
-                }, _callee, this, [[0, 9]]);
+                }, _callee, this, [[1, 9]]);
             }));
 
             function fetchResults(_x) {
@@ -46284,15 +46306,28 @@ exports.default = {
             }
 
             return fetchResults;
-        }()
-    },
+        }(),
 
-    // Delete this
-    created: function created() {
-        this.open = true;
-        this.results = stubResults;
-    },
 
+        /**
+         * Debounce function for the search handler
+         */
+        debouncer: _.debounce(function (callback) {
+            return callback();
+        }, 500),
+
+        /**
+         * Move the highlighted results
+         */
+        move: function move(offset) {
+            var newIndex = this.highlightedResultIndex + offset;
+
+            if (newIndex >= 0 && newIndex < this.results.length) {
+                this.highlightedResultIndex = newIndex;
+                // this.updateScrollPosition()
+            }
+        }
+    },
 
     computed: {
         currentlySearching: function currentlySearching() {
@@ -46311,17 +46346,21 @@ exports.default = {
         },
         formattedGroups: function formattedGroups() {
             return _.chain(this.indexedResults).map(function (item) {
-                return item.resourceName;
-            }).uniq().value();
+                return {
+                    resourceName: item.resourceName,
+                    resourceTitle: item.resourceTitle
+                };
+            }).uniqBy('resourceName').value();
         },
         formattedResults: function formattedResults() {
-            var _this = this;
+            var _this2 = this;
 
             return _.map(this.formattedGroups, function (group) {
                 return {
-                    resourceName: group,
-                    items: _.filter(_this.indexedResults, function (item) {
-                        return item.resourceName == group;
+                    resourceName: group.resourceName,
+                    resourceTitle: group.resourceTitle,
+                    items: _.filter(_this2.indexedResults, function (item) {
+                        return item.resourceName == group.resourceName;
                     })
                 };
             });
@@ -46372,16 +46411,41 @@ var render = function() {
               return _vm.search($event)
             }
           ],
-          keydown: function($event) {
-            if (
-              !("button" in $event) &&
-              _vm._k($event.keyCode, "esc", 27, $event.key, "Escape")
-            ) {
-              return null
+          keydown: [
+            function($event) {
+              if (
+                !("button" in $event) &&
+                _vm._k($event.keyCode, "esc", 27, $event.key, "Escape")
+              ) {
+                return null
+              }
+              $event.stopPropagation()
+              return _vm.closeSearch($event)
+            },
+            function($event) {
+              if (
+                !("button" in $event) &&
+                _vm._k($event.keyCode, "down", 40, $event.key, [
+                  "Down",
+                  "ArrowDown"
+                ])
+              ) {
+                return null
+              }
+              $event.preventDefault()
+              _vm.move(1)
+            },
+            function($event) {
+              if (
+                !("button" in $event) &&
+                _vm._k($event.keyCode, "up", 38, $event.key, ["Up", "ArrowUp"])
+              ) {
+                return null
+              }
+              $event.preventDefault()
+              _vm.move(-1)
             }
-            $event.stopPropagation()
-            return _vm.closeSearch($event)
-          },
+          ],
           focus: _vm.openSearch
         }
       }),
@@ -46422,7 +46486,7 @@ var render = function() {
                           "router-link",
                           {
                             staticClass:
-                              "hover:bg-primary hover:text-white block p-3 no-underline text-sm font-bold",
+                              "flex items-center hover:bg-primary hover:text-white block p-3 no-underline text-sm font-bold",
                             class: {
                               "bg-white text-primary":
                                 _vm.highlightedResultIndex != item.index,
@@ -46437,9 +46501,20 @@ var render = function() {
                                   resourceId: item.resourceId
                                 }
                               }
+                            },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.closeSearch($event)
+                              }
                             }
                           },
                           [
+                            item.avatar
+                              ? _c("img", {
+                                  staticClass: "h-8 w-8 rounded-full mr-3",
+                                  attrs: { src: item.avatar }
+                                })
+                              : _vm._e(),
                             _vm._v(
                               "\n                            " +
                                 _vm._s(item.label) +
