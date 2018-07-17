@@ -19884,13 +19884,13 @@ var render = function() {
                             ? _c(
                                 "div",
                                 {
-                                  staticClass: "flex",
+                                  staticClass: "flex items-center",
                                   attrs: { slot: "default" },
                                   slot: "default"
                                 },
                                 [
                                   _vm.selectedResource.avatar
-                                    ? _c("div", [
+                                    ? _c("div", { staticClass: "mr-3" }, [
                                         _c("img", {
                                           staticClass:
                                             "w-8 h-8 rounded-full block",
@@ -39095,13 +39095,13 @@ var render = function() {
                     ? _c(
                         "div",
                         {
-                          staticClass: "flex",
+                          staticClass: "flex items-center",
                           attrs: { slot: "default" },
                           slot: "default"
                         },
                         [
                           _vm.selectedResource.avatar
-                            ? _c("div", [
+                            ? _c("div", { staticClass: "mr-3" }, [
                                 _c("img", {
                                   staticClass: "w-8 h-8 rounded-full block",
                                   attrs: { src: _vm.selectedResource.avatar }
@@ -40398,7 +40398,6 @@ exports.default = {
 //
 //
 //
-//
 
 /***/ }),
 /* 886 */
@@ -40551,13 +40550,13 @@ var render = function() {
                         ? _c(
                             "div",
                             {
-                              staticClass: "flex",
+                              staticClass: "flex items-center",
                               attrs: { slot: "default" },
                               slot: "default"
                             },
                             [
                               _vm.selectedResource.avatar
-                                ? _c("div", [
+                                ? _c("div", { staticClass: "mr-3" }, [
                                     _c("img", {
                                       staticClass: "w-8 h-8 rounded-full block",
                                       attrs: {
