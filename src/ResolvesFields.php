@@ -3,6 +3,7 @@
 namespace Laravel\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\MorphTo;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Fields\MorphMany;
@@ -194,6 +195,25 @@ trait ResolvesFields
             return isset($field->resourceClass) &&
                    $field->resourceClass == $request->resource();
         });
+    }
+
+    /**
+     * Resolve the resource's avatar URL, if applicable.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @return string|null
+     */
+    public function resolveAvatarUrl(NovaRequest $request)
+    {
+        $fields = $this->resolveFields($request);
+
+        $field = $fields->first(function ($field) {
+            return $field instanceof Avatar;
+        });
+
+        if ($field) {
+            return $field->resolveThumbnailUrl();
+        }
     }
 
     /**

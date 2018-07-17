@@ -13,11 +13,19 @@
                 searchBy='display'
                 class="mb-3"
             >
-                <div slot="default" v-if="selectedResource">
+                <div slot="default" v-if="selectedResource" class="flex">
+                    <div v-if="selectedResource.avatar">
+                        {{ selectedResource.avatar }}
+                    </div>
+
                     {{ selectedResource.display }}
                 </div>
 
-                <div slot="option" slot-scope="{option, selected}">
+                <div slot="option" slot-scope="{option, selected}" class="flex items-center">
+                    <div v-if="option.avatar" class="mr-3">
+                        <img :src="option.avatar" class="w-8 h-8 rounded-full block" />
+                    </div>
+
                     {{ option.display }}
                 </div>
             </search-input>

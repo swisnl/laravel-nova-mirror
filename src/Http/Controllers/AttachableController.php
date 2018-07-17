@@ -31,8 +31,8 @@ class AttachableController extends Controller
                         ->filter(function ($resource) use ($request, $parentResource) {
                             return $parentResource->authorizedToAttach($request, $resource->resource);
                         })
-                        ->map(function ($resource) use ($field) {
-                            return $field->formatAttachableResource($resource);
+                        ->map(function ($resource) use ($request, $field) {
+                            return $field->formatAttachableResource($request, $resource);
                         })->sortBy('display')->values(),
             'withTrashed' => $withTrashed,
             'softDeletes' => $associatedResource::softDeletes(),

@@ -28,8 +28,8 @@ class AssociatableController extends Controller
             'resources' => $field->buildAssociatableQuery($request, $withTrashed)->get()
                         ->mapInto($field->resourceClass)
                         ->filter->authorizedToAdd($request, $request->model())
-                        ->map(function ($resource) use ($field) {
-                            return $field->formatAssociatableResource($resource);
+                        ->map(function ($resource) use ($request, $field) {
+                            return $field->formatAssociatableResource($request, $resource);
                         })->sortBy('display')->values(),
             'softDeletes' => $associatedResource::softDeletes(),
             'withTrashed' => $withTrashed,

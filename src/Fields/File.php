@@ -266,6 +266,16 @@ class File extends Field implements DeletableContract
     }
 
     /**
+     * Resolve the thumbnail URL for the field.
+     *
+     * @return string|null
+     */
+    public function resolveThumbnailUrl()
+    {
+        return call_user_func($this->thumbnailUrlCallback);
+    }
+
+    /**
      * Specify the callback that should be used to retrieve the preview URL.
      *
      * @param  callable  $previewUrlCallback
@@ -380,7 +390,7 @@ class File extends Field implements DeletableContract
     public function meta()
     {
         return array_merge([
-            'thumbnailUrl' => call_user_func($this->thumbnailUrlCallback),
+            'thumbnailUrl' => $this->resolveThumbnailUrl(),
             'previewUrl' => call_user_func($this->previewUrlCallback),
             'downloadable' => isset($this->downloadResponseCallback) && ! empty($this->value),
             'deletable' => isset($this->deleteCallback) && $this->deletable,
