@@ -101,6 +101,7 @@ export default {
                 theme: 'dracula',
             },
             ...this.field.options,
+            ...{ readOnly: true },
         }
 
         this.codemirror = CodeMirror.fromTextArea(this.$refs.theTextarea, config)
