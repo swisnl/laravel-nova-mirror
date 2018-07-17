@@ -40,7 +40,7 @@
 
                     <div slot="default" v-if="selectedResource" class="flex">
                         <div v-if="selectedResource.avatar">
-                            {{ selectedResource.avatar }}
+                            <img :src="selectedResource.avatar" class="w-8 h-8 rounded-full block" />
                         </div>
 
                         {{ selectedResource.display }}
