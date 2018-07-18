@@ -46259,7 +46259,13 @@ exports.default = {
         move: function move(offset) {
             var newIndex = this.highlightedResultIndex + offset;
 
-            if (newIndex >= 0 && newIndex < this.results.length) {
+            if (newIndex < 0) {
+                this.highlightedResultIndex = this.results.length - 1;
+                this.updateScrollPosition();
+            } else if (newIndex > this.results.length - 1) {
+                this.highlightedResultIndex = 0;
+                this.updateScrollPosition();
+            } else if (newIndex >= 0 && newIndex < this.results.length) {
                 this.highlightedResultIndex = newIndex;
                 this.updateScrollPosition();
             }
