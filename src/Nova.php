@@ -185,6 +185,20 @@ class Nova
     }
 
     /**
+     * Get the resources available for the given request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public static function globallySearchableResources(Request $request)
+    {
+        return collect(static::availableResources($request))
+                    ->filter(function ($resource) {
+                        return $resource::$globallySearchable;
+                    });
+    }
+
+    /**
      * Register the given resources.
      *
      * @param  array  $resources

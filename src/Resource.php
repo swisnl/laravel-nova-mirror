@@ -59,6 +59,13 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     public static $search = [];
 
     /**
+     * Indicates if the resoruce should be globally searchable.
+     *
+     * @var bool
+     */
+    public static $globallySearchable = true;
+
+    /**
      * The number of resources to show per page via relationships.
      *
      * @var int

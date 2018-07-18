@@ -17,13 +17,8 @@ class SearchController extends Controller
      */
     public function index(NovaRequest $request)
     {
-        $resources = collect(Nova::availableResources($request))
-                    ->filter(function ($resource) {
-                        // return $resource::usesScout();
-
-                        return true;
-                    });
-
-        return (new GlobalSearch($request, $resources))->get();
+        return (new GlobalSearch(
+            $request, Nova::globallySearchableResources($request)
+        ))->get();
     }
 }
