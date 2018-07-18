@@ -14,7 +14,7 @@ class Number extends Text
      */
     public function __construct($name, $attribute = null, $resolveCallback = null)
     {
-        parent::__construct($name, $attribute, $resolveCallback = null);
+        parent::__construct($name, $attribute, $resolveCallback);
 
         $this->withMeta(['type' => 'number']);
     }
