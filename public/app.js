@@ -17614,8 +17614,10 @@ exports.default = {
     },
 
     watch: {
-        resourceId: function resourceId() {
-            this.initializeComponent();
+        resourceId: function resourceId(newResourceId, oldResourceId) {
+            if (newResourceId != oldResourceId) {
+                this.initializeComponent();
+            }
         }
     },
 

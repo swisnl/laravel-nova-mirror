@@ -152,8 +152,10 @@ export default {
     }),
 
     watch: {
-        resourceId: function() {
-            this.initializeComponent()
+        resourceId: function(newResourceId, oldResourceId) {
+            if (newResourceId != oldResourceId) {
+                this.initializeComponent()
+            }
         },
     },
 
