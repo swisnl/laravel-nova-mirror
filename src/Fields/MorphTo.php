@@ -4,6 +4,7 @@ namespace Laravel\Nova\Fields;
 
 use Closure;
 use Laravel\Nova\Nova;
+use Laravel\Nova\Resource;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\TrashedStatus;
@@ -95,10 +96,6 @@ class MorphTo extends Field
         parent::__construct($name, $attribute);
 
         $this->morphToRelationship = $this->attribute;
-
-        $this->display = function ($resource) {
-            return $resource->id;
-        };
     }
 
     /**
@@ -323,9 +320,29 @@ class MorphTo extends Field
     {
         return array_filter([
             'avatar' => $resource->resolveAvatarUrl($request),
+            'display' => $this->formatDisplayValue($resource, $relatedResource),
             'value' => $resource->getKey(),
-            'display' => call_user_func($this->displayFor($relatedResource), $resource),
         ]);
+    }
+
+    /**
+     * Format the associatable display value.
+     *
+     * @param  mixed  $resource
+     * @param  string  $relatedResource
+     * @return string
+     */
+    protected function formatDisplayValue($resource, $relatedResource)
+    {
+        if (! $resource instanceof Resource) {
+            $resource = Nova::newResourceFromModel($resource);
+        }
+
+        if ($display = $this->displayFor($relatedResource)) {
+            return call_user_func($display, $resource);
+        }
+
+        return $resource->display();
     }
 
     /**
@@ -390,9 +407,7 @@ class MorphTo extends Field
     public function displayFor($type)
     {
         if (is_array($this->display) && $type) {
-            return $this->display[$type] ?? function ($resource) {
-                return $resource->id;
-            };
+            return $this->display[$type] ?? null;
         }
 
         return $this->display;
