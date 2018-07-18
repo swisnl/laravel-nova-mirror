@@ -46426,11 +46426,7 @@ var render = function() {
         ],
         ref: "input",
         staticClass: "form-control form-input form-input-bordered w-full",
-        attrs: {
-          dusk: "global-search",
-          type: "search",
-          placeholder: "Global search"
-        },
+        attrs: { dusk: "global-search", type: "search", placeholder: "Search" },
         domProps: { value: _vm.searchTerm },
         on: {
           input: [

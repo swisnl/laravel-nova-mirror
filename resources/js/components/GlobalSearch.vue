@@ -20,7 +20,7 @@
                 @keydown.up.prevent="move(-1)"
                 v-model="searchTerm"
                 type="search"
-                placeholder="Global search"
+                placeholder="Search"
                 class="form-control form-input form-input-bordered w-full"
             />
 
