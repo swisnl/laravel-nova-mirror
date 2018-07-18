@@ -36,9 +36,11 @@
             <div class="content">
                 <div class="flex items-center relative shadow h-header bg-white z-50 px-6">
 
-                    <div class="font-bold text-90 mr-6">
-                        {{ Config::get('nova.name') }}
-                    </div>
+                    @if (! empty(Config::get('nova.name')))
+                        <div class="font-bold text-90 mr-6">
+                            {{ Config::get('nova.name') }}
+                        </div>
+                    @endif
 
                     <global-search></global-search>
 
