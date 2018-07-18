@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="/nova-api/styles/{{ $name }}">
     @endforeach
 </head>
-<body class="bg-40 text-black min-h-full">
+<body class="min-w-site bg-40 text-black min-h-full">
     <div id="nova">
         <div v-cloak class="flex min-h-screen">
             <!-- Sidebar -->
