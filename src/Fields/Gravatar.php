@@ -17,6 +17,8 @@ class Gravatar extends Avatar
         parent::__construct($name, $attribute ?? 'email', $resolveCallback);
 
         $this->exceptOnForms();
+
+        $this->withMeta(['indexName' => '']);
     }
 
     /**

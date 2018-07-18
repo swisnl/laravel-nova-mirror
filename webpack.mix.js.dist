@@ -12,10 +12,36 @@ let tailwindcss = require('tailwindcss')
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [tailwindcss('tailwind.js')])
-    .copy('public/js/app.js', '../nova-app/public/nova/app.js')
-    .copy('public/css/app.css', '../nova-app/public/nova/app.css')
+mix
+    .js('resources/js/app.js', 'public')
+    .extract([
+        'codemirror',
+        'chartist',
+        'chartist-plugin-tooltips',
+        'flatpickr',
+        'form-backend-validation',
+        'inflector-js',
+        'markdown-it',
+        'marked',
+        'moment',
+        'numeral',
+        'pikaday',
+        'places.js',
+        'popper.js',
+        'vue-async-computed',
+        'vue-clickaway',
+        'vue-toasted',
+        'trix',
+        'vue',
+        'vue-router',
+        'portal-vue',
+        'lodash',
+        'moment-timezone',
+        'axios',
+        'laravel-nova',
+    ])
+    .postCss('resources/css/app.css', 'public', [tailwindcss('tailwind.js')])
+    .copy('public', '../nova-app/public/nova')
     .webpackConfig({
         resolve: {
             symlinks: false,

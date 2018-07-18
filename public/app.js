@@ -875,8 +875,9 @@ CodeMirror.defineMode("xml", function(editorConf, config_) {
         stream.next();
       }
       return style;
-    };
+    }
   }
+
   function doctype(depth) {
     return function(stream, state) {
       var ch;
@@ -49833,7 +49834,7 @@ var render = function() {
                             [
                               _vm._v(
                                 "\n                    " +
-                                  _vm._s(field.name) +
+                                  _vm._s(field.indexName) +
                                   "\n                "
                               )
                             ]
@@ -49841,7 +49842,7 @@ var render = function() {
                         : _c("span", [
                             _vm._v(
                               "\n                    " +
-                                _vm._s(field.name) +
+                                _vm._s(field.indexName) +
                                 "\n                "
                             )
                           ])
