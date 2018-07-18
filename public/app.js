@@ -26910,7 +26910,7 @@ exports.default = {
             lineWrapping: true,
             lineNumbers: true,
             theme: 'dracula'
-        }, this.field.options);
+        }, this.field.options, { readOnly: true });
 
         this.codemirror = _codemirror2.default.fromTextArea(this.$refs.theTextarea, config);
 

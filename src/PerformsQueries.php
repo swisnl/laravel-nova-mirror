@@ -44,7 +44,7 @@ trait PerformsQueries
             return static::applySoftDeleteConstraint($query, $withTrashed);
         }
 
-        return static::usesScout()
+        return static::usesScout() && ! is_numeric($search)
                 ? static::initializeQueryUsingScout($query, $search, $withTrashed)
                 : static::applySearch(static::applySoftDeleteConstraint($query, $withTrashed), $search);
     }
