@@ -42,7 +42,9 @@
                         </div>
                     @endif
 
-                    <global-search></global-search>
+                    @if (count(Nova::globallySearchableResources(request())) > 0)
+                        <global-search></global-search>
+                    @endif
 
                     <div class="ml-auto text-80">
                         <dropdown width="200" direction="rtl" active-class="" class="h-9 flex items-center" style="right: 20px">
