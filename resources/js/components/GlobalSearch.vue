@@ -8,6 +8,7 @@
 
         <div class="relative">
             <input
+                dusk="global-search"
                 ref="input"
                 @input.stop="search"
                 @keydown.stop=""
@@ -46,6 +47,7 @@
                                         resourceId: item.resourceId,
                                     }
                                 }"
+                                :dusk="item.resourceName + ' ' + item.index"
                                 @click.native="closeSearch"
                                 class="flex items-center text-90 hover:bg-20 block py-2 px-3 no-underline font-normal"
                                 :class="{

@@ -46395,6 +46395,8 @@ exports.default = {
 //
 //
 //
+//
+//
 
 /***/ }),
 /* 955 */
@@ -46424,7 +46426,11 @@ var render = function() {
         ],
         ref: "input",
         staticClass: "form-control form-input form-input-bordered w-full",
-        attrs: { type: "search", placeholder: "Global search" },
+        attrs: {
+          dusk: "global-search",
+          type: "search",
+          placeholder: "Global search"
+        },
         domProps: { value: _vm.searchTerm },
         on: {
           input: [
@@ -46549,7 +46555,8 @@ var render = function() {
                                   resourceName: item.resourceName,
                                   resourceId: item.resourceId
                                 }
-                              }
+                              },
+                              dusk: item.resourceName + " " + item.index
                             },
                             nativeOn: {
                               click: function($event) {
