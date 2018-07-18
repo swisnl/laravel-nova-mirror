@@ -16,7 +16,7 @@ use Laravel\Nova\Contracts\Deletable as DeletableContract;
 
 class MorphToMany extends Field implements DeletableContract, ListableField
 {
-    use Deletable, DetachesPivotModels;
+    use Deletable, DetachesPivotModels, FormatsRelatableDisplayValues;
 
     /**
      * The field's component.
@@ -236,25 +236,6 @@ class MorphToMany extends Field implements DeletableContract, ListableField
     }
 
     /**
-     * Format the associatable display value.
-     *
-     * @param  mixed  $resource
-     * @return string
-     */
-    protected function formatDisplayValue($resource)
-    {
-        if (! $resource instanceof Resource) {
-            $resource = Nova::newResourceFromModel($resource);
-        }
-
-        if ($this->display) {
-            return call_user_func($this->display, $resource);
-        }
-
-        return $resource->display();
-    }
-
-    /**
      * Specify the callback to be executed to retrieve the pivot fields.
      *
      * @param  callable  $callback
@@ -276,23 +257,6 @@ class MorphToMany extends Field implements DeletableContract, ListableField
     public function actions($callback)
     {
         $this->actionsCallback = $callback;
-
-        return $this;
-    }
-
-    /**
-     * Set the column that should be displayed for the field.
-     *
-     * @param  \Closure|string  $display
-     * @return $this
-     */
-    public function display($display)
-    {
-        $this->display = $display instanceof Closure
-                        ? $display
-                        : function ($resource) use ($display) {
-                            return $resource->{$display};
-                        };
 
         return $this;
     }
