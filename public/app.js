@@ -46257,17 +46257,19 @@ exports.default = {
          * Move the highlighted results
          */
         move: function move(offset) {
-            var newIndex = this.highlightedResultIndex + offset;
+            if (this.results.length) {
+                var newIndex = this.highlightedResultIndex + offset;
 
-            if (newIndex < 0) {
-                this.highlightedResultIndex = this.results.length - 1;
-                this.updateScrollPosition();
-            } else if (newIndex > this.results.length - 1) {
-                this.highlightedResultIndex = 0;
-                this.updateScrollPosition();
-            } else if (newIndex >= 0 && newIndex < this.results.length) {
-                this.highlightedResultIndex = newIndex;
-                this.updateScrollPosition();
+                if (newIndex < 0) {
+                    this.highlightedResultIndex = this.results.length - 1;
+                    this.updateScrollPosition();
+                } else if (newIndex > this.results.length - 1) {
+                    this.highlightedResultIndex = 0;
+                    this.updateScrollPosition();
+                } else if (newIndex >= 0 && newIndex < this.results.length) {
+                    this.highlightedResultIndex = newIndex;
+                    this.updateScrollPosition();
+                }
             }
         },
         updateScrollPosition: function updateScrollPosition() {
