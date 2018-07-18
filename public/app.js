@@ -46144,9 +46144,25 @@ exports.default = {
         };
     },
 
+    mounted: function mounted() {
+        document.addEventListener('keydown', this.handleKeydown);
+    },
+    destroyed: function destroyed() {
+        document.removeEventListener('keydown', this.handleKeydown);
+    },
+
+
     methods: {
+        handleKeydown: function handleKeydown(event) {
+            if (event.target == document.body && event.keyCode == 191) {
+                event.preventDefault();
+                event.stopPropagation();
+                this.openSearch();
+            }
+        },
         openSearch: function openSearch() {
             this.clearSearch();
+            this.$refs.input.focus();
             this.currentlySearching = true;
             this.clearResults();
         },
@@ -46180,32 +46196,37 @@ exports.default = {
                             case 0:
                                 this.results = [];
 
-                                _context.prev = 1;
-                                _context.next = 4;
+                                if (!(search !== '')) {
+                                    _context.next = 13;
+                                    break;
+                                }
+
+                                _context.prev = 2;
+                                _context.next = 5;
                                 return Nova.request().get('/nova-api/search', {
                                     params: { search: search }
                                 });
 
-                            case 4:
+                            case 5:
                                 _ref2 = _context.sent;
                                 results = _ref2.data;
 
 
                                 this.results = results;
-                                _context.next = 12;
+                                _context.next = 13;
                                 break;
 
-                            case 9:
-                                _context.prev = 9;
-                                _context.t0 = _context['catch'](1);
+                            case 10:
+                                _context.prev = 10;
+                                _context.t0 = _context['catch'](2);
                                 throw _context.t0;
 
-                            case 12:
+                            case 13:
                             case 'end':
                                 return _context.stop();
                         }
                     }
-                }, _callee, this, [[1, 9]]);
+                }, _callee, this, [[2, 10]]);
             }));
 
             function fetchResults(_x) {
@@ -46344,6 +46365,7 @@ exports.default = {
 //
 //
 //
+//
 
 /***/ }),
 /* 955 */
@@ -46353,7 +46375,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "w-full max-w-xs" }, [
     _vm.currentlySearching
       ? _c("div", {
           staticClass: "fixed pin bg-80 z-0 opacity-25",
@@ -46372,7 +46394,7 @@ var render = function() {
           }
         ],
         ref: "input",
-        staticClass: "form-control form-input form-input-bordered w-search",
+        staticClass: "form-control form-input form-input-bordered w-full",
         attrs: { type: "search", placeholder: "Global search" },
         domProps: { value: _vm.searchTerm },
         on: {
@@ -46436,6 +46458,7 @@ var render = function() {
               _vm.move(-1)
             }
           ],
+          blur: _vm.closeSearch,
           focus: _vm.openSearch
         }
       }),

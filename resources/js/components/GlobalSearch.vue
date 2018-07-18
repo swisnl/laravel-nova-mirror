@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="w-full max-w-xs">
         <div
             v-if="currentlySearching"
             @mousedown="closeSearch"
@@ -13,13 +13,14 @@
                 @keydown.stop=""
                 @keydown.enter.stop="goToCurrentlySelectedResource"
                 @keydown.esc.stop="closeSearch"
+                @blur="closeSearch"
                 @focus="openSearch"
                 @keydown.down.prevent="move(1)"
                 @keydown.up.prevent="move(-1)"
                 v-model="searchTerm"
                 type="search"
                 placeholder="Global search"
-                class="form-control form-input form-input-bordered w-search"
+                class="form-control form-input form-input-bordered w-full"
             />
 
             <div v-if="shouldShowResults" class="overflow-hidden absolute rounded-lg shadow-lg w-full mt-2">
@@ -66,9 +67,26 @@ export default {
         highlightedResultIndex: 0,
     }),
 
+    mounted() {
+        document.addEventListener('keydown', this.handleKeydown)
+    },
+
+    destroyed() {
+        document.removeEventListener('keydown', this.handleKeydown)
+    },
+
     methods: {
+        handleKeydown(event) {
+            if (event.target == document.body && event.keyCode == 191) {
+                event.preventDefault()
+                event.stopPropagation()
+                this.openSearch()
+            }
+        },
+
         openSearch() {
             this.clearSearch()
+            this.$refs.input.focus()
             this.currentlySearching = true
             this.clearResults()
         },
@@ -98,15 +116,16 @@ export default {
         async fetchResults(search) {
             this.results = []
 
-            try {
-                // Something like this from the server
-                const { data: results } = await Nova.request().get('/nova-api/search', {
-                    params: { search },
-                })
+            if (search !== '') {
+                try {
+                    const { data: results } = await Nova.request().get('/nova-api/search', {
+                        params: { search },
+                    })
 
-                this.results = results
-            } catch (e) {
-                throw e
+                    this.results = results
+                } catch (e) {
+                    throw e
+                }
             }
         },
 
