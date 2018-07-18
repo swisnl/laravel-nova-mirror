@@ -3,6 +3,8 @@
 namespace Laravel\Nova\Fields;
 
 use Closure;
+use Laravel\Nova\Nova;
+use Laravel\Nova\Resource;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\TrashedStatus;
@@ -104,10 +106,6 @@ class BelongsToMany extends Field implements DeletableContract, ListableField
 
         $this->actionsCallback = function () {
             return [];
-        };
-
-        $this->display = function ($resource) {
-            return $resource->id;
         };
     }
 
@@ -232,9 +230,28 @@ class BelongsToMany extends Field implements DeletableContract, ListableField
     {
         return array_filter([
             'avatar' => $resource->resolveAvatarUrl($request),
+            'display' => $this->formatDisplayValue($resource),
             'value' => $resource->getKey(),
-            'display' => call_user_func($this->display, $resource),
         ]);
+    }
+
+    /**
+     * Format the associatable display value.
+     *
+     * @param  mixed  $resource
+     * @return string
+     */
+    protected function formatDisplayValue($resource)
+    {
+        if (! $resource instanceof Resource) {
+            $resource = Nova::newResourceFromModel($resource);
+        }
+
+        if ($this->display) {
+            return call_user_func($this->display, $resource);
+        }
+
+        return $resource->display();
     }
 
     /**
