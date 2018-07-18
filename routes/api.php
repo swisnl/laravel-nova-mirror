@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/scripts/{script}', 'ScriptController@show');
 Route::get('/styles/{style}', 'StyleController@show');
 
+// Global Search...
+Route::get('/search', 'SearchController@index');
+
 // Fields...
 Route::get('/{resource}/field/{field}', 'FieldController@show');
 Route::get('/{resource}/creation-fields', 'CreationFieldController@index');

@@ -21,6 +21,13 @@ class PostResource extends Resource
     public static $model = \Laravel\Nova\Tests\Fixtures\Post::class;
 
     /**
+     * The single value that should be used to represent the resource when being displayed.
+     *
+     * @var string
+     */
+    public static $display = 'title';
+
+    /**
      * The columns that should be searched.
      *
      * @var array

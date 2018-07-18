@@ -24,6 +24,13 @@ class UserResource extends Resource
     public static $model = \Laravel\Nova\Tests\Fixtures\User::class;
 
     /**
+     * The single value that should be used to represent the resource when being displayed.
+     *
+     * @var string
+     */
+    public static $display = 'name';
+
+    /**
      * The columns that should be searched.
      *
      * @var array

@@ -38,25 +38,11 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     public $resource;
 
     /**
-     * The fields that should be shown on the index screen.
+     * The single value that should be used to represent the resource when being displayed.
      *
-     * @var array
+     * @var string
      */
-    public $indexFields;
-
-    /**
-     * The fields that should be shown on the resource detail page.
-     *
-     * @var array
-     */
-    public $detailFields;
-
-    /**
-     * The fields that should be shown on the creation and update screens.
-     *
-     * @var array
-     */
-    public $formFields;
+    public static $display = 'id';
 
     /**
      * The relationships that should be eager loaded when performing an index query.
@@ -221,6 +207,16 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     public static function singularLabel()
     {
         return Str::singular(static::label());
+    }
+
+    /**
+     * Get the value that should be displayed to represent the resource.
+     *
+     * @return string
+     */
+    public function display()
+    {
+        return $this->{static::$display};
     }
 
     /**
