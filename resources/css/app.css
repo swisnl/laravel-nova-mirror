@@ -27,10 +27,6 @@
   --90-half: rgba(40, 54, 61, 0.5);
 }
 
-body {
-  min-width: 1280px;
-}
-
 .content {
   min-width: 66.25rem;
   width: 100%;
