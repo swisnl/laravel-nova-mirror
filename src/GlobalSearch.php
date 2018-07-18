@@ -45,14 +45,16 @@ class GlobalSearch
 
         foreach ($this->getSearchResults() as $resource => $models) {
             foreach ($models as $model) {
+                $instance = new $resource($model);
+
                 $formatted[] = [
                     'resourceName' => $resource::uriKey(),
                     'resourceTitle' => $resource::label(),
-                    'label' => (new $resource($model))->display(),
+                    'label' => $instance->display(),
                     'subLabel' => null,
                     'resourceId' => $model->getKey(),
                     'url' => url(Nova::path().'/resources/'.$resource::uriKey().'/'.$model->getKey()),
-                    'avatar' => (new $resource($model))->resolveAvatarUrl($this->request),
+                    'avatar' => $instance->resolveAvatarUrl($this->request),
                 ];
             }
         }
