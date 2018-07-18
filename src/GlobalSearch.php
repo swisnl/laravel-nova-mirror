@@ -49,6 +49,7 @@ class GlobalSearch
                     'resourceName' => $resource::uriKey(),
                     'resourceTitle' => $resource::label(),
                     'label' => (new $resource($model))->display(),
+                    'subLabel' => null,
                     'resourceId' => $model->getKey(),
                     'url' => url(Nova::path().'/resources/'.$resource::uriKey().'/'.$model->getKey()),
                     'avatar' => (new $resource($model))->resolveAvatarUrl($this->request),
