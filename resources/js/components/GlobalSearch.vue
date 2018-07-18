@@ -23,14 +23,22 @@
                 class="form-control form-input form-input-bordered w-full"
             />
 
-            <div v-if="shouldShowResults" class="overflow-hidden absolute rounded-lg shadow-lg w-full mt-2">
+            <div
+                v-if="shouldShowResults"
+                class="overflow-hidden absolute rounded-lg shadow-lg w-full mt-2 max-h-search overflow-y-auto"
+                ref="container"
+            >
                 <div v-for="group in formattedResults">
                     <h3 class="text-xs uppercase tracking-wide text-80 bg-40 py-2 px-3">
                         {{ group.resourceName }}
                     </h3>
 
                     <ul class="list-reset">
-                        <li v-for="item in group.items">
+                        <li
+                            v-for="item in group.items"
+                            :key="item.label + item.index"
+                            :ref="item.index === highlightedResultIndex ? 'selected' : null"
+                        >
                             <router-link :to="{
                                     name: 'detail',
                                     params: {
@@ -148,8 +156,29 @@ export default {
 
             if (newIndex >= 0 && newIndex < this.results.length) {
                 this.highlightedResultIndex = newIndex
-                // this.updateScrollPosition()
+                this.updateScrollPosition()
             }
+        },
+
+        updateScrollPosition() {
+            this.$nextTick(() => {
+                if (this.$refs.selected) {
+                    if (
+                        this.$refs.selected[0].offsetTop >
+                        this.$refs.container.scrollTop +
+                            this.$refs.container.clientHeight -
+                            this.$refs.selected[0].clientHeight
+                    ) {
+                        this.$refs.container.scrollTop =
+                            this.$refs.selected[0].offsetTop +
+                            this.$refs.selected[0].clientHeight -
+                            this.$refs.container.clientHeight
+                    }
+                    if (this.$refs.selected[0].offsetTop < this.$refs.container.scrollTop) {
+                        this.$refs.container.scrollTop = this.$refs.selected[0].offsetTop
+                    }
+                }
+            })
         },
 
         goToCurrentlySelectedResource() {

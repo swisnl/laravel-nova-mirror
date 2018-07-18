@@ -215,6 +215,7 @@ module.exports = {
     maxHeight: {
         full: '100%',
         screen: '100vh',
+        search: '15rem',
     },
 
     padding: {

@@ -46257,16 +46257,30 @@ exports.default = {
 
             if (newIndex >= 0 && newIndex < this.results.length) {
                 this.highlightedResultIndex = newIndex;
-                // this.updateScrollPosition()
+                this.updateScrollPosition();
             }
         },
-        goToCurrentlySelectedResource: function goToCurrentlySelectedResource() {
+        updateScrollPosition: function updateScrollPosition() {
             var _this2 = this;
+
+            this.$nextTick(function () {
+                if (_this2.$refs.selected) {
+                    if (_this2.$refs.selected[0].offsetTop > _this2.$refs.container.scrollTop + _this2.$refs.container.clientHeight - _this2.$refs.selected[0].clientHeight) {
+                        _this2.$refs.container.scrollTop = _this2.$refs.selected[0].offsetTop + _this2.$refs.selected[0].clientHeight - _this2.$refs.container.clientHeight;
+                    }
+                    if (_this2.$refs.selected[0].offsetTop < _this2.$refs.container.scrollTop) {
+                        _this2.$refs.container.scrollTop = _this2.$refs.selected[0].offsetTop;
+                    }
+                }
+            });
+        },
+        goToCurrentlySelectedResource: function goToCurrentlySelectedResource() {
+            var _this3 = this;
 
             this.closeSearch();
 
             var resource = _.find(this.indexedResults, function (res) {
-                return res.index == _this2.highlightedResultIndex;
+                return res.index == _this3.highlightedResultIndex;
             });
 
             this.$router.push({
@@ -46300,13 +46314,13 @@ exports.default = {
             }).uniqBy('resourceName').value();
         },
         formattedResults: function formattedResults() {
-            var _this3 = this;
+            var _this4 = this;
 
             return _.map(this.formattedGroups, function (group) {
                 return {
                     resourceName: group.resourceName,
                     resourceTitle: group.resourceTitle,
-                    items: _.filter(_this3.indexedResults, function (item) {
+                    items: _.filter(_this4.indexedResults, function (item) {
                         return item.resourceName == group.resourceName;
                     })
                 };
@@ -46314,6 +46328,14 @@ exports.default = {
         }
     }
 }; //
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -46472,8 +46494,9 @@ var render = function() {
         ? _c(
             "div",
             {
+              ref: "container",
               staticClass:
-                "overflow-hidden absolute rounded-lg shadow-lg w-full mt-2"
+                "overflow-hidden absolute rounded-lg shadow-lg w-full mt-2 max-h-search overflow-y-auto"
             },
             _vm._l(_vm.formattedResults, function(group) {
               return _c("div", [
@@ -46498,6 +46521,14 @@ var render = function() {
                   _vm._l(group.items, function(item) {
                     return _c(
                       "li",
+                      {
+                        key: item.label + item.index,
+                        ref:
+                          item.index === _vm.highlightedResultIndex
+                            ? "selected"
+                            : null,
+                        refInFor: true
+                      },
                       [
                         _c(
                           "router-link",
