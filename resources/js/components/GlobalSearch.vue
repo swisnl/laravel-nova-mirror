@@ -58,45 +58,6 @@
 <script>
 import { Minimum } from 'laravel-nova'
 
-const stubResults = [
-    {
-        label: 'First Post',
-        resourceName: 'posts',
-        resourceTitle: 'Posts',
-        resourceId: 1,
-        url: 'http://nova-app.test/nova/resources/posts/1',
-    },
-    {
-        label: 'Second Post',
-        resourceName: 'posts',
-        resourceTitle: 'Posts',
-        resourceId: 2,
-        url: 'http://nova-app.test/nova/resources/posts/2',
-    },
-    {
-        label: 'Third Post',
-        resourceName: 'posts',
-        resourceTitle: 'Posts',
-        resourceId: 3,
-        url: 'http://nova-app.test/nova/resources/posts/3',
-    },
-    {
-        label: 'Taylor Otwell',
-        resourceName: 'users',
-        resourceTitle: 'Users',
-        resourceId: 1,
-        url: 'http://nova-app.test/nova/resources/users/1',
-    },
-    {
-        label: 'David Hemphill',
-        resourceName: 'users',
-        resourceTitle: 'Users',
-        resourceId: 2,
-        url: 'http://nova-app.test/nova/resources/users/2',
-        avatar: 'https://www.gravatar.com/avatar/2821f93cef33ccd01b1262ac41f87d9c?s=300',
-    },
-]
-
 export default {
     data: () => ({
         currentlySearching: false,
@@ -134,23 +95,14 @@ export default {
             }, 500)
         },
 
-        async fetchResults(searchTerm) {
+        async fetchResults(search) {
             this.results = []
 
             try {
                 // Something like this from the server
-                // const { data: results } = await Nova.request(this.searchEndpoint, {
-                //     params: { q: searchTerm },
-                // })
-
-                // But we'll fake it for now
-                const {
-                    data: { results },
-                } = await Minimum(
-                    new Promise((resolve, reject) => {
-                        resolve({ data: { results: stubResults } })
-                    }, 3000)
-                )
+                const { data: results } = await Nova.request().get('/nova/search', {
+                    params: { search },
+                })
 
                 this.results = results
             } catch (e) {
