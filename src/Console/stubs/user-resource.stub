@@ -18,6 +18,13 @@ class User extends Resource
     public static $model = 'App\\User';
 
     /**
+     * The single value that should be used to represent the resource when being displayed.
+     *
+     * @var string
+     */
+    public static $display = 'name';
+
+    /**
      * The columns that should be searched.
      *
      * @var array
