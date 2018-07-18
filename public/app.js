@@ -476,7 +476,7 @@ module.exports = __webpack_require__(310);
 
 exports.__esModule = true;
 
-var _promise = __webpack_require__(28);
+var _promise = __webpack_require__(38);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -520,9 +520,9 @@ exports.default = function (fn) {
 
 var global = __webpack_require__(9);
 var core = __webpack_require__(7);
-var ctx = __webpack_require__(34);
+var ctx = __webpack_require__(33);
 var hide = __webpack_require__(20);
-var has = __webpack_require__(37);
+var has = __webpack_require__(36);
 var PROTOTYPE = 'prototype';
 
 var $export = function (type, name, source) {
@@ -613,7 +613,7 @@ module.exports = __webpack_require__(21) ? function (object, key, value) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(36)(function () {
+module.exports = !__webpack_require__(35)(function () {
   return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
 });
 
@@ -663,12 +663,6 @@ module.exports = function (it) {
 /* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(295), __esModule: true };
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 
@@ -695,7 +689,7 @@ exports.default = _assign2.default || function (target) {
 };
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -742,7 +736,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
@@ -910,8 +904,9 @@ CodeMirror.defineMode("xml", function(editorConf, config_) {
         stream.next();
       }
       return style;
-    };
+    }
   }
+
   function doctype(depth) {
     return function(stream, state) {
       var ch;
@@ -1149,7 +1144,7 @@ if (!CodeMirror.mimeModes.hasOwnProperty("text/html"))
 
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
@@ -2051,12 +2046,12 @@ CodeMirror.defineMIME("application/typescript", { name: "javascript", typescript
 
 
 /***/ }),
-/* 33 */,
-/* 34 */
+/* 32 */,
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
-var aFunction = __webpack_require__(35);
+var aFunction = __webpack_require__(34);
 module.exports = function (fn, that, length) {
   aFunction(fn);
   if (that === undefined) return fn;
@@ -2078,7 +2073,7 @@ module.exports = function (fn, that, length) {
 
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
@@ -2088,7 +2083,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, exports) {
 
 module.exports = function (exec) {
@@ -2101,7 +2096,7 @@ module.exports = function (exec) {
 
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports) {
 
 var hasOwnProperty = {}.hasOwnProperty;
@@ -2111,7 +2106,7 @@ module.exports = function (it, key) {
 
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -2120,6 +2115,12 @@ module.exports = function (it) {
   return toString.call(it).slice(8, -1);
 };
 
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(295), __esModule: true };
 
 /***/ }),
 /* 39 */,
@@ -3480,7 +3481,7 @@ module.exports = function (key) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var def = __webpack_require__(26).f;
-var has = __webpack_require__(37);
+var has = __webpack_require__(36);
 var TAG = __webpack_require__(10)('toStringTag');
 
 module.exports = function (it, tag, stat) {
@@ -3528,7 +3529,7 @@ __webpack_require__(78)(String, 'String', function (iterated) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
-var cof = __webpack_require__(38);
+var cof = __webpack_require__(37);
 var TAG = __webpack_require__(10)('toStringTag');
 // ES3 wrong here
 var ARG = cof(function () { return arguments; }()) == 'Arguments';
@@ -3559,7 +3560,7 @@ module.exports = function (it) {
 "use strict";
 
 // 25.4.1.5 NewPromiseCapability(C)
-var aFunction = __webpack_require__(35);
+var aFunction = __webpack_require__(34);
 
 function PromiseCapability(C) {
   var resolve, reject;
@@ -3635,7 +3636,7 @@ module.exports = Component.exports
 
 (function(mod) {
   if (true) // CommonJS
-    mod(__webpack_require__(5), __webpack_require__(31), __webpack_require__(531));
+    mod(__webpack_require__(5), __webpack_require__(30), __webpack_require__(531));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror", "../xml/xml", "../meta"], mod);
   else // Plain browser env
@@ -5140,7 +5141,7 @@ var _slicedToArray2 = __webpack_require__(276);
 
 var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
 
-var _promise = __webpack_require__(28);
+var _promise = __webpack_require__(38);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -5148,7 +5149,7 @@ var _regenerator = __webpack_require__(12);
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _extends2 = __webpack_require__(29);
+var _extends2 = __webpack_require__(28);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -5332,7 +5333,7 @@ function scrollBehavior(to, from, savedPosition) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(38);
+var cof = __webpack_require__(37);
 // eslint-disable-next-line no-prototype-builtins
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
   return cof(it) == 'String' ? it.split('') : Object(it);
@@ -5494,7 +5495,7 @@ module.exports = __webpack_require__(7).getIteratorMethod = function (it) {
 
 // 7.3.20 SpeciesConstructor(O, defaultConstructor)
 var anObject = __webpack_require__(18);
-var aFunction = __webpack_require__(35);
+var aFunction = __webpack_require__(34);
 var SPECIES = __webpack_require__(10)('species');
 module.exports = function (O, D) {
   var C = anObject(O).constructor;
@@ -5507,7 +5508,7 @@ module.exports = function (O, D) {
 /* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ctx = __webpack_require__(34);
+var ctx = __webpack_require__(33);
 var invoke = __webpack_require__(302);
 var html = __webpack_require__(83);
 var cel = __webpack_require__(48);
@@ -5550,7 +5551,7 @@ if (!setTask || !clearTask) {
     delete queue[id];
   };
   // Node.js 0.8-
-  if (__webpack_require__(38)(process) == 'process') {
+  if (__webpack_require__(37)(process) == 'process') {
     defer = function (id) {
       process.nextTick(ctx(run, id, 1));
     };
@@ -6142,7 +6143,7 @@ module.exports = Component.exports
 
 (function(mod) {
   if (true) // CommonJS
-    mod(__webpack_require__(5), __webpack_require__(31), __webpack_require__(32), __webpack_require__(41));
+    mod(__webpack_require__(5), __webpack_require__(30), __webpack_require__(31), __webpack_require__(41));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror", "../xml/xml", "../javascript/javascript", "../css/css"], mod);
   else // Plain browser env
@@ -7020,8 +7021,8 @@ CodeMirror.defineMIME("text/x-nginx-conf", "nginx");
   if (true) {// CommonJS
     mod(__webpack_require__(5),
         __webpack_require__(533),
+        __webpack_require__(30),
         __webpack_require__(31),
-        __webpack_require__(32),
         __webpack_require__(534),
         __webpack_require__(41),
         __webpack_require__(65),
@@ -13552,7 +13553,7 @@ $export($export.S + $export.F * !__webpack_require__(21), 'Object', { defineProp
 /* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(21) && !__webpack_require__(36)(function () {
+module.exports = !__webpack_require__(21) && !__webpack_require__(35)(function () {
   return Object.defineProperty(__webpack_require__(48)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
@@ -13801,7 +13802,7 @@ module.exports = __webpack_require__(21) ? Object.defineProperties : function de
 /* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has = __webpack_require__(37);
+var has = __webpack_require__(36);
 var toIObject = __webpack_require__(50);
 var arrayIndexOf = __webpack_require__(287)(false);
 var IE_PROTO = __webpack_require__(55)('IE_PROTO');
@@ -13867,7 +13868,7 @@ module.exports = function (index, length) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has = __webpack_require__(37);
+var has = __webpack_require__(36);
 var toObject = __webpack_require__(57);
 var IE_PROTO = __webpack_require__(55)('IE_PROTO');
 var ObjectProto = Object.prototype;
@@ -13975,11 +13976,11 @@ module.exports = __webpack_require__(7).Promise;
 
 var LIBRARY = __webpack_require__(52);
 var global = __webpack_require__(9);
-var ctx = __webpack_require__(34);
+var ctx = __webpack_require__(33);
 var classof = __webpack_require__(59);
 var $export = __webpack_require__(17);
 var isObject = __webpack_require__(27);
-var aFunction = __webpack_require__(35);
+var aFunction = __webpack_require__(34);
 var anInstance = __webpack_require__(298);
 var forOf = __webpack_require__(299);
 var speciesConstructor = __webpack_require__(85);
@@ -14275,7 +14276,7 @@ module.exports = function (it, Constructor, name, forbiddenField) {
 /* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ctx = __webpack_require__(34);
+var ctx = __webpack_require__(33);
 var call = __webpack_require__(300);
 var isArrayIter = __webpack_require__(301);
 var anObject = __webpack_require__(18);
@@ -14365,7 +14366,7 @@ var macrotask = __webpack_require__(86).set;
 var Observer = global.MutationObserver || global.WebKitMutationObserver;
 var process = global.process;
 var Promise = global.Promise;
-var isNode = __webpack_require__(38)(process) == 'process';
+var isNode = __webpack_require__(37)(process) == 'process';
 
 module.exports = function () {
   var head, last, notify;
@@ -15362,7 +15363,7 @@ var IObject = __webpack_require__(77);
 var $assign = Object.assign;
 
 // should work with symbols and should have deterministic property order (V8 bug)
-module.exports = !$assign || __webpack_require__(36)(function () {
+module.exports = !$assign || __webpack_require__(35)(function () {
   var A = {};
   var B = {};
   // eslint-disable-next-line no-undef
@@ -20862,7 +20863,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _promise = __webpack_require__(28);
+var _promise = __webpack_require__(38);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -22412,7 +22413,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _promise = __webpack_require__(28);
+var _promise = __webpack_require__(38);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -22806,7 +22807,7 @@ _vue2.default.component('panel', __webpack_require__(385));
 _vue2.default.component('relationship-panel', __webpack_require__(388));
 
 // Text Field...
-_vue2.default.component('index-text-field', __webpack_require__(30));
+_vue2.default.component('index-text-field', __webpack_require__(29));
 _vue2.default.component('detail-text-field', __webpack_require__(40));
 _vue2.default.component('form-text-field', __webpack_require__(395));
 
@@ -22816,12 +22817,12 @@ _vue2.default.component('detail-password-field', __webpack_require__(401));
 _vue2.default.component('form-password-field', __webpack_require__(404));
 
 // Textarea Field...
-_vue2.default.component('index-textarea-field', __webpack_require__(30));
+_vue2.default.component('index-textarea-field', __webpack_require__(29));
 _vue2.default.component('detail-textarea-field', __webpack_require__(407));
 _vue2.default.component('form-textarea-field', __webpack_require__(412));
 
 // Code Field...
-_vue2.default.component('index-code-field', __webpack_require__(30));
+_vue2.default.component('index-code-field', __webpack_require__(29));
 _vue2.default.component('detail-code-field', __webpack_require__(415));
 _vue2.default.component('form-code-field', __webpack_require__(543));
 
@@ -22843,7 +22844,7 @@ _vue2.default.component('form-boolean-field', __webpack_require__(691));
 // Select Box Field
 _vue2.default.component('form-select-field', __webpack_require__(694));
 _vue2.default.component('detail-select-field', __webpack_require__(40));
-_vue2.default.component('index-select-field', __webpack_require__(30));
+_vue2.default.component('index-select-field', __webpack_require__(29));
 
 // Upload Field
 _vue2.default.component('index-file-field', __webpack_require__(697));
@@ -22867,7 +22868,7 @@ _vue2.default.component('form-trix-field', __webpack_require__(789));
 // Algolia Place Field
 _vue2.default.component('form-place-field', __webpack_require__(798));
 _vue2.default.component('detail-place-field', __webpack_require__(40));
-_vue2.default.component('index-place-field', __webpack_require__(30));
+_vue2.default.component('index-place-field', __webpack_require__(29));
 
 // Has One Field...
 _vue2.default.component('detail-has-one-field', __webpack_require__(850));
@@ -26789,7 +26790,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _extends2 = __webpack_require__(29);
+var _extends2 = __webpack_require__(28);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -26799,7 +26800,7 @@ var _codemirror2 = _interopRequireDefault(_codemirror);
 
 __webpack_require__(64);
 
-__webpack_require__(32);
+__webpack_require__(31);
 
 __webpack_require__(226);
 
@@ -26815,7 +26816,7 @@ __webpack_require__(230);
 
 __webpack_require__(231);
 
-__webpack_require__(31);
+__webpack_require__(30);
 
 __webpack_require__(232);
 
@@ -29219,7 +29220,7 @@ CodeMirror.defineMIME("text/coffeescript", "coffeescript");
 
 (function(mod) {
   if (true) // CommonJS
-    mod(__webpack_require__(5), __webpack_require__(32), __webpack_require__(41), __webpack_require__(227));
+    mod(__webpack_require__(5), __webpack_require__(31), __webpack_require__(41), __webpack_require__(227));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror", "../javascript/javascript", "../css/css", "../htmlmixed/htmlmixed"], mod);
   else // Plain browser env
@@ -33066,7 +33067,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _extends2 = __webpack_require__(29);
+var _extends2 = __webpack_require__(28);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -33076,7 +33077,7 @@ var _codemirror2 = _interopRequireDefault(_codemirror);
 
 __webpack_require__(64);
 
-__webpack_require__(32);
+__webpack_require__(31);
 
 __webpack_require__(226);
 
@@ -33092,7 +33093,7 @@ __webpack_require__(230);
 
 __webpack_require__(231);
 
-__webpack_require__(31);
+__webpack_require__(30);
 
 __webpack_require__(232);
 
@@ -36868,7 +36869,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _extends2 = __webpack_require__(29);
+var _extends2 = __webpack_require__(28);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -38722,7 +38723,7 @@ var _BelongsToFieldStorage2 = _interopRequireDefault(_BelongsToFieldStorage);
 
 var _laravelNova = __webpack_require__(4);
 
-var _vueClickaway = __webpack_require__(33);
+var _vueClickaway = __webpack_require__(32);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -45415,7 +45416,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _vueClickaway = __webpack_require__(33);
+var _vueClickaway = __webpack_require__(32);
 
 exports.default = {
     mixins: [_vueClickaway.mixin],
@@ -46118,7 +46119,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _extends2 = __webpack_require__(29);
+var _extends2 = __webpack_require__(28);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -46173,6 +46174,7 @@ exports.default = {
         },
         closeSearch: function closeSearch() {
             this.clearSearch();
+            this.clearResults();
             this.$refs.input.blur();
             this.currentlySearching = false;
         },
@@ -46277,8 +46279,6 @@ exports.default = {
         goToCurrentlySelectedResource: function goToCurrentlySelectedResource() {
             var _this3 = this;
 
-            this.closeSearch();
-
             var resource = _.find(this.indexedResults, function (res) {
                 return res.index == _this3.highlightedResultIndex;
             });
@@ -46290,6 +46290,8 @@ exports.default = {
                     resourceId: resource.resourceId
                 }
             });
+
+            this.closeSearch();
         }
     },
 
@@ -48996,7 +48998,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _vueClickaway = __webpack_require__(33);
+var _vueClickaway = __webpack_require__(32);
 
 exports.default = {
     mixins: [_vueClickaway.mixin],
@@ -50755,7 +50757,7 @@ var _popper = __webpack_require__(264);
 
 var _popper2 = _interopRequireDefault(_popper);
 
-var _vueClickaway = __webpack_require__(33);
+var _vueClickaway = __webpack_require__(32);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -51811,7 +51813,7 @@ __webpack_require__(1047)('keys', function () {
 // most Object methods by ES6 should accept primitives
 var $export = __webpack_require__(17);
 var core = __webpack_require__(7);
-var fails = __webpack_require__(36);
+var fails = __webpack_require__(35);
 module.exports = function (KEY, exec) {
   var fn = (core.Object || {})[KEY] || Object[KEY];
   var exp = {};

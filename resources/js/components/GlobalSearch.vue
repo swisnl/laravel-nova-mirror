@@ -107,6 +107,7 @@ export default {
 
         closeSearch() {
             this.clearSearch()
+            this.clearResults()
             this.$refs.input.blur()
             this.currentlySearching = false
         },
@@ -182,8 +183,6 @@ export default {
         },
 
         goToCurrentlySelectedResource() {
-            this.closeSearch()
-
             const resource = _.find(
                 this.indexedResults,
                 res => res.index == this.highlightedResultIndex
@@ -196,6 +195,8 @@ export default {
                     resourceId: resource.resourceId,
                 },
             })
+
+            this.closeSearch()
         },
     },
 
