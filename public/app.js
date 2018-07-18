@@ -46182,7 +46182,7 @@ exports.default = {
 
                                 _context.prev = 1;
                                 _context.next = 4;
-                                return Nova.request().get('/nova/search', {
+                                return Nova.request().get('/nova-api/search', {
                                     params: { search: search }
                                 });
 
