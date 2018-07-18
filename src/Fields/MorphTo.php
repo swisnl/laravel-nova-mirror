@@ -154,9 +154,9 @@ class MorphTo extends Field
         }
 
         if ($value) {
-            $display = $this->displayFor(Nova::resourceForModel($value));
-
-            $this->value = call_user_func($display, $value);
+            $this->value = $this->formatDisplayValue(
+                $value, Nova::resourceForModel($value)
+            );
         }
     }
 
