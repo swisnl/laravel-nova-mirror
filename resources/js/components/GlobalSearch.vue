@@ -100,7 +100,7 @@ export default {
 
             try {
                 // Something like this from the server
-                const { data: results } = await Nova.request().get('/nova/search', {
+                const { data: results } = await Nova.request().get('/nova-api/search', {
                     params: { search },
                 })
 
