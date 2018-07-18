@@ -46145,6 +46145,7 @@ exports.default = {
     },
 
     mounted: function mounted() {
+        // Open search menu if the user types '/'
         document.addEventListener('keydown', this.handleKeydown);
     },
     destroyed: function destroyed() {
@@ -46153,8 +46154,12 @@ exports.default = {
 
 
     methods: {
+        isNotInputElement: function isNotInputElement(event) {
+            var tagName = event.target.tagName;
+            return Boolean(tagName !== 'INPUT' && tagName !== 'TEXTAREA');
+        },
         handleKeydown: function handleKeydown(event) {
-            if (event.target == document.body && event.keyCode == 191) {
+            if (this.isNotInputElement(event) && event.keyCode == 191) {
                 event.preventDefault();
                 event.stopPropagation();
                 this.openSearch();

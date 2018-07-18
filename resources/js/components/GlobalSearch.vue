@@ -68,6 +68,7 @@ export default {
     }),
 
     mounted() {
+        // Open search menu if the user types '/'
         document.addEventListener('keydown', this.handleKeydown)
     },
 
@@ -76,8 +77,13 @@ export default {
     },
 
     methods: {
+        isNotInputElement(event) {
+            const tagName = event.target.tagName
+            return Boolean(tagName !== 'INPUT' && tagName !== 'TEXTAREA')
+        },
+
         handleKeydown(event) {
-            if (event.target == document.body && event.keyCode == 191) {
+            if (this.isNotInputElement(event) && event.keyCode == 191) {
                 event.preventDefault()
                 event.stopPropagation()
                 this.openSearch()
