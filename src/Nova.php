@@ -25,6 +25,13 @@ class Nova
     public static $resources = [];
 
     /**
+     * An index of resource names keyed by the model name.
+     *
+     * @var array
+     */
+    public static $resourcesByModel = [];
+
+    /**
      * The callback that should be used to authenticate Nova users.
      *
      * @var \Closure
@@ -234,6 +241,19 @@ class Nova
     }
 
     /**
+     * Get a new resource instance with the given model instance.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @return \Laravel\Nova\Resources
+     */
+    public static function newResourceFromModel($model)
+    {
+        $resource = static::resourceForModel($model);
+
+        return new $resource($model);
+    }
+
+    /**
      * Get the resource class name for a given model class.
      *
      * @param  object|string  $class
@@ -245,9 +265,15 @@ class Nova
             $class = get_class($class);
         }
 
-        return collect(static::$resources)->first(function ($value) use ($class) {
+        if (isset(static::$resourcesByModel[$class])) {
+            return static::$resourcesByModel[$class];
+        }
+
+        $resource = collect(static::$resources)->first(function ($value) use ($class) {
             return $value::$model === $class;
         });
+
+        return static::$resourcesByModel[$class] = $resource;
     }
 
     /**

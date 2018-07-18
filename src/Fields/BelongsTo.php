@@ -3,6 +3,8 @@
 namespace Laravel\Nova\Fields;
 
 use Closure;
+use Laravel\Nova\Nova;
+use Laravel\Nova\Resource;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\TrashedStatus;
@@ -91,10 +93,6 @@ class BelongsTo extends Field
         $this->resourceClass = $resource;
         $this->resourceName = $resource::uriKey();
         $this->belongsToRelationship = $this->attribute;
-
-        $this->display = function ($resource) {
-            return $resource->id;
-        };
     }
 
     /**
@@ -138,7 +136,7 @@ class BelongsTo extends Field
         if ($value) {
             $this->belongsToId = $value->getKey();
 
-            $this->value = call_user_func($this->display, $value);
+            $this->value = $this->formatDisplayValue($value);
         }
     }
 
@@ -241,9 +239,28 @@ class BelongsTo extends Field
     {
         return array_filter([
             'avatar' => $resource->resolveAvatarUrl($request),
-            'display' => call_user_func($this->display, $resource),
+            'display' => $this->formatDisplayValue($resource),
             'value' => $resource->getKey(),
         ]);
+    }
+
+    /**
+     * Format the associatable display value.
+     *
+     * @param  mixed  $resource
+     * @return string
+     */
+    protected function formatDisplayValue($resource)
+    {
+        if (! $resource instanceof Resource) {
+            $resource = Nova::newResourceFromModel($resource);
+        }
+
+        if ($this->display) {
+            return call_user_func($this->display, $resource);
+        }
+
+        return $resource->display();
     }
 
     /**

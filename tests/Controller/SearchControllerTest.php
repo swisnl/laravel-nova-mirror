@@ -33,14 +33,14 @@ class SearchControllerTest extends IntegrationTest
 
         $this->assertEquals('posts', $original[1]['resourceName']);
         $this->assertEquals('PostResources', $original[1]['resourceTitle']);
-        $this->assertEquals($post->title, $original[1]['label']);
+        $this->assertEquals($post->id, $original[1]['label']);
         $this->assertEquals($user->id, $original[1]['resourceId']);
         $this->assertEquals('http://localhost/nova/resources/posts/'.$post->id, $original[1]['url']);
         $this->assertNull($original[1]['avatar']);
 
         $this->assertEquals('users', $original[2]['resourceName']);
         $this->assertEquals('UserResources', $original[2]['resourceTitle']);
-        $this->assertEquals($user->name, $original[2]['label']);
+        $this->assertEquals($user->id, $original[2]['label']);
         $this->assertEquals($user->id, $original[2]['resourceId']);
         $this->assertEquals('http://localhost/nova/resources/users/'.$user->id, $original[2]['url']);
         $this->assertNull($original[2]['avatar']);
