@@ -2,8 +2,6 @@
 
 namespace Laravel\Nova\Fields;
 
-use Closure;
-use Laravel\Nova\Nova;
 use Laravel\Nova\Resource;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
