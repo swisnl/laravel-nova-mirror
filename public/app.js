@@ -46273,24 +46273,25 @@ exports.default = {
             }
         },
         updateScrollPosition: function updateScrollPosition() {
-            var _this2 = this;
+            var selection = this.$refs.selected;
+            var container = this.$refs.container;
 
             this.$nextTick(function () {
-                if (_this2.$refs.selected) {
-                    if (_this2.$refs.selected[0].offsetTop > _this2.$refs.container.scrollTop + _this2.$refs.container.clientHeight - _this2.$refs.selected[0].clientHeight) {
-                        _this2.$refs.container.scrollTop = _this2.$refs.selected[0].offsetTop + _this2.$refs.selected[0].clientHeight - _this2.$refs.container.clientHeight;
+                if (selection) {
+                    if (selection[0].offsetTop > container.scrollTop + container.clientHeight - selection[0].clientHeight) {
+                        container.scrollTop = selection[0].offsetTop + selection[0].clientHeight - container.clientHeight;
                     }
-                    if (_this2.$refs.selected[0].offsetTop < _this2.$refs.container.scrollTop) {
-                        _this2.$refs.container.scrollTop = _this2.$refs.selected[0].offsetTop;
+                    if (selection[0].offsetTop < container.scrollTop) {
+                        container.scrollTop = selection[0].offsetTop;
                     }
                 }
             });
         },
         goToCurrentlySelectedResource: function goToCurrentlySelectedResource() {
-            var _this3 = this;
+            var _this2 = this;
 
             var resource = _.find(this.indexedResults, function (res) {
-                return res.index == _this3.highlightedResultIndex;
+                return res.index == _this2.highlightedResultIndex;
             });
 
             this.$router.push({
@@ -46326,13 +46327,13 @@ exports.default = {
             }).uniqBy('resourceName').value();
         },
         formattedResults: function formattedResults() {
-            var _this4 = this;
+            var _this3 = this;
 
             return _.map(this.formattedGroups, function (group) {
                 return {
                     resourceName: group.resourceName,
                     resourceTitle: group.resourceTitle,
-                    items: _.filter(_this4.indexedResults, function (item) {
+                    items: _.filter(_this3.indexedResults, function (item) {
                         return item.resourceName == group.resourceName;
                     })
                 };
@@ -46340,6 +46341,10 @@ exports.default = {
         }
     }
 }; //
+//
+//
+//
+//
 //
 //
 //
@@ -46536,7 +46541,7 @@ var render = function() {
                     return _c(
                       "li",
                       {
-                        key: item.label + item.index,
+                        key: item.resourceName + " " + item.index,
                         ref:
                           item.index === _vm.highlightedResultIndex
                             ? "selected"
@@ -46548,7 +46553,7 @@ var render = function() {
                           "router-link",
                           {
                             staticClass:
-                              "flex items-center text-90 hover:bg-20 block py-2 px-3 no-underline font-normal",
+                              "flex items-center hover:bg-20 block py-2 px-3 no-underline font-normal",
                             class: {
                               "bg-white":
                                 _vm.highlightedResultIndex != item.index,
@@ -46577,11 +46582,20 @@ var render = function() {
                                   attrs: { src: item.avatar }
                                 })
                               : _vm._e(),
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(item.label) +
-                                "\n                        "
-                            )
+                            _vm._v(" "),
+                            _c("div", [
+                              _c("p", { staticClass: "text-90" }, [
+                                _vm._v(_vm._s(item.label))
+                              ]),
+                              _vm._v(" "),
+                              item.subLabel
+                                ? _c(
+                                    "p",
+                                    { staticClass: "text-xs mt-1 text-80" },
+                                    [_vm._v(_vm._s(item.subLabel))]
+                                  )
+                                : _vm._e()
+                            ])
                           ]
                         )
                       ],

@@ -37,7 +37,7 @@
                     <ul class="list-reset">
                         <li
                             v-for="item in group.items"
-                            :key="item.label + item.index"
+                            :key="item.resourceName + ' ' + item.index"
                             :ref="item.index === highlightedResultIndex ? 'selected' : null"
                         >
                             <router-link :to="{
@@ -49,14 +49,18 @@
                                 }"
                                 :dusk="item.resourceName + ' ' + item.index"
                                 @click.native="closeSearch"
-                                class="flex items-center text-90 hover:bg-20 block py-2 px-3 no-underline font-normal"
+                                class="flex items-center hover:bg-20 block py-2 px-3 no-underline font-normal"
                                 :class="{
                                     'bg-white': highlightedResultIndex != item.index,
                                     'bg-20': highlightedResultIndex == item.index,
                                 }"
                             >
                                 <img v-if="item.avatar" :src="item.avatar" class="h-8 w-8 rounded-full mr-3" />
-                                {{ item.label }}
+
+                                <div>
+                                    <p class="text-90">{{ item.label }}</p>
+                                    <p v-if="item.subLabel" class="text-xs mt-1 text-80">{{ item.subLabel }}</p>
+                                </div>
                             </router-link>
                         </li>
                     </ul>
@@ -172,21 +176,22 @@ export default {
         },
 
         updateScrollPosition() {
+            const selection = this.$refs.selected
+            const container = this.$refs.container
+
             this.$nextTick(() => {
-                if (this.$refs.selected) {
+                if (selection) {
                     if (
-                        this.$refs.selected[0].offsetTop >
-                        this.$refs.container.scrollTop +
-                            this.$refs.container.clientHeight -
-                            this.$refs.selected[0].clientHeight
+                        selection[0].offsetTop >
+                        container.scrollTop + container.clientHeight - selection[0].clientHeight
                     ) {
-                        this.$refs.container.scrollTop =
-                            this.$refs.selected[0].offsetTop +
-                            this.$refs.selected[0].clientHeight -
-                            this.$refs.container.clientHeight
+                        container.scrollTop =
+                            selection[0].offsetTop +
+                            selection[0].clientHeight -
+                            container.clientHeight
                     }
-                    if (this.$refs.selected[0].offsetTop < this.$refs.container.scrollTop) {
-                        this.$refs.container.scrollTop = this.$refs.selected[0].offsetTop
+                    if (selection[0].offsetTop < container.scrollTop) {
+                        container.scrollTop = selection[0].offsetTop
                     }
                 }
             })
