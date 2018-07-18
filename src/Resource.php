@@ -227,6 +227,16 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     }
 
     /**
+     * Get the search display subtext for the resource.
+     *
+     * @return string
+     */
+    public function displaySubtext()
+    {
+        return null;
+    }
+
+    /**
      * Filter and authorize the given values.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
