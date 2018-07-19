@@ -16124,7 +16124,7 @@ exports.default = {
 
                                 this.actionEventsRefresher = setInterval(function () {
                                     _this.getResources();
-                                }, 1 * 1000);
+                                }, 15 * 1000);
                             }
 
                         case 18:
