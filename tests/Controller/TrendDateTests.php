@@ -63,6 +63,8 @@ trait TrendDateTests
 
         $response->assertStatus(200);
 
+        $this->assertCount(6, $response->original['value']->trend);
+
         $this->assertEquals(1, $response->original['value']->trend[Chronos::now()->setTimezone('America/Chicago')->subMonths(5)->format('F Y')]);
         $this->assertEquals(0, $response->original['value']->trend[Chronos::now()->setTimezone('America/Chicago')->subMonths(4)->format('F Y')]);
         $this->assertEquals(0, $response->original['value']->trend[Chronos::now()->setTimezone('America/Chicago')->subMonths(3)->format('F Y')]);
@@ -148,6 +150,8 @@ trait TrendDateTests
         unset($_SERVER['nova.postCountUnit']);
 
         $response->assertStatus(200);
+
+        $this->assertCount(6, $response->original['value']->trend);
 
         $startingDate = Chronos::now()->setTimezone('America/Chicago')->subWeeks(5)->addDays(3)->startOfWeek();
         $endingDate = Chronos::now()->setTimezone('America/Chicago')->subWeeks(5)->addDays(3)->endOfWeek();
