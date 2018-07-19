@@ -904,9 +904,8 @@ CodeMirror.defineMode("xml", function(editorConf, config_) {
         stream.next();
       }
       return style;
-    }
+    };
   }
-
   function doctype(depth) {
     return function(stream, state) {
       var ch;
@@ -21072,6 +21071,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
 
 exports.default = {
     mixins: [_laravelNova.Deletable, _laravelNova.Filterable, _laravelNova.Paginatable, _laravelNova.PerPageable, _laravelNova.InteractsWithResourceInformation, _laravelNova.InteractsWithQueryString],
@@ -21769,27 +21773,58 @@ var render = function() {
                                         { staticClass: "flex items-center" },
                                         [
                                           _c(
-                                            "checkbox",
+                                            "label",
                                             {
-                                              attrs: {
-                                                checked: _vm.selectAllChecked
-                                              },
+                                              staticClass: "flex items-center",
                                               on: {
-                                                input: function() {
-                                                  return _vm.toggleSelectAll()
+                                                input: _vm.toggleSelectAll,
+                                                keydown: function($event) {
+                                                  if (
+                                                    !("button" in $event) &&
+                                                    _vm._k(
+                                                      $event.keyCode,
+                                                      "space",
+                                                      32,
+                                                      $event.key,
+                                                      " "
+                                                    ) &&
+                                                    _vm._k(
+                                                      $event.keyCode,
+                                                      "enter",
+                                                      13,
+                                                      $event.key,
+                                                      "Enter"
+                                                    )
+                                                  ) {
+                                                    return null
+                                                  }
+                                                  $event.preventDefault()
+                                                  return _vm.toggleSelectAll(
+                                                    $event
+                                                  )
                                                 }
                                               }
                                             },
                                             [
+                                              _c("checkbox", {
+                                                attrs: {
+                                                  checked: _vm.selectAllChecked
+                                                }
+                                              }),
+                                              _vm._v(" "),
                                               _c(
                                                 "span",
-                                                { staticClass: "ml-3" },
-                                                [_vm._v("Select All")]
+                                                { staticClass: "ml-2" },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                            Select All\n                                        "
+                                                  )
+                                                ]
                                               )
-                                            ]
+                                            ],
+                                            1
                                           )
-                                        ],
-                                        1
+                                        ]
                                       ),
                                       _vm._v(" "),
                                       _vm.allMatchingResourceCount > 0

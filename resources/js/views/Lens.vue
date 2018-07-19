@@ -32,12 +32,17 @@
                             <div class="p-4">
                                 <ul class="list-reset">
                                     <li class="flex items-center">
-                                        <checkbox
-                                            @input="() => toggleSelectAll()"
-                                            :checked="selectAllChecked"
+                                        <label
+                                            class="flex items-center"
+                                            @input="toggleSelectAll"
+                                            @keydown.prevent.space.enter="toggleSelectAll"
                                         >
-                                            <span class="ml-3">Select All</span>
-                                        </checkbox>
+                                            <checkbox :checked="selectAllChecked" />
+
+                                            <span class="ml-2">
+                                                Select All
+                                            </span>
+                                        </label>
                                     </li>
 
                                     <li class="flex items-center" v-if="allMatchingResourceCount > 0">
@@ -719,7 +724,11 @@ export default {
         shouldShowCheckBoxes() {
             return (
                 Boolean(this.hasResources && !this.viaHasOne) &&
-                Boolean(this.actionsAreAvailable || this.authorizedToDeleteAnyResources || this.canShowDeleteMenu)
+                Boolean(
+                    this.actionsAreAvailable ||
+                        this.authorizedToDeleteAnyResources ||
+                        this.canShowDeleteMenu
+                )
             )
         },
 
