@@ -21,7 +21,7 @@
 
         <loading-card :loading="loading" :class="{ 'overflow-hidden border border-50': !shouldShowToolbar }">
             <div v-if="shouldShowToolbar" class="py-3 flex items-center border-b border-50">
-                <div class="px-3" v-if="resources.length > 0 && actionsAreAvailable && ! viaHasOne">
+                <div class="px-3" v-if="shouldShowCheckBoxes">
                     <!-- Select All -->
                     <dropdown width="250" active-class="" class="h-9 flex items-center" dusk="select-all-dropdown">
                         <div slot="default" class="flex items-center">
@@ -31,7 +31,7 @@
                         <div slot="menu">
                             <div class="p-4">
                                 <ul class="list-reset">
-                                    <li class="flex items-center mb-6">
+                                    <li class="flex items-center">
                                         <checkbox
                                             @input="() => toggleSelectAll()"
                                             :checked="selectAllChecked"
@@ -39,7 +39,8 @@
                                             <span class="ml-3">Select All</span>
                                         </checkbox>
                                     </li>
-                                    <li class="flex items-center">
+
+                                    <li class="flex items-center" v-if="allMatchingResourceCount > 0">
                                         <checkbox
                                             @input="() => toggleSelectAllMatching()"
                                             :checked="selectAllMatchingChecked"
@@ -248,6 +249,7 @@ export default {
         softDeletes: false,
         selectedResources: [],
         selectAllMatchingResources: false,
+        allMatchingResourceCount: 0,
 
         deleteModalOpen: false,
 
@@ -356,7 +358,7 @@ export default {
 
                     this.loading = false
 
-                    this.getAllMatchingResourceCount()
+                    // this.getAllMatchingResourceCount()
                 })
             })
         },
@@ -445,6 +447,8 @@ export default {
                     params: this.resourceRequestQueryString,
                 })
                 .then(response => {
+                    console.log('count')
+                    console.log(response.data.count)
                     this.allMatchingResourceCount = response.data.count
                 })
         },
@@ -490,17 +494,6 @@ export default {
          */
         trashedChanged() {
             this.updateQueryString({ [this.trashedParameter]: this.trashed })
-        },
-    },
-
-    asyncComputed: {
-        allMatchingResourceCount: {
-            get() {
-                return new Promise((resolve, reject) => {
-                    return resolve(this.getAllMatchingResourceCount())
-                })
-            },
-            default: 0,
         },
     },
 
@@ -726,7 +719,7 @@ export default {
         shouldShowCheckBoxes() {
             return (
                 Boolean(this.hasResources && !this.viaHasOne) &&
-                Boolean(this.actionsAreAvailable || this.canShowDeleteMenu)
+                Boolean(this.actionsAreAvailable || this.authorizedToDeleteAnyResources || this.canShowDeleteMenu)
             )
         },
 
