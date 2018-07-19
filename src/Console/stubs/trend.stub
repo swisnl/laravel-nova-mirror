@@ -15,7 +15,7 @@ class DummyClass extends Trend
      */
     public function calculate(Request $request)
     {
-        return $this->countByMonths($request, Model::class);
+        return $this->countByDays($request, Model::class);
     }
 
     /**
@@ -28,10 +28,7 @@ class DummyClass extends Trend
         return [
             30 => '30 Days',
             60 => '60 Days',
-            365 => '365 Days',
-            'MTD' => 'Month To Date',
-            'QTD' => 'Quarter To Date',
-            'YTD' => 'Year To Date',
+            90 => '90 Days',
         ];
     }
 
