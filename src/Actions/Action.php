@@ -154,11 +154,25 @@ class Action implements JsonSerializable
             throw MissingActionHandlerException::make($this, $method);
         }
 
-        return $request->chunks(static::$chunkCount, function ($models) use ($request, $method) {
+        $wasExecuted = false;
+
+        $result = $request->chunks(static::$chunkCount, function ($models) use ($request, $method, &$wasExecuted) {
+            $models = $models->filterForExecution($request);
+
+            if (count($models) > 0) {
+                $wasExecuted = true;
+            }
+
             return DispatchAction::forModels(
-                $request, $this, $method, $models->filterForExecution($request)
+                $request, $this, $method, $models
             );
         });
+
+        if (! $wasExecuted) {
+            return static::danger(__("Sorry! You are not authorized to perform this action."));
+        }
+
+        return $result;
     }
 
     /**
