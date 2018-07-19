@@ -310,6 +310,7 @@ export default {
     },
 
     data: () => ({
+        actionEventsRefresher: null,
         initialLoading: true,
         loading: true,
 
@@ -389,7 +390,7 @@ export default {
                 this.getResources()
             })
 
-            setInterval(() => {
+            this.actionEventsRefresher = setInterval(() => {
                 this.getResources()
             }, 15 * 1000)
         }
@@ -399,6 +400,10 @@ export default {
      * Unbind the keydown even listener when the component is destroyed
      */
     destroyed() {
+        if (this.actionEventsRefresher) {
+            clearInterval(this.actionEventsRefresher);
+        }
+
         document.removeEventListener('keydown', this.handleKeydown)
     },
 
