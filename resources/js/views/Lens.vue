@@ -46,16 +46,21 @@
                                     </li>
 
                                     <li class="flex items-center" v-if="allMatchingResourceCount > 0">
-                                        <checkbox
-                                            @input="() => toggleSelectAllMatching()"
-                                            :checked="selectAllMatchingChecked"
-                                            dusk="select-all-matching-button"
+                                        <label
+                                            class="flex items-center"
+                                            @input="toggleSelectAllMatching"
+                                            @keydown.prevent.space.enter="toggleSelectAllMatching"
                                         >
-                                            <span class="ml-3">
+                                            <checkbox
+                                                dusk="select-all-matching-button"
+                                                :checked="selectAllMatchingChecked"
+                                            />
+
+                                            <span class="ml-2">
                                                 Select All Matching
                                                 <span>({{ allMatchingResourceCount }})</span>
                                             </span>
-                                        </checkbox>
+                                        </label>
                                     </li>
                                 </ul>
                             </div>

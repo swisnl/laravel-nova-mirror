@@ -16001,6 +16001,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
 
 exports.default = {
     mixins: [_laravelNova.Deletable, _laravelNova.Filterable, _laravelNova.HasCards, _laravelNova.Paginatable, _laravelNova.PerPageable, _laravelNova.InteractsWithResourceInformation, _laravelNova.InteractsWithQueryString],
@@ -21076,6 +21079,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
 
 exports.default = {
     mixins: [_laravelNova.Deletable, _laravelNova.Filterable, _laravelNova.Paginatable, _laravelNova.PerPageable, _laravelNova.InteractsWithResourceInformation, _laravelNova.InteractsWithQueryString],
@@ -21835,24 +21843,53 @@ var render = function() {
                                             },
                                             [
                                               _c(
-                                                "checkbox",
+                                                "label",
                                                 {
-                                                  attrs: {
-                                                    checked:
-                                                      _vm.selectAllMatchingChecked,
-                                                    dusk:
-                                                      "select-all-matching-button"
-                                                  },
+                                                  staticClass:
+                                                    "flex items-center",
                                                   on: {
-                                                    input: function() {
-                                                      return _vm.toggleSelectAllMatching()
+                                                    input:
+                                                      _vm.toggleSelectAllMatching,
+                                                    keydown: function($event) {
+                                                      if (
+                                                        !("button" in $event) &&
+                                                        _vm._k(
+                                                          $event.keyCode,
+                                                          "space",
+                                                          32,
+                                                          $event.key,
+                                                          " "
+                                                        ) &&
+                                                        _vm._k(
+                                                          $event.keyCode,
+                                                          "enter",
+                                                          13,
+                                                          $event.key,
+                                                          "Enter"
+                                                        )
+                                                      ) {
+                                                        return null
+                                                      }
+                                                      $event.preventDefault()
+                                                      return _vm.toggleSelectAllMatching(
+                                                        $event
+                                                      )
                                                     }
                                                   }
                                                 },
                                                 [
+                                                  _c("checkbox", {
+                                                    attrs: {
+                                                      dusk:
+                                                        "select-all-matching-button",
+                                                      checked:
+                                                        _vm.selectAllMatchingChecked
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
                                                   _c(
                                                     "span",
-                                                    { staticClass: "ml-3" },
+                                                    { staticClass: "ml-2" },
                                                     [
                                                       _vm._v(
                                                         "\n                                            Select All Matching\n                                            "
@@ -21868,10 +21905,10 @@ var render = function() {
                                                       ])
                                                     ]
                                                   )
-                                                ]
+                                                ],
+                                                1
                                               )
-                                            ],
-                                            1
+                                            ]
                                           )
                                         : _vm._e()
                                     ])

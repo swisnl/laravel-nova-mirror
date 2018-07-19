@@ -69,7 +69,10 @@
                                             @input="toggleSelectAllMatching"
                                             @keydown.prevent.space.enter="toggleSelectAllMatching"
                                         >
-                                            <checkbox dusk="select-all-matching-button" :checked="selectAllMatchingChecked" />
+                                            <checkbox
+                                                dusk="select-all-matching-button"
+                                                :checked="selectAllMatchingChecked"
+                                            />
 
                                             <span class="ml-2">
                                                 Select All Matching
@@ -884,8 +887,12 @@ export default {
          */
         shouldShowCheckBoxes() {
             return (
-                Boolean(this.hasResources && ! this.viaHasOne) &&
-                Boolean(this.actionsAreAvailable || this.authorizedToDeleteAnyResources || this.canShowDeleteMenu)
+                Boolean(this.hasResources && !this.viaHasOne) &&
+                Boolean(
+                    this.actionsAreAvailable ||
+                        this.authorizedToDeleteAnyResources ||
+                        this.canShowDeleteMenu
+                )
             )
         },
 
