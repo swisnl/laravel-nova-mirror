@@ -23462,7 +23462,7 @@ var render = function() {
             _vm._v(" "),
             _c("p", { staticClass: "text-error-message mb-8 leading-normal" }, [
               _vm._v(
-                "Well, this is awkward, but the page you were trying to view does not exist."
+                "We're lost in space. The page your were trying to view does not exist."
               )
             ]),
             _vm._v(" "),
