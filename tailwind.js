@@ -188,6 +188,7 @@ module.exports = {
 
     minWidth: {
         '0': '0',
+        '8': '2rem',
         '24': '6rem',
         site: '80rem',
         full: '100%',
@@ -201,6 +202,7 @@ module.exports = {
     },
 
     maxWidth: {
+        '8': '2rem',
         login: '25rem',
         xs: '20rem',
         sm: '30rem',

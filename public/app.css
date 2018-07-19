@@ -3090,6 +3090,10 @@ table {
   max-height: 5.625rem;
 }
 
+.max-w-8 {
+  max-width: 2rem;
+}
+
 .max-w-login {
   max-width: 25rem;
 }
@@ -3156,6 +3160,10 @@ table {
 
 .min-w-0 {
   min-width: 0;
+}
+
+.min-w-8 {
+  min-width: 2rem;
 }
 
 .min-w-24 {

@@ -23525,12 +23525,16 @@ instance.interceptors.response.use(function (response) {
     var status = error.response.status;
 
 
-    if (status >= 500) {
-        Nova.$emit('error', error.response.data.message);
-    }
-
-    if (status === 403) {
-        _router2.default.push({ name: '403' });
+    switch (status) {
+        case 500:
+            Nova.$emit('error', error.response.data.message);
+            break;
+        case 403:
+            _router2.default.push({ name: '403' });
+            break;
+        case 404:
+            _router2.default.push({ name: '404' });
+            break;
     }
 
     return _promise2.default.reject(error);
@@ -35995,7 +35999,7 @@ Object.defineProperty(exports, "__esModule", {
 //
 
 exports.default = {
-    props: ['resourceName', 'field']
+    props: ['viaResource', 'viaResourceId', 'resourceName', 'field']
 };
 
 /***/ }),
@@ -36009,7 +36013,7 @@ var render = function() {
   return _c("p", [
     _vm.field.thumbnailUrl
       ? _c("img", {
-          staticClass: "rounded-full w-8 h-8",
+          staticClass: "rounded-full w-8 h-auto min-w-8",
           attrs: { src: _vm.field.thumbnailUrl }
         })
       : _c("span", [_vm._v("—")])
