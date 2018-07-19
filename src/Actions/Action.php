@@ -169,7 +169,7 @@ class Action implements JsonSerializable
         });
 
         if (! $wasExecuted) {
-            return static::danger(__("Sorry! You are not authorized to perform this action."));
+            return static::danger(__('Sorry! You are not authorized to perform this action.'));
         }
 
         return $result;
