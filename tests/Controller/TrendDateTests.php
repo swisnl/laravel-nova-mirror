@@ -273,6 +273,8 @@ trait TrendDateTests
 
         $response->assertStatus(200);
 
+        $this->assertCount(6, $response->original['value']->trend);
+
         $this->assertEquals(1, $response->original['value']->trend[Chronos::now()->setTimezone('America/Chicago')->subHours(4)->format('F j - G:00')]);
         $this->assertEquals(0, $response->original['value']->trend[Chronos::now()->setTimezone('America/Chicago')->subHours(3)->format('F j - G:00')]);
         $this->assertEquals(0, $response->original['value']->trend[Chronos::now()->setTimezone('America/Chicago')->subHours(2)->format('F j - G:00')]);
@@ -342,6 +344,8 @@ trait TrendDateTests
         unset($_SERVER['nova.postCountUnit']);
 
         $response->assertStatus(200);
+
+        $this->assertCount(6, $response->original['value']->trend);
 
         $this->assertEquals(1, $response->original['value']->trend[Chronos::now()->setTimezone('America/Chicago')->subMinutes(4)->format('F j - G:i')]);
         $this->assertEquals(0, $response->original['value']->trend[Chronos::now()->setTimezone('America/Chicago')->subMinutes(3)->format('F j - G:i')]);
