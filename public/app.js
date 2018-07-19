@@ -17717,6 +17717,11 @@ exports.default = {
                     return;
                 }
 
+                if (error.response.status === 404 && _this.initialLoading) {
+                    _this.$router.push({ name: '404' });
+                    return;
+                }
+
                 if (error.response.status === 403) {
                     _this.$router.push({ name: '403' });
                     return;
@@ -18984,6 +18989,7 @@ exports.default = {
                                 return Nova.request().get('/nova-api/' + this.resourceName + '/' + this.resourceId + '/update-fields').catch(function (error) {
                                     if (error.response.status == 404) {
                                         _this.$router.push({ name: '404' });
+                                        return;
                                     }
                                 });
 
@@ -20378,6 +20384,8 @@ exports.default = {
          */
         getPivotFields: function () {
             var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
+                var _this2 = this;
+
                 var _ref4, data;
 
                 return _regenerator2.default.wrap(function _callee2$(_context2) {
@@ -20387,7 +20395,12 @@ exports.default = {
                                 this.fields = [];
 
                                 _context2.next = 3;
-                                return Nova.request().get('/nova-api/' + this.resourceName + '/' + this.resourceId + '/update-pivot-fields/' + this.relatedResourceName + '/' + this.relatedResourceId, { params: { viaRelationship: this.viaRelationship } });
+                                return Nova.request().get('/nova-api/' + this.resourceName + '/' + this.resourceId + '/update-pivot-fields/' + this.relatedResourceName + '/' + this.relatedResourceId, { params: { viaRelationship: this.viaRelationship } }).catch(function (error) {
+                                    if (error.response.status == 404) {
+                                        _this2.$router.push({ name: '404' });
+                                        return;
+                                    }
+                                });
 
                             case 3:
                                 _ref4 = _context2.sent;
@@ -20476,10 +20489,10 @@ exports.default = {
          * Determine if the related resource is soft deleting.
          */
         determineIfSoftDeletes: function determineIfSoftDeletes() {
-            var _this2 = this;
+            var _this3 = this;
 
             Nova.request().get('/nova-api/' + this.relatedResourceName + '/soft-deletes').then(function (response) {
-                _this2.softDeletes = response.data.softDeletes;
+                _this3.softDeletes = response.data.softDeletes;
             });
         },
 
@@ -20626,10 +20639,10 @@ exports.default = {
          * Select the initial selected resource
          */
         selectInitialResource: function selectInitialResource() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.selectedResource = _lodash2.default.find(this.availableResources, function (r) {
-                return r.value == _this3.selectedResourceId;
+                return r.value == _this4.selectedResourceId;
             });
         },
 
@@ -20655,23 +20668,23 @@ exports.default = {
          * Get the form data for the resource attachment update.
          */
         updateAttachmentFormData: function updateAttachmentFormData() {
-            var _this4 = this;
+            var _this5 = this;
 
             return _lodash2.default.tap(new FormData(), function (formData) {
-                _lodash2.default.each(_this4.fields, function (field) {
+                _lodash2.default.each(_this5.fields, function (field) {
                     field.fill(formData);
                 });
 
-                formData.append('viaRelationship', _this4.viaRelationship);
+                formData.append('viaRelationship', _this5.viaRelationship);
 
-                if (!_this4.selectedResource) {
-                    formData.append(_this4.relatedResourceName, '');
+                if (!_this5.selectedResource) {
+                    formData.append(_this5.relatedResourceName, '');
                 } else {
-                    formData.append(_this4.relatedResourceName, _this4.selectedResource.value);
+                    formData.append(_this5.relatedResourceName, _this5.selectedResource.value);
                 }
 
-                formData.append(_this4.relatedResourceName + '_trashed', _this4.withTrashed);
-                formData.append('_retrieved_at', _this4.lastRetrievedAt);
+                formData.append(_this5.relatedResourceName + '_trashed', _this5.withTrashed);
+                formData.append('_retrieved_at', _this5.lastRetrievedAt);
             });
         },
 
@@ -20680,10 +20693,10 @@ exports.default = {
          * Get the label for the related resource.
          */
         relatedResourceLabel: function relatedResourceLabel() {
-            var _this5 = this;
+            var _this6 = this;
 
             return _lodash2.default.find(Nova.config.resources, function (resource) {
-                return resource.uriKey == _this5.relatedResourceName;
+                return resource.uriKey == _this6.relatedResourceName;
             }).singularLabel;
         },
 

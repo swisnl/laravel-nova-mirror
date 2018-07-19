@@ -168,7 +168,12 @@ export default {
                     this.relatedResourceName
                 }/${this.relatedResourceId}`,
                 { params: { viaRelationship: this.viaRelationship } }
-            )
+            ).catch(error => {
+                if (error.response.status == 404) {
+                    this.$router.push({ name: '404' })
+                    return
+                }
+            })
 
             this.fields = data
 

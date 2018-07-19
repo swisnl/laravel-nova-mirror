@@ -220,6 +220,11 @@ export default {
                         return
                     }
 
+                    if (error.response.status === 404 && this.initialLoading) {
+                        this.$router.push({ name: '404' })
+                        return
+                    }
+
                     if (error.response.status === 403) {
                         this.$router.push({ name: '403' })
                         return

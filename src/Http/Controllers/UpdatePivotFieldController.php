@@ -17,6 +17,8 @@ class UpdatePivotFieldController extends Controller
     {
         $model = $request->findModelOrFail();
 
+        $request->findParentModelOrFail();
+
         $model->setRelation(
             $model->{$request->viaRelationship}()->getPivotAccessor(),
             $model->{$request->viaRelationship}()->withoutGlobalScopes()->find($request->relatedResourceId)->pivot
