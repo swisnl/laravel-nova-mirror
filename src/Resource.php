@@ -175,28 +175,6 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     }
 
     /**
-     * Get a fresh instance of the model represented by the resource.
-     *
-     * @return mixed
-     */
-    public static function newModel()
-    {
-        $model = static::$model;
-
-        return new $model;
-    }
-
-    /**
-     * Get the URI key for the resource.
-     *
-     * @return string
-     */
-    public static function uriKey()
-    {
-        return Str::plural(Str::snake(class_basename(get_called_class()), '-'));
-    }
-
-    /**
      * Get the displayble label of the resource.
      *
      * @return string
@@ -234,6 +212,28 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     public function displaySubtext()
     {
         return null;
+    }
+
+    /**
+     * Get a fresh instance of the model represented by the resource.
+     *
+     * @return mixed
+     */
+    public static function newModel()
+    {
+        $model = static::$model;
+
+        return new $model;
+    }
+
+    /**
+     * Get the URI key for the resource.
+     *
+     * @return string
+     */
+    public static function uriKey()
+    {
+        return Str::plural(Str::snake(class_basename(get_called_class()), '-'));
     }
 
     /**
