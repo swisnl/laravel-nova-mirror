@@ -16031,6 +16031,7 @@ exports.default = {
 
     data: function data() {
         return {
+            actionEventsRefresher: null,
             initialLoading: true,
             loading: true,
 
@@ -16121,9 +16122,9 @@ exports.default = {
                                     _this.getResources();
                                 });
 
-                                setInterval(function () {
+                                this.actionEventsRefresher = setInterval(function () {
                                     _this.getResources();
-                                }, 15 * 1000);
+                                }, 1 * 1000);
                             }
 
                         case 18:
@@ -16146,6 +16147,10 @@ exports.default = {
      * Unbind the keydown even listener when the component is destroyed
      */
     destroyed: function destroyed() {
+        if (this.actionEventsRefresher) {
+            clearInterval(this.actionEventsRefresher);
+        }
+
         document.removeEventListener('keydown', this.handleKeydown);
     },
 
