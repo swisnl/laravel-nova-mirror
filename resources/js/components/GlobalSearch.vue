@@ -58,8 +58,8 @@
                                 <img v-if="item.avatar" :src="item.avatar" class="h-8 w-8 rounded-full mr-3" />
 
                                 <div>
-                                    <p class="text-90">{{ item.label }}</p>
-                                    <p v-if="item.subLabel" class="text-xs mt-1 text-80">{{ item.subLabel }}</p>
+                                    <p class="text-90">{{ item.title }}</p>
+                                    <p v-if="item.subTitle" class="text-xs mt-1 text-80">{{ item.subTitle }}</p>
                                 </div>
                             </router-link>
                         </li>

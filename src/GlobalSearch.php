@@ -50,8 +50,8 @@ class GlobalSearch
                 $formatted[] = [
                     'resourceName' => $resource::uriKey(),
                     'resourceTitle' => $resource::label(),
-                    'label' => $instance->title(),
-                    'subLabel' => $instance->subtitle(),
+                    'title' => $instance->title(),
+                    'subTitle' => $instance->subtitle(),
                     'resourceId' => $model->getKey(),
                     'url' => url(Nova::path().'/resources/'.$resource::uriKey().'/'.$model->getKey()),
                     'avatar' => $instance->resolveAvatarUrl($this->request),

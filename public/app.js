@@ -46571,14 +46571,14 @@ var render = function() {
                             _vm._v(" "),
                             _c("div", [
                               _c("p", { staticClass: "text-90" }, [
-                                _vm._v(_vm._s(item.label))
+                                _vm._v(_vm._s(item.title))
                               ]),
                               _vm._v(" "),
-                              item.subLabel
+                              item.subTitle
                                 ? _c(
                                     "p",
                                     { staticClass: "text-xs mt-1 text-80" },
-                                    [_vm._v(_vm._s(item.subLabel))]
+                                    [_vm._v(_vm._s(item.subTitle))]
                                   )
                                 : _vm._e()
                             ])
