@@ -20,7 +20,7 @@ class DummyClass extends Resource
      *
      * @var string
      */
-    public static $display = 'id';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
