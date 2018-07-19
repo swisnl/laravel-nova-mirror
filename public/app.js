@@ -50349,7 +50349,7 @@ var render = function() {
           _vm._v(" "),
           _vm.resource.authorizedToRestore &&
           _vm.resource.softDeleted &&
-          !_vm.viaResource
+          !_vm.viaManyToMany
             ? _c(
                 "button",
                 {

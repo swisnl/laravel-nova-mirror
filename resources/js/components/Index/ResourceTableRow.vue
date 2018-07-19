@@ -97,7 +97,7 @@
             <button
                 :dusk="`${resource['id'].value}-restore-button`"
                 class="appearance-none cursor-pointer text-70 hover:text-primary mr-3"
-                v-if="resource.authorizedToRestore && resource.softDeleted && ! viaResource"
+                v-if="resource.authorizedToRestore && resource.softDeleted && ! viaManyToMany"
                 @click.prevent="openRestoreModal"
                 title="Restore"
             >
