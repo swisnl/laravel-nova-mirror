@@ -24,7 +24,7 @@ trait PerformsQueries
                                       $withTrashed = TrashedStatus::DEFAULT)
     {
         return static::applyOrderings(static::applyFilters(
-            $request, static::initializeQuery($query, $search, $withTrashed), $filters
+            $request, static::initializeQuery($request, $query, $search, $withTrashed), $filters
         ), $orderings)->tap(function ($query) use ($request) {
             static::indexQuery($request, $query->with(static::$with));
         });
@@ -33,19 +33,20 @@ trait PerformsQueries
     /**
      * Initialize the given index query.
      *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  string  $search
      * @param  string  $withTrashed
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected static function initializeQuery($query, $search, $withTrashed)
+    protected static function initializeQuery(NovaRequest $request, $query, $search, $withTrashed)
     {
         if (empty(trim($search))) {
             return static::applySoftDeleteConstraint($query, $withTrashed);
         }
 
         return static::usesScout() && ! is_numeric($search)
-                ? static::initializeQueryUsingScout($query, $search, $withTrashed)
+                ? static::initializeQueryUsingScout($request, $query, $search, $withTrashed)
                 : static::applySearch(static::applySoftDeleteConstraint($query, $withTrashed), $search);
     }
 
@@ -74,16 +75,19 @@ trait PerformsQueries
     /**
      * Initialize the given index query using Laravel Scout.
      *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  string  $search
      * @param  string  $withTrashed
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected static function initializeQueryUsingScout($query, $search, $withTrashed)
+    protected static function initializeQueryUsingScout(NovaRequest $request, $query, $search, $withTrashed)
     {
-        $keys = static::applySoftDeleteConstraint(
+        $keys = tap(static::applySoftDeleteConstraint(
             static::newModel()->search($search), $withTrashed
-        )->take(200)->keys();
+        ), function ($scoutBuilder) use ($request) {
+            static::scoutQuery($request, $scoutBuilder);
+        })->take(200)->keys();
 
         return static::applySoftDeleteConstraint(
             $query->whereIn(static::newModel()->getQualifiedKeyName(), $keys->all()), $withTrashed
@@ -149,6 +153,18 @@ trait PerformsQueries
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public static function indexQuery(NovaRequest $request, $query)
+    {
+        return $query;
+    }
+
+    /**
+     * Build a Scout search query for the given resource.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Laravel\Scout\Builder  $query
+     * @return \Laravel\Scout\Builder
+     */
+    public static function scoutQuery(NovaRequest $request, $query)
     {
         return $query;
     }

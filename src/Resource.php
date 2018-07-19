@@ -205,7 +205,7 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     }
 
     /**
-     * Get the search display subtext for the resource.
+     * Get the search result subtitle for the resource.
      *
      * @return string
      */
