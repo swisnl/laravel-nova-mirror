@@ -48605,7 +48605,7 @@ var render = function() {
           _c(
             "router-link",
             {
-              staticClass: "text-base text-90 my-2 no-underline",
+              staticClass: "dim block text-base text-90 no-underline",
               attrs: {
                 to: {
                   name: "lens",

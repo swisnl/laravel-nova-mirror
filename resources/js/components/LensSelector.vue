@@ -4,7 +4,7 @@
         <div v-for="lens in lenses">
             <router-link
                 :to="{name: 'lens', params: {resourceName: resourceName, lens: lens.uriKey }}"
-                class="text-base text-90 my-2 no-underline">
+                class="dim block text-base text-90 no-underline">
                 {{ lens.name }}
             </router-link>
         </div>
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    export default {
-        props: ['resourceName', 'lenses']
-    }
+export default {
+    props: ['resourceName', 'lenses'],
+}
 </script>
