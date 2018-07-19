@@ -41686,7 +41686,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.ct-series-a .ct-area, .ct-series-a .ct-slice-donut-solid, .ct-series-a .ct-slice-pie {fill: var(--primary);\n}\n.ct-series-b .ct-area, .ct-series-b .ct-slice-donut-solid, .ct-series-b .ct-slice-pie {fill: #124682;\n}\n.ct-series-c .ct-area, .ct-series-c .ct-slice-donut-solid, .ct-series-c .ct-slice-pie {fill: #8f80d2;\n}\n.ct-series-d .ct-area, .ct-series-d .ct-slice-donut-solid, .ct-series-d .ct-slice-pie {fill: #21b978;\n}\n.ct-series-e .ct-area, .ct-series-e .ct-slice-donut-solid, .ct-series-e .ct-slice-pie {fill: #afe9f1;\n}\n.max-h-90 {max-height: 90px;\n}\n", ""]);
+exports.push([module.i, "\n.ct-series-a .ct-area,\n.ct-series-a .ct-slice-donut-solid,\n.ct-series-a .ct-slice-pie {\n    fill: #f5573b;\n}\n.ct-series-b .ct-area,\n.ct-series-b .ct-slice-donut-solid,\n.ct-series-b .ct-slice-pie {\n    fill: #f99037;\n}\n.ct-series-c .ct-area,\n.ct-series-c .ct-slice-donut-solid,\n.ct-series-c .ct-slice-pie {\n    fill: #f2cb22;\n}\n.ct-series-d .ct-area,\n.ct-series-d .ct-slice-donut-solid,\n.ct-series-d .ct-slice-pie {\n    fill: #8fc15d;\n}\n.ct-series-e .ct-area,\n.ct-series-e .ct-slice-donut-solid,\n.ct-series-e .ct-slice-pie {\n    fill: #098f56;\n}\n.ct-series-f .ct-area,\n.ct-series-f .ct-slice-donut-solid,\n.ct-series-f .ct-slice-pie {\n    fill: #47c1bf;\n}\n.ct-series-g .ct-area,\n.ct-series-g .ct-slice-donut-solid,\n.ct-series-g .ct-slice-pie {\n    fill: #1693eb;\n}\n.ct-series-h .ct-area,\n.ct-series-h .ct-slice-donut-solid,\n.ct-series-h .ct-slice-pie {\n    fill: #6474d7;\n}\n.ct-series-i .ct-area,\n.ct-series-i .ct-slice-donut-solid,\n.ct-series-i .ct-slice-pie {\n    fill: #9c6ade;\n}\n.ct-series-j .ct-area,\n.ct-series-j .ct-slice-donut-solid,\n.ct-series-j .ct-slice-pie {\n    fill: #e471de;\n}\n", ""]);
 
 // exports
 
@@ -41737,7 +41737,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 
 var colorForIndex = function colorForIndex(index) {
-    return ['var(--primary)', '#124682', '#8f80d2', '#5fc392', '#afe9f1'][index];
+    return ['#F5573B', '#F99037', '#F2CB22', '#8FC15D', '#098F56', '#47C1BF', '#1693EB', '#6474D7', '#9C6ADE', '#E471DE'][index];
 };
 
 exports.default = {
@@ -41838,30 +41838,40 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "overflow-hidden overflow-y-scroll max-h-90" }, [
-        _c(
-          "ul",
-          { staticClass: "list-reset" },
-          _vm._l(_vm.formattedItems, function(item) {
-            return _c("li", { staticClass: "text-xs text-80 leading-normal" }, [
-              _c("span", {
-                staticClass: "inline-block rounded-full w-2 h-2 mr-2",
-                style: {
-                  backgroundColor: item.color
-                }
-              }),
-              _vm._v(
-                _vm._s(item.label) +
-                  " (" +
-                  _vm._s(item.value) +
-                  " - " +
-                  _vm._s(((item.value * 100) / _vm.formattedTotal).toFixed(2)) +
-                  "%)\n            "
+      _c(
+        "div",
+        { staticClass: "overflow-hidden overflow-y-scroll max-h-90px" },
+        [
+          _c(
+            "ul",
+            { staticClass: "list-reset" },
+            _vm._l(_vm.formattedItems, function(item) {
+              return _c(
+                "li",
+                { staticClass: "text-xs text-80 leading-normal" },
+                [
+                  _c("span", {
+                    staticClass: "inline-block rounded-full w-2 h-2 mr-2",
+                    style: {
+                      backgroundColor: item.color
+                    }
+                  }),
+                  _vm._v(
+                    _vm._s(item.label) +
+                      " (" +
+                      _vm._s(item.value) +
+                      " - " +
+                      _vm._s(
+                        ((item.value * 100) / _vm.formattedTotal).toFixed(2)
+                      ) +
+                      "%)\n            "
+                  )
+                ]
               )
-            ])
-          })
-        )
-      ]),
+            })
+          )
+        ]
+      ),
       _vm._v(" "),
       _c("div", {
         ref: "chart",

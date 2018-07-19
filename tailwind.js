@@ -217,6 +217,7 @@ module.exports = {
         full: '100%',
         screen: '100vh',
         search: '24.5rem',
+        '90px': '5.625rem',
     },
 
     padding: {

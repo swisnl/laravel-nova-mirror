@@ -3056,6 +3056,10 @@ table {
   max-height: 24.5rem;
 }
 
+.max-h-90px {
+  max-height: 5.625rem;
+}
+
 .max-w-login {
   max-width: 25rem;
 }
