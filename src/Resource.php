@@ -42,7 +42,7 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
      *
      * @var string
      */
-    public static $display = 'id';
+    public static $title = 'id';
 
     /**
      * The relationships that should be eager loaded when performing an index query.
@@ -199,9 +199,9 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
      *
      * @return string
      */
-    public function display()
+    public function title()
     {
-        return $this->{static::$display};
+        return $this->{static::$title};
     }
 
     /**
@@ -209,7 +209,7 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
      *
      * @return string
      */
-    public function displaySubtext()
+    public function subtitle()
     {
         return null;
     }

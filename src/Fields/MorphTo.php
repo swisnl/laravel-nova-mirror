@@ -342,7 +342,7 @@ class MorphTo extends Field
             return call_user_func($display, $resource);
         }
 
-        return $resource->display();
+        return $resource->title();
     }
 
     /**
