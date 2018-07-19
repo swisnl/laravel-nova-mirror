@@ -83,6 +83,7 @@ module.exports = {
         normal: 1.5,
         loose: 2,
         '9': '2.25rem',
+        '12': '3rem',
         '36': '2.25rem',
     },
 
@@ -158,6 +159,7 @@ module.exports = {
         '5/6': '83.33333%',
         full: '100%',
         screen: '100vw',
+        error: '65rem',
     },
 
     height: {

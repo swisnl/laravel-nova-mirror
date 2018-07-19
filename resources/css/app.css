@@ -242,7 +242,7 @@
 }
 
 .btn-lg {
-  @apply .h-12;
+  @apply .h-12 leading-12 text-lg;
 }
 
 .btn-link {
@@ -286,6 +286,10 @@
 
 .btn-icon:hover {
   @apply .opacity-75;
+}
+
+.no-text-shadow {
+  text-shadow: none;
 }
 
 /* Inline Links
@@ -691,6 +695,23 @@
 .spin {
   animation: spin 2s infinite linear;
   transform-origin: 50% 50%;
+}
+
+/* Error Pages
+---------------------------------------------------------------------------- */
+.text-error-title {
+  font-size: 9rem;
+}
+.text-error-subtitle {
+  font-size: 2.25rem;
+}
+.text-error-message {
+  font-size: 1.25rem;
+  color: #56677b;
+}
+
+.illustration {
+  margin-right: 7.5rem;
 }
 
 /* Tailwind Utilities
