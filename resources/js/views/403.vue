@@ -12,7 +12,6 @@
                     Go Home
                 </router-link>
             </div>
-
         </div>
     </div>
 </template>
