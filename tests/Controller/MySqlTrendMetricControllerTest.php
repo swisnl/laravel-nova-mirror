@@ -2,8 +2,6 @@
 
 namespace Laravel\Nova\Tests\Controller;
 
-use Cake\Chronos\Chronos;
-use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\MySqlIntegrationTest;
 
 class MySqlTrendMetricControllerTest extends MySqlIntegrationTest
