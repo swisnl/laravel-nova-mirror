@@ -23530,16 +23530,12 @@ instance.interceptors.response.use(function (response) {
     var status = error.response.status;
 
 
-    switch (status) {
-        case 500:
-            Nova.$emit('error', error.response.data.message);
-            break;
-        case 403:
-            _router2.default.push({ name: '403' });
-            break;
-        case 404:
-            _router2.default.push({ name: '404' });
-            break;
+    if (status >= 500) {
+        Nova.$emit('error', error.response.data.message);
+    }
+
+    if (status === 403) {
+        _router2.default.push({ name: '403' });
     }
 
     return _promise2.default.reject(error);
