@@ -904,8 +904,9 @@ CodeMirror.defineMode("xml", function(editorConf, config_) {
         stream.next();
       }
       return style;
-    };
+    }
   }
+
   function doctype(depth) {
     return function(stream, state) {
       var ch;
@@ -18967,6 +18968,8 @@ exports.default = {
          */
         getFields: function () {
             var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+                var _this = this;
+
                 var _ref2, fields;
 
                 return _regenerator2.default.wrap(function _callee$(_context) {
@@ -18978,7 +18981,11 @@ exports.default = {
                                 this.fields = [];
 
                                 _context.next = 4;
-                                return Nova.request().get('/nova-api/' + this.resourceName + '/' + this.resourceId + '/update-fields');
+                                return Nova.request().get('/nova-api/' + this.resourceName + '/' + this.resourceId + '/update-fields').catch(function (error) {
+                                    if (error.response.status == 404) {
+                                        _this.$router.push({ name: '404' });
+                                    }
+                                });
 
                             case 4:
                                 _ref2 = _context.sent;
@@ -19138,15 +19145,15 @@ exports.default = {
          * Create the form data for creating the resource.
          */
         updateResourceFormData: function updateResourceFormData() {
-            var _this = this;
+            var _this2 = this;
 
             return _.tap(new FormData(), function (formData) {
-                _(_this.fields).each(function (field) {
+                _(_this2.fields).each(function (field) {
                     field.fill(formData);
                 });
 
                 formData.append('_method', 'PUT');
-                formData.append('_retrieved_at', _this.lastRetrievedAt);
+                formData.append('_retrieved_at', _this2.lastRetrievedAt);
             });
         },
         singularName: function singularName() {
