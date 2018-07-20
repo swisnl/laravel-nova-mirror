@@ -15,10 +15,7 @@ class DummyClass extends Partition
      */
     public function calculate(Request $request)
     {
-        return $this->result([
-            'First Group' => 100,
-            'Second Group' => 200,
-        ]);
+        return $this->count($request, Model::class, 'groupByColumn');
     }
 
     /**

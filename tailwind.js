@@ -83,6 +83,7 @@ module.exports = {
         normal: 1.5,
         loose: 2,
         '9': '2.25rem',
+        '12': '3rem',
         '36': '2.25rem',
     },
 
@@ -158,6 +159,7 @@ module.exports = {
         '5/6': '83.33333%',
         full: '100%',
         screen: '100vw',
+        error: '65rem',
     },
 
     height: {
@@ -186,6 +188,7 @@ module.exports = {
 
     minWidth: {
         '0': '0',
+        '8': '2rem',
         '24': '6rem',
         site: '80rem',
         full: '100%',
@@ -199,6 +202,7 @@ module.exports = {
     },
 
     maxWidth: {
+        '8': '2rem',
         login: '25rem',
         xs: '20rem',
         sm: '30rem',
@@ -217,6 +221,7 @@ module.exports = {
         full: '100%',
         screen: '100vh',
         search: '24.5rem',
+        '90px': '5.625rem',
     },
 
     padding: {

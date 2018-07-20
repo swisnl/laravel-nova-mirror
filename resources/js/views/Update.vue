@@ -74,7 +74,12 @@ export default {
 
             const { data: fields } = await Nova.request().get(
                 `/nova-api/${this.resourceName}/${this.resourceId}/update-fields`
-            )
+            ).catch(error => {
+                if (error.response.status == 404) {
+                    this.$router.push({ name: '404' })
+                    return
+                }
+            })
 
             this.fields = fields
 
