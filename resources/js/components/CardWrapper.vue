@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import cardSizes from '@/util/sizes'
+import { CardSizes } from 'laravel-nova'
 
 export default {
     props: {
@@ -43,11 +43,11 @@ export default {
          * The class given to the card wrappers based on its width
          */
         widthClass() {
-            return this.size == 'large'
-                ? 'w-full'
-                : cardSizes.indexOf(this.card.width) !== -1
-                    ? `w-${this.card.width}`
-                    : 'w-1/3'
+            // return 'w-full'
+            // If we're passing in 'large' as the value we want to force the
+            // cards to be given the `w-full` class, otherwise we're letting
+            // the card decide for itself based on its configuration
+            return this.size == 'large' ? 'w-full' : calculateCardWidth(this.card)
         },
 
         /**
@@ -57,5 +57,11 @@ export default {
             return this.size !== 'large' ? 'card-panel' : ''
         },
     },
+}
+
+function calculateCardWidth(card) {
+    // If the card's width is found in the accepted sizes return that class,
+    // or return the default 1/3 class
+    return CardSizes.indexOf(card.width) !== -1 ? `w-${card.width}` : 'w-1/3'
 }
 </script>

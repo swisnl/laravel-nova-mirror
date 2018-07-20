@@ -30,6 +30,7 @@ class PostCountTrend extends Trend
     public function ranges()
     {
         return $_SERVER['nova.postCountRanges'] ?? [
+            3 => 'Last 3 Months',
             6 => 'Last 6 Months',
             12 => 'Last 12 Months',
         ];

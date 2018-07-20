@@ -475,16 +475,18 @@ abstract class Trend extends RangedMetric
     {
         $query = $model instanceof Builder ? $model : (new $model)->newQuery();
 
+        $timezone = $request->timezone;
+
         $expression = (string) TrendDateExpressionFactory::make(
             $query, $dateColumn = $dateColumn ?? $query->getModel()->getCreatedAtColumn(),
-            $unit, $request->timezone
+            $unit, $timezone
         );
 
         $possibleDateResults = $this->getAllPossibleDateResults(
             $startingDate = $this->getAggregateStartingDate($request, $unit),
             $endingDate = Chronos::now(),
             $unit,
-            $request->timezone,
+            $timezone,
             $request->twelveHourTime === 'true'
         );
 
@@ -497,12 +499,18 @@ abstract class Trend extends RangedMetric
                 ->orderBy('date_result')
                 ->get();
 
+        $results = array_merge($possibleDateResults, $results->mapWithKeys(function ($result) use ($request, $unit) {
+            return [$this->formatAggregateResultDate(
+                $result->date_result, $unit, $request->twelveHourTime === 'true'
+            ) => (int) number_format($result->aggregate, 0)];
+        })->all());
+
+        if (count($results) > $request->range) {
+            array_shift($results);
+        }
+
         return $this->result()->trend(
-            array_merge($possibleDateResults, $results->mapWithKeys(function ($result) use ($request, $unit) {
-                return [$this->formatAggregateResultDate(
-                    $result->date_result, $unit, $request->twelveHourTime === 'true'
-                ) => (int) number_format($result->aggregate, 0)];
-            })->all())
+            $results
         );
     }
 
