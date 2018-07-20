@@ -1,10 +1,20 @@
 <template>
     <loading-view :loading="initialLoading" :dusk="resourceName + '-index-component'">
-        <cards
-            v-if="shouldShowResourcePanels"
-            :cards="cards"
-            :resource-name="resourceName"
-        />
+        <div v-if="shouldShowCards">
+            <cards
+                v-if="smallCards.length > 0"
+                :cards="smallCards"
+                class="mb-3"
+                :resource-name="resourceName"
+            />
+
+            <cards
+                v-if="largeCards.length > 0"
+                :cards="largeCards"
+                size="large"
+                :resource-name="resourceName"
+            />
+        </div>
 
         <heading v-if="resourceResponse" class="mb-3">{{ resourceResponse.label }}</heading>
 
@@ -658,7 +668,8 @@ export default {
     },
 
     computed: {
-        shouldShowResourcePanels() {
+        shouldShowCards() {
+            // Don't show cards if this resource is not the main one being shown (e.g. a relation)
             return this.cards.length > 0 && this.resourceName == this.$route.params.resourceName
         },
 
