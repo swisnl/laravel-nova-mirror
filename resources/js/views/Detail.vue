@@ -1,13 +1,22 @@
 <template>
     <loading-view :loading="initialLoading">
+        <div v-if="shouldShowCards">
+            <cards
+                v-if="smallCards.length > 0"
+                :cards="smallCards"
+                class="mb-3"
+                :resource-name="resourceName"
+                :only-on-detail="true"
+            />
 
-        <cards
-            v-if="cards.length > 0"
-            :only-on-detail="true"
-            :cards="cards"
-            :resource-name="resourceName"
-            :resource-id="resourceId"
-        />
+            <cards
+                v-if="largeCards.length > 0"
+                :cards="largeCards"
+                size="large"
+                :resource-name="resourceName"
+                :only-on-detail="true"
+            />
+        </div>
 
         <!-- Resource Detail -->
         <div :dusk="resourceName + '-detail-component'" class="mb-8" :key="panel.id" v-for="panel in availablePanels">
