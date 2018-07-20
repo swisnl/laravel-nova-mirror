@@ -904,9 +904,8 @@ CodeMirror.defineMode("xml", function(editorConf, config_) {
         stream.next();
       }
       return style;
-    }
+    };
   }
-
   function doctype(depth) {
     return function(stream, state) {
       var ch;
@@ -49896,12 +49895,30 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
 
 exports.default = {
     props: {
         loading: {
             type: Boolean,
             default: true
+        },
+
+        mode: {
+            type: String,
+            default: 'light',
+            validator: function validator(value) {
+                return ['light', 'dark'].indexOf(value) !== -1;
+            }
+        }
+    },
+
+    computed: {
+        modeClass: function modeClass() {
+            return this.mode == 'light' ? 'bg-white' : 'bg-90';
         }
     }
 };
@@ -49923,7 +49940,8 @@ var render = function() {
             "div",
             {
               staticClass:
-                "rounded-lg flex items-center justify-center absolute pin bg-white z-50"
+                "rounded-lg flex items-center justify-center absolute pin z-50",
+              class: _vm.modeClass
             },
             [_c("loader", { staticClass: "text-60" })],
             1
