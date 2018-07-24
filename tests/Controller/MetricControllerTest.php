@@ -176,9 +176,13 @@ class MetricControllerTest extends IntegrationTest
 
     public function test_can_retrieve_qtd_count_calculations()
     {
-        factory(User::class, 2)->create();
+        factory(User::class, 3)->create();
 
         $user = User::find(2);
+        $user->created_at = $this->getFirstDayOfPreviousQuarter();
+        $user->save();
+
+        $user = User::find(3);
         $user->created_at = $this->getFirstDayOfPreviousQuarter();
         $user->save();
 
@@ -187,7 +191,7 @@ class MetricControllerTest extends IntegrationTest
 
         $response->assertStatus(200);
         $this->assertEquals(1, $response->original['value']->value);
-        $this->assertEquals(1, $response->original['value']->previous);
+        $this->assertEquals(2, $response->original['value']->previous);
     }
 
     public function test_can_retrieve_ytd_count_calculations()
