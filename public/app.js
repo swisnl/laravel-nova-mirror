@@ -47687,7 +47687,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "w-full max-w-xs" }, [
+  return _c("div", { staticClass: "relative z-50 w-full max-w-xs" }, [
     _vm.currentlySearching
       ? _c("div", {
           staticClass: "fixed pin bg-80 z-0 opacity-25",

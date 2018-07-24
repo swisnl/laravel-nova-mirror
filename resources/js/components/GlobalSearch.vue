@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full max-w-xs">
+    <div class="relative z-50 w-full max-w-xs">
         <div
             v-if="currentlySearching"
             @mousedown="closeSearch"
