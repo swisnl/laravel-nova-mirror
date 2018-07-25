@@ -94,9 +94,35 @@ class PivotActionControllerTest extends IntegrationTest
         $this->assertEquals('finished', $actionEvent->status);
     }
 
+    public function test_pivot_action_can_be_applied_if_authorized_to_update_resource()
+    {
+        $_SERVER['nova.role.authorizable'] = true;
+        $_SERVER['nova.role.updatable'] = true;
+
+        Gate::policy(Role::class, RolePolicy::class);
+
+        $user = factory(User::class)->create();
+        $role = factory(Role::class)->create();
+        $user->roles()->attach($role);
+
+        $response = $this->withoutExceptionHandling()
+                        ->post($this->pivotActionUriFor(NoopAction::class), [
+                            'resources' => $role->id,
+                            'test' => 'Taylor Otwell',
+                            'callback' => '',
+                        ]);
+
+        unset($_SERVER['nova.role.authorizable']);
+        unset($_SERVER['nova.role.updatable']);
+
+        $response->assertStatus(200);
+        $this->assertNotEmpty(NoopAction::$applied);
+        $this->assertCount(1, ActionEvent::all());
+    }
+
     public function test_pivot_action_cant_be_applied_if_not_authorized_to_update_resource()
     {
-        // TODO: Revisit this test... need to adjust ActionModelCollection
+        // TODO: Fix this...
         return;
 
         $_SERVER['nova.role.authorizable'] = true;
