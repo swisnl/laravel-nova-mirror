@@ -34959,7 +34959,8 @@ var render = function() {
   return _c("p", [
     _vm.field.thumbnailUrl
       ? _c("img", {
-          staticClass: "rounded-full w-8 h-auto min-w-8",
+          staticClass: "rounded-full w-8 h-8",
+          staticStyle: { "object-fit": "cover" },
           attrs: { src: _vm.field.thumbnailUrl }
         })
       : _c("span", [_vm._v("—")])
