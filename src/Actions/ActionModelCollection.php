@@ -15,6 +15,27 @@ class ActionModelCollection extends EloquentCollection
      */
     public function filterForExecution(ActionRequest $request)
     {
+        $action = $request->action();
+
+        if (! $request->isPivotAction()) {
+            $models = $this->filterByResourceAuthorization($request);
+        } else {
+            $models = $this;
+        }
+
+        return static::make($models->filter(function ($model) use ($request, $action) {
+            return $action->authorizedToRun($request, $model);
+        }));
+    }
+
+    /**
+     * Remove models the user does not have permission to execute the action against.
+     *
+     * @param  \Laravel\Nova\Http\Requests\ActionRequest  $request
+     * @return \Illuminate\Support\Collection
+     */
+    protected function filterByResourceAuthorization(ActionRequest $request)
+    {
         $models = $this->mapInto($request->resource())
                        ->filter->authorizedToUpdate($request)->map->resource;
 
@@ -25,8 +46,6 @@ class ActionModelCollection extends EloquentCollection
                            ->filter->authorizedToDelete($request)->map->resource;
         }
 
-        return static::make($models->filter(function ($model) use ($request, $action) {
-            return $action->authorizedToRun($request, $model);
-        }));
+        return $models;
     }
 }
