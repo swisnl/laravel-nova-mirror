@@ -47678,6 +47678,13 @@ exports.default = {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 /* 958 */
@@ -47696,84 +47703,104 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _c("div", { staticClass: "relative" }, [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.searchTerm,
-            expression: "searchTerm"
-          }
+      _c(
+        "div",
+        { staticClass: "relative flex items-center" },
+        [
+          _c("icon", {
+            staticClass: "absolute ml-3 text-70",
+            attrs: { type: "search" }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.searchTerm,
+                expression: "searchTerm"
+              }
+            ],
+            ref: "input",
+            staticClass:
+              "pl-search form-control form-input form-input-bordered w-full",
+            attrs: {
+              dusk: "global-search",
+              type: "search",
+              placeholder: "Search"
+            },
+            domProps: { value: _vm.searchTerm },
+            on: {
+              input: [
+                function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.searchTerm = $event.target.value
+                },
+                function($event) {
+                  $event.stopPropagation()
+                  return _vm.search($event)
+                }
+              ],
+              keydown: [
+                function($event) {
+                  $event.stopPropagation()
+                },
+                function($event) {
+                  if (
+                    !("button" in $event) &&
+                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                  ) {
+                    return null
+                  }
+                  $event.stopPropagation()
+                  return _vm.goToCurrentlySelectedResource($event)
+                },
+                function($event) {
+                  if (
+                    !("button" in $event) &&
+                    _vm._k($event.keyCode, "esc", 27, $event.key, "Escape")
+                  ) {
+                    return null
+                  }
+                  $event.stopPropagation()
+                  return _vm.closeSearch($event)
+                },
+                function($event) {
+                  if (
+                    !("button" in $event) &&
+                    _vm._k($event.keyCode, "down", 40, $event.key, [
+                      "Down",
+                      "ArrowDown"
+                    ])
+                  ) {
+                    return null
+                  }
+                  $event.preventDefault()
+                  _vm.move(1)
+                },
+                function($event) {
+                  if (
+                    !("button" in $event) &&
+                    _vm._k($event.keyCode, "up", 38, $event.key, [
+                      "Up",
+                      "ArrowUp"
+                    ])
+                  ) {
+                    return null
+                  }
+                  $event.preventDefault()
+                  _vm.move(-1)
+                }
+              ],
+              blur: _vm.closeSearch,
+              focus: _vm.openSearch
+            }
+          })
         ],
-        ref: "input",
-        staticClass: "form-control form-input form-input-bordered w-full",
-        attrs: { dusk: "global-search", type: "search", placeholder: "Search" },
-        domProps: { value: _vm.searchTerm },
-        on: {
-          input: [
-            function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.searchTerm = $event.target.value
-            },
-            function($event) {
-              $event.stopPropagation()
-              return _vm.search($event)
-            }
-          ],
-          keydown: [
-            function($event) {
-              $event.stopPropagation()
-            },
-            function($event) {
-              if (
-                !("button" in $event) &&
-                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-              ) {
-                return null
-              }
-              $event.stopPropagation()
-              return _vm.goToCurrentlySelectedResource($event)
-            },
-            function($event) {
-              if (
-                !("button" in $event) &&
-                _vm._k($event.keyCode, "esc", 27, $event.key, "Escape")
-              ) {
-                return null
-              }
-              $event.stopPropagation()
-              return _vm.closeSearch($event)
-            },
-            function($event) {
-              if (
-                !("button" in $event) &&
-                _vm._k($event.keyCode, "down", 40, $event.key, [
-                  "Down",
-                  "ArrowDown"
-                ])
-              ) {
-                return null
-              }
-              $event.preventDefault()
-              _vm.move(1)
-            },
-            function($event) {
-              if (
-                !("button" in $event) &&
-                _vm._k($event.keyCode, "up", 38, $event.key, ["Up", "ArrowUp"])
-              ) {
-                return null
-              }
-              $event.preventDefault()
-              _vm.move(-1)
-            }
-          ],
-          blur: _vm.closeSearch,
-          focus: _vm.openSearch
-        }
-      }),
+        1
+      ),
       _vm._v(" "),
       _vm.shouldShowResults
         ? _c(

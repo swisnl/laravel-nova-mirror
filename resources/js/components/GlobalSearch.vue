@@ -7,22 +7,29 @@
         />
 
         <div class="relative">
-            <input
-                dusk="global-search"
-                ref="input"
-                @input.stop="search"
-                @keydown.stop=""
-                @keydown.enter.stop="goToCurrentlySelectedResource"
-                @keydown.esc.stop="closeSearch"
-                @blur="closeSearch"
-                @focus="openSearch"
-                @keydown.down.prevent="move(1)"
-                @keydown.up.prevent="move(-1)"
-                v-model="searchTerm"
-                type="search"
-                placeholder="Search"
-                class="form-control form-input form-input-bordered w-full"
-            />
+
+            <!-- Search -->
+            <div class="relative flex items-center">
+                <icon type="search" class="absolute ml-3 text-70" />
+
+                <input
+                    dusk="global-search"
+                    ref="input"
+                    @input.stop="search"
+                    @keydown.stop=""
+                    @keydown.enter.stop="goToCurrentlySelectedResource"
+                    @keydown.esc.stop="closeSearch"
+                    @blur="closeSearch"
+                    @focus="openSearch"
+                    @keydown.down.prevent="move(1)"
+                    @keydown.up.prevent="move(-1)"
+                    v-model="searchTerm"
+                    type="search"
+                    placeholder="Search"
+                    class="pl-search form-control form-input form-input-bordered w-full"
+                />
+            </div>
+
 
             <div
                 v-if="shouldShowResults"
