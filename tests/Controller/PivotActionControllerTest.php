@@ -122,7 +122,9 @@ class PivotActionControllerTest extends IntegrationTest
 
     public function test_pivot_action_cant_be_applied_if_not_authorized_to_update_resource()
     {
-        // TODO: Fix this...
+        // TODO: Currently, pivot actions do not check the "update" ability
+        // of either side of the relationship. Authorization is only
+        // controlled by the canSee / canRun methods of the action
         return;
 
         $_SERVER['nova.role.authorizable'] = true;
