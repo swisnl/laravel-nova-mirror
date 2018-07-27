@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('/nova/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('/nova-assets/app.css') }}">
 
     <!-- Tool Styles -->
     @foreach(Nova::availableStyles(request()) as $name => $path)
@@ -89,9 +89,9 @@
     </script>
 
     <!-- Scripts -->
-    <script src="/nova/manifest.js"></script>
-    <script src="/nova/vendor.js"></script>
-    <script src="/nova/app.js"></script>
+    <script src="/nova-assets/manifest.js"></script>
+    <script src="/nova-assets/vendor.js"></script>
+    <script src="/nova-assets/app.js"></script>
 
     <!-- Build Nova Instance -->
     <script>
