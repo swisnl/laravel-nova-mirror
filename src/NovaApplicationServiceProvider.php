@@ -20,7 +20,7 @@ class NovaApplicationServiceProvider extends ServiceProvider
         Nova::serving(function (ServingNova $event) {
             $this->authorization();
 
-            Nova::resourcesIn(app_path('Nova'));
+            $this->resources();
             Nova::cards($this->cards());
             Nova::tools($this->tools());
         });
@@ -55,6 +55,16 @@ class NovaApplicationServiceProvider extends ServiceProvider
             return app()->environment('local') ||
                    Gate::check('viewNova', [$request->user()]);
         });
+    }
+
+    /**
+     * Register the application's Nova resources.
+     *
+     * @return void
+     */
+    protected function resources()
+    {
+        Nova::resourcesIn(app_path('Nova'));
     }
 
     /**
