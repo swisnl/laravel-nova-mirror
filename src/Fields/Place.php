@@ -31,6 +31,16 @@ class Place extends Text
     }
 
     /**
+     * Instruct the field to only display cities in its results.
+     *
+     * @return $this
+     */
+    public function onlyCities()
+    {
+        return $this->type('city');
+    }
+
+    /**
      * Set the place type.
      *
      * @param  string  $type
