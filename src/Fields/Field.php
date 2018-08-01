@@ -164,6 +164,19 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     }
 
     /**
+     * Define the callback that should be used to resolve the field's value.
+     *
+     * @param  callable  $resolveCallback
+     * @return $this
+     */
+    public function resolveUsing(callable $resolveCallback)
+    {
+        $this->resolveCallback = $resolveCallback;
+
+        return $this;
+    }
+
+    /**
      * Hydrate the given attribute on the model based on the incoming request.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
