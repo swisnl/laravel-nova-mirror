@@ -115,8 +115,8 @@ class File extends Field implements DeletableContract
             return null;
         })->preview(function () {
             return null;
-        })->download(function ($request, $resource) {
-            $name = $this->originalNameColumn ? $resource->{$this->originalNameColumn} : null;
+        })->download(function ($request, $model) {
+            $name = $this->originalNameColumn ? $model->{$this->originalNameColumn} : null;
 
             return Storage::disk($this->disk)->download($this->value, $name);
         })->delete(function () {
@@ -382,7 +382,9 @@ class File extends Field implements DeletableContract
      */
     public function toDownloadResponse(NovaRequest $request, $resource)
     {
-        return call_user_func($this->downloadResponseCallback, $request, $resource);
+        return call_user_func(
+            $this->downloadResponseCallback, $request, $resource->resource
+        );
     }
 
     /**
