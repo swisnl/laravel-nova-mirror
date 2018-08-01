@@ -5,10 +5,13 @@ namespace Laravel\Nova\Console;
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Laravel\Nova\Console\Concerns\AcceptsNameAndVendor;
 use Symfony\Component\Process\Process;
 
 class ToolCommand extends Command
 {
+    use AcceptsNameAndVendor;
+
     /**
      * The name and signature of the console command.
      *
@@ -30,6 +33,10 @@ class ToolCommand extends Command
      */
     public function handle()
     {
+        if (! $this->hasValidNameArgument()) {
+            return;
+        }
+
         (new Filesystem)->copyDirectory(
             __DIR__.'/tool-stubs',
             $this->toolPath()
