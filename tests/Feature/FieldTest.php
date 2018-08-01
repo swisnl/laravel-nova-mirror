@@ -22,6 +22,19 @@ class FieldTest extends IntegrationTest
         $this->assertEquals('belongs-to-field', (new BelongsTo('User', 'user', UserResource::class))->component());
     }
 
+    public function test_fields_can_have_custom_display_callback()
+    {
+        $field = Text::make('Name')->displayUsing(function ($value) {
+            return strtoupper($value);
+        });
+
+        $field->resolve((object) ['name' => 'Taylor'], 'name');
+        $this->assertEquals('Taylor', $field->value);
+
+        $field->resolveForDisplay((object) ['name' => 'Taylor'], 'name');
+        $this->assertEquals('TAYLOR', $field->value);
+    }
+
     public function test_fields_can_have_custom_resolver_callback()
     {
         $field = Text::make('Name')->resolveUsing(function ($value) {

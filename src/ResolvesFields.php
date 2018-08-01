@@ -32,6 +32,10 @@ trait ResolvesFields
             return $field instanceof ListableField ||
                    ! $field->showOnIndex ||
                    ! $field->authorize($request);
+        })->each(function ($field) use ($request) {
+            if ($field instanceof Resolvable) {
+                $field->resolveForDisplay($this->resource);
+            }
         });
     }
 
@@ -47,6 +51,10 @@ trait ResolvesFields
             return ! $field->showOnDetail || ! $field->authorize($request);
         })->when(in_array(Actionable::class, class_uses_recursive(static::newModel())), function ($fields) {
             return $fields->push(MorphMany::make('Actions', 'actions', ActionResource::class));
+        })->each(function ($field) use ($request) {
+            if ($field instanceof Resolvable) {
+                $field->resolveForDisplay($this->resource);
+            }
         });
     }
 

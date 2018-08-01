@@ -32,6 +32,13 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     public $value;
 
     /**
+     * The callback to be used to resolve the field's display value.
+     *
+     * @var \Closure
+     */
+    public $displayCallback;
+
+    /**
      * The callback to be used to resolve the field's value.
      *
      * @var \Closure
@@ -114,6 +121,29 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     }
 
     /**
+     * Resolve the field's value for display.
+     *
+     * @param  mixed  $resource
+     * @param  string|null  $attribute
+     * @return void
+     */
+    public function resolveForDisplay($resource, $attribute = null)
+    {
+        $attribute = $attribute ?? $this->attribute;
+
+        if (! $this->displayCallback) {
+            $this->resolve($resource, $attribute);
+        }
+
+        if (is_callable($this->displayCallback) &&
+            data_get($resource, $attribute, '___missing') !== '___missing') {
+            $this->value = call_user_func(
+                $this->displayCallback, data_get($resource, $attribute)
+            );
+        }
+    }
+
+    /**
      * Resolve the field's value.
      *
      * @param  mixed  $resource
@@ -161,6 +191,19 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
         $this->value = $attribute();
 
         $this->attribute = 'ComputedField';
+    }
+
+    /**
+     * Define the callback that should be used to resolve the field's value.
+     *
+     * @param  callable  $displayCallback
+     * @return $this
+     */
+    public function displayUsing(callable $displayCallback)
+    {
+        $this->displayCallback = $displayCallback;
+
+        return $this;
     }
 
     /**
