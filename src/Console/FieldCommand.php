@@ -5,8 +5,8 @@ namespace Laravel\Nova\Console;
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Laravel\Nova\Console\Concerns\AcceptsNameAndVendor;
 use Symfony\Component\Process\Process;
+use Laravel\Nova\Console\Concerns\AcceptsNameAndVendor;
 
 class FieldCommand extends Command
 {
