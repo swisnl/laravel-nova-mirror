@@ -115,8 +115,10 @@ class File extends Field implements DeletableContract
             return null;
         })->preview(function () {
             return null;
-        })->download(function () {
-            return Storage::disk($this->disk)->download($this->value);
+        })->download(function ($request, $resource) {
+            $name = $this->originalNameColumn ? $resource->{$this->originalNameColumn} : null;
+
+            return Storage::disk($this->disk)->download($this->value, $name);
         })->delete(function () {
             if ($this->value) {
                 Storage::disk($this->disk)->delete($this->value);
@@ -375,11 +377,12 @@ class File extends Field implements DeletableContract
      * Create an HTTP response to download the underlying field.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Laravel\Nova\Resource  $resource
      * @return \Illuminate\Http\Response
      */
-    public function toDownloadResponse(NovaRequest $request)
+    public function toDownloadResponse(NovaRequest $request, $resource)
     {
-        return call_user_func($this->downloadResponseCallback, $request);
+        return call_user_func($this->downloadResponseCallback, $request, $resource);
     }
 
     /**

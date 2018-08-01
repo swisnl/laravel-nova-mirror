@@ -24,6 +24,6 @@ class FieldDownloadController extends Controller
                     ->whereInstanceOf(File::class)
                     ->findFieldByAttribute($request->field, function () {
                         abort(404);
-                    })->toDownloadResponse($request);
+                    })->toDownloadResponse($request, $resource);
     }
 }
