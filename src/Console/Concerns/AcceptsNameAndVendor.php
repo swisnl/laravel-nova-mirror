@@ -11,7 +11,7 @@ trait AcceptsNameAndVendor
         if (! str_contains('/', $name)) {
             $this->line('');
 
-            $this->error("The name argument expects a full namespace.");
+            $this->error("The name argument expects the vendor and the name. Here's an example: `vendor/name`");
 
             return false;
         }
