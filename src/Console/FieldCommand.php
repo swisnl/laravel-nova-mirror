@@ -6,9 +6,12 @@ use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
+use Laravel\Nova\Console\Concerns\AcceptsNameAndVendor;
 
 class FieldCommand extends Command
 {
+    use AcceptsNameAndVendor;
+
     /**
      * The name and signature of the console command.
      *
@@ -30,6 +33,10 @@ class FieldCommand extends Command
      */
     public function handle()
     {
+        if (! $this->hasValidNameArgument()) {
+            return;
+        }
+
         (new Filesystem)->copyDirectory(
             __DIR__.'/field-stubs',
             $this->fieldPath()
