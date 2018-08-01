@@ -99,7 +99,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     {
         $this->name = $name;
         $this->resolveCallback = $resolveCallback;
-        $this->attribute = $attribute ?? Str::snake(Str::lower($name));
+        $this->attribute = $attribute ?? str_replace(' ', '_', Str::lower($name));
     }
 
     /**
