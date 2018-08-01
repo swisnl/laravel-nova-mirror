@@ -57,7 +57,7 @@ class NovaServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../resources/views/partials/logo.blade.php' => resource_path('views/vendor/nova/partials/logo.blade.php'),
         ], 'nova-views');
-        
+
         $this->publishes([
             __DIR__.'/../database/migrations/2018_01_01_000000_create_action_events_table.php' => database_path('migrations/2018_01_01_000000_create_action_events_table.php'),
         ], 'nova-migrations');
