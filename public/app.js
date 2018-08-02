@@ -904,9 +904,8 @@ CodeMirror.defineMode("xml", function(editorConf, config_) {
         stream.next();
       }
       return style;
-    }
+    };
   }
-
   function doctype(depth) {
     return function(stream, state) {
       var ch;
@@ -47414,6 +47413,12 @@ exports.default = {
         };
     },
 
+    watch: {
+        $route: function $route() {
+            this.closeSearch();
+        }
+    },
+
     mounted: function mounted() {
         // Open search menu if the user types '/'
         document.addEventListener('keydown', this.handleKeydown);
@@ -47554,6 +47559,10 @@ exports.default = {
                 }
             });
         },
+        navigate: function navigate(index) {
+            this.highlightedResultIndex = index;
+            this.goToCurrentlySelectedResource();
+        },
         goToCurrentlySelectedResource: function goToCurrentlySelectedResource() {
             var _this2 = this;
 
@@ -47608,13 +47617,6 @@ exports.default = {
         }
     }
 }; //
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -47795,7 +47797,6 @@ var render = function() {
                   _vm.move(-1)
                 }
               ],
-              blur: _vm.closeSearch,
               focus: _vm.openSearch
             }
           })
@@ -47844,28 +47845,22 @@ var render = function() {
                       },
                       [
                         _c(
-                          "router-link",
+                          "a",
                           {
                             staticClass:
-                              "flex items-center hover:bg-20 block py-2 px-3 no-underline font-normal",
+                              "cursor-pointer flex items-center hover:bg-20 block py-2 px-3 no-underline font-normal",
                             class: {
                               "bg-white":
                                 _vm.highlightedResultIndex != item.index,
                               "bg-20": _vm.highlightedResultIndex == item.index
                             },
                             attrs: {
-                              to: {
-                                name: "detail",
-                                params: {
-                                  resourceName: item.resourceName,
-                                  resourceId: item.resourceId
-                                }
-                              },
                               dusk: item.resourceName + " " + item.index
                             },
-                            nativeOn: {
+                            on: {
                               click: function($event) {
-                                return _vm.closeSearch($event)
+                                $event.preventDefault()
+                                _vm.navigate(item.index)
                               }
                             }
                           },
@@ -47892,8 +47887,7 @@ var render = function() {
                             ])
                           ]
                         )
-                      ],
-                      1
+                      ]
                     )
                   })
                 )
