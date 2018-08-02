@@ -56,7 +56,6 @@ class NovaServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../resources/views/partials/logo.blade.php' => resource_path('views/vendor/nova/partials/logo.blade.php'),
-            __DIR__.'/../resources/views/layout.blade.php' => resource_path('views/vendor/nova/layout.blade.php'),
         ], 'nova-views');
 
         $this->publishes([
