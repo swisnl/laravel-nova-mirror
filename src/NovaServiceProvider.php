@@ -59,7 +59,7 @@ class NovaServiceProvider extends ServiceProvider
         ], 'nova-views');
 
         $this->publishes([
-            __DIR__.'/../database/migrations/2018_01_01_000000_create_action_events_table.php' => database_path('migrations/2018_01_01_000000_create_action_events_table.php'),
+            __DIR__.'/../database/migrations' => database_path('migrations'),
         ], 'nova-migrations');
     }
 
