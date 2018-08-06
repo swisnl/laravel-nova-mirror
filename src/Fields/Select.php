@@ -27,7 +27,7 @@ class Select extends Field
     }
 
     /**
-     * Display values using the specified labels.
+     * Display values using their corresponding specified labels.
      *
      * @return $this
      */
@@ -35,8 +35,8 @@ class Select extends Field
     {
         return $this->displayUsing(function ($value) {
             return collect($this->meta['options'])
-                ->where('value2', $value)
-                ->first()['label'] ?? $value;
+                    ->where('value', $value)
+                    ->first()['label'] ?? $value;
         });
     }
 }
