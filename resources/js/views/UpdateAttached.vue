@@ -1,70 +1,74 @@
 <template>
-    <card class="overflow-hidden">
-        <form v-if="field" @submit.prevent="updateAttachedResource">
-            <!-- Related Resource -->
-            <field-wrapper>
-                <div class="w-1/5 px-8 py-6">
-                    <slot>
-                        <form-label>
-                            {{ relatedResourceLabel }}
-                        </form-label>
-                    </slot>
-                </div>
-                <div class="w-1/2 px-8 py-6">
-                    <select
-                        class="form-control form-select mb-3 w-full"
-                        dusk="attachable-select"
-                        :class="{ 'border-danger': validationErrors.has(field.attribute) }"
-                        :data-testid="`${field.resourceName}-select`"
-                        @change="selectResourceFromSelectControl"
-                        disabled
-                    >
-                        <option value="" disabled selected>Choose {{ field.name }}</option>
+    <loading-view :loading="loading">
+        <heading class="mb-3">Update {{ relatedResourceLabel }}</heading>
 
-                        <option
-                            v-for="resource in availableResources"
-                            :key="resource.value"
-                            :value="resource.value"
-                            :selected="selectedResourceId == resource.value"
+        <card class="overflow-hidden">
+            <form v-if="field" @submit.prevent="updateAttachedResource">
+                <!-- Related Resource -->
+                <field-wrapper>
+                    <div class="w-1/5 px-8 py-6">
+                        <slot>
+                            <form-label>
+                                {{ relatedResourceLabel }}
+                            </form-label>
+                        </slot>
+                    </div>
+                    <div class="w-1/2 px-8 py-6">
+                        <select
+                            class="form-control form-select mb-3 w-full"
+                            dusk="attachable-select"
+                            :class="{ 'border-danger': validationErrors.has(field.attribute) }"
+                            :data-testid="`${field.resourceName}-select`"
+                            @change="selectResourceFromSelectControl"
+                            disabled
                         >
-                            {{ resource.display}}
-                        </option>
-                    </select>
+                            <option value="" disabled selected>Choose {{ field.name }}</option>
 
-                    <p v-if="true" class="my-2 text-danger">
-                        {{ validationErrors.first(relatedResourceName) }}
-                    </p>
+                            <option
+                                v-for="resource in availableResources"
+                                :key="resource.value"
+                                :value="resource.value"
+                                :selected="selectedResourceId == resource.value"
+                            >
+                                {{ resource.display}}
+                            </option>
+                        </select>
+
+                        <p v-if="true" class="my-2 text-danger">
+                            {{ validationErrors.first(relatedResourceName) }}
+                        </p>
+                    </div>
+                </field-wrapper>
+
+                <!-- Pivot Fields -->
+                <div v-for="field in fields">
+                    <component
+                        :is="'form-' + field.component"
+                        :resource-name="resourceName"
+                        :resource-id="resourceId"
+                        :field="field"
+                        :errors="validationErrors"
+                        :related-resource-name="relatedResourceName"
+                        :related-resource-id="relatedResourceId"
+                        :via-resource="viaResource"
+                        :via-resource-id="viaResourceId"
+                        :via-relationship="viaRelationship"
+                    />
                 </div>
-            </field-wrapper>
 
-            <!-- Pivot Fields -->
-            <div v-for="field in fields">
-                <component
-                    :is="'form-' + field.component"
-                    :resource-name="resourceName"
-                    :resource-id="resourceId"
-                    :field="field"
-                    :errors="validationErrors"
-                    :related-resource-name="relatedResourceName"
-                    :related-resource-id="relatedResourceId"
-                    :via-resource="viaResource"
-                    :via-resource-id="viaResourceId"
-                    :via-relationship="viaRelationship"
-                />
-            </div>
+                <!-- Attach Button -->
+                <div class="bg-30 flex px-8 py-4">
+                    <button dusk="update-and-continue-editing-button" type="button" @click="updateAndContinueEditing" class="ml-auto btn btn-default btn-primary mr-3">
+                        Update &amp; Continue Editing
+                    </button>
 
-            <!-- Attach Button -->
-            <div class="bg-30 flex px-8 py-4">
-                <button dusk="update-and-continue-editing-button" type="button" @click="updateAndContinueEditing" class="ml-auto btn btn-default btn-primary mr-3">
-                    Update &amp; Continue Editing
-                </button>
-
-                <button dusk="update-button" class="btn btn-default btn-primary">
-                    Update
-                </button>
-            </div>
-        </form>
-    </card>
+                    <button dusk="update-button" class="btn btn-default btn-primary">
+                        Update {{ relatedResourceLabel }}
+                    </button>
+                </div>
+            </form>
+        </card>
+    </loading-view>
 </template>
 
 <script>
@@ -104,6 +108,7 @@ export default {
     },
 
     data: () => ({
+        loading: true,
         field: null,
         softDeletes: false,
         fields: [],
@@ -154,6 +159,8 @@ export default {
                     if (this.field.searchable) {
                         this.determineIfSoftDeletes()
                     }
+
+                    this.loading = false
                 })
         },
 

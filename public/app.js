@@ -19430,6 +19430,7 @@ exports.default = {
 
     data: function data() {
         return {
+            loading: true,
             field: null,
             softDeletes: false,
             fields: [],
@@ -19474,6 +19475,7 @@ exports.default = {
 
                 _this.field = data;
                 _this.field.searchable ? _this.determineIfSoftDeletes() : _this.getAvailableResources();
+                _this.loading = false;
             });
         },
 
@@ -19829,6 +19831,10 @@ exports.default = {
 //
 //
 //
+//
+//
+//
+//
 
 /***/ }),
 /* 336 */
@@ -19838,292 +19844,319 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("card", { staticClass: "overflow-hidden" }, [
-    _vm.field
-      ? _c(
-          "form",
-          {
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.attachResource($event)
-              }
-            }
-          },
-          [
-            _c("field-wrapper", [
-              _c(
-                "div",
-                { staticClass: "w-1/5 px-8 py-6" },
-                [
-                  _vm._t("default", [
-                    _c("form-label", [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(_vm.relatedResourceLabel) +
-                          "\n                    "
-                      )
-                    ])
-                  ])
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "w-1/2 px-8 py-6" },
-                [
-                  _vm.field.searchable
-                    ? _c(
-                        "search-input",
-                        {
-                          staticClass: "mb-3",
-                          attrs: {
-                            "data-testid":
-                              _vm.field.resourceName + "-search-input",
-                            value: _vm.selectedResource,
-                            data: _vm.availableResources,
-                            trackBy: "value",
-                            searchBy: "display"
-                          },
-                          on: {
-                            input: _vm.performSearch,
-                            clear: _vm.clearSelection,
-                            selected: _vm.selectResource
-                          },
-                          scopedSlots: _vm._u([
+  return _c(
+    "loading-view",
+    { attrs: { loading: _vm.loading } },
+    [
+      _c("heading", { staticClass: "mb-3" }, [
+        _vm._v("Attach " + _vm._s(_vm.relatedResourceLabel))
+      ]),
+      _vm._v(" "),
+      _c("card", { staticClass: "overflow-hidden" }, [
+        _vm.field
+          ? _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.attachResource($event)
+                  }
+                }
+              },
+              [
+                _c("field-wrapper", [
+                  _c(
+                    "div",
+                    { staticClass: "w-1/5 px-8 py-6" },
+                    [
+                      _vm._t("default", [
+                        _c("form-label", [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.relatedResourceLabel) +
+                              "\n                        "
+                          )
+                        ])
+                      ])
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "w-1/2 px-8 py-6" },
+                    [
+                      _vm.field.searchable
+                        ? _c(
+                            "search-input",
                             {
-                              key: "option",
-                              fn: function(ref) {
-                                var option = ref.option
-                                var selected = ref.selected
+                              staticClass: "mb-3",
+                              attrs: {
+                                "data-testid":
+                                  _vm.field.resourceName + "-search-input",
+                                value: _vm.selectedResource,
+                                data: _vm.availableResources,
+                                trackBy: "value",
+                                searchBy: "display"
+                              },
+                              on: {
+                                input: _vm.performSearch,
+                                clear: _vm.clearSelection,
+                                selected: _vm.selectResource
+                              },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "option",
+                                  fn: function(ref) {
+                                    var option = ref.option
+                                    var selected = ref.selected
+                                    return _c(
+                                      "div",
+                                      { staticClass: "flex items-center" },
+                                      [
+                                        option.avatar
+                                          ? _c("div", { staticClass: "mr-3" }, [
+                                              _c("img", {
+                                                staticClass:
+                                                  "w-8 h-8 rounded-full block",
+                                                attrs: { src: option.avatar }
+                                              })
+                                            ])
+                                          : _vm._e(),
+                                        _vm._v(
+                                          "\n\n                            " +
+                                            _vm._s(option.display) +
+                                            "\n                        "
+                                        )
+                                      ]
+                                    )
+                                  }
+                                }
+                              ])
+                            },
+                            [
+                              _vm.selectedResource
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass: "flex items-center",
+                                      attrs: { slot: "default" },
+                                      slot: "default"
+                                    },
+                                    [
+                                      _vm.selectedResource.avatar
+                                        ? _c("div", { staticClass: "mr-3" }, [
+                                            _c("img", {
+                                              staticClass:
+                                                "w-8 h-8 rounded-full block",
+                                              attrs: {
+                                                src: _vm.selectedResource.avatar
+                                              }
+                                            })
+                                          ])
+                                        : _vm._e(),
+                                      _vm._v(
+                                        "\n\n                            " +
+                                          _vm._s(_vm.selectedResource.display) +
+                                          "\n                        "
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ]
+                          )
+                        : _c(
+                            "select",
+                            {
+                              staticClass:
+                                "form-control form-select mb-3 w-full",
+                              class: {
+                                "border-danger": _vm.validationErrors.has(
+                                  _vm.field.attribute
+                                )
+                              },
+                              attrs: {
+                                dusk: "attachable-select",
+                                "data-testid":
+                                  _vm.field.resourceName + "-select"
+                              },
+                              on: {
+                                change: _vm.selectResourceFromSelectControl
+                              }
+                            },
+                            [
+                              _c(
+                                "option",
+                                {
+                                  attrs: {
+                                    value: "",
+                                    disabled: "",
+                                    selected: ""
+                                  }
+                                },
+                                [_vm._v("Choose " + _vm._s(_vm.field.name))]
+                              ),
+                              _vm._v(" "),
+                              _vm._l(_vm.availableResources, function(
+                                resource
+                              ) {
                                 return _c(
-                                  "div",
-                                  { staticClass: "flex items-center" },
+                                  "option",
+                                  {
+                                    key: resource.value,
+                                    domProps: {
+                                      value: resource.value,
+                                      selected:
+                                        _vm.selectedResourceId == resource.value
+                                    }
+                                  },
                                   [
-                                    option.avatar
-                                      ? _c("div", { staticClass: "mr-3" }, [
-                                          _c("img", {
-                                            staticClass:
-                                              "w-8 h-8 rounded-full block",
-                                            attrs: { src: option.avatar }
-                                          })
-                                        ])
-                                      : _vm._e(),
                                     _vm._v(
-                                      "\n\n                        " +
-                                        _vm._s(option.display) +
-                                        "\n                    "
+                                      "\n                            " +
+                                        _vm._s(resource.display) +
+                                        "\n                        "
                                     )
                                   ]
                                 )
-                              }
-                            }
-                          ])
-                        },
-                        [
-                          _vm.selectedResource
-                            ? _c(
-                                "div",
-                                {
-                                  staticClass: "flex items-center",
-                                  attrs: { slot: "default" },
-                                  slot: "default"
-                                },
-                                [
-                                  _vm.selectedResource.avatar
-                                    ? _c("div", { staticClass: "mr-3" }, [
-                                        _c("img", {
-                                          staticClass:
-                                            "w-8 h-8 rounded-full block",
-                                          attrs: {
-                                            src: _vm.selectedResource.avatar
-                                          }
-                                        })
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(
-                                    "\n\n                        " +
-                                      _vm._s(_vm.selectedResource.display) +
-                                      "\n                    "
-                                  )
-                                ]
-                              )
-                            : _vm._e()
-                        ]
-                      )
-                    : _c(
-                        "select",
-                        {
-                          staticClass: "form-control form-select mb-3 w-full",
-                          class: {
-                            "border-danger": _vm.validationErrors.has(
-                              _vm.field.attribute
-                            )
-                          },
-                          attrs: {
-                            dusk: "attachable-select",
-                            "data-testid": _vm.field.resourceName + "-select"
-                          },
-                          on: { change: _vm.selectResourceFromSelectControl }
-                        },
-                        [
-                          _c(
-                            "option",
-                            {
-                              attrs: { value: "", disabled: "", selected: "" }
-                            },
-                            [_vm._v("Choose " + _vm._s(_vm.field.name))]
+                              })
+                            ],
+                            2
                           ),
-                          _vm._v(" "),
-                          _vm._l(_vm.availableResources, function(resource) {
-                            return _c(
-                              "option",
+                      _vm._v(" "),
+                      _vm.softDeletes
+                        ? _c("div", [
+                            _c(
+                              "label",
                               {
-                                key: resource.value,
-                                domProps: {
-                                  value: resource.value,
-                                  selected:
-                                    _vm.selectedResourceId == resource.value
+                                staticClass: "flex items-center",
+                                on: {
+                                  input: _vm.toggleWithTrashed,
+                                  keydown: function($event) {
+                                    if (
+                                      !("button" in $event) &&
+                                      _vm._k(
+                                        $event.keyCode,
+                                        "space",
+                                        32,
+                                        $event.key,
+                                        " "
+                                      ) &&
+                                      _vm._k(
+                                        $event.keyCode,
+                                        "enter",
+                                        13,
+                                        $event.key,
+                                        "Enter"
+                                      )
+                                    ) {
+                                      return null
+                                    }
+                                    $event.preventDefault()
+                                    return _vm.toggleWithTrashed($event)
+                                  }
                                 }
                               },
                               [
-                                _vm._v(
-                                  "\n                        " +
-                                    _vm._s(resource.display) +
-                                    "\n                    "
-                                )
-                              ]
-                            )
-                          })
-                        ],
-                        2
-                      ),
-                  _vm._v(" "),
-                  _vm.softDeletes
-                    ? _c("div", [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "flex items-center",
-                            on: {
-                              input: _vm.toggleWithTrashed,
-                              keydown: function($event) {
-                                if (
-                                  !("button" in $event) &&
-                                  _vm._k(
-                                    $event.keyCode,
-                                    "space",
-                                    32,
-                                    $event.key,
-                                    " "
-                                  ) &&
-                                  _vm._k(
-                                    $event.keyCode,
-                                    "enter",
-                                    13,
-                                    $event.key,
-                                    "Enter"
+                                _c("checkbox", {
+                                  attrs: {
+                                    dusk:
+                                      _vm.field.resourceName +
+                                      "-with-trashed-checkbox",
+                                    checked: _vm.withTrashed
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "ml-2" }, [
+                                  _vm._v(
+                                    "\n                                With Trashed\n                            "
                                   )
-                                ) {
-                                  return null
-                                }
-                                $event.preventDefault()
-                                return _vm.toggleWithTrashed($event)
-                              }
-                            }
-                          },
-                          [
-                            _c("checkbox", {
-                              attrs: {
-                                dusk:
-                                  _vm.field.resourceName +
-                                  "-with-trashed-checkbox",
-                                checked: _vm.withTrashed
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "ml-2" }, [
-                              _vm._v(
-                                "\n                            With Trashed\n                        "
-                              )
-                            ])
-                          ],
-                          1
-                        )
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  true
-                    ? _c("p", { staticClass: "my-2 text-danger" }, [
-                        _vm._v(
-                          "\n                    " +
-                            _vm._s(
-                              _vm.validationErrors.first(
-                                _vm.relatedResourceName
-                              )
-                            ) +
-                            "\n                "
-                        )
-                      ])
-                    : _vm._e()
-                ],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.fields, function(field) {
-              return _c(
-                "div",
-                [
-                  _c("form-" + field.component, {
-                    tag: "component",
-                    attrs: {
-                      "resource-name": _vm.resourceName,
-                      field: field,
-                      errors: _vm.validationErrors,
-                      "via-resource": _vm.viaResource,
-                      "via-resource-id": _vm.viaResourceId,
-                      "via-relationship": _vm.viaRelationship
-                    }
-                  })
-                ],
-                1
-              )
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "bg-30 flex px-8 py-4" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "ml-auto btn btn-default btn-primary mr-3",
-                  attrs: {
-                    dusk: "attach-and-attach-another-button",
-                    type: "button"
-                  },
-                  on: { click: _vm.attachAndAttachAnother }
-                },
-                [
-                  _vm._v(
-                    "\n                Attach & Attach Another\n            "
+                                ])
+                              ],
+                              1
+                            )
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      true
+                        ? _c("p", { staticClass: "my-2 text-danger" }, [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(
+                                  _vm.validationErrors.first(
+                                    _vm.relatedResourceName
+                                  )
+                                ) +
+                                "\n                    "
+                            )
+                          ])
+                        : _vm._e()
+                    ],
+                    1
                   )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-default btn-primary",
-                  attrs: { dusk: "attach-button" }
-                },
-                [_vm._v("\n                Attach\n            ")]
-              )
-            ])
-          ],
-          2
-        )
-      : _vm._e()
-  ])
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.fields, function(field) {
+                  return _c(
+                    "div",
+                    [
+                      _c("form-" + field.component, {
+                        tag: "component",
+                        attrs: {
+                          "resource-name": _vm.resourceName,
+                          field: field,
+                          errors: _vm.validationErrors,
+                          "via-resource": _vm.viaResource,
+                          "via-resource-id": _vm.viaResourceId,
+                          "via-relationship": _vm.viaRelationship
+                        }
+                      })
+                    ],
+                    1
+                  )
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "bg-30 flex px-8 py-4" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "ml-auto btn btn-default btn-primary mr-3",
+                      attrs: {
+                        dusk: "attach-and-attach-another-button",
+                        type: "button"
+                      },
+                      on: { click: _vm.attachAndAttachAnother }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    Attach & Attach Another\n                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-default btn-primary",
+                      attrs: { dusk: "attach-button" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    Attach " +
+                          _vm._s(_vm.relatedResourceLabel) +
+                          "\n                "
+                      )
+                    ]
+                  )
+                ])
+              ],
+              2
+            )
+          : _vm._e()
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -20278,6 +20311,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
 
 exports.default = {
     mixins: [_laravelNova.PerformsSearches, _laravelNova.TogglesTrashed],
@@ -20313,6 +20350,7 @@ exports.default = {
 
     data: function data() {
         return {
+            loading: true,
             field: null,
             softDeletes: false,
             fields: [],
@@ -20393,6 +20431,8 @@ exports.default = {
                 if (_this.field.searchable) {
                     _this.determineIfSoftDeletes();
                 }
+
+                _this.loading = false;
             });
         },
 
@@ -20736,153 +20776,173 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("card", { staticClass: "overflow-hidden" }, [
-    _vm.field
-      ? _c(
-          "form",
-          {
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.updateAttachedResource($event)
-              }
-            }
-          },
-          [
-            _c("field-wrapper", [
-              _c(
-                "div",
-                { staticClass: "w-1/5 px-8 py-6" },
-                [
-                  _vm._t("default", [
-                    _c("form-label", [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(_vm.relatedResourceLabel) +
-                          "\n                    "
-                      )
-                    ])
-                  ])
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "w-1/2 px-8 py-6" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control form-select mb-3 w-full",
-                    class: {
-                      "border-danger": _vm.validationErrors.has(
-                        _vm.field.attribute
-                      )
-                    },
-                    attrs: {
-                      dusk: "attachable-select",
-                      "data-testid": _vm.field.resourceName + "-select",
-                      disabled: ""
-                    },
-                    on: { change: _vm.selectResourceFromSelectControl }
-                  },
-                  [
+  return _c(
+    "loading-view",
+    { attrs: { loading: _vm.loading } },
+    [
+      _c("heading", { staticClass: "mb-3" }, [
+        _vm._v("Update " + _vm._s(_vm.relatedResourceLabel))
+      ]),
+      _vm._v(" "),
+      _c("card", { staticClass: "overflow-hidden" }, [
+        _vm.field
+          ? _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.updateAttachedResource($event)
+                  }
+                }
+              },
+              [
+                _c("field-wrapper", [
+                  _c(
+                    "div",
+                    { staticClass: "w-1/5 px-8 py-6" },
+                    [
+                      _vm._t("default", [
+                        _c("form-label", [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.relatedResourceLabel) +
+                              "\n                        "
+                          )
+                        ])
+                      ])
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "w-1/2 px-8 py-6" }, [
                     _c(
-                      "option",
-                      { attrs: { value: "", disabled: "", selected: "" } },
-                      [_vm._v("Choose " + _vm._s(_vm.field.name))]
+                      "select",
+                      {
+                        staticClass: "form-control form-select mb-3 w-full",
+                        class: {
+                          "border-danger": _vm.validationErrors.has(
+                            _vm.field.attribute
+                          )
+                        },
+                        attrs: {
+                          dusk: "attachable-select",
+                          "data-testid": _vm.field.resourceName + "-select",
+                          disabled: ""
+                        },
+                        on: { change: _vm.selectResourceFromSelectControl }
+                      },
+                      [
+                        _c(
+                          "option",
+                          { attrs: { value: "", disabled: "", selected: "" } },
+                          [_vm._v("Choose " + _vm._s(_vm.field.name))]
+                        ),
+                        _vm._v(" "),
+                        _vm._l(_vm.availableResources, function(resource) {
+                          return _c(
+                            "option",
+                            {
+                              key: resource.value,
+                              domProps: {
+                                value: resource.value,
+                                selected:
+                                  _vm.selectedResourceId == resource.value
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(resource.display) +
+                                  "\n                        "
+                              )
+                            ]
+                          )
+                        })
+                      ],
+                      2
                     ),
                     _vm._v(" "),
-                    _vm._l(_vm.availableResources, function(resource) {
-                      return _c(
-                        "option",
-                        {
-                          key: resource.value,
-                          domProps: {
-                            value: resource.value,
-                            selected: _vm.selectedResourceId == resource.value
-                          }
-                        },
-                        [
+                    true
+                      ? _c("p", { staticClass: "my-2 text-danger" }, [
                           _vm._v(
                             "\n                        " +
-                              _vm._s(resource.display) +
+                              _vm._s(
+                                _vm.validationErrors.first(
+                                  _vm.relatedResourceName
+                                )
+                              ) +
                               "\n                    "
                           )
-                        ]
-                      )
-                    })
-                  ],
-                  2
-                ),
+                        ])
+                      : _vm._e()
+                  ])
+                ]),
                 _vm._v(" "),
-                true
-                  ? _c("p", { staticClass: "my-2 text-danger" }, [
+                _vm._l(_vm.fields, function(field) {
+                  return _c(
+                    "div",
+                    [
+                      _c("form-" + field.component, {
+                        tag: "component",
+                        attrs: {
+                          "resource-name": _vm.resourceName,
+                          "resource-id": _vm.resourceId,
+                          field: field,
+                          errors: _vm.validationErrors,
+                          "related-resource-name": _vm.relatedResourceName,
+                          "related-resource-id": _vm.relatedResourceId,
+                          "via-resource": _vm.viaResource,
+                          "via-resource-id": _vm.viaResourceId,
+                          "via-relationship": _vm.viaRelationship
+                        }
+                      })
+                    ],
+                    1
+                  )
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "bg-30 flex px-8 py-4" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "ml-auto btn btn-default btn-primary mr-3",
+                      attrs: {
+                        dusk: "update-and-continue-editing-button",
+                        type: "button"
+                      },
+                      on: { click: _vm.updateAndContinueEditing }
+                    },
+                    [
                       _vm._v(
-                        "\n                    " +
-                          _vm._s(
-                            _vm.validationErrors.first(_vm.relatedResourceName)
-                          ) +
+                        "\n                    Update & Continue Editing\n                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-default btn-primary",
+                      attrs: { dusk: "update-button" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    Update " +
+                          _vm._s(_vm.relatedResourceLabel) +
                           "\n                "
                       )
-                    ])
-                  : _vm._e()
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.fields, function(field) {
-              return _c(
-                "div",
-                [
-                  _c("form-" + field.component, {
-                    tag: "component",
-                    attrs: {
-                      "resource-name": _vm.resourceName,
-                      "resource-id": _vm.resourceId,
-                      field: field,
-                      errors: _vm.validationErrors,
-                      "related-resource-name": _vm.relatedResourceName,
-                      "related-resource-id": _vm.relatedResourceId,
-                      "via-resource": _vm.viaResource,
-                      "via-resource-id": _vm.viaResourceId,
-                      "via-relationship": _vm.viaRelationship
-                    }
-                  })
-                ],
-                1
-              )
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "bg-30 flex px-8 py-4" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "ml-auto btn btn-default btn-primary mr-3",
-                  attrs: {
-                    dusk: "update-and-continue-editing-button",
-                    type: "button"
-                  },
-                  on: { click: _vm.updateAndContinueEditing }
-                },
-                [
-                  _vm._v(
-                    "\n                Update & Continue Editing\n            "
+                    ]
                   )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-default btn-primary",
-                  attrs: { dusk: "update-button" }
-                },
-                [_vm._v("\n                Update\n            ")]
-              )
-            ])
-          ],
-          2
-        )
-      : _vm._e()
-  ])
+                ])
+              ],
+              2
+            )
+          : _vm._e()
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

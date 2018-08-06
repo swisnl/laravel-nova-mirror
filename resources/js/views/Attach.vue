@@ -1,107 +1,111 @@
 <template>
-    <card class="overflow-hidden">
-        <form v-if="field" @submit.prevent="attachResource">
-            <!-- Related Resource -->
-            <field-wrapper>
-                <div class="w-1/5 px-8 py-6">
-                    <slot>
-                        <form-label>
-                            {{ relatedResourceLabel }}
-                        </form-label>
-                    </slot>
-                </div>
-                <div class="w-1/2 px-8 py-6">
-                    <search-input
-                        v-if="field.searchable"
-                        :data-testid="`${field.resourceName}-search-input`"
-                        @input="performSearch"
-                        @clear="clearSelection"
-                        @selected="selectResource"
-                        :value='selectedResource'
-                        :data='availableResources'
-                        trackBy='value'
-                        searchBy='display'
-                        class="mb-3"
-                    >
-                        <div slot="default" v-if="selectedResource" class="flex items-center">
-                            <div v-if="selectedResource.avatar" class="mr-3">
-                                <img :src="selectedResource.avatar" class="w-8 h-8 rounded-full block" />
-                            </div>
+    <loading-view :loading="loading">
+        <heading class="mb-3">Attach {{ relatedResourceLabel }}</heading>
 
-                            {{ selectedResource.display }}
-                        </div>
-
-                        <div slot="option" slot-scope="{option, selected}" class="flex items-center">
-                            <div v-if="option.avatar" class="mr-3">
-                                <img :src="option.avatar" class="w-8 h-8 rounded-full block" />
-                            </div>
-
-                            {{ option.display }}
-                        </div>
-                    </search-input>
-
-                    <select
-                        v-else
-                        dusk="attachable-select"
-                        class="form-control form-select mb-3 w-full"
-                        :class="{ 'border-danger': validationErrors.has(field.attribute) }"
-                        :data-testid="`${field.resourceName}-select`"
-                        @change="selectResourceFromSelectControl"
-                    >
-                        <option value="" disabled selected>Choose {{ field.name }}</option>
-
-                        <option
-                            v-for="resource in availableResources"
-                            :key="resource.value"
-                            :value="resource.value"
-                            :selected="selectedResourceId == resource.value"
-                        >
-                            {{ resource.display}}
-                        </option>
-                    </select>
-
-                    <!-- Trashed State -->
-                    <div v-if="softDeletes">
-                        <label class="flex items-center" @input="toggleWithTrashed" @keydown.prevent.space.enter="toggleWithTrashed">
-                            <checkbox :dusk="field.resourceName + '-with-trashed-checkbox'" :checked="withTrashed" />
-
-                            <span class="ml-2">
-                                With Trashed
-                            </span>
-                        </label>
+        <card class="overflow-hidden">
+            <form v-if="field" @submit.prevent="attachResource">
+                <!-- Related Resource -->
+                <field-wrapper>
+                    <div class="w-1/5 px-8 py-6">
+                        <slot>
+                            <form-label>
+                                {{ relatedResourceLabel }}
+                            </form-label>
+                        </slot>
                     </div>
+                    <div class="w-1/2 px-8 py-6">
+                        <search-input
+                            v-if="field.searchable"
+                            :data-testid="`${field.resourceName}-search-input`"
+                            @input="performSearch"
+                            @clear="clearSelection"
+                            @selected="selectResource"
+                            :value='selectedResource'
+                            :data='availableResources'
+                            trackBy='value'
+                            searchBy='display'
+                            class="mb-3"
+                        >
+                            <div slot="default" v-if="selectedResource" class="flex items-center">
+                                <div v-if="selectedResource.avatar" class="mr-3">
+                                    <img :src="selectedResource.avatar" class="w-8 h-8 rounded-full block" />
+                                </div>
 
-                    <p v-if="true" class="my-2 text-danger">
-                        {{ validationErrors.first(relatedResourceName) }}
-                    </p>
+                                {{ selectedResource.display }}
+                            </div>
+
+                            <div slot="option" slot-scope="{option, selected}" class="flex items-center">
+                                <div v-if="option.avatar" class="mr-3">
+                                    <img :src="option.avatar" class="w-8 h-8 rounded-full block" />
+                                </div>
+
+                                {{ option.display }}
+                            </div>
+                        </search-input>
+
+                        <select
+                            v-else
+                            dusk="attachable-select"
+                            class="form-control form-select mb-3 w-full"
+                            :class="{ 'border-danger': validationErrors.has(field.attribute) }"
+                            :data-testid="`${field.resourceName}-select`"
+                            @change="selectResourceFromSelectControl"
+                        >
+                            <option value="" disabled selected>Choose {{ field.name }}</option>
+
+                            <option
+                                v-for="resource in availableResources"
+                                :key="resource.value"
+                                :value="resource.value"
+                                :selected="selectedResourceId == resource.value"
+                            >
+                                {{ resource.display}}
+                            </option>
+                        </select>
+
+                        <!-- Trashed State -->
+                        <div v-if="softDeletes">
+                            <label class="flex items-center" @input="toggleWithTrashed" @keydown.prevent.space.enter="toggleWithTrashed">
+                                <checkbox :dusk="field.resourceName + '-with-trashed-checkbox'" :checked="withTrashed" />
+
+                                <span class="ml-2">
+                                    With Trashed
+                                </span>
+                            </label>
+                        </div>
+
+                        <p v-if="true" class="my-2 text-danger">
+                            {{ validationErrors.first(relatedResourceName) }}
+                        </p>
+                    </div>
+                </field-wrapper>
+
+                <!-- Pivot Fields -->
+                <div v-for="field in fields">
+                    <component
+                        :is="'form-' + field.component"
+                        :resource-name="resourceName"
+                        :field="field"
+                        :errors="validationErrors"
+                        :via-resource="viaResource"
+                        :via-resource-id="viaResourceId"
+                        :via-relationship="viaRelationship"
+                    />
                 </div>
-            </field-wrapper>
 
-            <!-- Pivot Fields -->
-            <div v-for="field in fields">
-                <component
-                    :is="'form-' + field.component"
-                    :resource-name="resourceName"
-                    :field="field"
-                    :errors="validationErrors"
-                    :via-resource="viaResource"
-                    :via-resource-id="viaResourceId"
-                    :via-relationship="viaRelationship"
-                />
-            </div>
+                <!-- Attach Button -->
+                <div class="bg-30 flex px-8 py-4">
+                    <button dusk="attach-and-attach-another-button" type="button" @click="attachAndAttachAnother" class="ml-auto btn btn-default btn-primary mr-3">
+                        Attach &amp; Attach Another
+                    </button>
 
-            <!-- Attach Button -->
-            <div class="bg-30 flex px-8 py-4">
-                <button dusk="attach-and-attach-another-button" type="button" @click="attachAndAttachAnother" class="ml-auto btn btn-default btn-primary mr-3">
-                    Attach &amp; Attach Another
-                </button>
-
-                <button dusk="attach-button" class="btn btn-default btn-primary">
-                    Attach
-                </button>
-            </div>
-        </form>
-    </card>
+                    <button dusk="attach-button" class="btn btn-default btn-primary">
+                        Attach {{ relatedResourceLabel }}
+                    </button>
+                </div>
+            </form>
+        </card>
+    </loading-view>
 </template>
 
 <script>
@@ -137,6 +141,7 @@ export default {
     },
 
     data: () => ({
+        loading: true,
         field: null,
         softDeletes: false,
         fields: [],
@@ -178,6 +183,7 @@ export default {
                     this.field.searchable
                         ? this.determineIfSoftDeletes()
                         : this.getAvailableResources()
+                    this.loading = false
                 })
         },
 
