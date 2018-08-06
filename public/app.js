@@ -16784,7 +16784,7 @@ var render = function() {
                       "data-testid": "search-input",
                       dusk: "search",
                       placeholder: "Search",
-                      type: "text"
+                      type: "search"
                     },
                     domProps: { value: _vm.search },
                     on: {
@@ -22659,7 +22659,7 @@ exports.default = {
       canSuccess: true,
       duration: 3000,
       height: '3px',
-      color: '#4099DE',
+      color: 'var(--primary)',
       failedColor: 'red'
     };
   },
@@ -42873,7 +42873,7 @@ var render = function() {
                                       {
                                         attrs: {
                                           id: "icon-resources",
-                                          fill: "#4A90E2",
+                                          fill: "var(--primary)",
                                           "fill-rule": "nonzero",
                                           transform: "translate(0 -1)"
                                         }
@@ -42961,7 +42961,7 @@ var render = function() {
                                       {
                                         attrs: {
                                           id: "icon-actions",
-                                          fill: "#4A90E2",
+                                          fill: "var(--primary)",
                                           "fill-rule": "nonzero"
                                         }
                                       },
@@ -43052,7 +43052,7 @@ var render = function() {
                                       {
                                         attrs: {
                                           id: "icon-filters",
-                                          fill: "#4A90E2",
+                                          fill: "var(--primary)",
                                           "fill-rule": "nonzero"
                                         }
                                       },
@@ -43139,7 +43139,7 @@ var render = function() {
                                       {
                                         attrs: {
                                           id: "icon-lenses",
-                                          fill: "#4A90E2",
+                                          fill: "var(--primary)",
                                           "fill-rule": "nonzero"
                                         }
                                       },
@@ -43230,7 +43230,7 @@ var render = function() {
                                       {
                                         attrs: {
                                           id: "icon-metrics",
-                                          fill: "#4A90E2",
+                                          fill: "var(--primary)",
                                           "fill-rule": "nonzero"
                                         }
                                       },
@@ -43317,7 +43317,7 @@ var render = function() {
                                       {
                                         attrs: {
                                           id: "icon-cards",
-                                          fill: "#4A90E2",
+                                          fill: "var(--primary)",
                                           "fill-rule": "nonzero"
                                         }
                                       },
@@ -43870,7 +43870,9 @@ var render = function() {
                           [
                             _c(
                               "g",
-                              { attrs: { id: "b-link", fill: "#4099DE" } },
+                              {
+                                attrs: { id: "b-link", fill: "var(--primary)" }
+                              },
                               [
                                 _c("rect", {
                                   attrs: {
@@ -48247,11 +48249,15 @@ var render = function() {
                   "g",
                   { attrs: { id: "checkbox-on", "fill-rule": "nonzero" } },
                   [
-                    _c("g", { attrs: { id: "b-link", fill: "#4099DE" } }, [
-                      _c("rect", {
-                        attrs: { id: "b", width: "20", height: "20", rx: "4" }
-                      })
-                    ]),
+                    _c(
+                      "g",
+                      { attrs: { id: "b-link", fill: "var(--primary)" } },
+                      [
+                        _c("rect", {
+                          attrs: { id: "b", width: "20", height: "20", rx: "4" }
+                        })
+                      ]
+                    ),
                     _c("path", {
                       attrs: {
                         id: "Shape",
