@@ -49,7 +49,7 @@
                     @endif
 
                     <div class="ml-auto text-80">
-                        <dropdown width="200" direction="rtl" active-class="" class="h-9 flex items-center">
+                        <dropdown width="200" direction="rtl" active-class="" class="h-9 flex items-center" style="right: 20px">
                             @include('nova::partials.user')
                         </dropdown>
                     </div>
