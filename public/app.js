@@ -38702,6 +38702,8 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
 
 exports.default = {
     props: ['resource', 'resourceName', 'resourceId', 'field']
@@ -38723,22 +38725,28 @@ var render = function() {
         "template",
         { slot: "value" },
         [
-          _c(
-            "router-link",
-            {
-              staticClass: "no-underline font-bold dim text-primary",
-              attrs: {
-                to: {
-                  name: "detail",
-                  params: {
-                    resourceName: _vm.field.resourceName,
-                    resourceId: _vm.field.belongsToId
+          _vm.field.value
+            ? _c(
+                "router-link",
+                {
+                  staticClass: "no-underline font-bold dim text-primary",
+                  attrs: {
+                    to: {
+                      name: "detail",
+                      params: {
+                        resourceName: _vm.field.resourceName,
+                        resourceId: _vm.field.belongsToId
+                      }
+                    }
                   }
-                }
-              }
-            },
-            [_vm._v("\n            " + _vm._s(_vm.field.value) + "\n        ")]
-          )
+                },
+                [
+                  _vm._v(
+                    "\n            " + _vm._s(_vm.field.value) + "\n        "
+                  )
+                ]
+              )
+            : _c("p", [_vm._v("—")])
         ],
         1
       )

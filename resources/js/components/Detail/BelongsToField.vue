@@ -2,6 +2,7 @@
     <panel-item :field="field">
         <template slot="value">
             <router-link
+                v-if="field.value"
                 :to="{name: 'detail', params: {
                     resourceName: field.resourceName,
                     resourceId: field.belongsToId
@@ -10,6 +11,7 @@
             >
                 {{ field.value }}
             </router-link>
+            <p v-else>&mdash;</p>
         </template>
     </panel-item>
 </template>
