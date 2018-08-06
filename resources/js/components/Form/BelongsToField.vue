@@ -7,6 +7,7 @@
                 @input="performSearch"
                 @clear="clearSelection"
                 @selected="selectResource"
+                :error="hasError"
                 :value='selectedResource'
                 :data='availableResources'
                 trackBy='value'

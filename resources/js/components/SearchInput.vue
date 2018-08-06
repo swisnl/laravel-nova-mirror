@@ -33,8 +33,6 @@
             </button>
         </div>
 
-        <div v-if="error" class="form-error">{{ error }}</div>
-
         <div v-if="show" ref="dropdown" class="form-input px-0 border border-60 absolute pin-t pin-l my-1 overflow-hidden" :style="{ width: inputWidth + 'px', zIndex: 2000 }">
 
             <div class="p-2 bg-grey-300">
@@ -97,7 +95,10 @@ export default {
         data: {},
         trackBy: {},
         searchBy: {},
-        error: {},
+        error: {
+            type: Boolean,
+            default: false,
+        },
         boundary: {},
         debounce: {
             type: Number,

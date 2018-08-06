@@ -38899,6 +38899,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 
 exports.default = {
     mixins: [_laravelNova.TogglesTrashed, _laravelNova.PerformsSearches, _laravelNova.HandlesValidationErrors],
@@ -39163,6 +39164,7 @@ var render = function() {
                   staticClass: "mb-3",
                   attrs: {
                     "data-testid": _vm.field.resourceName + "-search-input",
+                    error: _vm.hasError,
                     value: _vm.selectedResource,
                     data: _vm.availableResources,
                     trackBy: "value",
@@ -52244,8 +52246,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
 
 exports.default = {
     mixins: [_vueClickaway.mixin],
@@ -52257,7 +52257,10 @@ exports.default = {
         data: {},
         trackBy: {},
         searchBy: {},
-        error: {},
+        error: {
+            type: Boolean,
+            default: false
+        },
         boundary: {},
         debounce: {
             type: Number,
@@ -52532,10 +52535,6 @@ var render = function() {
             )
           : _vm._e()
       ]),
-      _vm._v(" "),
-      _vm.error
-        ? _c("div", { staticClass: "form-error" }, [_vm._v(_vm._s(_vm.error))])
-        : _vm._e(),
       _vm._v(" "),
       _vm.show
         ? _c(
