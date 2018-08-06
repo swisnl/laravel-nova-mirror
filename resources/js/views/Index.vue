@@ -28,7 +28,7 @@
                     dusk="search"
                     class="appearance-none form-control form-input w-search pl-search"
                     placeholder="Search"
-                    type="text"
+                    type="search"
                     v-model="search"
                     @keydown.stop="performSearch"
                 >
