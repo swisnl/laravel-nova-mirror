@@ -9,6 +9,8 @@ let colors = {
     'primary-50%': 'var(--primary-50)',
     'primary-30%': 'var(--primary-30)',
     'primary-10%': 'var(--primary-10)',
+    'sidebar-icon': 'var(--sidebar-icon)',
+    logo: 'var(--logo)',
     info: 'var(--info)',
     danger: 'var(--danger)',
     warning: 'var(--warning)',
