@@ -6,18 +6,6 @@ use Illuminate\Support\Facades\Route;
 
 class PendingRouteRegistration
 {
-    protected $path;
-
-    /**
-     * Handle the object's construction and store Nova's path .
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->path = Nova::path();
-    }
-
     /**
      * Register the Nova authentication routes.
      *
@@ -29,7 +17,7 @@ class PendingRouteRegistration
         Route::namespace('Laravel\Nova\Http\Controllers')
             ->middleware($middleware)
             ->as('nova.')
-            ->prefix($this->path)
+            ->prefix(Nova::path())
             ->group(function () {
                 Route::get('/login', 'LoginController@showLoginForm');
                 Route::post('/login', 'LoginController@login')->name('login');
@@ -52,7 +40,7 @@ class PendingRouteRegistration
         Route::namespace('Laravel\Nova\Http\Controllers')
             ->middleware($middleware)
             ->as('nova.')
-            ->prefix($this->path)
+            ->prefix(Nova::path())
             ->group(function () {
                 Route::get('/password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.request');
                 Route::post('/password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('password.email');
@@ -70,13 +58,13 @@ class PendingRouteRegistration
      */
     public function __destruct()
     {
-        Route::view($this->path, 'nova::router')
+        Route::view(Nova::path(), 'nova::router')
             ->middleware(config('nova.middleware', []))
             ->name('nova.index');
 
         Route::middleware(config('nova.middleware', []))
             ->as('nova.')
-            ->prefix($this->path)
+            ->prefix(Nova::path())
             ->get('/{view}', function () {
                 return view('nova::router');
             })
