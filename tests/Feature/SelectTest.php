@@ -8,7 +8,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Tests\IntegrationTest;
 use Laravel\Nova\Tests\Fixtures\UserResource;
 
-class FieldTest extends IntegrationTest
+class SelectTest extends IntegrationTest
 {
     public function setUp()
     {
