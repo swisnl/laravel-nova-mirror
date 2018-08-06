@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('/nova/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('/nova-assets/app.css') }}">
 
     <!-- Tool Styles -->
     @foreach(Nova::availableStyles(request()) as $name => $path)
@@ -23,9 +23,11 @@
         <div v-cloak class="flex min-h-screen">
             <!-- Sidebar -->
             <div class="min-h-screen flex-none pt-header min-h-screen w-sidebar bg-grad-sidebar px-6">
-                <div class="absolute pin-t pin-l pin-r bg-logo flex items-center w-sidebar h-header px-6 text-white">
-                    @include('nova::partials.logo')
-                </div>
+                <a href="{{ Laravel\Nova\Nova::path() }}">
+                    <div class="absolute pin-t pin-l pin-r bg-logo flex items-center w-sidebar h-header px-6 text-white">
+                       @include('nova::partials.logo')
+                    </div>
+                </a>
 
                 @foreach (Nova::availableTools(request()) as $tool)
                     {!! $tool->renderNavigation() !!}
@@ -47,24 +49,8 @@
                     @endif
 
                     <div class="ml-auto text-80">
-                        <dropdown width="200" direction="rtl" active-class="" class="h-9 flex items-center" style="right: 20px">
-                            <div slot="default" class="flex items-center" v-pre>
-                                <img src="https://secure.gravatar.com/avatar/{{ md5(auth()->user()->email) }}?size=512" class="rounded-full w-8 h-8 mr-3"/>
-
-                                <span class="text-90">
-                                    {{ auth()->user()->name }}
-                                </span>
-                            </div>
-
-                            <div slot="menu">
-                                <ul class="list-reset">
-                                    <li>
-                                        <a href="{{ Laravel\Nova\Nova::path() }}/logout" class="block no-underline text-90 hover:bg-30 p-3">
-                                            {{ __('Logout') }}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                        <dropdown width="200" direction="rtl" active-class="" class="h-9 flex items-center">
+                            @include('nova::partials.user')
                         </dropdown>
                     </div>
                 </div>
@@ -75,7 +61,7 @@
                     <p class="mt-8 text-center text-xs text-80">
                         <a href="http://nova.laravel.com" class="text-primary dim no-underline">Laravel Nova</a>
                         <span class="px-1">&middot;</span>
-                        &copy; {{ date('Y') }} Laravel LLC - By Taylor Otwell, David Hemphill, and Steve Schoger.
+                        &copy; {{ date('Y') }} Laravel LLC - By Taylor Otwell, David Hemphill and Steve Schoger.
                         <span class="px-1">&middot;</span>
                         v{{ Laravel\Nova\Nova::version() }}
                     </p>
@@ -89,9 +75,9 @@
     </script>
 
     <!-- Scripts -->
-    <script src="/nova/manifest.js"></script>
-    <script src="/nova/vendor.js"></script>
-    <script src="/nova/app.js"></script>
+    <script src="/nova-assets/manifest.js"></script>
+    <script src="/nova-assets/vendor.js"></script>
+    <script src="/nova-assets/app.js"></script>
 
     <!-- Build Nova Instance -->
     <script>

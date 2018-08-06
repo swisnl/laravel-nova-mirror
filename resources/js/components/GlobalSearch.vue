@@ -19,7 +19,6 @@
                     @keydown.stop=""
                     @keydown.enter.stop="goToCurrentlySelectedResource"
                     @keydown.esc.stop="closeSearch"
-                    @blur="closeSearch"
                     @focus="openSearch"
                     @keydown.down.prevent="move(1)"
                     @keydown.up.prevent="move(-1)"
@@ -47,16 +46,10 @@
                             :key="item.resourceName + ' ' + item.index"
                             :ref="item.index === highlightedResultIndex ? 'selected' : null"
                         >
-                            <router-link :to="{
-                                    name: 'detail',
-                                    params: {
-                                        resourceName: item.resourceName,
-                                        resourceId: item.resourceId,
-                                    }
-                                }"
+                            <a
                                 :dusk="item.resourceName + ' ' + item.index"
-                                @click.native="closeSearch"
-                                class="flex items-center hover:bg-20 block py-2 px-3 no-underline font-normal"
+                                @click.prevent="navigate(item.index)"
+                                class="cursor-pointer flex items-center hover:bg-20 block py-2 px-3 no-underline font-normal"
                                 :class="{
                                     'bg-white': highlightedResultIndex != item.index,
                                     'bg-20': highlightedResultIndex == item.index,
@@ -68,7 +61,7 @@
                                     <p class="text-90">{{ item.title }}</p>
                                     <p v-if="item.subTitle" class="text-xs mt-1 text-80">{{ item.subTitle }}</p>
                                 </div>
-                            </router-link>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -87,6 +80,12 @@ export default {
         results: [],
         highlightedResultIndex: 0,
     }),
+
+    watch: {
+        $route: function () {
+            this.closeSearch()
+        }
+    },
 
     mounted() {
         // Open search menu if the user types '/'
@@ -202,6 +201,11 @@ export default {
                     }
                 }
             })
+        },
+
+        navigate(index) {
+            this.highlightedResultIndex = index
+            this.goToCurrentlySelectedResource()
         },
 
         goToCurrentlySelectedResource() {

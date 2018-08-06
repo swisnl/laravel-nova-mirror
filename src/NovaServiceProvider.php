@@ -47,7 +47,7 @@ class NovaServiceProvider extends ServiceProvider
         ], 'nova-config');
 
         $this->publishes([
-            __DIR__.'/../public' => public_path('nova'),
+            __DIR__.'/../public' => public_path('nova-assets'),
         ], 'nova-assets');
 
         $this->publishes([
@@ -55,8 +55,12 @@ class NovaServiceProvider extends ServiceProvider
         ], 'nova-lang');
 
         $this->publishes([
-            __DIR__.'/../resources/views/partials/logo.blade.php' => resource_path('views/vendor/nova/partials/logo.blade.php'),
+            __DIR__.'/../resources/views/partials' => resource_path('views/vendor/nova/partials'),
         ], 'nova-views');
+
+        $this->publishes([
+            __DIR__.'/../database/migrations' => database_path('migrations'),
+        ], 'nova-migrations');
     }
 
     /**
@@ -97,6 +101,7 @@ class NovaServiceProvider extends ServiceProvider
     {
         return [
             'namespace' => 'Laravel\Nova\Http\Controllers',
+            'as' => 'nova.api.',
             'prefix' => 'nova-api',
             'middleware' => config('nova.middleware', []),
         ];

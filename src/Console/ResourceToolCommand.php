@@ -6,9 +6,12 @@ use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
+use Laravel\Nova\Console\Concerns\AcceptsNameAndVendor;
 
 class ResourceToolCommand extends Command
 {
+    use AcceptsNameAndVendor;
+
     /**
      * The name and signature of the console command.
      *
@@ -30,6 +33,10 @@ class ResourceToolCommand extends Command
      */
     public function handle()
     {
+        if (! $this->hasValidNameArgument()) {
+            return;
+        }
+
         (new Filesystem)->copyDirectory(
             __DIR__.'/resource-tool-stubs',
             $this->toolPath()

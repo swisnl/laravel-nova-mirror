@@ -60,7 +60,7 @@
                         <div slot="menu">
                             <div class="p-4">
                                 <ul class="list-reset">
-                                    <li class="flex items-center mb-6">
+                                    <li class="flex items-center mb-4">
                                         <label
                                             class="flex items-center"
                                             @input="toggleSelectAll"

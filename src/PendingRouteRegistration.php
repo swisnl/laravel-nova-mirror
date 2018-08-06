@@ -14,11 +14,15 @@ class PendingRouteRegistration
      */
     public function withAuthenticationRoutes($middleware = ['web'])
     {
-        Route::namespace('Laravel\Nova\Http\Controllers')->middleware($middleware)->group(function () {
-            Route::get(Nova::path().'/login', 'LoginController@showLoginForm');
-            Route::post(Nova::path().'/login', 'LoginController@login')->name('nova.login');
-            Route::get(Nova::path().'/logout', 'LoginController@logout');
-        });
+        Route::namespace('Laravel\Nova\Http\Controllers')
+            ->middleware($middleware)
+            ->as('nova.')
+            ->prefix(Nova::path())
+            ->group(function () {
+                Route::get('/login', 'LoginController@showLoginForm');
+                Route::post('/login', 'LoginController@login')->name('login');
+                Route::get('/logout', 'LoginController@logout');
+            });
 
         return $this;
     }
@@ -33,12 +37,16 @@ class PendingRouteRegistration
     {
         Nova::$resetsPasswords = true;
 
-        Route::namespace('Laravel\Nova\Http\Controllers')->middleware($middleware)->group(function () {
-            Route::get(Nova::path().'/password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('nova.password.request');
-            Route::post(Nova::path().'/password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('nova.password.email');
-            Route::get(Nova::path().'/password/reset/{token}', 'ResetPasswordController@showResetForm')->name('nova.password.reset');
-            Route::post(Nova::path().'/password/reset', 'ResetPasswordController@reset');
-        });
+        Route::namespace('Laravel\Nova\Http\Controllers')
+            ->middleware($middleware)
+            ->as('nova.')
+            ->prefix(Nova::path())
+            ->group(function () {
+                Route::get('/password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.request');
+                Route::post('/password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+                Route::get('/password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
+                Route::post('/password/reset', 'ResetPasswordController@reset');
+            });
 
         return $this;
     }
@@ -50,10 +58,16 @@ class PendingRouteRegistration
      */
     public function __destruct()
     {
-        Route::view(Nova::path(), 'nova::router')->middleware(config('nova.middleware', []));
+        Route::view(Nova::path(), 'nova::router')
+            ->middleware(config('nova.middleware', []))
+            ->name('nova.index');
 
-        Route::middleware(config('nova.middleware', []))->get(Nova::path().'/{view}', function ($view) {
-            return view('nova::router');
-        })->where('view', '.*');
+        Route::middleware(config('nova.middleware', []))
+            ->as('nova.')
+            ->prefix(Nova::path())
+            ->get('/{view}', function () {
+                return view('nova::router');
+            })
+            ->where('view', '.*');
     }
 }

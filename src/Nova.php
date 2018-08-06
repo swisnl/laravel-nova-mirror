@@ -444,6 +444,7 @@ class Nova
     /**
      * Resolve the user's preferred timezone.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return string
      */
     public static function resolveUserTimezone(Request $request)

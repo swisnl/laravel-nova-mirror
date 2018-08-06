@@ -16875,7 +16875,7 @@ var render = function() {
                                       _c(
                                         "li",
                                         {
-                                          staticClass: "flex items-center mb-6"
+                                          staticClass: "flex items-center mb-4"
                                         },
                                         [
                                           _c(
@@ -34959,7 +34959,8 @@ var render = function() {
   return _c("p", [
     _vm.field.thumbnailUrl
       ? _c("img", {
-          staticClass: "rounded-full w-8 h-auto min-w-8",
+          staticClass: "rounded-full w-8 h-8",
+          staticStyle: { "object-fit": "cover" },
           attrs: { src: _vm.field.thumbnailUrl }
         })
       : _c("span", [_vm._v("—")])
@@ -45021,8 +45022,7 @@ var render = function() {
             ? _c(
                 "button",
                 {
-                  staticClass:
-                    "text-left w-full leading-normal text-sm dim text-90 my-2",
+                  staticClass: "text-left w-full leading-normal dim my-2",
                   attrs: { dusk: "delete-selected-button" },
                   on: { click: _vm.confirmDeleteSelectedResources }
                 },
@@ -45046,7 +45046,7 @@ var render = function() {
                 "button",
                 {
                   staticClass:
-                    "text-left w-full leading-normal text-sm dim text-90 my-2",
+                    "text-left w-full leading-normal dim text-90 my-2",
                   attrs: { dusk: "restore-selected-button" },
                   on: { click: _vm.confirmRestore }
                 },
@@ -45068,7 +45068,7 @@ var render = function() {
                 "button",
                 {
                   staticClass:
-                    "text-left w-full leading-normal text-sm dim text-90 my-2",
+                    "text-left w-full leading-normal dim text-90 my-2",
                   attrs: { dusk: "force-delete-selected-button" },
                   on: { click: _vm.confirmForceDeleteSelectedResources }
                 },
@@ -47415,6 +47415,12 @@ exports.default = {
         };
     },
 
+    watch: {
+        $route: function $route() {
+            this.closeSearch();
+        }
+    },
+
     mounted: function mounted() {
         // Open search menu if the user types '/'
         document.addEventListener('keydown', this.handleKeydown);
@@ -47555,6 +47561,10 @@ exports.default = {
                 }
             });
         },
+        navigate: function navigate(index) {
+            this.highlightedResultIndex = index;
+            this.goToCurrentlySelectedResource();
+        },
         goToCurrentlySelectedResource: function goToCurrentlySelectedResource() {
             var _this2 = this;
 
@@ -47609,13 +47619,6 @@ exports.default = {
         }
     }
 }; //
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -47796,7 +47799,6 @@ var render = function() {
                   _vm.move(-1)
                 }
               ],
-              blur: _vm.closeSearch,
               focus: _vm.openSearch
             }
           })
@@ -47845,28 +47847,22 @@ var render = function() {
                       },
                       [
                         _c(
-                          "router-link",
+                          "a",
                           {
                             staticClass:
-                              "flex items-center hover:bg-20 block py-2 px-3 no-underline font-normal",
+                              "cursor-pointer flex items-center hover:bg-20 block py-2 px-3 no-underline font-normal",
                             class: {
                               "bg-white":
                                 _vm.highlightedResultIndex != item.index,
                               "bg-20": _vm.highlightedResultIndex == item.index
                             },
                             attrs: {
-                              to: {
-                                name: "detail",
-                                params: {
-                                  resourceName: item.resourceName,
-                                  resourceId: item.resourceId
-                                }
-                              },
                               dusk: item.resourceName + " " + item.index
                             },
-                            nativeOn: {
+                            on: {
                               click: function($event) {
-                                return _vm.closeSearch($event)
+                                $event.preventDefault()
+                                _vm.navigate(item.index)
                               }
                             }
                           },
@@ -47893,8 +47889,7 @@ var render = function() {
                             ])
                           ]
                         )
-                      ],
-                      1
+                      ]
                     )
                   })
                 )
@@ -49832,11 +49827,13 @@ var render = function() {
     _vm._l(_vm.lenses, function(lens) {
       return _c(
         "div",
+        { staticClass: "px-3" },
         [
           _c(
             "router-link",
             {
-              staticClass: "dim block text-base text-90 no-underline",
+              staticClass:
+                "dim block text-base text-90 no-underline leading-normal my-2",
               attrs: {
                 to: {
                   name: "lens",

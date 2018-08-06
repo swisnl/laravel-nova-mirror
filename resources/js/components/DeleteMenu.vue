@@ -8,13 +8,13 @@
 
         <div class="px-6 py-3" slot="menu">
             <!-- Delete Menu -->
-            <button dusk="delete-selected-button" class="text-left w-full leading-normal text-sm dim text-90 my-2" @click="confirmDeleteSelectedResources"
+            <button dusk="delete-selected-button" class="text-left w-full leading-normal dim my-2" @click="confirmDeleteSelectedResources"
                 v-if="authorizedToDeleteSelectedResources || allMatchingSelected">
                     {{ viaManyToMany ? 'Detach' : 'Delete' }} Selected ({{ selectedResourcesCount }})
             </button>
 
             <!-- Restore Resources -->
-            <button dusk="restore-selected-button" class="text-left w-full leading-normal text-sm dim text-90 my-2" @click="confirmRestore"
+            <button dusk="restore-selected-button" class="text-left w-full leading-normal dim text-90 my-2" @click="confirmRestore"
                 v-if="softDeletes &&
                       ! viaManyToMany &&
                       (softDeletedResourcesSelected || allMatchingSelected) &&
@@ -23,7 +23,7 @@
             </button>
 
             <!-- Force Delete Resources -->
-            <button dusk="force-delete-selected-button" class="text-left w-full leading-normal text-sm dim text-90 my-2" @click="confirmForceDeleteSelectedResources"
+            <button dusk="force-delete-selected-button" class="text-left w-full leading-normal dim text-90 my-2" @click="confirmForceDeleteSelectedResources"
                 v-if="softDeletes && ! viaManyToMany &&
                       (authorizedToForceDeleteSelectedResources || allMatchingSelected)">
                 Force Delete Selected ({{ selectedResourcesCount }})

@@ -78,6 +78,17 @@ class Code extends Field
     }
 
     /**
+     * Define the language syntax highlighting mode for the field.
+     *
+     * @param  string  $language
+     * @return $this
+     */
+    public function language($language)
+    {
+        return $this->options(['mode' => $language]);
+    }
+
+    /**
      * Set configuration options for the code editor instance.
      *
      * @param  array  $options
