@@ -34850,6 +34850,7 @@ exports.default = {
 //
 //
 //
+//
 
 /***/ }),
 /* 695 */
@@ -34895,7 +34896,9 @@ var render = function() {
             }
           },
           [
-            _c("option", { attrs: { value: "", selected: "", disabled: "" } }),
+            _c("option", { attrs: { value: "", selected: "", disabled: "" } }, [
+              _vm._v("\n                Choose an option\n            ")
+            ]),
             _vm._v(" "),
             _vm._l(_vm.field.options, function(option) {
               return _c(
