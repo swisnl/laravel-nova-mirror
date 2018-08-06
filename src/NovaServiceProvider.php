@@ -55,11 +55,11 @@ class NovaServiceProvider extends ServiceProvider
         ], 'nova-lang');
 
         $this->publishes([
-            __DIR__.'/../resources/views/partials/logo.blade.php' => resource_path('views/vendor/nova/partials/logo.blade.php'),
+            __DIR__.'/../resources/views/partials' => resource_path('views/vendor/nova/partials'),
         ], 'nova-views');
 
         $this->publishes([
-            __DIR__.'/../database/migrations/2018_01_01_000000_create_action_events_table.php' => database_path('migrations/2018_01_01_000000_create_action_events_table.php'),
+            __DIR__.'/../database/migrations' => database_path('migrations'),
         ], 'nova-migrations');
     }
 
