@@ -25,4 +25,18 @@ class Select extends Field
             })->values()->all(),
         ]);
     }
+
+    /**
+     * Display values using the specified labels.
+     *
+     * @return $this
+     */
+    public function displayUsingLabels()
+    {
+        return $this->displayUsing(function ($value) {
+            return collect($this->meta['options'])
+                ->where('value2', $value)
+                ->first()['label'] ?? $value;
+        });
+    }
 }
