@@ -45,4 +45,17 @@ class FieldTest extends IntegrationTest
 
         $this->assertEquals('TAYLOR', $field->value);
     }
+
+    public function test_computed_fields_resolve()
+    {
+        $field = Text::make('InvokableComputed', function () {
+            return 'Computed';
+        });
+
+        $field->resolve((object) []);
+        $this->assertEquals('Computed', $field->value);
+
+        $field->resolveForDisplay((object) []);
+        $this->assertEquals('Computed', $field->value);
+    }
 }
