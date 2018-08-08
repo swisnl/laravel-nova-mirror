@@ -13,9 +13,7 @@
         {{ field.resourceLabel }}: {{ field.value }}
     </router-link>
 
-    <span v-else>
-        -
-    </span>
+    <span v-else>&mdash;</span>
 </template>
 
 <script>
