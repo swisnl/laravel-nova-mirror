@@ -39,9 +39,9 @@
                 <div class="flex items-center relative shadow h-header bg-white z-50 px-6">
 
                     @if (! empty(Config::get('nova.name')))
-                        <div class="font-bold text-90 mr-6">
+                        <a href="{{ Config::get('nova.url') }}" class="no-underline dim font-bold text-90 mr-6">
                             {{ Config::get('nova.name') }}
-                        </div>
+                        </a>
                     @endif
 
                     @if (count(Nova::globallySearchableResources(request())) > 0)

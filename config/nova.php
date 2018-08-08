@@ -22,6 +22,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Nova App URL
+    |--------------------------------------------------------------------------
+    |
+    | This URL is used to make the application name a shortcut link in the nav
+    | bar to give you an easy method of viewing your application. It can be
+    | changed to any other URL if you'd like it to link somewhere else.
+    |
+    */
+    'url' => env('APP_URL', '/'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Nova Route Middleware
     |--------------------------------------------------------------------------
     |
