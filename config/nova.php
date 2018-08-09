@@ -35,6 +35,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Nova Path
+    |--------------------------------------------------------------------------
+    |
+    | This is the URI path where Nova will be accessible from. Feel free to set
+    | it to anything you like, for example: `/admin`. Please note, this value
+    | does not influence Nova's API routes, just Nova's public-facing path.
+    |
+    */
+
+    'path' => '/nova',
+
+    /*
+    |--------------------------------------------------------------------------
     | Nova Route Middleware
     |--------------------------------------------------------------------------
     |
