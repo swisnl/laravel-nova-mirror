@@ -904,9 +904,8 @@ CodeMirror.defineMode("xml", function(editorConf, config_) {
         stream.next();
       }
       return style;
-    }
+    };
   }
-
   function doctype(depth) {
     return function(stream, state) {
       var ch;
@@ -23638,9 +23637,18 @@ exports.default = {
          */
         inputMax: function inputMax() {
             return this.field.max;
+        },
+
+
+        /**
+         * Get the pattern that should be used for the field
+         */
+        inputPattern: function inputPattern() {
+            return this.field.pattern;
         }
     }
 }; //
+//
 //
 //
 //
@@ -23695,6 +23703,7 @@ var render = function() {
                 min: _vm.inputMin,
                 max: _vm.inputMax,
                 step: _vm.inputStep,
+                pattern: _vm.inputPattern,
                 placeholder: _vm.field.name,
                 type: "checkbox"
               },
@@ -23744,6 +23753,7 @@ var render = function() {
                   min: _vm.inputMin,
                   max: _vm.inputMax,
                   step: _vm.inputStep,
+                  pattern: _vm.inputPattern,
                   placeholder: _vm.field.name,
                   type: "radio"
                 },
@@ -23772,6 +23782,7 @@ var render = function() {
                   min: _vm.inputMin,
                   max: _vm.inputMax,
                   step: _vm.inputStep,
+                  pattern: _vm.inputPattern,
                   placeholder: _vm.field.name,
                   type: _vm.inputType
                 },

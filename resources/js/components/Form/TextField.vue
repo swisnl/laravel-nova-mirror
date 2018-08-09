@@ -8,6 +8,7 @@
                 :min="inputMin"
                 :max="inputMax"
                 :step="inputStep"
+                :pattern="inputPattern"
                 v-model="value"
                 class="w-full form-control form-input form-input-bordered"
                 :class="errorClasses"
@@ -54,6 +55,13 @@ export default {
          */
         inputMax() {
             return this.field.max
+        },
+
+        /**
+         * Get the pattern that should be used for the field
+         */
+        inputPattern() {
+            return this.field.pattern
         },
     },
 }
