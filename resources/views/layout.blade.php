@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=1280">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Laravel Nova</title>
+    <title>{{ Nova::name() }}</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i" rel="stylesheet">
@@ -23,7 +23,7 @@
         <div v-cloak class="flex min-h-screen">
             <!-- Sidebar -->
             <div class="min-h-screen flex-none pt-header min-h-screen w-sidebar bg-grad-sidebar px-6">
-                <a href="{{ Laravel\Nova\Nova::path() }}">
+                <a href="{{ Nova::path() }}">
                     <div class="absolute pin-t pin-l pin-r bg-logo flex items-center w-sidebar h-header px-6 text-white">
                        @include('nova::partials.logo')
                     </div>
@@ -37,12 +37,9 @@
             <!-- Content -->
             <div class="content">
                 <div class="flex items-center relative shadow h-header bg-white z-50 px-6">
-
-                    @if (! empty(Config::get('nova.name')))
-                        <a href="{{ Config::get('nova.url') }}" class="no-underline dim font-bold text-90 mr-6">
-                            {{ Config::get('nova.name') }}
-                        </a>
-                    @endif
+                    <a href="{{ Config::get('nova.url') }}" class="no-underline dim font-bold text-90 mr-6">
+                        {{ Nova::name() }}
+                    </a>
 
                     @if (count(Nova::globallySearchableResources(request())) > 0)
                         <global-search></global-search>
