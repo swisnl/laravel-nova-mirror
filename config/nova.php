@@ -25,9 +25,9 @@ return [
     | Nova App URL
     |--------------------------------------------------------------------------
     |
-    | This URL is used to make the application name a shortcut link in the nav
-    | bar to give you an easy method of viewing your application. It can be
-    | changed to any other URL if you'd like it to link somewhere else.
+    | This URL is where users will be directed when clicking the application
+    | name in the Nova navigation bar. You are free to change this URL to
+    | any location you wish depending on the needs of your application.
     |
     */
 
@@ -38,9 +38,9 @@ return [
     | Nova Path
     |--------------------------------------------------------------------------
     |
-    | This is the URI path where Nova will be accessible from. Feel free to set
-    | it to anything you like, for example: `/admin`. Please note, this value
-    | does not influence Nova's API routes, just Nova's public-facing path.
+    | This is the URI path where Nova will be accessible from. Feel free to
+    | this path to anything you like. Note that this URI will not affect
+    | Nova's internal API routes which are never exposed to the users.
     |
     */
 
