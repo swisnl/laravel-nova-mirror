@@ -119,6 +119,16 @@ class Nova
     }
 
     /**
+     * Get the app name utilized by Nova.
+     *
+     * @return string
+     */
+    public static function name()
+    {
+        return config('nova.name', 'Nova Site');
+    }
+
+    /**
      * Get the URI path prefix utilized by Nova.
      *
      * @return string
