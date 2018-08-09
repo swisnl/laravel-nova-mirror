@@ -38,9 +38,9 @@ return [
     | Nova Path
     |--------------------------------------------------------------------------
     |
-    | This is the path where Nova will be accessible from. Feel free to set it
-    | to anything you like, for example: `/adminland`. However this value
-    | does not influrence Nova's API routes, just the frontend of it.
+    | This is the URI path where Nova will be accessible from. Feel free to set
+    | it to anything you like, for example: `/admin`. Please note, this value
+    | does not influence Nova's API routes, just Nova's public-facing path.
     |
     */
 
