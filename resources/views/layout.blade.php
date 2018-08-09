@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=1280">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Laravel Nova</title>
+    @php($name = Config::get('nova.name'))
+
+    <title>{{ empty($name) ? 'Laravel Nova' : $name }}</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i" rel="stylesheet">
@@ -38,11 +40,11 @@
             <div class="content">
                 <div class="flex items-center relative shadow h-header bg-white z-50 px-6">
 
-                    @if (! empty(Config::get('nova.name')))
+                    @unless (empty($name))
                         <a href="{{ Config::get('nova.url') }}" class="no-underline dim font-bold text-90 mr-6">
-                            {{ Config::get('nova.name') }}
+                            {{ $name }}
                         </a>
-                    @endif
+                    @endunless
 
                     @if (count(Nova::globallySearchableResources(request())) > 0)
                         <global-search></global-search>
