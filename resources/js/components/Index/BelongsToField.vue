@@ -13,9 +13,7 @@
             </router-link>
         </span>
 
-        <span v-else>
-            -
-        </span>
+        <span v-else>&mdash;</span>
     </span>
 </template>
 
