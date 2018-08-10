@@ -15966,6 +15966,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 
 exports.default = {
     mixins: [_laravelNova.Deletable, _laravelNova.Filterable, _laravelNova.HasCards, _laravelNova.Paginatable, _laravelNova.PerPageable, _laravelNova.InteractsWithResourceInformation, _laravelNova.InteractsWithQueryString],
@@ -16791,6 +16792,7 @@ var render = function() {
                         $event.stopPropagation()
                         return _vm.performSearch($event)
                       },
+                      search: _vm.performSearch,
                       input: function($event) {
                         if ($event.target.composing) {
                           return
@@ -38587,8 +38589,6 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
-//
-//
 
 exports.default = {
     props: ['resourceName', 'field']
@@ -38630,7 +38630,7 @@ var render = function() {
           ],
           1
         )
-      : _c("span", [_vm._v("\n        -\n    ")])
+      : _c("span", [_vm._v("—")])
   ])
 }
 var staticRenderFns = []
@@ -39666,8 +39666,6 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
-//
-//
 
 exports.default = {
     props: ['resourceName', 'field']
@@ -39706,7 +39704,7 @@ var render = function() {
           )
         ]
       )
-    : _c("span", [_vm._v("\n    -\n")])
+    : _c("span", [_vm._v("—")])
 }
 var staticRenderFns = []
 render._withStripped = true

@@ -31,6 +31,7 @@
                     type="search"
                     v-model="search"
                     @keydown.stop="performSearch"
+                    @search="performSearch"
                 >
             </div>
 
@@ -411,7 +412,7 @@ export default {
      */
     destroyed() {
         if (this.actionEventsRefresher) {
-            clearInterval(this.actionEventsRefresher);
+            clearInterval(this.actionEventsRefresher)
         }
 
         document.removeEventListener('keydown', this.handleKeydown)
