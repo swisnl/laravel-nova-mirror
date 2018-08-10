@@ -39,8 +39,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | This is the URI path where Nova will be accessible from. Feel free to
-    | this path to anything you like. Note that this URI will not affect
-    | Nova's internal API routes which are never exposed to the users.
+    | change this path to anything you like. Note that this URI will not
+    | affect Nova's internal API routes which aren't exposed to users.
     |
     */
 
