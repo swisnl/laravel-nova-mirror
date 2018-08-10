@@ -19,7 +19,7 @@ class Currency extends Number
         $this->withMeta(['step' => '0.01']);
 
         $this->displayUsing(function ($value) {
-            return money_format('%i', $value);
+            return $value ? money_format('%i', $value) : null;
         });
     }
 
