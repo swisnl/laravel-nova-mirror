@@ -68,9 +68,6 @@ class ToolCommand extends Command
         $this->replace('{{ namespace }}', $this->toolNamespace(), $this->toolPath().'/src/Http/Middleware/Authorize.stub');
         $this->replace('{{ class }}', $this->toolClass(), $this->toolPath().'/src/Http/Middleware/Authorize.stub');
 
-        // routes/api.php replacements...
-        $this->replace('{{ namespace }}', $this->toolNamespace(), $this->toolPath().'/routes/api.stub');
-
         // Navigation replacements...
         $this->replace('{{ title }}', $this->toolTitle(), $this->toolPath().'/resources/views/navigation.blade.php');
         $this->replace('{{ component }}', $this->toolName(), $this->toolPath().'/resources/views/navigation.blade.php');
