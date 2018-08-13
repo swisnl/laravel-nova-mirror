@@ -11,15 +11,16 @@ class Authenticate extends BaseAuthenticationMiddleware
     /**
      * Determine if the user is logged in to any of the given guards.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  array  $guards
      * @return void
      *
      * @throws \Illuminate\Auth\AuthenticationException
      */
-    protected function authenticate(array $guards)
+    protected function authenticate($request, array $guards)
     {
         try {
-            return parent::authenticate($guards);
+            return parent::authenticate($request, $guards);
         } catch (AuthenticationException $e) {
             throw new NovaAuthenticationException('Unauthenticated.', $e->guards());
         }
