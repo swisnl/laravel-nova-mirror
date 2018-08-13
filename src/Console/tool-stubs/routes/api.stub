@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/nova-api/{{ name }}/endpoint', function (Request $request) {
+// Route::get('/endpoint', function (Request $request) {
 //     //
 // });
