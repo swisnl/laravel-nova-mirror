@@ -2,6 +2,7 @@
 
 namespace Laravel\Nova;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Http\Middleware\ServeNova;
 use Illuminate\Contracts\Http\Kernel as HttpKernel;
@@ -27,6 +28,8 @@ class NovaCoreServiceProvider extends ServiceProvider
         if (! $this->app->configurationIsCached()) {
             $this->mergeConfigFrom(__DIR__.'/../config/nova.php', 'nova');
         }
+
+        Route::middlewareGroup('nova', config('nova.middleware', []));
 
         $this->app->make(HttpKernel::class)
                     ->pushMiddleware(ServeNova::class);

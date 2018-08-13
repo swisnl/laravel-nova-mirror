@@ -103,7 +103,7 @@ class NovaServiceProvider extends ServiceProvider
             'namespace' => 'Laravel\Nova\Http\Controllers',
             'as' => 'nova.api.',
             'prefix' => 'nova-api',
-            'middleware' => config('nova.middleware', []),
+            'middleware' => 'nova',
         ];
     }
 
