@@ -2,10 +2,18 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use {{ namespace }}\Http\Middleware\Authorize;
 
-// Route::middleware(['nova', Authorize::class])->group(function () {
-//     Route::get('/nova-api/{{ name }}/endpoint', function (Request $request) {
+/*
+|--------------------------------------------------------------------------
+| Tool API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you may register API routes for your tool. These routes
+| are loaded by the ServiceProvider of your tool. They are protected
+| by your tool's "Authorize" middleware by default. Now, go build!
+|
+*/
 
-//     });
+// Route::get('/nova-api/{{ name }}/endpoint', function (Request $request) {
+//     //
 // });
