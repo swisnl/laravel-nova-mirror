@@ -63,10 +63,12 @@ class ToolCommand extends Command
         $this->replace('{{ namespace }}', $this->toolNamespace(), $this->toolPath().'/src/ToolServiceProvider.stub');
         $this->replace('{{ component }}', $this->toolName(), $this->toolPath().'/src/ToolServiceProvider.stub');
 
-        (new Filesystem)->move(
-            $this->toolPath().'/src/ToolServiceProvider.stub',
-            $this->toolPath().'/src/ToolServiceProvider.php'
-        );
+        // Authorize.php replacements...
+        $this->replace('{{ namespace }}', $this->toolNamespace(), $this->toolPath().'/src/Http/Middleware/Authorize.stub');
+        $this->replace('{{ class }}', $this->toolClass(), $this->toolPath().'/src/Http/Middleware/Authorize.stub');
+
+        // routes/api.php replacements...
+        $this->replace('{{ namespace }}', $this->toolNamespace(), $this->toolPath().'/src/routes/api.php');
 
         // Navigation replacements...
         $this->replace('{{ title }}', $this->toolTitle(), $this->toolPath().'/resources/views/navigation.blade.php');
@@ -75,6 +77,9 @@ class ToolCommand extends Command
         // Tool composer.json replacements...
         $this->replace('{{ name }}', $this->argument('name'), $this->toolPath().'/composer.json');
         $this->replace('{{ escapedNamespace }}', $this->escapedToolNamespace(), $this->toolPath().'/composer.json');
+
+        // Rename the stubs with the proper file extensions...
+        $this->renameStubs();
 
         // Register the tool...
         $this->addToolRepositoryToRootComposer();
@@ -96,6 +101,20 @@ class ToolCommand extends Command
         if ($this->confirm('Would you like to update your Composer packages?', true)) {
             $this->composerUpdate();
         }
+    }
+
+    /**
+     * Get the array of stubs that need PHP file extensions.
+     *
+     * @return array
+     */
+    protected function stubsToRename()
+    {
+        return [
+            $this->toolPath().'/src/ToolServiceProvider.stub',
+            $this->toolPath().'/src/Http/Middleware/Authorize.stub',
+            $this->toolPath().'/src/routes/api.stub',
+        ];
     }
 
     /**

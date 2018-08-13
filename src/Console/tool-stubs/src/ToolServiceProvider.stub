@@ -17,8 +17,24 @@ class ToolServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', '{{ component }}');
 
+        $this->routes();
+
         Nova::serving(function (ServingNova $event) {
             //
+        });
+    }
+
+    /**
+     * Register the tool's routes.
+     *
+     * @return void
+     */
+    protected function routes()
+    {
+        $this->app->booted(function () {
+            if (! $this->app->routesAreCached()) {
+                require __DIR__.'/../routes/api.php';
+            }
         });
     }
 
