@@ -10,7 +10,7 @@ use Laravel\Nova\Console\Concerns\AcceptsNameAndVendor;
 
 class ResourceToolCommand extends Command
 {
-    use AcceptsNameAndVendor;
+    use AcceptsNameAndVendor, RenamesStubs;
 
     /**
      * The name and signature of the console command.
