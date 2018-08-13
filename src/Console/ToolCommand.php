@@ -10,7 +10,7 @@ use Laravel\Nova\Console\Concerns\AcceptsNameAndVendor;
 
 class ToolCommand extends Command
 {
-    use AcceptsNameAndVendor;
+    use AcceptsNameAndVendor, RenamesStubs;
 
     /**
      * The name and signature of the console command.
@@ -68,7 +68,8 @@ class ToolCommand extends Command
         $this->replace('{{ class }}', $this->toolClass(), $this->toolPath().'/src/Http/Middleware/Authorize.stub');
 
         // routes/api.php replacements...
-        $this->replace('{{ namespace }}', $this->toolNamespace(), $this->toolPath().'/src/routes/api.php');
+        $this->replace('{{ namespace }}', $this->toolNamespace(), $this->toolPath().'/routes/api.stub');
+        $this->replace('{{ name }}', $this->argument('name'), $this->toolPath().'/routes/api.stub');
 
         // Navigation replacements...
         $this->replace('{{ title }}', $this->toolTitle(), $this->toolPath().'/resources/views/navigation.blade.php');
@@ -113,7 +114,7 @@ class ToolCommand extends Command
         return [
             $this->toolPath().'/src/ToolServiceProvider.stub',
             $this->toolPath().'/src/Http/Middleware/Authorize.stub',
-            $this->toolPath().'/src/routes/api.stub',
+            $this->toolPath().'/routes/api.stub',
         ];
     }
 

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use {{ namespace }}\Http\Middleware\Authorize;
 
 // Route::middleware(['nova', Authorize::class])->group(function () {
-//     Route::get('/nova-api/your-endpoint', function (Request $request) {
+//     Route::get('/nova-api/{{ name }}/endpoint', function (Request $request) {
 
 //     });
 // });
