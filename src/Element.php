@@ -65,7 +65,7 @@ abstract class Element implements JsonSerializable
      */
     public function authorize(Request $request)
     {
-        return true && $this->authorizedToSee($request);
+        return $this->authorizedToSee($request);
     }
 
     /**
