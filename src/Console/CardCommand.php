@@ -10,7 +10,7 @@ use Laravel\Nova\Console\Concerns\AcceptsNameAndVendor;
 
 class CardCommand extends Command
 {
-    use AcceptsNameAndVendor;
+    use AcceptsNameAndVendor, RenamesStubs;
 
     /**
      * The name and signature of the console command.
@@ -59,15 +59,14 @@ class CardCommand extends Command
         // CardServiceProvider.php replacements...
         $this->replace('{{ namespace }}', $this->cardNamespace(), $this->cardPath().'/src/CardServiceProvider.stub');
         $this->replace('{{ component }}', $this->cardName(), $this->cardPath().'/src/CardServiceProvider.stub');
-
-        (new Filesystem)->move(
-            $this->cardPath().'/src/CardServiceProvider.stub',
-            $this->cardPath().'/src/CardServiceProvider.php'
-        );
+        $this->replace('{{ name }}', $this->cardName(), $this->cardPath().'/src/CardServiceProvider.stub');
 
         // Card composer.json replacements...
         $this->replace('{{ name }}', $this->argument('name'), $this->cardPath().'/composer.json');
         $this->replace('{{ escapedNamespace }}', $this->escapedCardNamespace(), $this->cardPath().'/composer.json');
+
+        // Rename the stubs with the proper file extensions...
+        $this->renameStubs();
 
         // Register the card...
         $this->addCardRepositoryToRootComposer();
@@ -89,6 +88,19 @@ class CardCommand extends Command
         if ($this->confirm('Would you like to update your Composer packages?', true)) {
             $this->composerUpdate();
         }
+    }
+
+    /**
+     * Get the array of stubs that need PHP file extensions.
+     *
+     * @return array
+     */
+    protected function stubsToRename()
+    {
+        return [
+            $this->cardPath().'/src/CardServiceProvider.stub',
+            $this->cardPath().'/routes/api.stub',
+        ];
     }
 
     /**
