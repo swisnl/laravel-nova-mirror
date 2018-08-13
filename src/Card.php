@@ -4,8 +4,6 @@ namespace Laravel\Nova;
 
 abstract class Card extends Element
 {
-    use AuthorizesRequests;
-
     /**
      * The width of the card (1/3, 1/2, or full).
      *

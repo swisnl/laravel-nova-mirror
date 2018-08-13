@@ -15,6 +15,6 @@ class Authorize
      */
     public function handle($request, $next)
     {
-        return {{ class }}::check($request) ? $next($request) : abort(403);
+        return resolve({{ class }}::class)->authorize($request) ? $next($request) : abort(403);
     }
 }
