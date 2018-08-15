@@ -44,6 +44,40 @@ trait TrendDateTests
     /**
      * @dataProvider trendDateProvider
      */
+    public function test_trend_count_can_be_retrieved_by_month_by_user($date)
+    {
+        Chronos::setTestNow($date);
+
+        factory(Post::class, 4)->create();
+
+        $post = Post::find(1);
+        $post->user_id = 1;
+        $post->created_at = $date;
+        $post->save();
+
+        $post = Post::find(2);
+        $post->user_id = 1;
+        $post->created_at = Chronos::now()->subMonths(5);
+        $post->save();
+
+        $response = $this->withExceptionHandling()
+                        ->get('/nova-api/posts/1/metrics/post-count-trend?range=6');
+
+        $response->assertStatus(200);
+
+        $this->assertEquals(1, $response->original['value']->trend[Chronos::now()->subMonths(5)->format('F Y')]);
+        $this->assertEquals(0, $response->original['value']->trend[Chronos::now()->subMonths(4)->format('F Y')]);
+        $this->assertEquals(0, $response->original['value']->trend[Chronos::now()->subMonths(3)->format('F Y')]);
+        $this->assertEquals(0, $response->original['value']->trend[Chronos::now()->subMonths(2)->format('F Y')]);
+        $this->assertEquals(0, $response->original['value']->trend[Chronos::now()->subMonths(1)->format('F Y')]);
+        $this->assertEquals(1, $response->original['value']->trend[Chronos::now()->format('F Y')]);
+
+        Chronos::setTestNow();
+    }
+
+    /**
+     * @dataProvider trendDateProvider
+     */
     public function test_trend_count_can_be_retrieved_by_month_with_timezone($date)
     {
         Chronos::setTestNow($date);

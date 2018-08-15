@@ -16,8 +16,14 @@ class PostCountTrend extends Trend
      */
     public function calculate(Request $request)
     {
+        if ($request->resourceId) {
+            $query = Post::where('user_id', $request->resourceId);
+        } else {
+            $query = (new Post)->newQuery();
+        }
+
         return $this->count(
-            $request, (new Post)->newQuery(),
+            $request, $query,
             $_SERVER['nova.postCountUnit'] ?? Trend::BY_MONTHS
         );
     }
