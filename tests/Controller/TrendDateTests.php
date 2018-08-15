@@ -60,6 +60,7 @@ trait TrendDateTests
         $post->created_at = Chronos::now()->subMonths(5);
         $post->save();
 
+        // This is kind of a mis-use of the resourceId here since I'm giving it a user-id... but it fits the purpose of this test easily...
         $response = $this->withExceptionHandling()
                         ->get('/nova-api/posts/1/metrics/post-count-trend?range=6');
 
