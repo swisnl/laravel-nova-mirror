@@ -65,10 +65,6 @@ class FieldTest extends IntegrationTest
     {
         unset($_SERVER['__nova.ability']);
 
-        Gate::define('view-profile', function ($user) {
-            return true;
-        });
-
         $field = Text::make('Name')->canSeeWhen('view-profile');
         $callback = $field->seeCallback;
 
