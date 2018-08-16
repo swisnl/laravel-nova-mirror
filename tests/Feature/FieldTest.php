@@ -69,9 +69,9 @@ class FieldTest extends IntegrationTest
         $callback = $field->seeCallback;
 
         $request = Request::create('/', 'GET');
+
         $request->setUserResolver(function () {
             return new class {
-                public $id = 1;
                 public function can($ability, $arguments = [])
                 {
                     $_SERVER['__nova.ability'] = $ability;
