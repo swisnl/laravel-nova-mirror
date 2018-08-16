@@ -72,9 +72,11 @@ class FieldTest extends IntegrationTest
         $request->setUserResolver(function () {
             return new class {
                 public $id = 1;
+
                 public function can($ability, $arguments = [])
                 {
                     $_SERVER['__nova.ability'] = $ability;
+
                     return true;
                 }
             };
