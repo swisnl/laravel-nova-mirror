@@ -8,11 +8,14 @@ use Laravel\Nova\Nova;
 use Laravel\Nova\Resource;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Laravel\Nova\ProxiesCanSeeToGate;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Exceptions\MissingActionHandlerException;
 
 class Action implements JsonSerializable
 {
+    use ProxiesCanSeeToGate;
+
     /**
      * The displayable name of the action.
      *

@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 
 class ResourceTool extends Panel
 {
+    use ProxiesCanSeeToGate;
+
     /**
      * The resource tool element.
      *

@@ -7,9 +7,12 @@ use JsonSerializable;
 use Laravel\Nova\Nova;
 use Illuminate\Http\Request;
 use Illuminate\Container\Container;
+use Laravel\Nova\ProxiesCanSeeToGate;
 
 abstract class Filter implements JsonSerializable
 {
+    use ProxiesCanSeeToGate;
+
     /**
      * The displayable name of the action.
      *
