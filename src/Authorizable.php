@@ -26,6 +26,23 @@ trait Authorizable
      * @param  \Illuminate\Http\Request  $request
      * @return bool
      */
+    public static function authorizeToViewAny(Request $request)
+    {
+        if (! static::authorizable()) {
+            return;
+        }
+
+        if (method_exists(Gate::getPolicyFor(static::newModel()), 'viewAny')) {
+            $this->authorizeTo($request, 'viewAny');
+        }
+    }
+
+    /**
+     * Determine if the resource should be available for the given request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
     public static function authorizedToViewAny(Request $request)
     {
         if (! static::authorizable()) {
@@ -47,7 +64,7 @@ trait Authorizable
      */
     public function authorizeToView(Request $request)
     {
-        return $this->authorizeTo($request, 'view');
+        return $this->authorizeTo($request, 'view') && $this->authorizeToViewAny($request);
     }
 
     /**
@@ -58,7 +75,7 @@ trait Authorizable
      */
     public function authorizedToView(Request $request)
     {
-        return $this->authorizedTo($request, 'view');
+        return $this->authorizedTo($request, 'view') && $this->authorizedToViewAny($request);
     }
 
     /**
