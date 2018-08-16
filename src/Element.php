@@ -4,7 +4,6 @@ namespace Laravel\Nova;
 
 use Closure;
 use JsonSerializable;
-use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 
 abstract class Element implements JsonSerializable
