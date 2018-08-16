@@ -2,8 +2,10 @@
 
 namespace Laravel\Nova\Tests\Feature;
 
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\BelongsTo;
+use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Tests\IntegrationTest;
 use Laravel\Nova\Tests\Fixtures\UserResource;
 
@@ -57,5 +59,32 @@ class FieldTest extends IntegrationTest
 
         $field->resolveForDisplay((object) []);
         $this->assertEquals('Computed', $field->value);
+    }
+
+    public function test_can_see_when_proxies_to_gate()
+    {
+        unset($_SERVER['__nova.ability']);
+
+        Gate::define('view-profile', function ($user) {
+            return true;
+        });
+
+        $field = Text::make('Name')->canSeeWhen('view-profile');
+        $callback = $field->seeCallback;
+
+        $request = Request::create('/', 'GET');
+        $request->setUserResolver(function () {
+            return new class {
+                public $id = 1;
+                public function can($ability, $arguments = [])
+                {
+                    $_SERVER['__nova.ability'] = $ability;
+                    return true;
+                }
+            };
+        });
+
+        $this->assertTrue($callback($request));
+        $this->assertEquals('view-profile', $_SERVER['__nova.ability']);
     }
 }

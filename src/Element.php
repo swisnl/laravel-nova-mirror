@@ -4,6 +4,7 @@ namespace Laravel\Nova;
 
 use Closure;
 use JsonSerializable;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 
 abstract class Element implements JsonSerializable
@@ -79,6 +80,26 @@ abstract class Element implements JsonSerializable
         $this->seeCallback = $callback;
 
         return $this;
+    }
+
+    /**
+     * Indicate that the field can be seen when a given authorization ability is available.
+     *
+     * @param  string  $ability
+     * @param  array|mixed  $arguments
+     * @return $this
+     */
+    public function canSeeWhen($ability, $arguments = [])
+    {
+        $arguments = Arr::wrap($arguments);
+
+        if (isset($arguments[0]) && $arguments[0] instanceof Resource) {
+            $arguments[0] = $arguments[0]->resource;
+        }
+
+        return $this->canSee(function ($request) use ($ability, $arguments) {
+            return $request->user()->can($ability, $arguments);
+        });
     }
 
     /**
