@@ -42341,7 +42341,7 @@ exports.default = {
             return Math.abs(this.increaseOrDecrease);
         },
         increaseOrDecrease: function increaseOrDecrease() {
-            if (this.previous == 0) return 0;else if (this.value == 0) return 0;
+            if (this.previous == 0 || this.previous == null || this.value == 0) return 0;
 
             return ((this.value - this.previous) / this.previous * 100).toFixed(2);
         },
