@@ -42164,7 +42164,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "loading-card",
-    { staticClass: "metric px-6 py-4", attrs: { loading: _vm.loading } },
+    { staticClass: "px-6 py-4", attrs: { loading: _vm.loading } },
     [
       _c("div", { staticClass: "flex mb-4" }, [
         _c("h3", { staticClass: "mr-3 text-base text-80 font-bold" }, [
