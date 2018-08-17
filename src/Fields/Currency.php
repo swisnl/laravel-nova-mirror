@@ -5,6 +5,13 @@ namespace Laravel\Nova\Fields;
 class Currency extends Number
 {
     /**
+     * The format the field will be displayed in.
+     *
+     * @var string
+     */
+    public $format;
+
+    /**
      * Create a new field.
      *
      * @param  string  $name
@@ -18,22 +25,23 @@ class Currency extends Number
 
         $this->withMeta([
             'step' => '0.01',
-            'format' => '%i',
         ]);
 
         $this->displayUsing(function ($value) {
-            return $value ? money_format($this->meta['format'], $value) : null;
+            return $value ? money_format($this->format ?? '%i', $value) : null;
         });
     }
 
     /**
-     * The format the field will used to be displayed in.
+     * The monetary format the field will used be displayed in.
      *
-     * @param  mixed  $step
+     * @param  string  $format
      * @return $this
      */
     public function format($format)
     {
-        return $this->withMeta(['format' => $format]);
+        $this->format = $format;
+
+        return $this;
     }
 }
