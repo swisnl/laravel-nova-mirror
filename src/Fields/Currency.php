@@ -16,10 +16,13 @@ class Currency extends Number
     {
         parent::__construct($name, $attribute, $resolveCallback);
 
-        $this->withMeta(['step' => '0.01']);
+        $this->withMeta([
+            'step' => '0.01',
+            'format' => '%i',
+        ]);
 
         $this->displayUsing(function ($value) {
-            return $value ? money_format('%i', $value) : null;
+            return $value ? money_format($this->meta['format'], $value) : null;
         });
     }
 
