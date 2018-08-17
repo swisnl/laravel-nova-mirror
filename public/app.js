@@ -15960,6 +15960,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 
 exports.default = {
     mixins: [_laravelNova.Deletable, _laravelNova.Filterable, _laravelNova.HasCards, _laravelNova.Paginatable, _laravelNova.PerPageable, _laravelNova.InteractsWithResourceInformation, _laravelNova.InteractsWithQueryString],
@@ -16837,32 +16838,39 @@ var render = function() {
                           _c(
                             "dropdown",
                             {
-                              staticClass: "h-9 flex items-center",
-                              attrs: {
-                                width: "250",
-                                "active-class": "",
-                                dusk: "select-all-dropdown"
-                              }
+                              attrs: { dusk: "select-all-dropdown" },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "default",
+                                  fn: function(ref) {
+                                    var toggle = ref.toggle
+                                    return _c(
+                                      "dropdown-trigger",
+                                      { attrs: { "handle-click": toggle } },
+                                      [
+                                        _c("fake-checkbox", {
+                                          attrs: {
+                                            checked: _vm.selectAllChecked
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  }
+                                }
+                              ])
                             },
                             [
                               _c(
-                                "div",
+                                "dropdown-menu",
                                 {
-                                  staticClass: "flex items-center",
-                                  attrs: { slot: "default" },
-                                  slot: "default"
+                                  attrs: {
+                                    slot: "menu",
+                                    direction: "ltr",
+                                    width: "250"
+                                  },
+                                  slot: "menu"
                                 },
-                                [
-                                  _c("fake-checkbox", {
-                                    attrs: { checked: _vm.selectAllChecked }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { attrs: { slot: "menu" }, slot: "menu" },
                                 [
                                   _c("div", { staticClass: "p-4" }, [
                                     _c("ul", { staticClass: "list-reset" }, [
@@ -17002,7 +17010,8 @@ var render = function() {
                                   ])
                                 ]
                               )
-                            ]
+                            ],
+                            1
                           )
                         ],
                         1
@@ -17039,34 +17048,48 @@ var render = function() {
                         ? _c(
                             "dropdown",
                             {
-                              staticClass: "bg-30 mr-3 px-3 rounded",
-                              attrs: {
-                                "active-class": "",
-                                direction: "rtl",
-                                width: "240"
-                              }
+                              staticClass: "bg-30 hover:bg-40 mr-3 rounded",
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "default",
+                                  fn: function(ref) {
+                                    var toggle = ref.toggle
+                                    return _c(
+                                      "dropdown-trigger",
+                                      {
+                                        staticClass: "px-3",
+                                        attrs: { "handle-click": toggle }
+                                      },
+                                      [
+                                        _c(
+                                          "h3",
+                                          {
+                                            staticClass:
+                                              "flex items-center font-normal text-base text-90 h-9",
+                                            attrs: { slot: "default" },
+                                            slot: "default"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                            Lens\n                        "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  }
+                                }
+                              ])
                             },
                             [
                               _c(
-                                "h3",
+                                "dropdown-menu",
                                 {
-                                  staticClass:
-                                    "flex items-center font-normal text-base text-90 h-9 mr-3",
-                                  attrs: { slot: "default" },
-                                  slot: "default"
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                        Lens\n                    "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "p-3",
-                                  attrs: { slot: "menu" },
+                                  attrs: {
+                                    slot: "menu",
+                                    width: "240",
+                                    direction: "rtl"
+                                  },
                                   slot: "menu"
                                 },
                                 [
@@ -17079,7 +17102,8 @@ var render = function() {
                                 ],
                                 1
                               )
-                            ]
+                            ],
+                            1
                           )
                         : _vm._e(),
                       _vm._v(" "),
@@ -17089,24 +17113,46 @@ var render = function() {
                         ? _c(
                             "dropdown",
                             {
-                              staticClass: "dropdown-alt",
+                              staticClass: "bg-30 hover:bg-40 rounded",
                               attrs: {
-                                direction: "rtl",
-                                width: "290",
                                 "data-testid": "filter-selector",
-                                dusk: "filter-selector",
-                                dark: true
-                              }
+                                dusk: "filter-selector"
+                              },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "default",
+                                  fn: function(ref) {
+                                    var toggle = ref.toggle
+                                    return _c(
+                                      "dropdown-trigger",
+                                      {
+                                        staticClass: "px-3",
+                                        attrs: { "handle-click": toggle }
+                                      },
+                                      [
+                                        _c("icon", {
+                                          staticClass: "text-80",
+                                          attrs: { type: "filter" }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  }
+                                }
+                              ])
                             },
                             [
-                              _c("icon", {
-                                staticClass: "text-80",
-                                attrs: { type: "filter" }
-                              }),
-                              _vm._v(" "),
                               _c(
-                                "div",
-                                { attrs: { slot: "menu" }, slot: "menu" },
+                                "dropdown-menu",
+                                {
+                                  attrs: {
+                                    slot: "menu",
+                                    width: "290",
+                                    direction: "rtl",
+                                    dark: true
+                                  },
+                                  slot: "menu"
+                                },
                                 [
                                   !_vm.viaHasOne
                                     ? _c("filter-selector", {
@@ -45011,182 +45057,210 @@ var render = function() {
   return _c(
     "dropdown",
     {
-      staticClass: "dropdown-alt ml-3",
-      attrs: { direction: "rtl", width: "250" }
+      staticClass: "ml-3 bg-30 hover:bg-40 rounded",
+      scopedSlots: _vm._u([
+        {
+          key: "default",
+          fn: function(ref) {
+            var toggle = ref.toggle
+            return _c(
+              "dropdown-trigger",
+              { staticClass: "px-3", attrs: { "handle-click": toggle } },
+              [
+                _c("icon", {
+                  staticClass: "text-80",
+                  attrs: { type: "delete" }
+                })
+              ],
+              1
+            )
+          }
+        }
+      ])
     },
     [
-      _c("icon", { staticClass: "text-80", attrs: { type: "delete" } }),
-      _vm._v(" "),
       _c(
-        "div",
-        { staticClass: "px-6 py-3", attrs: { slot: "menu" }, slot: "menu" },
+        "dropdown-menu",
+        {
+          attrs: { slot: "menu", direction: "rtl", width: "250" },
+          slot: "menu"
+        },
         [
-          _vm.authorizedToDeleteSelectedResources || _vm.allMatchingSelected
-            ? _c(
-                "button",
-                {
-                  staticClass: "text-left w-full leading-normal dim my-2",
-                  attrs: { dusk: "delete-selected-button" },
-                  on: { click: _vm.confirmDeleteSelectedResources }
-                },
-                [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.viaManyToMany ? "Detach" : "Delete") +
-                      " Selected (" +
-                      _vm._s(_vm.selectedResourcesCount) +
-                      ")\n        "
-                  )
-                ]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.softDeletes &&
-          !_vm.viaManyToMany &&
-          (_vm.softDeletedResourcesSelected || _vm.allMatchingSelected) &&
-          (_vm.authorizedToRestoreSelectedResources || _vm.allMatchingSelected)
-            ? _c(
-                "button",
-                {
-                  staticClass:
-                    "text-left w-full leading-normal dim text-90 my-2",
-                  attrs: { dusk: "restore-selected-button" },
-                  on: { click: _vm.confirmRestore }
-                },
-                [
-                  _vm._v(
-                    "\n            Restore Selected (" +
-                      _vm._s(_vm.selectedResourcesCount) +
-                      ")\n        "
-                  )
-                ]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.softDeletes &&
-          !_vm.viaManyToMany &&
-          (_vm.authorizedToForceDeleteSelectedResources ||
-            _vm.allMatchingSelected)
-            ? _c(
-                "button",
-                {
-                  staticClass:
-                    "text-left w-full leading-normal dim text-90 my-2",
-                  attrs: { dusk: "force-delete-selected-button" },
-                  on: { click: _vm.confirmForceDeleteSelectedResources }
-                },
-                [
-                  _vm._v(
-                    "\n            Force Delete Selected (" +
-                      _vm._s(_vm.selectedResourcesCount) +
-                      ")\n        "
-                  )
-                ]
-              )
-            : _vm._e(),
-          _vm._v(" "),
           _c(
-            "portal",
-            { attrs: { to: "modals" } },
+            "div",
+            { staticClass: "px-3" },
             [
-              _c(
-                "transition",
-                { attrs: { name: "fade" } },
-                [
-                  _vm.deleteSelectedModalOpen
-                    ? _c("delete-resource-modal", {
-                        attrs: {
-                          mode: _vm.viaManyToMany ? "detach" : "delete"
-                        },
-                        on: {
-                          confirm: _vm.deleteSelectedResources,
-                          close: _vm.closeDeleteSelectedModal
-                        }
-                      })
-                    : _vm._e()
-                ],
-                1
-              ),
+              _vm.authorizedToDeleteSelectedResources || _vm.allMatchingSelected
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "text-left w-full leading-normal dim my-2",
+                      attrs: { dusk: "delete-selected-button" },
+                      on: { click: _vm.confirmDeleteSelectedResources }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.viaManyToMany ? "Detach" : "Delete") +
+                          " Selected (" +
+                          _vm._s(_vm.selectedResourcesCount) +
+                          ")\n            "
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.softDeletes &&
+              !_vm.viaManyToMany &&
+              (_vm.softDeletedResourcesSelected || _vm.allMatchingSelected) &&
+              (_vm.authorizedToRestoreSelectedResources ||
+                _vm.allMatchingSelected)
+                ? _c(
+                    "button",
+                    {
+                      staticClass:
+                        "text-left w-full leading-normal dim text-90 my-2",
+                      attrs: { dusk: "restore-selected-button" },
+                      on: { click: _vm.confirmRestore }
+                    },
+                    [
+                      _vm._v(
+                        "\n                Restore Selected (" +
+                          _vm._s(_vm.selectedResourcesCount) +
+                          ")\n            "
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.softDeletes &&
+              !_vm.viaManyToMany &&
+              (_vm.authorizedToForceDeleteSelectedResources ||
+                _vm.allMatchingSelected)
+                ? _c(
+                    "button",
+                    {
+                      staticClass:
+                        "text-left w-full leading-normal dim text-90 my-2",
+                      attrs: { dusk: "force-delete-selected-button" },
+                      on: { click: _vm.confirmForceDeleteSelectedResources }
+                    },
+                    [
+                      _vm._v(
+                        "\n                Force Delete Selected (" +
+                          _vm._s(_vm.selectedResourcesCount) +
+                          ")\n            "
+                      )
+                    ]
+                  )
+                : _vm._e(),
               _vm._v(" "),
               _c(
-                "transition",
-                { attrs: { name: "fade" } },
+                "portal",
+                { attrs: { to: "modals" } },
                 [
-                  _vm.forceDeleteSelectedModalOpen
-                    ? _c("delete-resource-modal", {
-                        attrs: { mode: "delete" },
-                        on: {
-                          confirm: _vm.forceDeleteSelectedResources,
-                          close: _vm.closeForceDeleteSelectedModal
-                        },
-                        scopedSlots: _vm._u([
-                          {
-                            key: "default",
-                            fn: function(ref) {
-                              var uppercaseMode = ref.uppercaseMode
-                              var mode = ref.mode
-                              return _c(
-                                "div",
-                                { staticClass: "p-8" },
-                                [
-                                  _c(
-                                    "heading",
-                                    {
-                                      staticClass: "mb-6",
-                                      attrs: { level: 2 }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "Force " +
-                                          _vm._s(uppercaseMode) +
-                                          " Resource"
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "p",
-                                    { staticClass: "text-80 leading-normal" },
-                                    [
-                                      _vm._v(
-                                        "Are you sure you want to force " +
-                                          _vm._s(mode) +
-                                          " the selected resources?"
-                                      )
-                                    ]
-                                  )
-                                ],
-                                1
-                              )
+                  _c(
+                    "transition",
+                    { attrs: { name: "fade" } },
+                    [
+                      _vm.deleteSelectedModalOpen
+                        ? _c("delete-resource-modal", {
+                            attrs: {
+                              mode: _vm.viaManyToMany ? "detach" : "delete"
+                            },
+                            on: {
+                              confirm: _vm.deleteSelectedResources,
+                              close: _vm.closeDeleteSelectedModal
                             }
-                          }
-                        ])
-                      })
-                    : _vm._e()
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "transition",
-                { attrs: { name: "fade" } },
-                [
-                  _vm.restoreModalOpen
-                    ? _c("restore-resource-modal", {
-                        on: {
-                          confirm: _vm.restoreSelectedResources,
-                          close: _vm.closeRestoreModal
-                        }
-                      })
-                    : _vm._e()
+                          })
+                        : _vm._e()
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "transition",
+                    { attrs: { name: "fade" } },
+                    [
+                      _vm.forceDeleteSelectedModalOpen
+                        ? _c("delete-resource-modal", {
+                            attrs: { mode: "delete" },
+                            on: {
+                              confirm: _vm.forceDeleteSelectedResources,
+                              close: _vm.closeForceDeleteSelectedModal
+                            },
+                            scopedSlots: _vm._u([
+                              {
+                                key: "default",
+                                fn: function(ref) {
+                                  var uppercaseMode = ref.uppercaseMode
+                                  var mode = ref.mode
+                                  return _c(
+                                    "div",
+                                    { staticClass: "p-8" },
+                                    [
+                                      _c(
+                                        "heading",
+                                        {
+                                          staticClass: "mb-6",
+                                          attrs: { level: 2 }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "Force " +
+                                              _vm._s(uppercaseMode) +
+                                              " Resource"
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "p",
+                                        {
+                                          staticClass: "text-80 leading-normal"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "Are you sure you want to force " +
+                                              _vm._s(mode) +
+                                              " the selected resources?"
+                                          )
+                                        ]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                }
+                              }
+                            ])
+                          })
+                        : _vm._e()
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "transition",
+                    { attrs: { name: "fade" } },
+                    [
+                      _vm.restoreModalOpen
+                        ? _c("restore-resource-modal", {
+                            on: {
+                              confirm: _vm.restoreSelectedResources,
+                              close: _vm.closeRestoreModal
+                            }
+                          })
+                        : _vm._e()
+                    ],
+                    1
+                  )
                 ],
                 1
               )
             ],
             1
           )
-        ],
-        1
+        ]
       )
     ],
     1
@@ -45491,49 +45565,20 @@ var _vueClickaway = __webpack_require__(32);
 
 exports.default = {
     mixins: [_vueClickaway.mixin],
-    props: {
-        direction: {
-            default: 'ltr'
-        },
-        width: {
-            default: 120
-        },
-        dark: {
-            type: Boolean,
-            default: false
-        },
-        activeClass: {
-            default: 'dropdown-trigger-active'
-        }
-    },
 
     data: function data() {
-        return {
-            visible: false
-        };
+        return { visible: false };
     },
 
     methods: {
         toggle: function toggle() {
             this.visible = !this.visible;
         },
-        hide: function hide() {
+        close: function close() {
             this.visible = false;
-        }
-    },
-    computed: {
-        customClasses: function customClasses() {
-            return [this.isActive ? this.activeClass : '', this.direction == 'ltr' ? 'dropdown-menu-left' : 'dropdown-menu-right'];
-        },
-        isActive: function isActive() {
-            return this.visible == true;
         }
     }
 }; //
-//
-//
-//
-//
 //
 //
 //
@@ -45559,46 +45604,23 @@ var render = function() {
         {
           name: "on-clickaway",
           rawName: "v-on-clickaway",
-          value: _vm.hide,
-          expression: "hide"
+          value: _vm.close,
+          expression: "close"
         }
       ],
-      staticClass: "dropdown relative",
-      class: _vm.customClasses
+      staticClass: "dropdown relative"
     },
     [
-      _c(
-        "dropdown-trigger",
-        { attrs: { "handle-click": _vm.toggle } },
-        [_vm._t("default")],
-        2
-      ),
+      _vm._t("default", null, { toggle: _vm.toggle }),
       _vm._v(" "),
       _c(
         "transition",
         { attrs: { name: "fade" } },
-        [
-          _c(
-            "dropdown-menu",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.visible,
-                  expression: "visible"
-                }
-              ],
-              attrs: { width: _vm.width, dark: _vm.dark }
-            },
-            [_vm._t("menu")],
-            2
-          )
-        ],
-        1
+        [_vm.visible ? _vm._t("menu") : _vm._e()],
+        2
       )
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
@@ -45689,14 +45711,27 @@ exports.default = {
             type: Boolean,
             default: false
         },
+        direction: {
+            type: String,
+            default: 'ltr',
+            validator: function validator(value) {
+                return ['ltr', 'rtl'].indexOf(value) != -1;
+            }
+        },
         width: {
             default: 120
         }
     },
     computed: {
+        menuClasses: function menuClasses() {
+            return [this.direction == 'ltr' ? 'dropdown-menu-left' : 'dropdown-menu-right'];
+        },
+        arrowClasses: function arrowClasses() {
+            return [this.direction == 'ltr' ? 'dropdown-arrow-left' : 'dropdown-arrow-right'];
+        },
         styles: function styles() {
             return {
-                width: this.width + "px"
+                width: this.width + 'px'
             };
         }
     }
@@ -45710,86 +45745,95 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "dropdown-menu absolute z-50 select-none" }, [
-    _vm.dark
-      ? _c(
-          "svg",
-          {
-            staticClass: "absolute dropdown-arrow z-50",
-            attrs: {
-              width: "46px",
-              height: "23px",
-              xmlns: "http://www.w3.org/2000/svg",
-              "xmlns:xlink": "http://www.w3.org/1999/xlink",
-              viewBox: "0 0 44 22"
-            }
-          },
-          [
-            _c("defs", [
-              _c("path", { attrs: { id: "a", d: "M0 0h44v22H0z" } }),
-              _c("path", { attrs: { id: "c", d: "M2 22L22 2l20 20z" } })
-            ]),
-            _c("g", { attrs: { fill: "none", "fill-rule": "evenodd" } }, [
-              _c("mask", { attrs: { id: "b", fill: "#fff" } }, [
-                _c("use", { attrs: { "xlink:href": "#a" } })
+  return _c(
+    "div",
+    {
+      staticClass: "dropdown-menu absolute z-50 select-none",
+      class: _vm.menuClasses
+    },
+    [
+      _vm.dark
+        ? _c(
+            "svg",
+            {
+              staticClass: "absolute dropdown-arrow z-50",
+              class: _vm.arrowClasses,
+              attrs: {
+                width: "46px",
+                height: "23px",
+                xmlns: "http://www.w3.org/2000/svg",
+                "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                viewBox: "0 0 44 22"
+              }
+            },
+            [
+              _c("defs", [
+                _c("path", { attrs: { id: "a", d: "M0 0h44v22H0z" } }),
+                _c("path", { attrs: { id: "c", d: "M2 22L22 2l20 20z" } })
               ]),
-              _c("g", { attrs: { mask: "url(#b)" } }, [
-                _c("use", { attrs: { fill: "#F6F8FB", "xlink:href": "#c" } }),
-                _c("path", {
-                  attrs: {
-                    stroke: "#CCD4DB",
-                    d: "M.793 22.5L22 1.293 43.207 22.5H.793z"
-                  }
-                })
+              _c("g", { attrs: { fill: "none", "fill-rule": "evenodd" } }, [
+                _c("mask", { attrs: { id: "b", fill: "#fff" } }, [
+                  _c("use", { attrs: { "xlink:href": "#a" } })
+                ]),
+                _c("g", { attrs: { mask: "url(#b)" } }, [
+                  _c("use", { attrs: { fill: "#F6F8FB", "xlink:href": "#c" } }),
+                  _c("path", {
+                    attrs: {
+                      stroke: "#CCD4DB",
+                      d: "M.793 22.5L22 1.293 43.207 22.5H.793z"
+                    }
+                  })
+                ])
               ])
-            ])
-          ]
-        )
-      : _c(
-          "svg",
-          {
-            staticClass: "absolute dropdown-arrow z-50",
-            attrs: {
-              width: "46px",
-              height: "23px",
-              xmlns: "http://www.w3.org/2000/svg",
-              "xmlns:xlink": "http://www.w3.org/1999/xlink",
-              viewBox: "0 0 44 22"
-            }
-          },
-          [
-            _c("defs", [
-              _c("path", { attrs: { id: "a", d: "M0 0h44v22H0z" } }),
-              _c("path", { attrs: { id: "c", d: "M2 22L22 2l20 20z" } })
-            ]),
-            _c("g", { attrs: { fill: "none", "fill-rule": "evenodd" } }, [
-              _c("mask", { attrs: { id: "b", fill: "#fff" } }, [
-                _c("use", { attrs: { "xlink:href": "#a" } })
+            ]
+          )
+        : _c(
+            "svg",
+            {
+              staticClass: "absolute dropdown-arrow z-50",
+              class: _vm.arrowClasses,
+              attrs: {
+                width: "46px",
+                height: "23px",
+                xmlns: "http://www.w3.org/2000/svg",
+                "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                viewBox: "0 0 44 22"
+              }
+            },
+            [
+              _c("defs", [
+                _c("path", { attrs: { id: "a", d: "M0 0h44v22H0z" } }),
+                _c("path", { attrs: { id: "c", d: "M2 22L22 2l20 20z" } })
               ]),
-              _c("g", { attrs: { mask: "url(#b)" } }, [
-                _c("use", { attrs: { fill: "#FFF", "xlink:href": "#c" } }),
-                _c("path", {
-                  attrs: {
-                    stroke: "#CCD4DB",
-                    d: "M.793 22.5L22 1.293 43.207 22.5H.793z"
-                  }
-                })
+              _c("g", { attrs: { fill: "none", "fill-rule": "evenodd" } }, [
+                _c("mask", { attrs: { id: "b", fill: "#fff" } }, [
+                  _c("use", { attrs: { "xlink:href": "#a" } })
+                ]),
+                _c("g", { attrs: { mask: "url(#b)" } }, [
+                  _c("use", { attrs: { fill: "#FFF", "xlink:href": "#c" } }),
+                  _c("path", {
+                    attrs: {
+                      stroke: "#CCD4DB",
+                      d: "M.793 22.5L22 1.293 43.207 22.5H.793z"
+                    }
+                  })
+                ])
               ])
-            ])
-          ]
-        ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass:
-          "z-40 overflow-hidden bg-white border border-60 shadow rounded-lg",
-        style: _vm.styles
-      },
-      [_vm._t("default")],
-      2
-    )
-  ])
+            ]
+          ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "z-40 overflow-hidden bg-white border border-60 shadow rounded-lg",
+          style: _vm.styles
+        },
+        [_vm._t("default")],
+        2
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -45904,10 +45948,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "a",
     {
       staticClass:
-        "dropdown-trigger flex items-center cursor-pointer select-none",
+        "dropdown-trigger h-9 flex items-center cursor-pointer select-none",
       on: { click: _vm.handleClick }
     },
     [
