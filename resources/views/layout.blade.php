@@ -45,11 +45,9 @@
                         <global-search></global-search>
                     @endif
 
-                    <div class="ml-auto text-80">
-                        <dropdown width="200" direction="rtl" active-class="" class="h-9 flex items-center" style="right: 20px">
-                            @include('nova::partials.user')
-                        </dropdown>
-                    </div>
+                    <dropdown class="ml-auto h-9 flex items-center" style="right: 20px">
+                        @include('nova::partials.user')
+                    </dropdown>
                 </div>
 
                 <div data-testid="content" class="px-view py-view mx-auto">
