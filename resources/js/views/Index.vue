@@ -53,12 +53,12 @@
             <div v-if="shouldShowToolbar" class="py-3 flex items-center border-b border-50">
                 <div class="px-3" v-if="shouldShowCheckBoxes">
                     <!-- Select All -->
-                    <dropdown width="250" active-class="" class="h-9 flex items-center" dusk="select-all-dropdown">
-                        <div slot="default" class="flex items-center">
+                    <dropdown dusk="select-all-dropdown">
+                        <dropdown-trigger slot-scope="{toggle}" :handle-click="toggle">
                             <fake-checkbox :checked="selectAllChecked" />
-                        </div>
+                        </dropdown-trigger>
 
-                        <div slot="menu">
+                        <dropdown-menu slot="menu" direction="ltr" width="250">
                             <div class="p-4">
                                 <ul class="list-reset">
                                     <li class="flex items-center mb-4">
@@ -93,7 +93,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </dropdown-menu>
                     </dropdown>
                 </div>
 
@@ -118,29 +118,30 @@
                         @actionExecuted="getResources"
                     />
 
-                    <dropdown class="bg-30 mr-3 px-3 rounded" active-class="" direction="rtl" width="240" v-if="lenses.length > 0">
-                        <h3 slot="default" class="flex items-center font-normal text-base text-90 h-9 mr-3">
-                            Lens
-                        </h3>
+                    <!-- Lenses -->
+                    <dropdown class="bg-30 hover:bg-40 mr-3 rounded" v-if="lenses.length > 0">
+                        <dropdown-trigger slot-scope="{toggle}" :handle-click="toggle" class="px-3">
+                            <h3 slot="default" class="flex items-center font-normal text-base text-90 h-9">
+                                Lens
+                            </h3>
+                        </dropdown-trigger>
 
-                        <div class="p-3" slot="menu">
-                            <!-- Lenses -->
+                        <dropdown-menu slot="menu" width="240" direction="rtl">
                             <lens-selector :resource-name="resourceName" :lenses="lenses" />
-                        </div>
+                        </dropdown-menu>
                     </dropdown>
 
                     <dropdown
                         v-if="filters.length > 0 || softDeletes || !viaResource"
-                        direction="rtl"
-                        width="290"
-                        class="dropdown-alt"
                         data-testid="filter-selector"
                         dusk="filter-selector"
-                        :dark="true"
+                        class="bg-30 hover:bg-40 rounded"
                     >
-                        <icon type="filter" class="text-80" />
+                        <dropdown-trigger slot-scope="{toggle}" :handle-click="toggle" class="px-3">
+                            <icon type="filter" class="text-80" />
+                        </dropdown-trigger>
 
-                        <div slot="menu">
+                        <dropdown-menu slot="menu" width="290" direction="rtl" :dark="true">
                             <!-- Filters -->
                             <filter-selector
                                 :filters="filters"
@@ -185,7 +186,7 @@
                                     <option value="100">100</option>
                                 </select>
                             </filter-select>
-                        </div>
+                        </dropdown-menu>
                     </dropdown>
 
                     <delete-menu

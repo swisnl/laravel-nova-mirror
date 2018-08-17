@@ -323,22 +323,22 @@ input[type='search']::-webkit-search-cancel-button {
 .dropdown {
 }
 
-.dropdown-menu-left .dropdown-menu {
+.dropdown-menu-left {
   top: 3rem;
   left: -2rem;
 }
 
-.dropdown-menu-left .dropdown-arrow {
+.dropdown-arrow-left {
   top: calc(-1.35rem);
   left: 2.3rem;
 }
 
-.dropdown-menu-right .dropdown-menu {
+.dropdown-menu-right {
   top: 3rem;
   right: -1.5rem;
 }
 
-.dropdown-menu-right .dropdown-arrow {
+.dropdown-arrow-right {
   top: calc(-1.35rem);
   right: 2rem;
 }

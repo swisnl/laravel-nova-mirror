@@ -1,13 +1,9 @@
 <template>
-    <div v-on-clickaway="hide" :class="customClasses" class="dropdown relative">
-        <dropdown-trigger :handle-click="toggle">
-            <slot name="default"></slot>
-        </dropdown-trigger>
+    <div v-on-clickaway="close" class="dropdown relative">
+        <slot :toggle="toggle" />
 
         <transition name="fade">
-            <dropdown-menu v-show="visible" :width="width" :dark="dark">
-                <slot name="menu"></slot>
-            </dropdown-menu>
+            <slot v-if="visible" name="menu" />
         </transition>
     </div>
 </template>
@@ -17,44 +13,16 @@ import { mixin as clickaway } from 'vue-clickaway'
 
 export default {
     mixins: [clickaway],
-    props: {
-        direction: {
-            default: 'ltr',
-        },
-        width: {
-            default: 120,
-        },
-        dark: {
-            type: Boolean,
-            default: false,
-        },
-        activeClass: {
-            default: 'dropdown-trigger-active',
-        },
-    },
 
-    data: () => ({
-        visible: false,
-    }),
+    data: () => ({ visible: false }),
 
     methods: {
         toggle() {
             this.visible = !this.visible
         },
-        hide() {
-            this.visible = false
-        },
-    },
-    computed: {
-        customClasses() {
-            return [
-                this.isActive ? this.activeClass : '',
-                this.direction == 'ltr' ? 'dropdown-menu-left' : 'dropdown-menu-right',
-            ]
-        },
 
-        isActive() {
-            return this.visible == true
+        close() {
+            this.visible = false
         },
     },
 }
