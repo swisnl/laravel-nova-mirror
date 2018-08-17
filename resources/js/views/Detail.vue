@@ -5,6 +5,7 @@
                 v-if="smallCards.length > 0"
                 :cards="smallCards"
                 class="mb-3"
+                :resource-id="resourceId"
                 :resource-name="resourceName"
                 :only-on-detail="true"
             />
@@ -13,6 +14,7 @@
                 v-if="largeCards.length > 0"
                 :cards="largeCards"
                 size="large"
+                :resource-id="resourceId"
                 :resource-name="resourceName"
                 :only-on-detail="true"
             />

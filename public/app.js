@@ -18148,6 +18148,8 @@ exports.default = {
 //
 //
 //
+//
+//
 
 /***/ }),
 /* 325 */
@@ -18187,6 +18189,7 @@ var render = function() {
                     staticClass: "mb-3",
                     attrs: {
                       cards: _vm.smallCards,
+                      "resource-id": _vm.resourceId,
                       "resource-name": _vm.resourceName,
                       "only-on-detail": true
                     }
@@ -18198,6 +18201,7 @@ var render = function() {
                     attrs: {
                       cards: _vm.largeCards,
                       size: "large",
+                      "resource-id": _vm.resourceId,
                       "resource-name": _vm.resourceName,
                       "only-on-detail": true
                     }
