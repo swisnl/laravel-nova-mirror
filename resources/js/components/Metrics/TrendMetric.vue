@@ -20,9 +20,7 @@ import BaseTrendMetric from './Base/TrendMetric'
 export default {
     name: 'TrendMetric',
 
-    mixins: [
-        InteractsWithDates,
-    ],
+    mixins: [InteractsWithDates],
 
     components: {
         BaseTrendMetric,
@@ -104,10 +102,12 @@ export default {
         },
 
         metricPayload() {
-            const payload = {params: {
-                timezone: this.userTimezone,
-                twelveHourTime: this.usesTwelveHourTime
-            }}
+            const payload = {
+                params: {
+                    timezone: this.userTimezone,
+                    twelveHourTime: this.usesTwelveHourTime,
+                },
+            }
 
             if (this.hasRanges) {
                 payload.params.range = this.selectedRangeKey
@@ -130,24 +130,3 @@ export default {
     },
 }
 </script>
-
-<style>
-.ct-series-a .ct-bar,
-.ct-series-a .ct-line,
-.ct-series-a .ct-point,
-.ct-series-a .ct-slice-donut {
-    stroke: var(--primary-70) !important;
-    stroke-width: 2px;
-}
-
-.ct-series-a .ct-area,
-.ct-series-a .ct-slice-donut-solid,
-.ct-series-a .ct-slice-pie {
-    fill: var(--primary-50) !important;
-}
-
-.ct-point {
-    stroke: var(--primary) !important;
-    stroke-width: 6px !important;
-}
-</style>

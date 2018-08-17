@@ -156,32 +156,3 @@ export default {
     },
 }
 </script>
-
-<style>
-.full {
-    top: 20%;
-}
-
-.half {
-    top: 60%;
-}
-
-.ct-series-a .ct-bar,
-.ct-series-a .ct-line,
-.ct-series-a .ct-point,
-.ct-series-a .ct-slice-donut {
-    stroke: var(--primary-70) !important;
-    stroke-width: 2px;
-}
-
-.ct-series-a .ct-area,
-.ct-series-a .ct-slice-donut-solid,
-.ct-series-a .ct-slice-pie {
-    fill: var(--primary-50) !important;
-}
-
-.ct-point {
-    stroke: var(--primary) !important;
-    stroke-width: 6px !important;
-}
-</style>

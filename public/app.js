@@ -904,8 +904,9 @@ CodeMirror.defineMode("xml", function(editorConf, config_) {
         stream.next();
       }
       return style;
-    };
+    }
   }
+
   function doctype(depth) {
     return function(stream, state) {
       var ch;
@@ -13064,10 +13065,6 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(891)
-}
 var normalizeComponent = __webpack_require__(3)
 /* script */
 var __vue_script__ = __webpack_require__(893)
@@ -13076,7 +13073,7 @@ var __vue_template__ = __webpack_require__(895)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = injectStyle
+var __vue_styles__ = null
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -13146,10 +13143,6 @@ if(false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(896)
-}
 var normalizeComponent = __webpack_require__(3)
 /* script */
 var __vue_script__ = __webpack_require__(898)
@@ -13158,7 +13151,7 @@ var __vue_template__ = __webpack_require__(901)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = injectStyle
+var __vue_styles__ = null
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -41725,46 +41718,8 @@ if (false) {
 }
 
 /***/ }),
-/* 891 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(892);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(2)("05b785e4", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1ae1649a\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PartitionMetric.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1ae1649a\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PartitionMetric.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 892 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.ct-series-a .ct-area,\n.ct-series-a .ct-slice-donut-solid,\n.ct-series-a .ct-slice-pie {\n    fill: #f5573b;\n}\n.ct-series-b .ct-area,\n.ct-series-b .ct-slice-donut-solid,\n.ct-series-b .ct-slice-pie {\n    fill: #f99037;\n}\n.ct-series-c .ct-area,\n.ct-series-c .ct-slice-donut-solid,\n.ct-series-c .ct-slice-pie {\n    fill: #f2cb22;\n}\n.ct-series-d .ct-area,\n.ct-series-d .ct-slice-donut-solid,\n.ct-series-d .ct-slice-pie {\n    fill: #8fc15d;\n}\n.ct-series-e .ct-area,\n.ct-series-e .ct-slice-donut-solid,\n.ct-series-e .ct-slice-pie {\n    fill: #098f56;\n}\n.ct-series-f .ct-area,\n.ct-series-f .ct-slice-donut-solid,\n.ct-series-f .ct-slice-pie {\n    fill: #47c1bf;\n}\n.ct-series-g .ct-area,\n.ct-series-g .ct-slice-donut-solid,\n.ct-series-g .ct-slice-pie {\n    fill: #1693eb;\n}\n.ct-series-h .ct-area,\n.ct-series-h .ct-slice-donut-solid,\n.ct-series-h .ct-slice-pie {\n    fill: #6474d7;\n}\n.ct-series-i .ct-area,\n.ct-series-i .ct-slice-donut-solid,\n.ct-series-i .ct-slice-pie {\n    fill: #9c6ade;\n}\n.ct-series-j .ct-area,\n.ct-series-j .ct-slice-donut-solid,\n.ct-series-j .ct-slice-pie {\n    fill: #e471de;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 891 */,
+/* 892 */,
 /* 893 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -41971,46 +41926,8 @@ if (false) {
 }
 
 /***/ }),
-/* 896 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(897);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(2)("ee7a7dbe", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-316f5db4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TrendMetric.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-316f5db4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TrendMetric.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 897 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.full {\n    top: 20%;\n}\n.half {\n    top: 60%;\n}\n.ct-series-a .ct-bar,\n.ct-series-a .ct-line,\n.ct-series-a .ct-point,\n.ct-series-a .ct-slice-donut {\n    stroke: var(--primary-70) !important;\n    stroke-width: 2px;\n}\n.ct-series-a .ct-area,\n.ct-series-a .ct-slice-donut-solid,\n.ct-series-a .ct-slice-pie {\n    fill: var(--primary-50) !important;\n}\n.ct-point {\n    stroke: var(--primary) !important;\n    stroke-width: 6px !important;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 896 */,
+/* 897 */,
 /* 898 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -42247,7 +42164,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "loading-card",
-    { staticClass: "px-6 py-4", attrs: { loading: _vm.loading } },
+    { staticClass: "metric px-6 py-4", attrs: { loading: _vm.loading } },
     [
       _c("div", { staticClass: "flex mb-4" }, [
         _c("h3", { staticClass: "mr-3 text-base text-80 font-bold" }, [
@@ -52963,10 +52880,6 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(1044)
-}
 var normalizeComponent = __webpack_require__(3)
 /* script */
 var __vue_script__ = __webpack_require__(1046)
@@ -52975,7 +52888,7 @@ var __vue_template__ = __webpack_require__(1051)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = injectStyle
+var __vue_styles__ = null
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -53010,46 +52923,8 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 1044 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(1045);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(2)("1d9ec7da", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-54ccf0b4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TrendMetric.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-54ccf0b4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TrendMetric.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 1045 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.ct-series-a .ct-bar,\n.ct-series-a .ct-line,\n.ct-series-a .ct-point,\n.ct-series-a .ct-slice-donut {\n    stroke: var(--primary-70) !important;\n    stroke-width: 2px;\n}\n.ct-series-a .ct-area,\n.ct-series-a .ct-slice-donut-solid,\n.ct-series-a .ct-slice-pie {\n    fill: var(--primary-50) !important;\n}\n.ct-point {\n    stroke: var(--primary) !important;\n    stroke-width: 6px !important;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 1044 */,
+/* 1045 */,
 /* 1046 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -53162,10 +53037,12 @@ exports.default = {
             return this.card.ranges.length > 0;
         },
         metricPayload: function metricPayload() {
-            var payload = { params: {
+            var payload = {
+                params: {
                     timezone: this.userTimezone,
                     twelveHourTime: this.usesTwelveHourTime
-                } };
+                }
+            };
 
             if (this.hasRanges) {
                 payload.params.range = this.selectedRangeKey;
