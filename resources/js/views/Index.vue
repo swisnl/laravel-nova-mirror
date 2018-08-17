@@ -18,7 +18,7 @@
 
         <heading v-if="resourceResponse" class="mb-3">{{ resourceResponse.label }}</heading>
 
-        <div class="flex justify-between">
+        <div class="flex">
             <!-- Search -->
             <div v-if="resourceInformation.searchable && ! viaHasOne" class="relative h-9 flex items-center mb-6">
                 <icon type="search" class="absolute ml-3 text-70" />
@@ -35,18 +35,22 @@
                 >
             </div>
 
-            <!-- Create / Attach Button -->
-            <create-resource-button
-                :singular-name="singularName"
-                :resource-name="resourceName"
-                :via-resource="viaResource"
-                :via-resource-id="viaResourceId"
-                :via-relationship="viaRelationship"
-                :relationship-type="relationshipType"
-                :authorized-to-create="authorizedToCreate && ! resourceIsFull"
-                :authorized-to-relate="authorizedToRelate"
-                class="mb-6"
-            />
+            <div class="ml-auto flex items-center mb-6">
+                <custom-index-buttons :resource-name="resourceName" />
+
+                <!-- Create / Attach Button -->
+                <create-resource-button
+                    :singular-name="singularName"
+                    :resource-name="resourceName"
+                    :via-resource="viaResource"
+                    :via-resource-id="viaResourceId"
+                    :via-relationship="viaRelationship"
+                    :relationship-type="relationshipType"
+                    :authorized-to-create="authorizedToCreate && ! resourceIsFull"
+                    :authorized-to-relate="authorizedToRelate"
+                    class="ml-3"
+                />
+            </div>
         </div>
 
         <loading-card :loading="loading" :class="{ 'overflow-hidden border border-50': !shouldShowToolbar }">

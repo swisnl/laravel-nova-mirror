@@ -12,6 +12,7 @@ import Checkbox from '@/components/Index/Checkbox'
 import ConfirmActionModal from '@/components/Modals/ConfirmActionModal'
 import ConfirmUploadRemovalModal from '@/components/Modals/ConfirmUploadRemovalModal'
 import CreateResourceButton from '@/components/CreateResourceButton'
+import CustomIndexButtons from '@/components/CustomIndexButtons'
 import DeleteMenu from '@/components/DeleteMenu'
 import DeleteResourceModal from '@/components/Modals/DeleteResourceModal'
 import Dropdown from '@/components/Dropdown'
@@ -73,6 +74,7 @@ Vue.component('checkbox', Checkbox)
 Vue.component('confirm-action-modal', ConfirmActionModal)
 Vue.component('confirm-upload-removal-modal', ConfirmUploadRemovalModal)
 Vue.component('create-resource-button', CreateResourceButton)
+Vue.component('custom-index-buttons', CustomIndexButtons)
 Vue.component('delete-menu', DeleteMenu)
 Vue.component('delete-resource-modal', DeleteResourceModal)
 Vue.component('dropdown', Dropdown)
