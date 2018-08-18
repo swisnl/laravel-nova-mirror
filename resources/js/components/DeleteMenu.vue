@@ -1,68 +1,83 @@
 <template>
-    <dropdown class="ml-3 bg-30 hover:bg-40 rounded">
-        <dropdown-trigger slot-scope="{toggle}" :handle-click="toggle" class="px-3">
-            <icon type="delete" class="text-80" />
-        </dropdown-trigger>
+    <div>
+        <dropdown class="ml-3 bg-30 hover:bg-40 rounded">
+            <dropdown-trigger slot-scope="{toggle}" :handle-click="toggle" class="px-3">
+                <icon type="delete" class="text-80" />
+            </dropdown-trigger>
 
-        <dropdown-menu slot="menu" direction="rtl"width="250">
-            <div class="px-3">
-                <!-- Delete Menu -->
-                <button dusk="delete-selected-button" class="text-left w-full leading-normal dim my-2" @click="confirmDeleteSelectedResources"
-                    v-if="authorizedToDeleteSelectedResources || allMatchingSelected">
-                        {{ viaManyToMany ? 'Detach' : 'Delete' }} Selected ({{ selectedResourcesCount }})
-                </button>
+            <dropdown-menu slot="menu" direction="rtl"width="250">
+                <div class="px-3">
+                    <!-- Delete Menu -->
+                    <button
+                        dusk="delete-selected-button"
+                        class="text-left w-full leading-normal dim my-2"
+                        @click="confirmDeleteSelectedResources"
+                        v-if="authorizedToDeleteSelectedResources || allMatchingSelected"
+                    >
+                            {{ viaManyToMany ? 'Detach' : 'Delete' }} Selected ({{ selectedResourcesCount }})
+                    </button>
 
-                <!-- Restore Resources -->
-                <button dusk="restore-selected-button" class="text-left w-full leading-normal dim text-90 my-2" @click="confirmRestore"
-                    v-if="softDeletes &&
-                          ! viaManyToMany &&
-                          (softDeletedResourcesSelected || allMatchingSelected) &&
-                          (authorizedToRestoreSelectedResources || allMatchingSelected)">
-                    Restore Selected ({{ selectedResourcesCount }})
-                </button>
+                    <!-- Restore Resources -->
+                    <button
+                        dusk="restore-selected-button"
+                        class="text-left w-full leading-normal dim text-90 my-2"
+                        @click="confirmRestore"
+                        v-if="softDeletes &&
+                              ! viaManyToMany &&
+                              (softDeletedResourcesSelected || allMatchingSelected) &&
+                              (authorizedToRestoreSelectedResources || allMatchingSelected)"
+                    >
+                        Restore Selected ({{ selectedResourcesCount }})
+                    </button>
 
-                <!-- Force Delete Resources -->
-                <button dusk="force-delete-selected-button" class="text-left w-full leading-normal dim text-90 my-2" @click="confirmForceDeleteSelectedResources"
-                    v-if="softDeletes && ! viaManyToMany &&
-                          (authorizedToForceDeleteSelectedResources || allMatchingSelected)">
-                    Force Delete Selected ({{ selectedResourcesCount }})
-                </button>
+                    <!-- Force Delete Resources -->
+                    <button
+                        dusk="force-delete-selected-button"
+                        class="text-left w-full leading-normal dim text-90 my-2"
+                        @click="confirmForceDeleteSelectedResources"
+                        v-if="softDeletes && ! viaManyToMany &&
+                              (authorizedToForceDeleteSelectedResources || allMatchingSelected)"
+                    >
+                        Force Delete Selected ({{ selectedResourcesCount }})
+                    </button>
 
-                <portal to="modals">
-                    <transition name="fade">
-                        <delete-resource-modal
-                            v-if="deleteSelectedModalOpen"
-                            @confirm="deleteSelectedResources"
-                            @close="closeDeleteSelectedModal"
-                            :mode="viaManyToMany ? 'detach' : 'delete'"
-                        />
-                    </transition>
+                </div>
+            </dropdown-menu>
+        </dropdown>
 
-                    <transition name="fade">
-                        <delete-resource-modal
-                            v-if="forceDeleteSelectedModalOpen"
-                            @confirm="forceDeleteSelectedResources"
-                            @close="closeForceDeleteSelectedModal"
-                            mode="delete"
-                        >
-                           <div slot-scope="{ uppercaseMode, mode }" class="p-8">
-                               <heading :level="2" class="mb-6">Force {{ uppercaseMode }} Resource</heading>
-                               <p class="text-80 leading-normal">Are you sure you want to force {{ mode }} the selected resources?</p>
-                           </div>
-                       </delete-resource-modal>
-                    </transition>
+        <portal to="modals">
+            <transition name="fade">
+                <delete-resource-modal
+                    v-if="deleteSelectedModalOpen"
+                    @confirm="deleteSelectedResources"
+                    @close="closeDeleteSelectedModal"
+                    :mode="viaManyToMany ? 'detach' : 'delete'"
+                />
+            </transition>
 
-                    <transition name="fade">
-                        <restore-resource-modal
-                            v-if="restoreModalOpen"
-                            @confirm="restoreSelectedResources"
-                            @close="closeRestoreModal"
-                        />
-                    </transition>
-                </portal>
-            </div>
-        </dropdown-menu>
-    </dropdown>
+            <transition name="fade">
+                <delete-resource-modal
+                    v-if="forceDeleteSelectedModalOpen"
+                    @confirm="forceDeleteSelectedResources"
+                    @close="closeForceDeleteSelectedModal"
+                    mode="delete"
+                >
+                   <div slot-scope="{ uppercaseMode, mode }" class="p-8">
+                       <heading :level="2" class="mb-6">Force {{ uppercaseMode }} Resource</heading>
+                       <p class="text-80 leading-normal">Are you sure you want to force {{ mode }} the selected resources?</p>
+                   </div>
+               </delete-resource-modal>
+            </transition>
+
+            <transition name="fade">
+                <restore-resource-modal
+                    v-if="restoreModalOpen"
+                    @confirm="restoreSelectedResources"
+                    @close="closeRestoreModal"
+                />
+            </transition>
+        </portal>
+    </div>
 </template>
 
 <script>
