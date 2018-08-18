@@ -40,7 +40,6 @@
                     >
                         Force Delete Selected ({{ selectedResourcesCount }})
                     </button>
-
                 </div>
             </dropdown-menu>
         </dropdown>
