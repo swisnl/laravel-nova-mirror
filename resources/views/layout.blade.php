@@ -76,7 +76,7 @@
 
     <!-- Build Nova Instance -->
     <script>
-        const Nova = new CreateNova(config)
+        window.Nova = new CreateNova(config)
     </script>
 
     <!-- Tool Scripts -->
