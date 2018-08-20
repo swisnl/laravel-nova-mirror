@@ -5,7 +5,9 @@
         :via-resource-id="resourceId"
         :via-relationship="field.hasOneRelationship"
         :relationship-type="'hasOne'"
-        @actionExecuted="actionExecuted" />
+        @actionExecuted="actionExecuted"
+        :load-cards="false"
+    />
 </template>
 
 <script>
