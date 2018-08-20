@@ -18,8 +18,12 @@ export default class Nova {
         this.bootingCallbacks.push(callback)
     }
 
+    /**
+     * Execute all of the booting callbacks.
+     */
     boot() {
         this.bootingCallbacks.forEach(callback => callback(Vue, router))
+
         this.bootingCallbacks = []
     }
 
