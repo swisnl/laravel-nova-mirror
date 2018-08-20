@@ -24,11 +24,11 @@
                 <div class="px-3" v-if="shouldShowCheckBoxes">
                     <!-- Select All -->
                     <dropdown width="250" active-class="" class="h-9 flex items-center" dusk="select-all-dropdown">
-                        <div slot="default" class="flex items-center">
+                        <dropdown-trigger slot-scope="{toggle}" :handle-click="toggle">
                             <fake-checkbox :checked="selectAllChecked" />
-                        </div>
+                        </dropdown-trigger>
 
-                        <div slot="menu">
+                        <dropdown-menu slot="menu" direction="ltr" width="250">
                             <div class="p-4">
                                 <ul class="list-reset">
                                     <li class="flex items-center">
@@ -64,7 +64,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </dropdown-menu>
                     </dropdown>
                 </div>
 
@@ -91,10 +91,17 @@
                         @actionExecuted="getResources"
                     />
 
-                    <dropdown direction="rtl" width="290" class="dropdown-alt" :dark="true" dusk="filter-selector">
-                        <icon type="filter" class="text-80" />
+                    <dropdown
+                        v-if="filters.length > 0 || softDeletes || !viaResource"
+                        data-testid="filter-selector"
+                        dusk="filter-selector"
+                        class="bg-30 hover:bg-40 rounded"
+                    >
+                        <dropdown-trigger slot-scope="{toggle}" :handle-click="toggle" class="px-3">
+                            <icon type="filter" class="text-80" />
+                        </dropdown-trigger>
 
-                        <div slot="menu">
+                        <dropdown-menu slot="menu" width="290" direction="rtl" :dark="true">
                             <!-- Filters -->
                             <filter-selector
                                 :filters="filters"
@@ -119,7 +126,7 @@
                                     <option value="100">100</option>
                                 </select>
                             </filter-select>
-                        </div>
+                        </dropdown-menu>
                     </dropdown>
 
                     <delete-menu
