@@ -1,6 +1,6 @@
 <template>
     <loading-view :loading="loading">
-        <heading class="mb-3">Update {{ relatedResourceLabel }}</heading>
+        <heading class="mb-3">{{__('Update')}} {{ relatedResourceLabel }}</heading>
 
         <card class="overflow-hidden">
             <form v-if="field" @submit.prevent="updateAttachedResource">
@@ -22,7 +22,7 @@
                             @change="selectResourceFromSelectControl"
                             disabled
                         >
-                            <option value="" disabled selected>Choose {{ field.name }}</option>
+                            <option value="" disabled selected>{{__('Choose')}} {{ field.name }}</option>
 
                             <option
                                 v-for="resource in availableResources"
@@ -59,11 +59,11 @@
                 <!-- Attach Button -->
                 <div class="bg-30 flex px-8 py-4">
                     <button dusk="update-and-continue-editing-button" type="button" @click="updateAndContinueEditing" class="ml-auto btn btn-default btn-primary mr-3">
-                        Update &amp; Continue Editing
+                        {{__('Update &amp; Continue Editing')}}
                     </button>
 
                     <button dusk="update-button" class="btn btn-default btn-primary">
-                        Update {{ relatedResourceLabel }}
+                        {{__('Update')}} {{ relatedResourceLabel }}
                     </button>
                 </div>
             </form>

@@ -16941,7 +16941,11 @@ var render = function() {
                                                 { staticClass: "ml-2" },
                                                 [
                                                   _vm._v(
-                                                    "\n                                            Select All\n                                        "
+                                                    "\n                                            " +
+                                                      _vm._s(
+                                                        _vm.__("Select All")
+                                                      ) +
+                                                      "\n                                        "
                                                   )
                                                 ]
                                               )
@@ -17004,7 +17008,13 @@ var render = function() {
                                                 { staticClass: "ml-2" },
                                                 [
                                                   _vm._v(
-                                                    "\n                                            Select All Matching\n                                            "
+                                                    "\n                                            " +
+                                                      _vm._s(
+                                                        _vm.__(
+                                                          "Select All Matching"
+                                                        )
+                                                      ) +
+                                                      "\n                                            "
                                                   ),
                                                   _c("span", [
                                                     _vm._v(
@@ -19135,7 +19145,7 @@ exports.default = {
                                 }
 
                                 if (_context2.t0.response.status == 409) {
-                                    this.$toasted.show('Another user has updated this resource since this page was loaded. Please refresh the page and try again.', { type: 'error' });
+                                    this.$toasted.show(this.__('Another user has updated this resource since this page was loaded. Please refresh the page and try again.'), { type: 'error' });
                                 }
 
                             case 12:
@@ -19189,7 +19199,7 @@ exports.default = {
                                 }
 
                                 if (_context3.t0.response.status == 409) {
-                                    this.$toasted.show('Another user has updated this resource since this page was loaded. Please refresh the page and try again.', { type: 'error' });
+                                    this.$toasted.show(this.__('Another user has updated this resource since this page was loaded. Please refresh the page and try again.'), { type: 'error' });
                                 }
 
                             case 13:
@@ -19294,7 +19304,7 @@ var render = function() {
         "div",
         [
           _c("heading", { staticClass: "mb-3" }, [
-            _vm._v("Edit " + _vm._s(_vm.singularName))
+            _vm._v(_vm._s(_vm.__("Edit")) + " " + _vm._s(_vm.singularName))
           ]),
           _vm._v(" "),
           _c("card", { staticClass: "overflow-hidden" }, [
@@ -19349,7 +19359,9 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                    Update & Continue Editing\n                "
+                            "\n                    " +
+                              _vm._s(_vm.__("Update & Continue Editing")) +
+                              "\n                "
                           )
                         ]
                       ),
@@ -19362,7 +19374,9 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                    Update " +
+                            "\n                    " +
+                              _vm._s(_vm.__("Update")) +
+                              " " +
                               _vm._s(_vm.singularName) +
                               "\n                "
                           )
@@ -20855,7 +20869,9 @@ var render = function() {
     { attrs: { loading: _vm.loading } },
     [
       _c("heading", { staticClass: "mb-3" }, [
-        _vm._v("Update " + _vm._s(_vm.relatedResourceLabel))
+        _vm._v(
+          _vm._s(_vm.__("Update")) + " " + _vm._s(_vm.relatedResourceLabel)
+        )
       ]),
       _vm._v(" "),
       _c("card", { staticClass: "overflow-hidden" }, [
@@ -20910,7 +20926,13 @@ var render = function() {
                         _c(
                           "option",
                           { attrs: { value: "", disabled: "", selected: "" } },
-                          [_vm._v("Choose " + _vm._s(_vm.field.name))]
+                          [
+                            _vm._v(
+                              _vm._s(_vm.__("Choose")) +
+                                " " +
+                                _vm._s(_vm.field.name)
+                            )
+                          ]
                         ),
                         _vm._v(" "),
                         _vm._l(_vm.availableResources, function(resource) {
@@ -20989,7 +21011,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                    Update & Continue Editing\n                "
+                        "\n                    " +
+                          _vm._s(_vm.__("Update & Continue Editing")) +
+                          "\n                "
                       )
                     ]
                   ),
@@ -21002,7 +21026,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                    Update " +
+                        "\n                    " +
+                          _vm._s(_vm.__("Update")) +
+                          " " +
                           _vm._s(_vm.relatedResourceLabel) +
                           "\n                "
                       )
@@ -22016,7 +22042,11 @@ var render = function() {
                                                 { staticClass: "ml-2" },
                                                 [
                                                   _vm._v(
-                                                    "\n                                            Select All\n                                        "
+                                                    "\n                                            " +
+                                                      _vm._s(
+                                                        _vm.__("Select All")
+                                                      ) +
+                                                      "\n                                        "
                                                   )
                                                 ]
                                               )
@@ -22083,7 +22113,13 @@ var render = function() {
                                                     { staticClass: "ml-2" },
                                                     [
                                                       _vm._v(
-                                                        "\n                                            Select All Matching\n                                            "
+                                                        "\n                                            " +
+                                                          _vm._s(
+                                                            _vm.__(
+                                                              "Select All Matching"
+                                                            )
+                                                          ) +
+                                                          "\n                                            "
                                                       ),
                                                       _c("span", [
                                                         _vm._v(
@@ -46768,12 +46804,16 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("p", { staticClass: "text-error-subtitle mb-6" }, [
-              _vm._v("Whoops…")
+              _vm._v(_vm._s(_vm.__("Whoops")) + "…")
             ]),
             _vm._v(" "),
             _c("p", { staticClass: "text-error-message mb-8 leading-normal" }, [
               _vm._v(
-                "We're lost in space. The page your were trying to view does not exist."
+                _vm._s(
+                  _vm.__(
+                    "We're lost in space. The page your were trying to view does not exist."
+                  )
+                )
               )
             ]),
             _vm._v(" "),
@@ -46784,7 +46824,13 @@ var render = function() {
                   "dim btn btn-lg btn-default btn-white text-90 no-text-shadow tracking-wide uppercase",
                 attrs: { to: { name: "dashboard" } }
               },
-              [_vm._v("\n                Go Home\n            ")]
+              [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.__("Go Home")) +
+                    "\n            "
+                )
+              ]
             )
           ],
           1
@@ -47381,12 +47427,16 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("p", { staticClass: "text-error-subtitle mb-6" }, [
-              _vm._v("Hold Up!")
+              _vm._v(_vm._s(_vm.__("Hold Up!")))
             ]),
             _vm._v(" "),
             _c("p", { staticClass: "text-error-message mb-8 leading-normal" }, [
               _vm._v(
-                "The government won't let us show you what's behind these doors…"
+                _vm._s(
+                  _vm.__(
+                    "The government won't let us show you what's behind these doors"
+                  )
+                ) + "…"
               )
             ]),
             _vm._v(" "),
@@ -47397,7 +47447,13 @@ var render = function() {
                   "dim btn btn-lg btn-default btn-white text-90 no-text-shadow tracking-wide uppercase",
                 attrs: { to: { name: "dashboard" } }
               },
-              [_vm._v("\n                Go Home\n            ")]
+              [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.__("Go Home")) +
+                    "\n            "
+                )
+              ]
             )
           ],
           1
@@ -53751,8 +53807,14 @@ if (false) {
 
 module.exports = {
     methods: {
-        __: function __(key) {
-            return key + ':t:';
+        __: function __(key, replace) {
+            var translation = window.config.translations[key] ? window.config.translations[key] : key;
+
+            _.forEach(replace, function (value, key) {
+                translation = translation.replace(':' + key, value);
+            });
+
+            return translation;
         }
     }
 };

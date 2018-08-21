@@ -140,6 +140,7 @@ class NovaServiceProvider extends ServiceProvider
     {
         Nova::serving(function (ServingNova $event) {
             Nova::provideToScript([
+                'translations' => $this->getTranslations(),
                 'timezone' => config('app.timezone', 'UTC'),
                 'userTimezone' => Nova::resolveUserTimezone($event->request),
             ]);
@@ -170,5 +171,21 @@ class NovaServiceProvider extends ServiceProvider
             Console\UserCommand::class,
             Console\ValueCommand::class,
         ]);
+    }
+
+    /**
+     * Get the translation keys from file.
+     *
+     * @return array
+     */
+    private static function getTranslations()
+    {
+        $translationFile = resource_path('lang/'.app()->getLocale().'.json');
+
+        if (! is_readable($translationFile)) {
+            $translationFile = resource_path('lang/'.app('translator')->getFallback().'.json');
+        }
+
+        return json_decode(file_get_contents($translationFile), true);
     }
 }

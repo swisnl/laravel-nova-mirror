@@ -40,7 +40,7 @@
                                             <checkbox :checked="selectAllChecked" />
 
                                             <span class="ml-2">
-                                                Select All
+                                                {{__('Select All')}}
                                             </span>
                                         </label>
                                     </li>
@@ -57,7 +57,7 @@
                                             />
 
                                             <span class="ml-2">
-                                                Select All Matching
+                                                {{__('Select All Matching')}}
                                                 <span>({{ allMatchingResourceCount }})</span>
                                             </span>
                                         </label>
