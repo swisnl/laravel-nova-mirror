@@ -37,6 +37,9 @@
     "Are you sure you want to force delete the selected resources?": "Are you sure you want to force delete the selected resources?",
     "Are you sure you want to restore this resource?": "Are you sure you want to restore this resource?",
     "Are you sure you want to restore the selected resources?": "Are you sure you want to restore the selected resources?",
+    "No :resource matched the given criteria.": "No :resource matched the given criteria.",
+
+
 
     "January": "January",
     "February": "February",

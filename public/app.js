@@ -21305,6 +21305,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
 
 exports.default = {
     mixins: [_laravelNova.Deletable, _laravelNova.Filterable, _laravelNova.Paginatable, _laravelNova.PerPageable, _laravelNova.InteractsWithResourceInformation, _laravelNova.InteractsWithQueryString],
@@ -22460,11 +22462,16 @@ var render = function() {
                         { staticClass: "text-base text-80 font-normal mb-6" },
                         [
                           _vm._v(
-                            "\n                    No " +
+                            "\n                    " +
                               _vm._s(
-                                _vm.resourceInformation.label.toLowerCase()
+                                _vm.__(
+                                  "No :resource matched the given criteria.",
+                                  {
+                                    resource: _vm.resourceInformation.label.toLowerCase()
+                                  }
+                                )
                               ) +
-                              " matched the given criteria.\n                "
+                              "\n                "
                           )
                         ]
                       ),
