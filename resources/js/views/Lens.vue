@@ -113,7 +113,7 @@
                             <!-- Per Page -->
                             <filter-select v-if="!viaResource">
                                 <h3 slot="default" class="text-sm uppercase tracking-wide text-80 bg-30 p-3">
-                                    Per Page:
+                                    {{__('Per Page:')}}
                                 </h3>
 
                                 <select slot="select"

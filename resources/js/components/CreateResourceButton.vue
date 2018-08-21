@@ -20,7 +20,7 @@
             }"
         >
             <slot>
-                Attach {{singularName}}
+                {{__('Attach')}} {{singularName}}
             </slot>
         </router-link>
 
@@ -42,7 +42,7 @@
                 }
             }"
         >
-            Create {{singularName}}
+            {{__('Create')}} {{singularName}}
         </router-link>
     </span>
 </template>

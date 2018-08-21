@@ -1,6 +1,6 @@
 <template>
     <loading-view :loading="loading">
-        <heading class="mb-3">New {{ singularName }}</heading>
+        <heading class="mb-3">{{__('New')}} {{ singularName }}</heading>
 
         <card class="overflow-hidden">
             <form v-if="fields" @submit.prevent="createResource">
@@ -23,11 +23,11 @@
                 <!-- Create Button -->
                 <div class="bg-30 flex px-8 py-4">
                     <button dusk="create-and-add-another-button" type="button" @click="createAndAddAnother" class="ml-auto btn btn-default btn-primary mr-3">
-                        Create &amp; Add Another
+                        {{__('Create &amp; Add Another')}}
                     </button>
 
                     <button dusk="create-button" class="btn btn-default btn-primary">
-                        Create {{ singularName }}
+                        {{__('Create')}} {{ singularName }}
                     </button>
                 </div>
             </form>

@@ -37,7 +37,7 @@
                         resourceName: resourceName,
                         resourceId: resource['id'].value
                     }}"
-                    title="View"
+                    :title="__('View')"
                 >
                     <icon type="view" width="22" height="18" view-box="0 0 22 16" />
                 </router-link>
@@ -61,7 +61,7 @@
                             viaRelationship: viaRelationship
                         }
                     }"
-                    title="Edit Attached"
+                    :title="__('Edit Attached')"
                 >
                     <icon type="edit" />
                 </router-link>
@@ -75,7 +75,7 @@
                         resourceName: resourceName,
                         resourceId: resource['id'].value
                     }}"
-                    title="Edit"
+                    :title="__('Edit')"
                 >
                     <icon type="edit" />
                 </router-link>
@@ -88,7 +88,7 @@
                 class="appearance-none cursor-pointer text-70 hover:text-primary mr-3"
                 v-if="resource.authorizedToDelete && (! resource.softDeleted || viaManyToMany)"
                 @click.prevent="openDeleteModal"
-                :title="viaManyToMany ? 'Detach' : 'Delete'"
+                :title="__(viaManyToMany ? 'Detach' : 'Delete')"
             >
                 <icon />
             </button>
@@ -99,7 +99,7 @@
                 class="appearance-none cursor-pointer text-70 hover:text-primary mr-3"
                 v-if="resource.authorizedToRestore && resource.softDeleted && ! viaManyToMany"
                 @click.prevent="openRestoreModal"
-                title="Restore"
+                :title="__('Restore')"
             >
                 <icon type="restore" with="20" height="21" />
            </button>

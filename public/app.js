@@ -17097,7 +17097,9 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              "\n                            Lens\n                        "
+                                              "\n                            " +
+                                                _vm._s(_vm.__("Lens")) +
+                                                "\n                        "
                                             )
                                           ]
                                         )
@@ -17274,13 +17276,21 @@ var render = function() {
                                             _c(
                                               "option",
                                               { attrs: { value: "with" } },
-                                              [_vm._v("With Trashed")]
+                                              [
+                                                _vm._v(
+                                                  _vm._s(_vm.__("With Trashed"))
+                                                )
+                                              ]
                                             ),
                                             _vm._v(" "),
                                             _c(
                                               "option",
                                               { attrs: { value: "only" } },
-                                              [_vm._v("Only Trashed")]
+                                              [
+                                                _vm._v(
+                                                  _vm._s(_vm.__("Only Trashed"))
+                                                )
+                                              ]
                                             )
                                           ]
                                         )
@@ -17299,7 +17309,9 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              "\n                                Per Page:\n                            "
+                                              "\n                                " +
+                                                _vm._s(_vm.__("Per Page:")) +
+                                                "\n                            "
                                             )
                                           ]
                                         ),
@@ -18864,7 +18876,7 @@ var render = function() {
     { attrs: { loading: _vm.loading } },
     [
       _c("heading", { staticClass: "mb-3" }, [
-        _vm._v("New " + _vm._s(_vm.singularName))
+        _vm._v(_vm._s(_vm.__("New")) + " " + _vm._s(_vm.singularName))
       ]),
       _vm._v(" "),
       _c("card", { staticClass: "overflow-hidden" }, [
@@ -18917,7 +18929,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                    Create & Add Another\n                "
+                        "\n                    " +
+                          _vm._s(_vm.__("Create & Add Another")) +
+                          "\n                "
                       )
                     ]
                   ),
@@ -18930,7 +18944,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                    Create " +
+                        "\n                    " +
+                          _vm._s(_vm.__("Create")) +
+                          " " +
                           _vm._s(_vm.singularName) +
                           "\n                "
                       )
@@ -22254,7 +22270,9 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              "\n                                Per Page:\n                            "
+                                              "\n                                " +
+                                                _vm._s(_vm.__("Per Page:")) +
+                                                "\n                            "
                                             )
                                           ]
                                         ),
@@ -44954,7 +44972,9 @@ var render = function() {
                 [
                   _vm._t("default", [
                     _vm._v(
-                      "\n            Attach " +
+                      "\n            " +
+                        _vm._s(_vm.__("Attach")) +
+                        " " +
                         _vm._s(_vm.singularName) +
                         "\n        "
                     )
@@ -44985,7 +45005,11 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n        Create " + _vm._s(_vm.singularName) + "\n    "
+                      "\n        " +
+                        _vm._s(_vm.__("Create")) +
+                        " " +
+                        _vm._s(_vm.singularName) +
+                        "\n    "
                     )
                   ]
                 )
@@ -51875,7 +51899,7 @@ var render = function() {
                             resourceId: _vm.resource["id"].value
                           }
                         },
-                        title: "View"
+                        title: _vm.__("View")
                       }
                     },
                     [
@@ -51922,7 +51946,7 @@ var render = function() {
                                 viaRelationship: _vm.viaRelationship
                               }
                             },
-                            title: "Edit Attached"
+                            title: _vm.__("Edit Attached")
                           }
                         },
                         [_c("icon", { attrs: { type: "edit" } })],
@@ -51942,7 +51966,7 @@ var render = function() {
                                 resourceId: _vm.resource["id"].value
                               }
                             },
-                            title: "Edit"
+                            title: _vm.__("Edit")
                           }
                         },
                         [_c("icon", { attrs: { type: "edit" } })],
@@ -51963,7 +51987,7 @@ var render = function() {
                   attrs: {
                     "data-testid": _vm.testId + "-delete-button",
                     dusk: _vm.resource["id"].value + "-delete-button",
-                    title: _vm.viaManyToMany ? "Detach" : "Delete"
+                    title: _vm.__(_vm.viaManyToMany ? "Detach" : "Delete")
                   },
                   on: {
                     click: function($event) {
@@ -51987,7 +52011,7 @@ var render = function() {
                     "appearance-none cursor-pointer text-70 hover:text-primary mr-3",
                   attrs: {
                     dusk: _vm.resource["id"].value + "-restore-button",
-                    title: "Restore"
+                    title: _vm.__("Restore")
                   },
                   on: {
                     click: function($event) {
@@ -53807,6 +53831,9 @@ if (false) {
 
 module.exports = {
     methods: {
+        /**
+         * Translate the given key.
+         */
         __: function __(key, replace) {
             var translation = window.config.translations[key] ? window.config.translations[key] : key;
 
@@ -53814,7 +53841,7 @@ module.exports = {
                 translation = translation.replace(':' + key, value);
             });
 
-            return translation;
+            return translation + '::';
         }
     }
 };

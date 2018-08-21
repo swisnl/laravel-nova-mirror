@@ -122,7 +122,7 @@
                     <dropdown class="bg-30 hover:bg-40 mr-3 rounded" v-if="lenses.length > 0">
                         <dropdown-trigger slot-scope="{toggle}" :handle-click="toggle" class="px-3">
                             <h3 slot="default" class="flex items-center font-normal text-base text-90 h-9">
-                                Lens
+                                {{__('Lens')}}
                             </h3>
                         </dropdown-trigger>
 
@@ -164,15 +164,15 @@
                                     @change="trashedChanged"
                                 >
                                     <option value="" selected>&mdash;</option>
-                                    <option value="with">With Trashed</option>
-                                    <option value="only">Only Trashed</option>
+                                    <option value="with">{{__('With Trashed')}}</option>
+                                    <option value="only">{{__('Only Trashed')}}</option>
                                 </select>
                             </filter-select>
 
                             <!-- Per Page -->
                             <filter-select v-if="!viaResource">
                                 <h3 slot="default" class="text-sm uppercase tracking-wide text-80 bg-30 p-3">
-                                    Per Page:
+                                    {{__('Per Page:')}}
                                 </h3>
 
                                 <select slot="select"
