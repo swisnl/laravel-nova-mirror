@@ -18745,7 +18745,7 @@ exports.default = {
                                 response = _context2.sent;
 
 
-                                this.$toasted.show('The ' + this.resourceInformation.singularLabel.toLowerCase() + ' was created!', { type: 'success' });
+                                this.$toasted.show(this.__('The :resource was created!', { resource: this.resourceInformation.singularLabel.toLowerCase() }), { type: 'success' });
 
                                 this.$router.push({
                                     name: 'detail',
@@ -18799,7 +18799,7 @@ exports.default = {
                                 response = _context3.sent;
 
 
-                                this.$toasted.show('The ' + this.resourceInformation.singularLabel.toLowerCase() + ' was created!', { type: 'success' });
+                                this.$toasted.show(this.__('The :resource was created!', { resource: this.resourceInformation.singularLabel.toLowerCase() }), { type: 'success' });
 
                                 // Reset the form by refetching the fields
                                 this.getFields();

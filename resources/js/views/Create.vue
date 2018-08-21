@@ -91,7 +91,7 @@ export default {
                 const response = await this.createRequest()
 
                 this.$toasted.show(
-                    `The ${this.resourceInformation.singularLabel.toLowerCase()} was created!`,
+                    this.__('The :resource was created!', {resource: this.resourceInformation.singularLabel.toLowerCase()}),
                     { type: 'success' }
                 )
 
@@ -117,7 +117,7 @@ export default {
                 const response = await this.createRequest()
 
                 this.$toasted.show(
-                    `The ${this.resourceInformation.singularLabel.toLowerCase()} was created!`,
+                    this.__('The :resource was created!', {resource: this.resourceInformation.singularLabel.toLowerCase()}),
                     { type: 'success' }
                 )
 

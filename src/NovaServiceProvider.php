@@ -186,6 +186,10 @@ class NovaServiceProvider extends ServiceProvider
             $translationFile = resource_path('lang/'.app('translator')->getFallback().'.json');
         }
 
+        if (! is_readable($translationFile)) {
+            return [];
+        }
+
         return json_decode(file_get_contents($translationFile), true);
     }
 }
