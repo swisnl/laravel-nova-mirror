@@ -20,6 +20,8 @@ Vue.use(AsyncComputed)
 
 Vue.config.productionTip = false
 
+Vue.mixin(require('./base'))
+
 /**
  * Next, we'll setup some of Nova's Vue components that need to be global
  * so that they are always available. Then, we will be ready to create

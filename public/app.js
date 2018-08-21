@@ -904,8 +904,9 @@ CodeMirror.defineMode("xml", function(editorConf, config_) {
         stream.next();
       }
       return style;
-    };
+    }
   }
+
   function doctype(depth) {
     return function(stream, state) {
       var ch;
@@ -13239,7 +13240,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(266);
-module.exports = __webpack_require__(1052);
+module.exports = __webpack_require__(1053);
 
 
 /***/ }),
@@ -13291,6 +13292,8 @@ _vue2.default.use(_portalVue2.default);
 _vue2.default.use(_vueAsyncComputed2.default);
 
 _vue2.default.config.productionTip = false;
+
+_vue2.default.mixin(__webpack_require__(1052));
 
 /**
  * Next, we'll setup some of Nova's Vue components that need to be global
@@ -39376,7 +39379,11 @@ var render = function() {
                   _c(
                     "option",
                     { attrs: { value: "", disabled: "", selected: "" } },
-                    [_vm._v("Choose " + _vm._s(_vm.field.name))]
+                    [
+                      _vm._v(
+                        _vm._s(_vm.__("Choose")) + " " + _vm._s(_vm.field.name)
+                      )
+                    ]
                   ),
                   _vm._v(" "),
                   _vm._l(_vm.availableResources, function(resource) {
@@ -53602,6 +53609,21 @@ if (false) {
 
 /***/ }),
 /* 1052 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {
+    methods: {
+        __: function __(key) {
+            return key + ':t:';
+        }
+    }
+};
+
+/***/ }),
+/* 1053 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
