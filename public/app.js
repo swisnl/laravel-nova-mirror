@@ -48854,7 +48854,7 @@ exports.default = {
                 return f.class == filter.class;
             });
 
-            if (filter.currentValue != '') {
+            if (filter.currentValue !== '') {
                 this.current.push({
                     class: filter.class,
                     value: filter.currentValue

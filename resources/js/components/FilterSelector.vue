@@ -22,37 +22,33 @@
 </template>
 
 <script>
-    export default {
-        props: ['filters', 'currentFilters'],
+export default {
+    props: ['filters', 'currentFilters'],
 
+    /**
+     * Mount the component.
+     */
+    mounted() {
+        this.current = this.currentFilters
+    },
 
+    methods: {
         /**
-         * Mount the component.
+         * Handle a filter selection change.
          */
-        mounted() {
-            this.current = this.currentFilters;
+        filterChanged(filter) {
+            this.current = _.reject(this.current, f => f.class == filter.class)
+
+            if (filter.currentValue !== '') {
+                this.current.push({
+                    class: filter.class,
+                    value: filter.currentValue,
+                })
+            }
+
+            this.$emit('update:currentFilters', this.current)
+            this.$emit('changed')
         },
-
-
-        methods: {
-            /**
-             * Handle a filter selection change.
-             */
-            filterChanged(filter) {
-                this.current = _.reject(
-                    this.current, f => f.class == filter.class
-                );
-
-                if (filter.currentValue != '') {
-                    this.current.push({
-                        class: filter.class,
-                        value: filter.currentValue
-                    });
-                }
-
-                this.$emit('update:currentFilters', this.current);
-                this.$emit('changed');
-            },
-        }
-    }
+    },
+}
 </script>
