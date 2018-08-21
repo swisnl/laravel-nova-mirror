@@ -53848,7 +53848,7 @@ module.exports = {
                 translation = translation.replace(':' + key, value);
             });
 
-            return translation + '::';
+            return translation;
         }
     }
 };
