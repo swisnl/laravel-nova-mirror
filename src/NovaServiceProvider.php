@@ -141,8 +141,8 @@ class NovaServiceProvider extends ServiceProvider
     {
         Nova::serving(function (ServingNova $event) {
             Nova::provideToScript([
-                'translations' => $this->getTranslations(),
                 'timezone' => config('app.timezone', 'UTC'),
+                'translations' => $this->getTranslations(),
                 'userTimezone' => Nova::resolveUserTimezone($event->request),
             ]);
         });
