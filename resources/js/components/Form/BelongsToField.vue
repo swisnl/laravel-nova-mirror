@@ -58,7 +58,7 @@
                     <checkbox :dusk="field.resourceName + '-with-trashed-checkbox'" :checked="withTrashed" />
 
                     <span class="ml-2">
-                        With Trashed
+                        {{__('With Trashed')}}
                     </span>
                 </label>
             </div>

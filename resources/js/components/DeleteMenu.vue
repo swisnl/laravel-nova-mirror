@@ -14,7 +14,7 @@
                         @click="confirmDeleteSelectedResources"
                         v-if="authorizedToDeleteSelectedResources || allMatchingSelected"
                     >
-                            {{ viaManyToMany ? 'Detach' : 'Delete' }} Selected ({{ selectedResourcesCount }})
+                            {{ __(viaManyToMany ? 'Detach Selected' : 'Delete Selected') }} ({{ selectedResourcesCount }})
                     </button>
 
                     <!-- Restore Resources -->
@@ -27,7 +27,7 @@
                               (softDeletedResourcesSelected || allMatchingSelected) &&
                               (authorizedToRestoreSelectedResources || allMatchingSelected)"
                     >
-                        Restore Selected ({{ selectedResourcesCount }})
+                        {{__('Restore Selected')}} ({{ selectedResourcesCount }})
                     </button>
 
                     <!-- Force Delete Resources -->
@@ -38,7 +38,7 @@
                         v-if="softDeletes && ! viaManyToMany &&
                               (authorizedToForceDeleteSelectedResources || allMatchingSelected)"
                     >
-                        Force Delete Selected ({{ selectedResourcesCount }})
+                        {{__('Force Delete Selected')}} ({{ selectedResourcesCount }})
                     </button>
                 </div>
             </dropdown-menu>
@@ -62,8 +62,8 @@
                     mode="delete"
                 >
                    <div slot-scope="{ uppercaseMode, mode }" class="p-8">
-                       <heading :level="2" class="mb-6">Force {{ uppercaseMode }} Resource</heading>
-                       <p class="text-80 leading-normal">Are you sure you want to force {{ mode }} the selected resources?</p>
+                       <heading :level="2" class="mb-6">{{__('Force Delete Resource')}}</heading>
+                       <p class="text-80 leading-normal">{{__('Are you sure you want to force delete the selected resources?')}}</p>
                    </div>
                </delete-resource-modal>
             </transition>

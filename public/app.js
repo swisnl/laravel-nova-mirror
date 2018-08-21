@@ -15633,7 +15633,9 @@ var render = function() {
     "div",
     [
       _vm.cards.length > 1
-        ? _c("heading", { staticClass: "mb-6" }, [_vm._v("Dashboard")])
+        ? _c("heading", { staticClass: "mb-6" }, [
+            _vm._v(_vm._s(_vm.__("Dashboard")))
+          ])
         : _vm._e(),
       _vm._v(" "),
       _vm.shouldShowCards
@@ -19907,7 +19909,9 @@ var render = function() {
     { attrs: { loading: _vm.loading } },
     [
       _c("heading", { staticClass: "mb-3" }, [
-        _vm._v("Attach " + _vm._s(_vm.relatedResourceLabel))
+        _vm._v(
+          _vm._s(_vm.__("Attach")) + " " + _vm._s(_vm.relatedResourceLabel)
+        )
       ]),
       _vm._v(" "),
       _c("card", { staticClass: "overflow-hidden" }, [
@@ -20053,7 +20057,13 @@ var render = function() {
                                     selected: ""
                                   }
                                 },
-                                [_vm._v("Choose " + _vm._s(_vm.field.name))]
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.__("Choose")) +
+                                      " " +
+                                      _vm._s(_vm.field.name)
+                                  )
+                                ]
                               ),
                               _vm._v(" "),
                               _vm._l(_vm.availableResources, function(
@@ -20127,7 +20137,9 @@ var render = function() {
                                 _vm._v(" "),
                                 _c("span", { staticClass: "ml-2" }, [
                                   _vm._v(
-                                    "\n                                With Trashed\n                            "
+                                    "\n                                " +
+                                      _vm._s(_vm.__("With Trashed")) +
+                                      "\n                            "
                                   )
                                 ])
                               ],
@@ -20187,7 +20199,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                    Attach & Attach Another\n                "
+                        "\n                    " +
+                          _vm._s(_vm.__("Attach & Attach Another")) +
+                          "\n                "
                       )
                     ]
                   ),
@@ -20200,7 +20214,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                    Attach " +
+                        "\n                    " +
+                          _vm._s(_vm.__("Attach")) +
+                          " " +
                           _vm._s(_vm.relatedResourceLabel) +
                           "\n                "
                       )
@@ -35014,7 +35030,11 @@ var render = function() {
           },
           [
             _c("option", { attrs: { value: "", selected: "", disabled: "" } }, [
-              _vm._v("\n                Choose an option\n            ")
+              _vm._v(
+                "\n                " +
+                  _vm._s(_vm.__("Choose an option")) +
+                  "\n            "
+              )
             ]),
             _vm._v(" "),
             _vm._l(_vm.field.options, function(option) {
@@ -35504,9 +35524,9 @@ var render = function() {
                   staticClass: "text-primary dim",
                   attrs: { href: _vm.src, target: "_blank" }
                 },
-                [_vm._v("This image")]
+                [_vm._v(_vm._s(_vm.__("This image")))]
               ),
-              _vm._v(" could not be found.\n        ")
+              _vm._v(" " + _vm._s(_vm.__("could not be found.")) + "\n        ")
             ])
           ])
         : _vm._e()
@@ -36183,7 +36203,9 @@ var render = function() {
                               [
                                 _c("span", { staticClass: "class ml-2 mt-1" }, [
                                   _vm._v(
-                                    "\n                        Delete\n                    "
+                                    "\n                        " +
+                                      _vm._s(_vm.__("Delete")) +
+                                      "\n                    "
                                   )
                                 ])
                               ]
@@ -36240,7 +36262,13 @@ var render = function() {
               staticClass: "form-file-btn btn btn-default btn-primary",
               attrs: { for: _vm.labelFor }
             },
-            [_vm._v("\n                Choose File\n            ")]
+            [
+              _vm._v(
+                "\n                " +
+                  _vm._s(_vm.__("Choose File")) +
+                  "\n            "
+              )
+            ]
           )
         ]),
         _vm._v(" "),
@@ -37134,7 +37162,52 @@ var actions = {
     exitFullScreen: function exitFullScreen() {
         this.fullScreen = false;
     }
-};
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var keyMaps = {
     'Cmd-B': 'bold',
@@ -37346,7 +37419,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Write")]
+                    [_vm._v(_vm._s(_vm.__("Write")))]
                   ),
                   _vm._v(" "),
                   _c(
@@ -37363,7 +37436,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Preview")]
+                    [_vm._v(_vm._s(_vm.__("Preview")))]
                   )
                 ]
               ),
@@ -39453,7 +39526,9 @@ var render = function() {
                     _vm._v(" "),
                     _c("span", { staticClass: "ml-2" }, [
                       _vm._v(
-                        "\n                    With Trashed\n                "
+                        "\n                    " +
+                          _vm._s(_vm.__("With Trashed")) +
+                          "\n                "
                       )
                     ])
                   ],
@@ -40705,7 +40780,7 @@ var render = function() {
               _c(
                 "option",
                 { attrs: { value: "", disabled: "", selected: "" } },
-                [_vm._v("Choose Type")]
+                [_vm._v(_vm._s(_vm.__("Choose Type")))]
               ),
               _vm._v(" "),
               _vm._l(_vm.field.morphToTypes, function(option) {
@@ -40846,7 +40921,13 @@ var render = function() {
                           attrs: { value: "", disabled: "" },
                           domProps: { selected: _vm.selectedResourceId == "" }
                         },
-                        [_vm._v("Choose " + _vm._s(_vm.field.name))]
+                        [
+                          _vm._v(
+                            _vm._s(_vm.__("Choose")) +
+                              " " +
+                              _vm._s(_vm.field.name)
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _vm._l(_vm.availableResources, function(resource) {
@@ -40917,7 +40998,9 @@ var render = function() {
                         _vm._v(" "),
                         _c("span", { staticClass: "ml-2" }, [
                           _vm._v(
-                            "\n                        With Trashed\n                    "
+                            "\n                        " +
+                              _vm._s(_vm.__("With Trashed")) +
+                              "\n                    "
                           )
                         ])
                       ],
@@ -41505,7 +41588,7 @@ exports.default = {
             this.working = true;
 
             if (this.selectedResources.length == 0) {
-                alert('Please select a resource to perform this action on.');
+                alert(this.__('Please select a resource to perform this action on.'));
                 return;
             }
 
@@ -41568,7 +41651,7 @@ exports.default = {
                 window.location = response.redirect;
             } else {
                 this.$emit('actionExecuted');
-                this.$toasted.show('The action ran successfully!', { type: 'success' });
+                this.$toasted.show(this.__('The action ran successfully!'), { type: 'success' });
             }
         }
     },
@@ -41713,7 +41796,7 @@ var render = function() {
                 _c(
                   "option",
                   { attrs: { value: "", disabled: "", selected: "" } },
-                  [_vm._v("Select Action")]
+                  [_vm._v(_vm._s(_vm.__("Select Action")))]
                 ),
                 _vm._v(" "),
                 _vm.actions.length > 0
@@ -41986,7 +42069,13 @@ var render = function() {
       _c("h3", { staticClass: "flex mb-3 text-base text-80 font-bold" }, [
         _vm._v("\n        " + _vm._s(_vm.title) + "\n        "),
         _c("span", { staticClass: "ml-auto font-semibold text-70 text-sm" }, [
-          _vm._v("(" + _vm._s(_vm.formattedTotal) + " total)")
+          _vm._v(
+            "(" +
+              _vm._s(_vm.formattedTotal) +
+              " " +
+              _vm._s(_vm.__("total")) +
+              ")"
+          )
         ])
       ]),
       _vm._v(" "),
@@ -44365,7 +44454,11 @@ var render = function() {
               _vm.selectedAction.fields.length == 0
                 ? _c("p", { staticClass: "text-80 px-8 my-8" }, [
                     _vm._v(
-                      "\n                Are you sure you want to run this action?\n            "
+                      "\n                " +
+                        _vm._s(
+                          _vm.__("Are you sure you want to run this action?")
+                        ) +
+                        "\n            "
                     )
                   ])
                 : _c(
@@ -44433,7 +44526,7 @@ var render = function() {
                 [
                   _vm.working
                     ? _c("loader", { attrs: { width: "30" } })
-                    : _c("span", [_vm._v("Run Action")])
+                    : _c("span", [_vm._v(_vm._s(_vm.__("Run Action")))])
                 ],
                 1
               )
@@ -44573,11 +44666,13 @@ var render = function() {
           { staticClass: "p-8" },
           [
             _c("heading", { staticClass: "mb-6", attrs: { level: 2 } }, [
-              _vm._v("Delete File")
+              _vm._v(_vm._s(_vm.__("Delete File")))
             ]),
             _vm._v(" "),
             _c("p", { staticClass: "text-80" }, [
-              _vm._v("Are you sure you want to delete this file?")
+              _vm._v(
+                _vm._s(_vm.__("Are you sure you want to delete this file?"))
+              )
             ])
           ],
           1
@@ -44601,7 +44696,7 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("Cancel")]
+              [_vm._v(_vm._s(_vm.__("Cancel")))]
             ),
             _vm._v(" "),
             _c(
@@ -44620,7 +44715,7 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("Delete")]
+              [_vm._v(_vm._s(_vm.__("Delete")))]
             )
           ])
         ])
@@ -45188,8 +45283,14 @@ var render = function() {
                       [
                         _vm._v(
                           "\n                        " +
-                            _vm._s(_vm.viaManyToMany ? "Detach" : "Delete") +
-                            " Selected (" +
+                            _vm._s(
+                              _vm.__(
+                                _vm.viaManyToMany
+                                  ? "Detach Selected"
+                                  : "Delete Selected"
+                              )
+                            ) +
+                            " (" +
                             _vm._s(_vm.selectedResourcesCount) +
                             ")\n                "
                         )
@@ -45212,7 +45313,9 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n                    Restore Selected (" +
+                          "\n                    " +
+                            _vm._s(_vm.__("Restore Selected")) +
+                            " (" +
                             _vm._s(_vm.selectedResourcesCount) +
                             ")\n                "
                         )
@@ -45234,7 +45337,9 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n                    Force Delete Selected (" +
+                          "\n                    " +
+                            _vm._s(_vm.__("Force Delete Selected")) +
+                            " (" +
                             _vm._s(_vm.selectedResourcesCount) +
                             ")\n                "
                         )
@@ -45295,9 +45400,7 @@ var render = function() {
                                 { staticClass: "mb-6", attrs: { level: 2 } },
                                 [
                                   _vm._v(
-                                    "Force " +
-                                      _vm._s(uppercaseMode) +
-                                      " Resource"
+                                    _vm._s(_vm.__("Force Delete Resource"))
                                   )
                                 ]
                               ),
@@ -45307,9 +45410,11 @@ var render = function() {
                                 { staticClass: "text-80 leading-normal" },
                                 [
                                   _vm._v(
-                                    "Are you sure you want to force " +
-                                      _vm._s(mode) +
-                                      " the selected resources?"
+                                    _vm._s(
+                                      _vm.__(
+                                        "Are you sure you want to force delete the selected resources?"
+                                      )
+                                    )
                                   )
                                 ]
                               )
@@ -45512,14 +45617,22 @@ var render = function() {
                       _c(
                         "heading",
                         { staticClass: "mb-6", attrs: { level: 2 } },
-                        [_vm._v(_vm._s(_vm.uppercaseMode) + " Resource")]
+                        [
+                          _vm._v(
+                            _vm._s(_vm.__(_vm.uppercaseMode + " Resource"))
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c("p", { staticClass: "text-80 leading-normal" }, [
                         _vm._v(
-                          "Are you sure you want to " +
-                            _vm._s(_vm.mode) +
-                            " the selected resources?"
+                          _vm._s(
+                            _vm.__(
+                              "Are you sure you want to " +
+                                _vm.mode +
+                                " the selected resources?"
+                            )
+                          )
                         )
                       ])
                     ],
@@ -45548,7 +45661,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Cancel")]
+                    [_vm._v(_vm._s(_vm.__("Cancel")))]
                   ),
                   _vm._v(" "),
                   _c(
@@ -45562,7 +45675,7 @@ var render = function() {
                         type: "submit"
                       }
                     },
-                    [_vm._v(_vm._s(_vm.uppercaseMode))]
+                    [_vm._v(_vm._s(_vm.__(_vm.uppercaseMode)))]
                   )
                 ])
               ])
@@ -50704,7 +50817,11 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("\n            Previous\n        ")]
+            [
+              _vm._v(
+                "\n            " + _vm._s(_vm.__("Previous")) + "\n        "
+              )
+            ]
           ),
           _vm._v(" "),
           _c(
@@ -50723,7 +50840,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("\n            Next\n        ")]
+            [_vm._v("\n            " + _vm._s(_vm.__("Next")) + "\n        ")]
           )
         ])
       : _vm._e()
@@ -51867,7 +51984,9 @@ var render = function() {
                                     },
                                     [
                                       _vm._v(
-                                        _vm._s(uppercaseMode) + " Resource"
+                                        _vm._s(
+                                          _vm.__(uppercaseMode + " Resource")
+                                        )
                                       )
                                     ]
                                   ),
@@ -51877,9 +51996,13 @@ var render = function() {
                                     { staticClass: "text-80 leading-normal" },
                                     [
                                       _vm._v(
-                                        "Are you sure you want to " +
-                                          _vm._s(mode) +
-                                          " this resource?"
+                                        _vm._s(
+                                          _vm.__(
+                                            "Are you sure you want to " +
+                                              mode +
+                                              " this resource?"
+                                          )
+                                        )
                                       )
                                     ]
                                   )
@@ -51916,7 +52039,7 @@ var render = function() {
                               _c(
                                 "heading",
                                 { staticClass: "mb-6", attrs: { level: 2 } },
-                                [_vm._v("Restore Resource")]
+                                [_vm._v(_vm._s(_vm.__("Restore Resource")))]
                               ),
                               _vm._v(" "),
                               _c(
@@ -51924,7 +52047,11 @@ var render = function() {
                                 { staticClass: "text-80 leading-normal" },
                                 [
                                   _vm._v(
-                                    "Are you sure you want to restore this resource?"
+                                    _vm._s(
+                                      _vm.__(
+                                        "Are you sure you want to restore this resource?"
+                                      )
+                                    )
                                   )
                                 ]
                               )
@@ -52093,12 +52220,16 @@ var render = function() {
                     _c(
                       "heading",
                       { staticClass: "mb-6", attrs: { level: 2 } },
-                      [_vm._v("Restore Resource")]
+                      [_vm._v(_vm._s(_vm.__("Restore Resource")))]
                     ),
                     _vm._v(" "),
                     _c("p", { staticClass: "text-80 leading-normal" }, [
                       _vm._v(
-                        "Are you sure you want to restore the selected resources?"
+                        _vm._s(
+                          _vm.__(
+                            "Are you sure you want to restore the selected resources?"
+                          )
+                        )
                       )
                     ])
                   ],
@@ -52121,7 +52252,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Cancel")]
+                    [_vm._v(_vm._s(_vm.__("Cancel")))]
                   ),
                   _vm._v(" "),
                   _c(
@@ -52135,7 +52266,7 @@ var render = function() {
                         type: "submit"
                       }
                     },
-                    [_vm._v("Restore")]
+                    [_vm._v(_vm._s(_vm.__("Restore")))]
                   )
                 ])
               ])
@@ -52558,7 +52689,9 @@ var render = function() {
               : _vm._e(),
             _vm._v(" "),
             _vm._t("default", [
-              _c("div", { staticClass: "text-70" }, [_vm._v("Click to choose")])
+              _c("div", { staticClass: "text-70" }, [
+                _vm._v(_vm._s(_vm.__("Click to choose")))
+              ])
             ])
           ],
           2
@@ -53373,8 +53506,10 @@ var render = function() {
     _vm.errors.length > 0
       ? _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-6 alert alert-danger" }, [
-            _c("strong", [_vm._v("Whoops!")]),
-            _vm._v(" Something went wrong.\n\n            "),
+            _c("strong", [_vm._v(_vm._s(_vm.__("Whoops!")))]),
+            _vm._v(
+              " " + _vm._s(_vm.__("Something went wrong.")) + "\n\n            "
+            ),
             _c("br"),
             _c("br"),
             _vm._v(" "),

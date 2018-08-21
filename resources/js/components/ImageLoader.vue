@@ -8,7 +8,7 @@
 
         <div class="missing p-8" v-if="missing">
             <p class="text-center leading-normal">
-                <a :href="src" class="text-primary dim" target="_blank">This image</a> could not be found.
+                <a :href="src" class="text-primary dim" target="_blank">{{__('This image')}}</a> {{__('could not be found.')}}
             </p>
         </div>
     </loading-card>

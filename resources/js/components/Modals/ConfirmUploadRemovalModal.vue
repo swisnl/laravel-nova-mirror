@@ -5,14 +5,14 @@
             style="width: 460px"
         >
             <div class="p-8">
-                <heading :level="2" class="mb-6">Delete File</heading>
-                <p class="text-80">Are you sure you want to delete this file?</p>
+                <heading :level="2" class="mb-6">{{__('Delete File')}}</heading>
+                <p class="text-80">{{__('Are you sure you want to delete this file?')}}</p>
             </div>
 
             <div class="bg-30 px-6 py-3 flex">
                 <div class="ml-auto">
-                    <button dusk="cancel-upload-delete-button" type="button" data-testid="cancel-button" @click.prevent="handleClose" class="btn text-80 font-normal h-9 px-3 mr-3 btn-link">Cancel</button>
-                    <button dusk="confirm-upload-delete-button" ref="confirmButton" data-testid="confirm-button" @click.prevent="handleConfirm" class="btn btn-default btn-danger">Delete</button>
+                    <button dusk="cancel-upload-delete-button" type="button" data-testid="cancel-button" @click.prevent="handleClose" class="btn text-80 font-normal h-9 px-3 mr-3 btn-link">{{__('Cancel')}}</button>
+                    <button dusk="confirm-upload-delete-button" ref="confirmButton" data-testid="confirm-button" @click.prevent="handleConfirm" class="btn btn-default btn-danger">{{__('Delete')}}</button>
                 </div>
             </div>
         </div>

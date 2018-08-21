@@ -113,8 +113,8 @@
                         :mode="viaManyToMany ? 'detach' : 'delete'"
                     >
                         <div slot-scope="{ uppercaseMode, mode }" class="p-8">
-                            <heading :level="2" class="mb-6">{{ uppercaseMode }} Resource</heading>
-                            <p class="text-80 leading-normal">Are you sure you want to {{ mode }} this resource?</p>
+                            <heading :level="2" class="mb-6">{{ __(uppercaseMode+' Resource') }}</heading>
+                            <p class="text-80 leading-normal">{{__('Are you sure you want to '+mode+' this resource?')}}</p>
                         </div>
                     </delete-resource-modal>
                 </transition>
@@ -126,8 +126,8 @@
                         @close="closeRestoreModal"
                     >
                         <div class="p-8">
-                            <heading :level="2" class="mb-6">Restore Resource</heading>
-                            <p class="text-80 leading-normal">Are you sure you want to restore this resource?</p>
+                            <heading :level="2" class="mb-6">{{__('Restore Resource')}}</heading>
+                            <p class="text-80 leading-normal">{{__('Are you sure you want to restore this resource?')}}</p>
                         </div>
                     </restore-resource-modal>
                 </transition>

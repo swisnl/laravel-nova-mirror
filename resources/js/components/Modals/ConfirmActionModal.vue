@@ -19,7 +19,7 @@
                 <heading :level="2" class="pt-8 px-8">{{ selectedAction.name }}</heading>
 
                 <p v-if="selectedAction.fields.length == 0" class="text-80 px-8 my-8">
-                    Are you sure you want to run this action?
+                    {{__('Are you sure you want to run this action?')}}
                 </p>
 
                 <div v-else>
@@ -54,7 +54,7 @@
                         :class="{ 'btn-primary': ! selectedAction.destructive, 'btn-danger': selectedAction.destructive }"
                     >
                         <loader v-if="working" width="30"></loader>
-                        <span v-else>Run Action</span>
+                        <span v-else>{{__('Run Action')}}</span>
                     </button>
                 </div>
             </div>
