@@ -44,7 +44,6 @@ mix
     .copy('public', '../nova-app/public/nova')
     .webpackConfig({
         resolve: {
-            symlinks: false,
             alias: {
                 '@': path.resolve(__dirname, 'resources/js/'),
             },
