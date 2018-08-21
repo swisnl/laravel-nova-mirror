@@ -88,6 +88,7 @@ class TrendResult implements JsonSerializable
     /**
      * Indicate that the metric represents a dollar value.
      *
+     * @param  string  $symbol
      * @return $this
      */
     public function dollars($symbol = '$')
@@ -98,6 +99,7 @@ class TrendResult implements JsonSerializable
     /**
      * Indicate that the metric represents a euro value.
      *
+     * @param  string  $symbol
      * @return $this
      */
     public function euros($symbol = '€')

@@ -3,7 +3,6 @@
 namespace Laravel\Nova;
 
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Nova\Query\ApplySoftDeleteConstraint;
 
 trait PerformsQueries

@@ -263,7 +263,7 @@ class Nova
      * Get a new resource instance with the given model instance.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return \Laravel\Nova\Resources
+     * @return \Laravel\Nova\Resource
      */
     public static function newResourceFromModel($model)
     {

@@ -2,7 +2,6 @@
 
 namespace Laravel\Nova;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -202,6 +201,7 @@ trait PerformsValidation
      * Perform any final formatting of the given validation rules.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  array  $rules
      * @return array
      */
     protected static function formatRules(NovaRequest $request, array $rules)

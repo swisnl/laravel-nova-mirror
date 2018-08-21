@@ -2,7 +2,6 @@
 
 namespace Laravel\Nova\Console;
 
-use Laravel\Nova\Nova;
 use Illuminate\Console\Command;
 
 class PublishCommand extends Command

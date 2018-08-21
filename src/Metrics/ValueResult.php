@@ -70,6 +70,7 @@ class ValueResult implements JsonSerializable
     /**
      * Indicate that the metric represents a dollar value.
      *
+     * @param  string  $symbol
      * @return $this
      */
     public function dollars($symbol = '$')

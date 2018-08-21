@@ -4,7 +4,6 @@ namespace Laravel\Nova\Fields;
 
 use JsonSerializable;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Laravel\Nova\Contracts\Resolvable;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
