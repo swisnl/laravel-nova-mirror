@@ -72,6 +72,7 @@ class NovaServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'nova');
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'nova');
+        $this->loadJsonTranslationsFrom(resource_path('lang/vendor/nova'));
 
         if (Nova::runsMigrations()) {
             $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
