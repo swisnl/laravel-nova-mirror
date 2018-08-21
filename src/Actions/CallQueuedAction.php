@@ -3,7 +3,6 @@
 namespace Laravel\Nova\Actions;
 
 use Illuminate\Support\Str;
-use Illuminate\Contracts\Queue\Job;
 use Laravel\Nova\Fields\ActionFields;
 use Illuminate\Database\Eloquent\Collection;
 

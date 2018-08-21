@@ -4,6 +4,7 @@ namespace Laravel\Nova\Rules;
 
 use Laravel\Nova\Nova;
 use Laravel\Nova\Fields\HasOne;
+use Laravel\Nova\Fields\MorphOne;
 use Illuminate\Contracts\Validation\Rule;
 use Laravel\Nova\Http\Requests\NovaRequest;
 

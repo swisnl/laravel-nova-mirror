@@ -2,7 +2,6 @@
 
 namespace Laravel\Nova\Fields;
 
-use Laravel\Nova\Resource;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\TrashedStatus;
@@ -247,6 +246,7 @@ class BelongsTo extends Field
     /**
      * Specify if the relationship should be searchable.
      *
+     * @param  bool  $value
      * @return $this
      */
     public function searchable($value = true)

@@ -8,7 +8,6 @@ use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Scout\Searchable;
-use Laravel\Nova\Filters\Filter;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Contracts\Routing\UrlRoutable;

@@ -26,7 +26,7 @@ trait Authorizable
      * @param  \Illuminate\Http\Request  $request
      * @return bool
      */
-    public static function authorizeToViewAny(Request $request)
+    public function authorizeToViewAny(Request $request)
     {
         if (! static::authorizable()) {
             return;

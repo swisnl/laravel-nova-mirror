@@ -7,7 +7,6 @@ use stdClass;
 use ArrayAccess;
 use JsonSerializable;
 use Laravel\Nova\Nova;
-use Laravel\Nova\Resource;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;

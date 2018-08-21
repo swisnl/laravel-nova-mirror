@@ -416,6 +416,7 @@ class MorphTo extends Field
     /**
      * Specify if the relationship should be searchable.
      *
+     * @param  bool  $value
      * @return $this
      */
     public function searchable($value = true)
