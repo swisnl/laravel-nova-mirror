@@ -234,7 +234,7 @@ export default {
             try {
                 await this.updateRequest()
 
-                this.$toasted.show('The resource was updated!', { type: 'success' })
+                this.$toasted.show(this.__('The resource was updated!'), { type: 'success' })
 
                 this.$router.push({
                     name: 'detail',
@@ -251,7 +251,7 @@ export default {
 
                 if (error.response.status == 409) {
                     this.$toasted.show(
-                        'Another user has updated this resource since this page was loaded. Please refresh the page and try again.',
+                        this.__('Another user has updated this resource since this page was loaded. Please refresh the page and try again.'),
                         { type: 'error' }
                     )
                 }
@@ -265,7 +265,7 @@ export default {
             try {
                 await this.updateRequest()
 
-                this.$toasted.show('The resource was updated!', { type: 'success' })
+                this.$toasted.show(this.__('The resource was updated!'), { type: 'success' })
 
                 // Reset the form by refetching the fields
                 this.initializeComponent()
@@ -277,7 +277,7 @@ export default {
 
                 if (error.response.status == 409) {
                     this.$toasted.show(
-                        'Another user has updated this resource since this page was loaded. Please refresh the page and try again.',
+                        this.__('Another user has updated this resource since this page was loaded. Please refresh the page and try again.'),
                         { type: 'error' }
                     )
                 }

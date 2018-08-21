@@ -94,7 +94,7 @@ export default {
                 const response = await this.updateRequest()
 
                 this.$toasted.show(
-                    'The ' + this.resourceInformation.singularLabel.toLowerCase() + ' was updated!',
+                    this.__('The :resource was updated!', {resource: this.resourceInformation.singularLabel.toLowerCase()}),
                     { type: 'success' }
                 )
 
@@ -127,7 +127,7 @@ export default {
                 const response = await this.updateRequest()
 
                 this.$toasted.show(
-                    'The ' + this.resourceInformation.singularLabel.toLowerCase() + ' was updated!',
+                    this.__('The :resource was updated!', {resource: this.resourceInformation.singularLabel.toLowerCase()}),
                     { type: 'success' }
                 )
 

@@ -17795,7 +17795,7 @@ exports.default = {
                     return;
                 }
 
-                _this.$toasted.show('This resource no longer exists', { type: 'error' });
+                _this.$toasted.show(_this.__('This resource no longer exists'), { type: 'error' });
 
                 _this.$router.push({
                     name: 'index',
@@ -17884,7 +17884,7 @@ exports.default = {
                         switch (_context3.prev = _context3.next) {
                             case 0:
                                 this.deleteResources([this.resource], function () {
-                                    _this3.$toasted.show('The ' + _this3.resourceInformation.singularLabel.toLowerCase() + ' was deleted!', { type: 'success' });
+                                    _this3.$toasted.show(_this3.__('The :resource was deleted!', { resource: _this3.resourceInformation.singularLabel.toLowerCase() }), { type: 'success' });
 
                                     if (!_this3.resource.softDeletes) {
                                         _this3.$router.push({
@@ -17942,7 +17942,7 @@ exports.default = {
                         switch (_context4.prev = _context4.next) {
                             case 0:
                                 this.restoreResources([this.resource], function () {
-                                    _this4.$toasted.show('The ' + _this4.resourceInformation.singularLabel.toLowerCase() + ' was restored!', { type: 'success' });
+                                    _this4.$toasted.show(_this4.__('The :resource was restored!', { resource: _this4.resourceInformation.singularLabel.toLowerCase() }), { type: 'success' });
 
                                     _this4.closeRestoreModal();
                                     _this4.getResource();
@@ -17992,7 +17992,7 @@ exports.default = {
                         switch (_context5.prev = _context5.next) {
                             case 0:
                                 this.forceDeleteResources([this.resource], function () {
-                                    _this5.$toasted.show('The ' + _this5.resourceInformation.singularLabel.toLowerCase() + ' was deleted!', { type: 'success' });
+                                    _this5.$toasted.show(_this5.__('The :resource was deleted!', { resource: _this5.resourceInformation.singularLabel.toLowerCase() }), { type: 'success' });
 
                                     _this5.$router.push({ name: 'index', params: { resourceName: _this5.resourceName } });
                                 });
@@ -19140,7 +19140,7 @@ exports.default = {
                                 response = _context2.sent;
 
 
-                                this.$toasted.show('The ' + this.resourceInformation.singularLabel.toLowerCase() + ' was updated!', { type: 'success' });
+                                this.$toasted.show(this.__('The :resource was updated!', { resource: this.resourceInformation.singularLabel.toLowerCase() }), { type: 'success' });
 
                                 this.$router.push({
                                     name: 'detail',
@@ -19198,7 +19198,7 @@ exports.default = {
                                 response = _context3.sent;
 
 
-                                this.$toasted.show('The ' + this.resourceInformation.singularLabel.toLowerCase() + ' was updated!', { type: 'success' });
+                                this.$toasted.show(this.__('The :resource was updated!', { resource: this.resourceInformation.singularLabel.toLowerCase() }), { type: 'success' });
 
                                 // Reset the form by refetching the fields
                                 this.getFields();
@@ -20674,7 +20674,7 @@ exports.default = {
 
                             case 3:
 
-                                this.$toasted.show('The resource was updated!', { type: 'success' });
+                                this.$toasted.show(this.__('The resource was updated!'), { type: 'success' });
 
                                 this.$router.push({
                                     name: 'detail',
@@ -20696,7 +20696,7 @@ exports.default = {
                                 }
 
                                 if (_context4.t0.response.status == 409) {
-                                    this.$toasted.show('Another user has updated this resource since this page was loaded. Please refresh the page and try again.', { type: 'error' });
+                                    this.$toasted.show(this.__('Another user has updated this resource since this page was loaded. Please refresh the page and try again.'), { type: 'error' });
                                 }
 
                             case 12:
@@ -20730,7 +20730,7 @@ exports.default = {
 
                             case 3:
 
-                                this.$toasted.show('The resource was updated!', { type: 'success' });
+                                this.$toasted.show(this.__('The resource was updated!'), { type: 'success' });
 
                                 // Reset the form by refetching the fields
                                 this.initializeComponent();
@@ -20747,7 +20747,7 @@ exports.default = {
                                 }
 
                                 if (_context5.t0.response.status == 409) {
-                                    this.$toasted.show('Another user has updated this resource since this page was loaded. Please refresh the page and try again.', { type: 'error' });
+                                    this.$toasted.show(this.__('Another user has updated this resource since this page was loaded. Please refresh the page and try again.'), { type: 'error' });
                                 }
 
                             case 12:
