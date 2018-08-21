@@ -30,7 +30,7 @@ class PublishCommand extends Command
     {
         $this->call('vendor:publish', [
             '--tag' => 'nova-config',
-            '--force' => $this->option('force'),
+            '--force' => false,
         ]);
 
         $this->call('vendor:publish', [
@@ -40,7 +40,7 @@ class PublishCommand extends Command
 
         $this->call('vendor:publish', [
             '--tag' => 'nova-lang',
-            '--force' => $this->option('force'),
+            '--force' => false,
         ]);
 
         $this->call('vendor:publish', [
