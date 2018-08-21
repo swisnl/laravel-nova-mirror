@@ -241,7 +241,7 @@ export default {
                         return
                     }
 
-                    this.$toasted.show('This resource no longer exists', { type: 'error' })
+                    this.$toasted.show(this.__('This resource no longer exists'), { type: 'error' })
 
                     this.$router.push({
                         name: 'index',
@@ -297,7 +297,7 @@ export default {
         async confirmDelete() {
             this.deleteResources([this.resource], () => {
                 this.$toasted.show(
-                    'The ' + this.resourceInformation.singularLabel.toLowerCase() + ' was deleted!',
+                    this.__('The :resource was deleted!', {resource: this.resourceInformation.singularLabel.toLowerCase()}),
                     { type: 'success' }
                 )
 
@@ -334,9 +334,7 @@ export default {
         async confirmRestore() {
             this.restoreResources([this.resource], () => {
                 this.$toasted.show(
-                    'The ' +
-                        this.resourceInformation.singularLabel.toLowerCase() +
-                        ' was restored!',
+                     this.__('The :resource was restored!', {resource: this.resourceInformation.singularLabel.toLowerCase()}),
                     { type: 'success' }
                 )
 
@@ -365,7 +363,7 @@ export default {
         async confirmForceDelete() {
             this.forceDeleteResources([this.resource], () => {
                 this.$toasted.show(
-                    'The ' + this.resourceInformation.singularLabel.toLowerCase() + ' was deleted!',
+                    this.__('The :resource was deleted!', {resource: this.resourceInformation.singularLabel.toLowerCase()}),
                     { type: 'success' }
                 )
 
