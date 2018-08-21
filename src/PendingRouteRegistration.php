@@ -21,7 +21,6 @@ class PendingRouteRegistration
             ->group(function () {
                 Route::get('/login', 'LoginController@showLoginForm');
                 Route::post('/login', 'LoginController@login')->name('login');
-                Route::get('/logout', 'LoginController@logout');
             });
 
         return $this;
@@ -58,6 +57,14 @@ class PendingRouteRegistration
      */
     public function __destruct()
     {
+        Route::namespace('Laravel\Nova\Http\Controllers')
+            ->middleware(config('nova.middleware', []))
+            ->as('nova.')
+            ->prefix(Nova::path())
+            ->group(function () {
+                Route::get('/logout', 'LoginController@logout');
+            });
+
         Route::view(Nova::path(), 'nova::router')
             ->middleware(config('nova.middleware', []))
             ->name('nova.index');
