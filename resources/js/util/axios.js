@@ -8,10 +8,17 @@ instance.interceptors.response.use(
     error => {
         const { status } = error.response
 
+        // Show the user a 500 error
         if (status >= 500) {
             Nova.$emit('error', error.response.data.message)
         }
 
+        // Handle Session Timeouts
+        if (status === 401) {
+            window.location.href = Nova.config.base
+        }
+
+        // Handle Forbidden
         if (status === 403) {
             router.push({ name: '403' })
         }
