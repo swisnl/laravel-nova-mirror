@@ -153,7 +153,7 @@ class BelongsTo extends Field
         );
 
         return array_merge_recursive(parent::getRules($request), [
-            $this->attribute => ['required', new Relatable($request, $query)],
+            $this->attribute => [new Relatable($request, $query)],
         ]);
     }
 
