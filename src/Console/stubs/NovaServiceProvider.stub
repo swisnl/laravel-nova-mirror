@@ -31,6 +31,22 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     }
 
     /**
+     * Register the Nova gate.
+     *
+     * This gate determines who can access Nova in non-local environments.
+     *
+     * @return void
+     */
+    protected function gate()
+    {
+        Gate::define('viewNova', function ($user) {
+            return in_array($user->email, [
+                //
+            ]);
+        });
+    }
+
+    /**
      * Get the cards that should be displayed on the Nova dashboard.
      *
      * @return array
