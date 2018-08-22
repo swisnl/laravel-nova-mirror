@@ -636,6 +636,7 @@ trait TrendDateTests
         return [
             [Chronos::create(2018, 12, 31)],
             [Chronos::create(2018, 12, 31, 23, 59, 59)],
+            [Chronos::create(2018, 12, 31, 13, 0, 0)],
             [Chronos::create(2018, 2, 28)],
             [Chronos::create(2018, 1, 1)],
         ];
