@@ -9,8 +9,8 @@
         <div class="relative">
 
             <!-- Search -->
-            <div class="relative flex items-center">
-                <icon type="search" class="absolute ml-3 text-70" />
+            <div class="relative">
+                <icon type="search" class="absolute search-icon-center ml-3 text-70" />
 
                 <input
                     dusk="global-search"
@@ -20,6 +20,7 @@
                     @keydown.enter.stop="goToCurrentlySelectedResource"
                     @keydown.esc.stop="closeSearch"
                     @focus="openSearch"
+                    @blur="closeSearch"
                     @keydown.down.prevent="move(1)"
                     @keydown.up.prevent="move(-1)"
                     v-model="searchTerm"
@@ -82,9 +83,9 @@ export default {
     }),
 
     watch: {
-        $route: function () {
+        $route: function() {
             this.closeSearch()
-        }
+        },
     },
 
     mounted() {

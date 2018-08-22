@@ -20,8 +20,8 @@
 
         <div class="flex justify-between">
             <!-- Search -->
-            <div v-if="resourceInformation.searchable && ! viaHasOne" class="relative h-9 flex items-center mb-6">
-                <icon type="search" class="absolute ml-3 text-70" />
+            <div v-if="resourceInformation.searchable && ! viaHasOne" class="relative h-9 mb-6">
+                <icon type="search" class="absolute search-icon-center ml-3 text-70" />
 
                 <input
                     data-testid="search-input"
