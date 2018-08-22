@@ -159,7 +159,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
         $attribute = $attribute ?? $this->attribute;
 
         if ($attribute instanceof Closure ||
-           is_callable($attribute) && is_object($attribute)) {
+           (is_callable($attribute) && is_object($attribute))) {
             return $this->resolveComputedAttribute($attribute);
         }
 
