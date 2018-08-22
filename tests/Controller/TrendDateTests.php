@@ -537,7 +537,7 @@ trait TrendDateTests
 
         Chronos::setTestNow($date);
 
-        factory(Post::class, 3)->create(['word_count' => 100]);
+        factory(Post::class, 4)->create(['word_count' => 100]);
 
         $post = Post::find(1);
         $post->created_at = $date;
@@ -553,13 +553,18 @@ trait TrendDateTests
         $post->created_at = Chronos::now()->subHour(5);
         $post->save();
 
+        $post = Post::find(4);
+        $post->word_count = 500;
+        $post->created_at = Chronos::now()->subHour(5);
+        $post->save();
+
         $response = $this->withExceptionHandling()
                         ->get('/nova-api/posts/metrics/post-sum-trend?range=6');
 
         unset($_SERVER['nova.postCountUnit']);
 
         $response->assertStatus(200);
-        $this->assertEquals(150, $response->original['value']->trend[Chronos::now()->subHours(5)->format('F j - G:00')]);
+        $this->assertEquals(650, $response->original['value']->trend[Chronos::now()->subHours(5)->format('F j - G:00')]);
         $this->assertEquals(200, $response->original['value']->trend[Chronos::now()->subHours(4)->format('F j - G:00')]);
         $this->assertEquals(100, $response->original['value']->trend[Chronos::now()->format('F j - G:00')]);
 
