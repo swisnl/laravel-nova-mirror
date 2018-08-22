@@ -58,6 +58,13 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     public static $search = [];
 
     /**
+     * Indicates if the resource should be displayed in the sidebar.
+     *
+     * @var bool
+     */
+    public static $displayInNavigation = true;
+
+    /**
      * Indicates if the resoruce should be globally searchable.
      *
      * @var bool
