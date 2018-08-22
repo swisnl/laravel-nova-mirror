@@ -544,12 +544,12 @@ trait TrendDateTests
         $post->save();
 
         $post = Post::find(2);
-        $post->word_count = 200;
+        $post->word_count = 25000;
         $post->created_at = Chronos::now()->subHours(4);
         $post->save();
 
         $post = Post::find(3);
-        $post->word_count = 200;
+        $post->word_count = 25000;
         $post->created_at = Chronos::now()->subHours(4);
         $post->save();
 
@@ -570,7 +570,7 @@ trait TrendDateTests
 
         $response->assertStatus(200);
         $this->assertEquals(650, $response->original['value']->trend[Chronos::now()->subHours(5)->format('F j - G:00')]);
-        $this->assertEquals(400, $response->original['value']->trend[Chronos::now()->subHours(4)->format('F j - G:00')]);
+        $this->assertEquals(50000, $response->original['value']->trend[Chronos::now()->subHours(4)->format('F j - G:00')]);
         $this->assertEquals(100, $response->original['value']->trend[Chronos::now()->format('F j - G:00')]);
 
         Chronos::setTestNow();
