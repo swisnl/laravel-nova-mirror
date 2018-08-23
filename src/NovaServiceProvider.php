@@ -181,11 +181,7 @@ class NovaServiceProvider extends ServiceProvider
      */
     private static function getTranslations()
     {
-        $translationFile = resource_path('lang/'.app()->getLocale().'.json');
-
-        if (! is_readable($translationFile)) {
-            $translationFile = resource_path('lang/'.app('translator')->getFallback().'.json');
-        }
+        $translationFile = resource_path('lang/vendor/nova/'.app()->getLocale().'.json');
 
         if (! is_readable($translationFile)) {
             return [];

@@ -66,7 +66,7 @@
     </div>
 
     <script>
-        window.config = JSON.parse('@json(Nova::jsonVariables(request()))');
+        window.config = @json(Nova::jsonVariables(request()));
     </script>
 
     <!-- Scripts -->
