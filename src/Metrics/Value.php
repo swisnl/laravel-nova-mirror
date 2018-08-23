@@ -94,12 +94,12 @@ abstract class Value extends RangedMetric
 
         $column = $column ?? $query->getModel()->getQualifiedKeyName();
 
-        $previousValue = number_format(with(clone $query)->whereBetween(
+        $previousValue = round(with(clone $query)->whereBetween(
             $query->getModel()->getCreatedAtColumn(), $this->previousRange($request->range)
         )->{$function}($column), 0);
 
         return $this->result(
-            number_format(with(clone $query)->whereBetween(
+            round(with(clone $query)->whereBetween(
                 $query->getModel()->getCreatedAtColumn(), $this->currentRange($request->range)
             )->{$function}($column), 0)
         )->previous($previousValue);

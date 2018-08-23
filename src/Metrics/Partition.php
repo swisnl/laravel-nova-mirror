@@ -122,7 +122,7 @@ abstract class Partition extends Metric
     {
         $key = $result->{last(explode('.', $groupBy))};
 
-        return [$key => (int) number_format($result->aggregate, 0)];
+        return [$key => round($result->aggregate, 0)];
     }
 
     /**
