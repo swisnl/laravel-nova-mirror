@@ -46,5 +46,7 @@ class PublishCommand extends Command
             '--tag' => 'nova-views',
             '--force' => $this->option('force'),
         ]);
+
+        $this->call('view:clear');
     }
 }

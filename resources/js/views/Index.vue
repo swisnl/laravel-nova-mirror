@@ -860,7 +860,7 @@ export default {
          * Get the singular name for the resource
          */
         singularName() {
-            return Capitalize(Inflector.singularize(this.resourceName))
+            return Capitalize(this.resourceInformation.singularLabel);
         },
 
         /**
