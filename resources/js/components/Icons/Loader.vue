@@ -17,7 +17,7 @@ export default {
         return (
             <svg
                 class="mx-auto block"
-                style={{ width: this.width }}
+                style={{ width: `${this.width}px` }}
                 viewBox="0 0 120 30"
                 xmlns="http://www.w3.org/2000/svg"
                 fill={this.fillColor}
