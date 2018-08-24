@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\Route;
 class PendingRouteRegistration
 {
     /**
+     * Indicates if the routes have been registered.
+     *
+     * @var bool
+     */
+    protected $registered = false;
+
+    /**
      * Register the Nova authentication routes.
      *
      * @param  array  $middleware
@@ -51,12 +58,14 @@ class PendingRouteRegistration
     }
 
     /**
-     * Handle the object's destruction and register the router route.
+     * Register the Nova routes.
      *
      * @return void
      */
-    public function __destruct()
+    public function register()
     {
+        $this->registered = true;
+
         Route::namespace('Laravel\Nova\Http\Controllers')
             ->middleware(config('nova.middleware', []))
             ->as('nova.')
@@ -72,9 +81,19 @@ class PendingRouteRegistration
         Route::middleware(config('nova.middleware', []))
             ->as('nova.')
             ->prefix(Nova::path())
-            ->get('/{view}', function () {
-                return view('nova::router');
-            })
+            ->get('/{view}', 'Laravel\Nova\Http\Controllers\RouterController@show')
             ->where('view', '.*');
+    }
+
+    /**
+     * Handle the object's destruction and register the router route.
+     *
+     * @return void
+     */
+    public function __destruct()
+    {
+        if (! $this->registered) {
+            $this->register();
+        }
     }
 }

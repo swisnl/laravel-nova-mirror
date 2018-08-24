@@ -2,7 +2,6 @@
 
 namespace Laravel\Nova\Console;
 
-use Laravel\Nova\Nova;
 use Illuminate\Console\Command;
 
 class PublishCommand extends Command
@@ -47,5 +46,7 @@ class PublishCommand extends Command
             '--tag' => 'nova-views',
             '--force' => $this->option('force'),
         ]);
+
+        $this->call('view:clear');
     }
 }

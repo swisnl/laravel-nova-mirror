@@ -2,9 +2,7 @@
 
 namespace Laravel\Nova;
 
-use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Illuminate\Database\Eloquent\Relations\Pivot;
 
 trait FillsFields
 {
@@ -43,7 +41,7 @@ trait FillsFields
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @param  \Illuminate\Database\Eloquent\Pivot  $pivot
+     * @param  \Illuminate\Database\Eloquent\Relations\Pivot  $pivot
      * @return array
      */
     public static function fillPivot(NovaRequest $request, $model, $pivot)

@@ -2,7 +2,6 @@
 
 namespace Laravel\Nova;
 
-use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\MorphTo;
 use Illuminate\Support\Collection;
@@ -73,7 +72,8 @@ trait ResolvesFields
      * Resolve the creation pivot fields for a related resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @return \Illuminate\Support\Collection
+     * @param  \Illuminate\Support\Collection  $relatedResource
+     * @return Collection
      */
     public function creationPivotFields(NovaRequest $request, $relatedResource)
     {
@@ -114,7 +114,8 @@ trait ResolvesFields
      * Resolve the update pivot fields for a related resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @return \Illuminate\Support\Collection
+     * @param  \Illuminate\Support\Collection  $relatedResource
+     * @return Collection
      */
     public function updatePivotFields(NovaRequest $request, $relatedResource)
     {

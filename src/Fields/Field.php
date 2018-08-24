@@ -2,9 +2,9 @@
 
 namespace Laravel\Nova\Fields;
 
+use Closure;
 use JsonSerializable;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Laravel\Nova\Contracts\Resolvable;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -158,7 +158,8 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     {
         $attribute = $attribute ?? $this->attribute;
 
-        if (is_callable($attribute)) {
+        if ($attribute instanceof Closure ||
+           (is_callable($attribute) && is_object($attribute))) {
             return $this->resolveComputedAttribute($attribute);
         }
 

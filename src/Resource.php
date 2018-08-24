@@ -8,7 +8,6 @@ use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Scout\Searchable;
-use Laravel\Nova\Filters\Filter;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Contracts\Routing\UrlRoutable;
@@ -57,6 +56,13 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
      * @var array
      */
     public static $search = [];
+
+    /**
+     * Indicates if the resource should be displayed in the sidebar.
+     *
+     * @var bool
+     */
+    public static $displayInNavigation = true;
 
     /**
      * Indicates if the resoruce should be globally searchable.

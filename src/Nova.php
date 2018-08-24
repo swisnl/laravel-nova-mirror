@@ -110,7 +110,7 @@ class Nova
      */
     public static function version()
     {
-        return '1.0.0';
+        return '1.0.5';
     }
 
     /**
@@ -263,7 +263,7 @@ class Nova
      * Get a new resource instance with the given model instance.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return \Laravel\Nova\Resources
+     * @return \Laravel\Nova\Resource
      */
     public static function newResourceFromModel($model)
     {
