@@ -29,7 +29,7 @@
             >
                 <div v-for="group in formattedResults">
                     <h3 class="text-xs uppercase tracking-wide text-80 bg-40 py-2 px-3">
-                        {{ group.resourceName }}
+                        {{ group.resourceTitle }}
                     </h3>
 
                     <ul class="list-reset">
