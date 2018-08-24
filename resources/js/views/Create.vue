@@ -36,8 +36,7 @@
 </template>
 
 <script>
-import { Errors, Minimum } from 'laravel-nova'
-import { Capitalize, Inflector, InteractsWithResourceInformation } from 'laravel-nova'
+import { Errors, Minimum, InteractsWithResourceInformation } from 'laravel-nova'
 
 export default {
     mixins: [InteractsWithResourceInformation],
@@ -164,7 +163,7 @@ export default {
 
     computed: {
         singularName() {
-            return Capitalize(Inflector.singularize(this.resourceName))
+            return this.resourceInformation.singularLabel
         },
     },
 }

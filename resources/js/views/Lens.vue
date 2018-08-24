@@ -219,7 +219,7 @@
 </template>
 
 <script>
-import { Errors, Capitalize, Inflector, Minimum } from 'laravel-nova'
+import { Errors, Minimum } from 'laravel-nova'
 
 import {
     Deletable,
@@ -703,7 +703,7 @@ export default {
          * Get the singular name for the resource
          */
         singularName() {
-            return Capitalize(Inflector.singularize(this.resourceName))
+            return this.resourceInformation.singularLabel
         },
 
         /**

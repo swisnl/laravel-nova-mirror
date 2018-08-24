@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { Errors, Capitalize, Inflector, InteractsWithResourceInformation } from 'laravel-nova'
+import { Errors, InteractsWithResourceInformation } from 'laravel-nova'
 
 export default {
     mixins: [InteractsWithResourceInformation],
@@ -72,14 +72,14 @@ export default {
 
             this.fields = []
 
-            const { data: fields } = await Nova.request().get(
-                `/nova-api/${this.resourceName}/${this.resourceId}/update-fields`
-            ).catch(error => {
-                if (error.response.status == 404) {
-                    this.$router.push({ name: '404' })
-                    return
-                }
-            })
+            const { data: fields } = await Nova.request()
+                .get(`/nova-api/${this.resourceName}/${this.resourceId}/update-fields`)
+                .catch(error => {
+                    if (error.response.status == 404) {
+                        this.$router.push({ name: '404' })
+                        return
+                    }
+                })
 
             this.fields = fields
 
@@ -94,7 +94,9 @@ export default {
                 const response = await this.updateRequest()
 
                 this.$toasted.show(
-                    this.__('The :resource was updated!', {resource: this.resourceInformation.singularLabel.toLowerCase()}),
+                    this.__('The :resource was updated!', {
+                        resource: this.resourceInformation.singularLabel.toLowerCase(),
+                    }),
                     { type: 'success' }
                 )
 
@@ -112,7 +114,9 @@ export default {
 
                 if (error.response.status == 409) {
                     this.$toasted.show(
-                        this.__('Another user has updated this resource since this page was loaded. Please refresh the page and try again.'),
+                        this.__(
+                            'Another user has updated this resource since this page was loaded. Please refresh the page and try again.'
+                        ),
                         { type: 'error' }
                     )
                 }
@@ -127,7 +131,9 @@ export default {
                 const response = await this.updateRequest()
 
                 this.$toasted.show(
-                    this.__('The :resource was updated!', {resource: this.resourceInformation.singularLabel.toLowerCase()}),
+                    this.__('The :resource was updated!', {
+                        resource: this.resourceInformation.singularLabel.toLowerCase(),
+                    }),
                     { type: 'success' }
                 )
 
@@ -141,7 +147,9 @@ export default {
 
                 if (error.response.status == 409) {
                     this.$toasted.show(
-                        this.__('Another user has updated this resource since this page was loaded. Please refresh the page and try again.'),
+                        this.__(
+                            'Another user has updated this resource since this page was loaded. Please refresh the page and try again.'
+                        ),
                         { type: 'error' }
                     )
                 }
@@ -182,7 +190,7 @@ export default {
         },
 
         singularName() {
-            return Capitalize(Inflector.singularize(this.resourceName))
+            return this.resourceInformation.singularLabel
         },
     },
 }
