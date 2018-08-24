@@ -5,7 +5,6 @@
                 class="w-full form-control form-input form-input-bordered"
                 :field="field"
                 :name="field.name"
-                :field="field"
                 :value="value"
                 dateFormat="Y-m-d"
                 :placeholder="placeholder"
