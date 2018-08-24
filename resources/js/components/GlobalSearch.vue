@@ -1,13 +1,6 @@
 <template>
-    <div class="relative z-50 w-full max-w-xs">
-        <div
-            v-if="currentlySearching"
-            @mousedown="closeSearch"
-            class="fixed pin bg-80 z-0 opacity-25"
-        />
-
+    <div v-on-clickaway="closeSearch" class="relative z-50 w-full max-w-xs">
         <div class="relative">
-
             <!-- Search -->
             <div class="relative">
                 <icon type="search" class="absolute search-icon-center ml-3 text-70" />
@@ -20,7 +13,6 @@
                     @keydown.enter.stop="goToCurrentlySelectedResource"
                     @keydown.esc.stop="closeSearch"
                     @focus="openSearch"
-                    @blur="closeSearch"
                     @keydown.down.prevent="move(1)"
                     @keydown.up.prevent="move(-1)"
                     v-model="searchTerm"
@@ -29,7 +21,6 @@
                     class="pl-search form-control form-input form-input-bordered w-full"
                 />
             </div>
-
 
             <div
                 v-if="shouldShowResults"
@@ -73,8 +64,11 @@
 
 <script>
 import { Minimum } from 'laravel-nova'
+import { mixin as clickaway } from 'vue-clickaway'
 
 export default {
+    mixins: [clickaway],
+
     data: () => ({
         currentlySearching: false,
         searchTerm: '',
