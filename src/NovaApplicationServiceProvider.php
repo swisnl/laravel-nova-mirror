@@ -70,6 +70,26 @@ class NovaApplicationServiceProvider extends ServiceProvider
     }
 
     /**
+     * Get the cards that should be displayed on the Nova dashboard.
+     *
+     * @return array
+     */
+    protected function cards()
+    {
+        return [];
+    }
+
+    /**
+     * Get the tools that should be listed in the Nova sidebar.
+     *
+     * @return array
+     */
+    public function tools()
+    {
+        return [];
+    }
+
+    /**
      * Register the application's Nova resources.
      *
      * @return void
