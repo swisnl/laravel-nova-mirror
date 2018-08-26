@@ -23,11 +23,9 @@ Please note; the repository you mirror to must be private, as per license agreem
 1. Setup your Nova project to pull from your private repository.
 
 ```json
-...
 "require" : {
-    ...
-    "laravel/nova": "^1",
-    ...
+    "laravel/framework": "5.6.*",
+    "laravel/nova": "^1"
 },
 "repositories": [
     {
@@ -35,7 +33,6 @@ Please note; the repository you mirror to must be private, as per license agreem
         "url": "git@bitbucket.org:username/laravel-nova.git"
     }
 ],
-...
 ```
 
 
