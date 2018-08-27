@@ -8,7 +8,7 @@ This application enables you to update a private mirror of Laravel Nova automati
 
 The application assumes the user which runs it has git access to the repository. The best way to do this using an ssh key. You need to enter the username and password to your account on nova.laravel.org to get this to work.
 
-This repository was created because Nova only supplies a download which you need to copy to your project. This feels way too old-school and makes updating a bit hard. Using this application you van include nova directly from the git repository which should make updating a lot easier.
+This repository was created because Nova only supplies a download which you need to copy to your project. This feels way too old-school and makes updating a bit hard. Using this application you can include nova directly from the git repository which should make updating a lot easier.
 
 Run this on a CI once a day, and you will have an up-to-date Nova available whenever you need it.   
 
