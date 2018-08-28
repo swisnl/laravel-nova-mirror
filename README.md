@@ -19,7 +19,7 @@ Please note; the repository you mirror to must be private, as per license agreem
 1. Start with installing the project with composer ```composer create-project swis/laravel-nova-mirror```
 1. Setup the .env file (or environment) with the correct credentials. 
 1. Make sure the remote repository exists.
-1. Run `php artisan nova-mirror:update` to download and push the repository.
+1. Run `php artisan nova-mirror:update` to download and push the repository or run Dusk directly `php artisan dusk` to do the same.
 1. Setup your Nova project to pull from your private repository.
 
 ```json
