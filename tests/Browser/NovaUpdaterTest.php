@@ -11,11 +11,9 @@ use Tests\DuskTestCase;
 class NovaUpdaterTest extends DuskTestCase
 {
     /**
-     * A Dusk test example.
-     *
-     * @return void
+     * @test
      */
-    public function testExample()
+    public function updateNovaMirror()
     {
         $updateService = new NovaUpdateService();
         $repository = $updateService->loadRepository();
@@ -29,6 +27,8 @@ class NovaUpdaterTest extends DuskTestCase
                     ->type('password', env('NOVA_DOWNLOAD_PASSWORD'))
                     ->press('LOGIN');
                 $elements = array_reverse($browser->elements('a[href^="https://nova.laravel.com/releases/"]'));
+
+                fwrite(STDOUT, '>>> Logged into nova.laravel.com, scanning download links'.PHP_EOL);
 
                 foreach ($elements as $element) {
                     $releaseTag = $updateService->getReleaseTag($element->getAttribute('href'));
@@ -65,12 +65,21 @@ class NovaUpdaterTest extends DuskTestCase
                     fwrite(STDOUT, '>>> Committing and tagging new release ('.$version.')'.PHP_EOL);
                     $updateService->createRelease($version, $releaseTag);
 
+                    if(env('NOVA_ENABLE_PUSH', true) === false) {
+                        fwrite(STDOUT, '>>> Pushing changes to remote is disabled, skipping'.PHP_EOL);
+                        continue;
+                    }
+
                     fwrite(STDOUT, '>>> Pushing changes to remote'.PHP_EOL);
                     $updateService->pushRelease();
+
                 }
 
                 fwrite(STDOUT, '>>> Done'.PHP_EOL);
             }
         );
+
+
+        $this->assertTrue(true);
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 
-class NovaMirrorUpdate extends Command
+class NovaMirrorUpdateCommand extends Command
 {
     /**
      * The name and signature of the console command.
