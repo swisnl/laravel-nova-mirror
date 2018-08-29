@@ -181,7 +181,7 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     }
 
     /**
-     * Get the displayble label of the resource.
+     * Get the displayable label of the resource.
      *
      * @return string
      */
@@ -191,7 +191,7 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     }
 
     /**
-     * Get the displayble singular label of the resource.
+     * Get the displayable singular label of the resource.
      *
      * @return string
      */
