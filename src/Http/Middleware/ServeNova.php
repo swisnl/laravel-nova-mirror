@@ -31,10 +31,10 @@ class ServeNova
      */
     protected function isNovaRequest($request)
     {
-        $path = trim(Nova::path(), '/');
+        $path = trim(Nova::path(), '/') ?: '/';
 
         return $request->is($path) ||
-               $request->is($path.'/*') ||
+               $request->is(trim($path.'/*', '/')) ||
                $request->is('nova-api/*');
     }
 }
