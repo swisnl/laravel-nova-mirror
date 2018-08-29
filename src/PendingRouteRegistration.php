@@ -73,7 +73,7 @@ class PendingRouteRegistration
             ->as('nova.')
             ->prefix(Nova::path())
             ->group(function () {
-                Route::get('/logout', 'LoginController@logout');
+                Route::get('/logout', 'LoginController@logout')->name('logout');
             });
 
         Event::listen(NovaServiceProviderRegistered::class, function () {
