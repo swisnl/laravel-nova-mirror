@@ -4,7 +4,7 @@
             <checkbox
                 class="py-2"
                 @input="toggle"
-                :id="field.name"
+                :id="field.attribute"
                 :name="field.name"
                 :checked="checked"
             />

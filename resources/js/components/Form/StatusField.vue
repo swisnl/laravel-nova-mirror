@@ -2,7 +2,7 @@
     <default-field :field="field">
         <template slot="field">
             <input
-                :id="field.name"
+                :id="field.attribute"
                 :type="inputType"
                 :min="inputMin"
                 :max="inputMax"

@@ -49,7 +49,7 @@ export default {
             const placeType = this.field.placeType
 
             const config = {
-                container: document.querySelector('#' + this.field.name),
+                container: document.querySelector('#' + this.field.attribute),
                 type: this.field.placeType ? this.field.placeType : 'address',
                 templates: {
                     value(suggestion) {
