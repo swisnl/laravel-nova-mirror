@@ -113,7 +113,7 @@ class ActionResource extends Resource
     }
 
     /**
-     * Get the displayble label of the resource.
+     * Get the displayable label of the resource.
      *
      * @return string
      */
