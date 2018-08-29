@@ -17,4 +17,24 @@ class Trix extends Field
      * @var bool
      */
     public $showOnIndex = false;
+
+    /**
+     * The callback that should be executed to store file attachments.
+     *
+     * @var callable
+     */
+    public $attachCallback;
+
+    /**
+     * Specify the callback that should be used to store file attachments.
+     *
+     * @param  callable  $callback
+     * @return $this
+     */
+    public function attach(callable $callback)
+    {
+        $this->attachCallback = $callback;
+
+        return $this;
+    }
 }
