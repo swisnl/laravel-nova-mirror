@@ -4,6 +4,7 @@ namespace Laravel\Nova\Http\Middleware;
 
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaServiceProvider;
+use Laravel\Nova\Events\NovaServiceProviderRegistered;
 
 class ServeNova
 {
@@ -18,6 +19,8 @@ class ServeNova
     {
         if ($this->isNovaRequest($request)) {
             app()->register(NovaServiceProvider::class);
+
+            NovaServiceProviderRegistered::dispatch();
         }
 
         return $next($request);
