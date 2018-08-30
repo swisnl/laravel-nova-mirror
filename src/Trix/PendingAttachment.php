@@ -35,7 +35,7 @@ class PendingAttachment extends Model
             'attachable_type' => get_class($model),
             'attachable_id' => $model->getKey(),
             'attachment' => $this->attachment,
-            'url' => Storage::disk($field->disk ?? 'public')->url($this->attachment)
+            'url' => Storage::disk($field->disk ?? 'public')->url($this->attachment),
         ]);
 
         $this->delete();
