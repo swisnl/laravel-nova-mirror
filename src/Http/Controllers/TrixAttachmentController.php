@@ -27,12 +27,31 @@ class TrixAttachmentController extends Controller
     }
 
     /**
-     * Purge pending attachments for a Trix field.
+     * Purge a single, persisted attachment for a Trix field by URL.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(NovaRequest $request)
+    public function destroyAttachment(NovaRequest $request)
+    {
+        $field = $request->newResource()
+                        ->availableFields($request)
+                        ->findFieldByAttribute($request->field, function () {
+                            abort(404);
+                        });
+
+        call_user_func(
+            $field->deleteCallback, $request
+        );
+    }
+
+    /**
+     * Purge all pending attachments for a Trix field.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyPending(NovaRequest $request)
     {
         $field = $request->newResource()
                         ->availableFields($request)
@@ -43,16 +62,5 @@ class TrixAttachmentController extends Controller
         call_user_func(
             $field->discardCallback, $request
         );
-    }
-
-    /**
-     * Purge pending attachments for a Trix field.
-     *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function destroySingle(NovaRequest $request)
-    {
-        info($request->attachmentUrl);
     }
 }

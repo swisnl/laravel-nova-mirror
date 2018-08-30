@@ -26,6 +26,13 @@ class Trix extends Field
     public $attachCallback;
 
     /**
+     * The callback that should be executed to delete persisted file attachments.
+     *
+     * @var callable
+     */
+    public $deleteCallback;
+
+    /**
      * The callback that should be executed to discard file attachments.
      *
      * @var callable
@@ -41,6 +48,19 @@ class Trix extends Field
     public function attach(callable $callback)
     {
         $this->attachCallback = $callback;
+
+        return $this;
+    }
+
+    /**
+     * Specify the callback that should be used to delete persisted file attachments.
+     *
+     * @param  callable  $callback
+     * @return $this
+     */
+    public function delete(callable $callback)
+    {
+        $this->deleteCallback = $callback;
 
         return $this;
     }
