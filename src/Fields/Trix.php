@@ -2,7 +2,6 @@
 
 namespace Laravel\Nova\Fields;
 
-use Laravel\Nova\Fields\Deletable;
 use Laravel\Nova\Trix\DetachAttachment;
 use Laravel\Nova\Trix\DeleteAttachments;
 use Laravel\Nova\Trix\PendingAttachment;
