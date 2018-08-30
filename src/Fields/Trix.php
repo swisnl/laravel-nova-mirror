@@ -26,6 +26,13 @@ class Trix extends Field
     public $attachCallback;
 
     /**
+     * The callback that should be executed to discard file attachments.
+     *
+     * @var callable
+     */
+    public $discardCallback;
+
+    /**
      * Specify the callback that should be used to store file attachments.
      *
      * @param  callable  $callback
@@ -36,5 +43,28 @@ class Trix extends Field
         $this->attachCallback = $callback;
 
         return $this;
+    }
+
+    /**
+     * Specify the callback that should be used to discard pending file attachments.
+     *
+     * @param  callable  $callback
+     * @return $this
+     */
+    public function discard(callable $callback)
+    {
+        $this->discardCallback = $callback;
+
+        return $this;
+    }
+
+    /**
+     * Specify that file uploads should not be allowed.
+     *
+     * @return $this
+     */
+    public function withoutFiles()
+    {
+        return $this->withMeta(['acceptFiles' => false]);
     }
 }

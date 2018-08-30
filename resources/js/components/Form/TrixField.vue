@@ -40,9 +40,9 @@ export default {
 
     data: () => ({ draftId: uuidv4() }),
 
-    // beforeDestroy() {
-    //     this.cleanUp()
-    // },
+    beforeDestroy() {
+        this.cleanUp()
+    },
 
     methods: {
         fill(formData) {
@@ -100,10 +100,10 @@ export default {
 
         cleanUp() {
             Nova.request()
-                .post(
+                .delete(
                     `/nova-api/${this.resourceName}/trix-attachment/${
                         this.field.attribute
-                    }/cleanup`,
+                    }`,
                     { draftId: this.draftId }
                 )
                 .then(response => console.log(response))
