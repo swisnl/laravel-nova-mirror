@@ -2,7 +2,7 @@
     <default-field :field="field">
         <template slot="field">
             <input
-                :id="field.name"
+                :id="field.attribute"
                 :dusk="field.attribute"
                 type="search"
                 v-model="value"
@@ -49,7 +49,7 @@ export default {
             const placeType = this.field.placeType
 
             const config = {
-                container: document.querySelector('#' + this.field.name),
+                container: document.querySelector('#' + this.field.attribute),
                 type: this.field.placeType ? this.field.placeType : 'address',
                 templates: {
                     value(suggestion) {
