@@ -37882,9 +37882,7 @@ exports.default = {
 
             Nova.request().delete('/nova-api/' + this.resourceName + '/trix-attachment/' + this.field.attribute, {
                 params: { attachmentUrl: attachment.attributes.values.url }
-            }).then(function (response) {
-                console.log(response);
-            });
+            }).then(function (response) {}).catch(function (error) {});
         },
 
 
@@ -37894,7 +37892,7 @@ exports.default = {
         cleanUp: function cleanUp() {
             Nova.request().delete('/nova-api/' + this.resourceName + '/trix-attachment/' + this.field.attribute + '/' + this.draftId).then(function (response) {
                 return console.log(response);
-            });
+            }).catch(function (error) {});
         }
     }
 };

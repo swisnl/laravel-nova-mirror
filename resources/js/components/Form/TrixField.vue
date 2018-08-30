@@ -92,9 +92,8 @@ export default {
                 .delete(`/nova-api/${this.resourceName}/trix-attachment/${this.field.attribute}`, {
                     params: { attachmentUrl: attachment.attributes.values.url },
                 })
-                .then(response => {
-                    console.log(response)
-                })
+                .then(response => {})
+                .catch(error => {})
         },
 
         /**
@@ -108,6 +107,7 @@ export default {
                     }`
                 )
                 .then(response => console.log(response))
+                .catch(error => {})
         },
     },
 }
