@@ -2,8 +2,13 @@
 
 namespace Laravel\Nova\Fields;
 
-class Trix extends Field
+use Laravel\Nova\Fields\Deletable;
+use Laravel\Nova\Contracts\Deletable as DeletableContract;
+
+class Trix extends Field implements DeletableContract
 {
+    use Deletable;
+
     /**
      * The field's component.
      *
@@ -30,7 +35,7 @@ class Trix extends Field
      *
      * @var callable
      */
-    public $deleteCallback;
+    public $deleteOneCallback;
 
     /**
      * The callback that should be executed to discard file attachments.
@@ -58,9 +63,9 @@ class Trix extends Field
      * @param  callable  $callback
      * @return $this
      */
-    public function delete(callable $callback)
+    public function deleteOne(callable $callback)
     {
-        $this->deleteCallback = $callback;
+        $this->deleteOneCallback = $callback;
 
         return $this;
     }
