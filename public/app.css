@@ -4165,6 +4165,14 @@ input[type='search']::-webkit-search-cancel-button {
   stroke: currentColor;
 }
 
+.table-auto {
+  table-layout: auto;
+}
+
+.table-fixed {
+  table-layout: fixed;
+}
+
 .text-left {
   text-align: left;
 }
