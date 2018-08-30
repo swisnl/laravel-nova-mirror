@@ -15,6 +15,7 @@
                 @change="handleChange"
                 @file-add="handleFileAdd"
                 @file-remove="handleFileRemove"
+                :class="{'border-danger': hasError}"
             />
 
             <p v-if="hasError" class="my-2 text-danger">
