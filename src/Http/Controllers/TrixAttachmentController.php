@@ -21,8 +21,8 @@ class TrixAttachmentController extends Controller
                             abort(404);
                         });
 
-        return call_user_func(
+        return response()->json(['url' => call_user_func(
             $field->attachCallback, $request
-        );
+        )]);
     }
 }

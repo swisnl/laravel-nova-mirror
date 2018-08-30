@@ -45,6 +45,11 @@ export default {
     // },
 
     methods: {
+        fill(formData) {
+            formData.append(this.field.attribute, this.value || '')
+            formData.append(this.field.attribute + 'DraftId', this.draftId)
+        },
+
         handleFileAdd({ attachment }) {
             if (attachment.file) {
                 this.uploadAttachment(attachment)
@@ -53,8 +58,8 @@ export default {
 
         uploadAttachment(attachment) {
             const data = new FormData()
-            data.append('file', attachment.file)
             data.append('Content-Type', attachment.file.type)
+            data.append('attachment', attachment.file)
             data.append('draftId', this.draftId)
 
             Nova.request()
