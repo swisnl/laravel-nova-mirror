@@ -14,6 +14,7 @@
                 placeholder=""
                 @change="handleChange"
                 @file-add="handleFileAdd"
+                @file-remove="handleFileRemove"
             />
 
             <p v-if="hasError" class="my-2 text-danger">
@@ -76,6 +77,20 @@ export default {
                         href: url,
                     })
                 })
+        },
+
+        handleFileRemove({ attachment: { attachment } }) {
+            console.log(attachment)
+
+            // Nova.request()
+            //     .delete(`/nova-api/${this.resourceName}/trix-attachment/${this.field.attribute}`, {
+            //         params: {
+            //             file: attachment.attributes.href,
+            //         },
+            //     })
+            //     .then(response => {
+            //         console.log(response)
+            //     })
         },
 
         cleanUp() {

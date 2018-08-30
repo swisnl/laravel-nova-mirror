@@ -4,6 +4,7 @@
         @trix-change="handleChange"
         @trix-initialize="initialize"
         @trix-attachment-add="handleAddFile"
+        @trix-attachment-remove="handleRemoveFile"
         :value="value"
         :placeholder="placeholder"
     />
@@ -27,6 +28,10 @@ export default {
 
         handleAddFile(event) {
             this.$emit('file-add', event)
+        },
+
+        handleRemoveFile(event) {
+            this.$emit('file-remove', event)
         },
     },
 }

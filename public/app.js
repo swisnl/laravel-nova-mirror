@@ -4624,6 +4624,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 
 function uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, function (c) {
@@ -4671,6 +4672,21 @@ exports.default = {
                     href: url
                 });
             });
+        },
+        handleFileRemove: function handleFileRemove(_ref3) {
+            var attachment = _ref3.attachment.attachment;
+
+            console.log(attachment);
+
+            // Nova.request()
+            //     .delete(`/nova-api/${this.resourceName}/trix-attachment/${this.field.attribute}`, {
+            //         params: {
+            //             file: attachment.attributes.href,
+            //         },
+            //     })
+            //     .then(response => {
+            //         console.log(response)
+            //     })
         },
         cleanUp: function cleanUp() {
             Nova.request().post('/nova-api/' + this.resourceName + '/trix-attachment/' + this.field.attribute + '/cleanup', { draftId: this.draftId }).then(function (response) {
@@ -7971,6 +7987,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 
 exports.default = {
     name: 'trix-vue',
@@ -7984,6 +8001,9 @@ exports.default = {
         },
         handleAddFile: function handleAddFile(event) {
             this.$emit('file-add', event);
+        },
+        handleRemoveFile: function handleRemoveFile(event) {
+            this.$emit('file-remove', event);
         }
     }
 };
@@ -32420,7 +32440,8 @@ var render = function() {
     on: {
       "trix-change": _vm.handleChange,
       "trix-initialize": _vm.initialize,
-      "trix-attachment-add": _vm.handleAddFile
+      "trix-attachment-add": _vm.handleAddFile,
+      "trix-attachment-remove": _vm.handleRemoveFile
     }
   })
 }
@@ -42573,7 +42594,11 @@ var render = function() {
       [
         _c("trix", {
           attrs: { name: "trixman", value: _vm.field.value, placeholder: "" },
-          on: { change: _vm.handleChange, "file-add": _vm.handleFileAdd }
+          on: {
+            change: _vm.handleChange,
+            "file-add": _vm.handleFileAdd,
+            "file-remove": _vm.handleFileRemove
+          }
         }),
         _vm._v(" "),
         _vm.hasError
