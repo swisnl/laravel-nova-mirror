@@ -13,6 +13,7 @@
                 :value="field.value"
                 placeholder=""
                 @change="handleChange"
+                @file-add="handleFileAdd"
             />
 
             <p v-if="hasError" class="my-2 text-danger">
@@ -26,8 +27,67 @@
 import Trix from '../Trix'
 import { FormField, HandlesValidationErrors } from 'laravel-nova'
 
+function uuidv4() {
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+        (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)
+    )
+}
+
 export default {
     mixins: [HandlesValidationErrors, FormField],
     components: { Trix },
+
+    data: () => ({ draftId: uuidv4() }),
+
+    // beforeDestroy() {
+    //     this.cleanUp()
+    // },
+
+    methods: {
+        handleFileAdd({ attachment }) {
+            if (attachment.file) {
+                this.uploadAttachment(attachment)
+            }
+        },
+
+        uploadAttachment(attachment) {
+            const data = new FormData()
+            data.append('file', attachment.file)
+            data.append('Content-Type', attachment.file.type)
+            data.append('draftId', this.draftId)
+
+            Nova.request()
+                .post(
+                    `/nova-api/${this.resourceName}/trix-attachment/${this.field.attribute}`,
+                    data,
+                    {
+                        onUploadProgress: function(progressEvent) {
+                            attachment.setUploadProgress(
+                                Math.round((progressEvent.loaded * 100) / progressEvent.total)
+                            )
+                        },
+                    }
+                )
+                .then(({ data: { url } }) => {
+                    console.log(url)
+
+                    return attachment.setAttributes({
+                        url: url,
+                        href: url,
+                    })
+                })
+        },
+
+        cleanUp() {
+            Nova.request()
+                .post(
+                    `/nova-api/${this.resourceName}/trix-attachment/${
+                        this.field.attribute
+                    }/cleanup`,
+                    { draftId: this.draftId }
+                )
+                .then(response => console.log(response))
+        },
+    },
 }
 </script>
