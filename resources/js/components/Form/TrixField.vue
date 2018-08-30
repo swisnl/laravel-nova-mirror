@@ -28,12 +28,6 @@
 import Trix from '../Trix'
 import { FormField, HandlesValidationErrors } from 'laravel-nova'
 
-function uuidv4() {
-    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-        (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)
-    )
-}
-
 export default {
     mixins: [HandlesValidationErrors, FormField],
     components: { Trix },
@@ -50,12 +44,18 @@ export default {
             formData.append(this.field.attribute + 'DraftId', this.draftId)
         },
 
+        /**
+         * Initiate an attachement upload
+         */
         handleFileAdd({ attachment }) {
             if (attachment.file) {
                 this.uploadAttachment(attachment)
             }
         },
 
+        /**
+         * Upload an attachment
+         */
         uploadAttachment(attachment) {
             const data = new FormData()
             data.append('Content-Type', attachment.file.type)
@@ -84,29 +84,41 @@ export default {
                 })
         },
 
+        /**
+         * Remove an attachment from the server
+         */
         handleFileRemove({ attachment: { attachment } }) {
             console.log(attachment)
 
-            // Nova.request()
-            //     .delete(`/nova-api/${this.resourceName}/trix-attachment/${this.field.attribute}`, {
-            //         params: {
-            //             file: attachment.attributes.href,
-            //         },
-            //     })
-            //     .then(response => {
-            //         console.log(response)
-            //     })
+            Nova.request()
+                .delete(`/nova-api/${this.resourceName}/trix-attachment/${this.field.attribute}`, {
+                    // params: {
+                    file: attachment.attributes.href,
+                    // },
+                })
+                .then(response => {
+                    console.log(response)
+                })
         },
 
+        /**
+         * Purge pending attachments for the draft
+         */
         cleanUp() {
             Nova.request()
                 .delete(
-                    `/nova-api/${this.resourceName}/trix-attachment/${
-                        this.field.attribute
-                    }/${this.draftId}`
+                    `/nova-api/${this.resourceName}/trix-attachment/${this.field.attribute}/${
+                        this.draftId
+                    }`
                 )
                 .then(response => console.log(response))
         },
     },
+}
+
+function uuidv4() {
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+        (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)
+    )
 }
 </script>
