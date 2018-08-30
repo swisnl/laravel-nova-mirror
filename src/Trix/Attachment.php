@@ -2,7 +2,6 @@
 
 namespace Laravel\Nova\Trix;
 
-use Laravel\Nova\Fields\Trix;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
