@@ -87,15 +87,11 @@ export default {
         handleFileRemove({ attachment: { attachment } }) {
             console.log(attachment)
 
-            // Nova.request()
-            //     .delete(`/nova-api/${this.resourceName}/trix-attachment/${this.field.attribute}`, {
-            //         params: {
-            //             file: attachment.attributes.href,
-            //         },
-            //     })
-            //     .then(response => {
-            //         console.log(response)
-            //     })
+            Nova.request()
+                .delete(`/nova-api/${this.resourceName}/trix-attachment/${this.field.attribute}?attachmentUrl=${attachment.attributes.values.url}`)
+                .then(response => {
+                    console.log(response)
+                })
         },
 
         cleanUp() {

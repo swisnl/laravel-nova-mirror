@@ -12,6 +12,7 @@ Route::get('/search', 'SearchController@index');
 // Fields...
 Route::get('/{resource}/field/{field}', 'FieldController@show');
 Route::post('/{resource}/trix-attachment/{field}', 'TrixAttachmentController@store');
+Route::delete('/{resource}/trix-attachment/{field}', 'TrixAttachmentController@destroySingle');
 Route::delete('/{resource}/trix-attachment/{field}/{draftId}', 'TrixAttachmentController@destroy');
 Route::get('/{resource}/creation-fields', 'CreationFieldController@index');
 Route::get('/{resource}/{resourceId}/update-fields', 'UpdateFieldController@index');
