@@ -103,8 +103,7 @@ export default {
                 .delete(
                     `/nova-api/${this.resourceName}/trix-attachment/${
                         this.field.attribute
-                    }`,
-                    { draftId: this.draftId }
+                    }/${this.draftId}`
                 )
                 .then(response => console.log(response))
         },

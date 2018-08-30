@@ -41,7 +41,7 @@ class TrixAttachmentController extends Controller
                         });
 
         call_user_func(
-            $field->attachCallback, $request
+            $field->discardCallback, $request
         );
     }
 }
