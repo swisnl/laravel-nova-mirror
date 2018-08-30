@@ -27,7 +27,7 @@ class TrixAttachmentController extends Controller
     }
 
     /**
-     * Purge a single, persisted attachment for a Trix field by URL.
+     * Delete a single, persisted attachment for a Trix field by URL.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return \Illuminate\Http\Response
@@ -41,7 +41,7 @@ class TrixAttachmentController extends Controller
                         });
 
         call_user_func(
-            $field->deleteOneCallback, $request
+            $field->detachCallback, $request
         );
     }
 
