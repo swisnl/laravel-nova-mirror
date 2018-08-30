@@ -30,7 +30,7 @@ class Attachment extends Model
      */
     public function purge(Trix $field)
     {
-        Storage::disk($field->disk ?? 'public')->delete($this->attachment);
+        Storage::disk($field->disk)->delete($this->attachment);
 
         $this->delete();
     }

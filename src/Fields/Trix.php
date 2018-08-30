@@ -36,6 +36,13 @@ class Trix extends Field implements DeletableContract
     public $withFiles = false;
 
     /**
+     * The disk that should be used to store files.
+     *
+     * @var string
+     */
+    public $disk = 'public';
+
+    /**
      * The callback that should be executed to store file attachments.
      *
      * @var callable
@@ -57,25 +64,16 @@ class Trix extends Field implements DeletableContract
     public $discardCallback;
 
     /**
-     * Hydrate the given attribute on the model based on the incoming request.
+     * The disk that should be used to store attachments.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @param  string  $requestAttribute
-     * @param  object  $model
-     * @param  string  $attribute
-     * @return void
+     * @param  string  $disk
+     * @return $this
      */
-    protected function fillAttribute(NovaRequest $request, $requestAttribute, $model, $attribute)
+    public function disk($disk)
     {
-        parent::fillAttribute($request, $requestAttribute, $model, $attribute);
+        $this->disk = $disk;
 
-        if ($request->{$this->attribute.'DraftId'}) {
-            PendingAttachment::persistDraft(
-                $request->{$this->attribute.'DraftId'},
-                $this,
-                $model
-            );
-        }
+        return $this;
     }
 
     /**
@@ -154,6 +152,28 @@ class Trix extends Field implements DeletableContract
              ->prunable();
 
         return $this;
+    }
+
+    /**
+     * Hydrate the given attribute on the model based on the incoming request.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  string  $requestAttribute
+     * @param  object  $model
+     * @param  string  $attribute
+     * @return void
+     */
+    protected function fillAttribute(NovaRequest $request, $requestAttribute, $model, $attribute)
+    {
+        parent::fillAttribute($request, $requestAttribute, $model, $attribute);
+
+        if ($request->{$this->attribute.'DraftId'}) {
+            PendingAttachment::persistDraft(
+                $request->{$this->attribute.'DraftId'},
+                $this,
+                $model
+            );
+        }
     }
 
     /**

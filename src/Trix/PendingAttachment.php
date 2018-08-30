@@ -48,7 +48,7 @@ class PendingAttachment extends Model
             'attachable_type' => get_class($model),
             'attachable_id' => $model->getKey(),
             'attachment' => $this->attachment,
-            'url' => Storage::disk($field->disk ?? 'public')->url($this->attachment),
+            'url' => Storage::disk($field->disk)->url($this->attachment),
         ]);
 
         $this->delete();
@@ -62,7 +62,7 @@ class PendingAttachment extends Model
      */
     public function purge(Trix $field)
     {
-        Storage::disk($field->disk ?? 'public')->delete($this->attachment);
+        Storage::disk($field->disk)->delete($this->attachment);
 
         $this->delete();
     }

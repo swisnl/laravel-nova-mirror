@@ -34,9 +34,9 @@ class StorePendingAttachment
      */
     public function __invoke(Request $request)
     {
-        return Storage::disk($field->disk ?? 'public')->url(PendingAttachment::create([
+        return Storage::disk($this->field->disk)->url(PendingAttachment::create([
             'draft_id' => $request->draftId,
-            'attachment' => $request->attachment->store('/', $field->disk ?? 'public'),
+            'attachment' => $request->attachment->store('/', $this->field->disk),
         ])->attachment);
     }
 }
