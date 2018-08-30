@@ -44,4 +44,15 @@ class TrixAttachmentController extends Controller
             $field->discardCallback, $request
         );
     }
+
+    /**
+     * Purge pending attachments for a Trix field.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroySingle(NovaRequest $request)
+    {
+        info($request->attachmentUrl);
+    }
 }

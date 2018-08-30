@@ -4626,12 +4626,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 
-function uuidv4() {
-    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, function (c) {
-        return (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
-    });
-}
-
 exports.default = {
     mixins: [_laravelNova.HandlesValidationErrors, _laravelNova.FormField],
     components: { Trix: _Trix2.default },
@@ -4650,6 +4644,11 @@ exports.default = {
             formData.append(this.field.attribute, this.value || '');
             formData.append(this.field.attribute + 'DraftId', this.draftId);
         },
+
+
+        /**
+         * Initiate an attachement upload
+         */
         handleFileAdd: function handleFileAdd(_ref) {
             var attachment = _ref.attachment;
 
@@ -4657,6 +4656,11 @@ exports.default = {
                 this.uploadAttachment(attachment);
             }
         },
+
+
+        /**
+         * Upload an attachment
+         */
         uploadAttachment: function uploadAttachment(attachment) {
             var data = new FormData();
             data.append('Content-Type', attachment.file.type);
@@ -4678,21 +4682,25 @@ exports.default = {
                 });
             });
         },
+
+
+        /**
+         * Remove an attachment from the server
+         */
         handleFileRemove: function handleFileRemove(_ref3) {
             var attachment = _ref3.attachment.attachment;
 
-            console.log(attachment);
-
-            // Nova.request()
-            //     .delete(`/nova-api/${this.resourceName}/trix-attachment/${this.field.attribute}`, {
-            //         params: {
-            //             file: attachment.attributes.href,
-            //         },
-            //     })
-            //     .then(response => {
-            //         console.log(response)
-            //     })
+            Nova.request().delete('/nova-api/' + this.resourceName + '/trix-attachment/' + this.field.attribute, {
+                params: { attachmentUrl: attachment.attributes.values.url }
+            }).then(function (response) {
+                console.log(response);
+            });
         },
+
+
+        /**
+         * Purge pending attachments for the draft
+         */
         cleanUp: function cleanUp() {
             Nova.request().delete('/nova-api/' + this.resourceName + '/trix-attachment/' + this.field.attribute + '/' + this.draftId).then(function (response) {
                 return console.log(response);
@@ -4700,6 +4708,13 @@ exports.default = {
         }
     }
 };
+
+
+function uuidv4() {
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, function (c) {
+        return (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
+    });
+}
 
 /***/ }),
 
@@ -7993,10 +8008,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 
 exports.default = {
     name: 'trix-vue',
-    props: ['name', 'value', 'placeholder'],
+
+    props: {
+        name: { type: String },
+        value: { type: String },
+        placeholder: { type: String },
+        acceptFiles: { type: Boolean, default: true }
+    },
+
     methods: {
         initialize: function initialize() {
             this.$refs.theEditor.editor.insertHTML(this.value);
@@ -32428,6 +32451,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("trix-editor", {
     ref: "theEditor",
+    staticClass: "trix-content",
     attrs: { value: _vm.value, placeholder: _vm.placeholder },
     on: {
       "trix-change": _vm.handleChange,
@@ -41519,7 +41543,7 @@ var render = function() {
   return _c("div", [
     _vm.expanded
       ? _c("div", {
-          staticClass: "markdown",
+          staticClass: "markdown leading-normal",
           domProps: { innerHTML: _vm._s(_vm.content) }
         })
       : _vm._e(),
