@@ -23,6 +23,19 @@ class PendingAttachment extends Model
     protected $guarded = [];
 
     /**
+     * Persist the given draft's pending attachments.
+     *
+     * @param  string  $draftId
+     * @param  \Laravel\Nova\Fields\Trix  $field
+     * @param  mixed  $model
+     * @return void
+     */
+    public static function persistDraft($draftId, Trix $field, $model)
+    {
+        static::where('draft_id', $draftId)->get()->each->persist($field, $model);
+    }
+
+    /**
      * Persist the pending attachment.
      *
      * @param  \Laravel\Nova\Fields\Trix  $field
