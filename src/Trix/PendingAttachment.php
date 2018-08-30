@@ -48,6 +48,7 @@ class PendingAttachment extends Model
             'attachable_type' => get_class($model),
             'attachable_id' => $model->getKey(),
             'attachment' => $this->attachment,
+            'disk' => $field->disk,
             'url' => Storage::disk($field->disk)->url($this->attachment),
         ]);
 
@@ -57,12 +58,11 @@ class PendingAttachment extends Model
     /**
      * Purge the attachment.
      *
-     * @param  \Laravel\Nova\Fields\Trix  $field
      * @return void
      */
-    public function purge(Trix $field)
+    public function purge()
     {
-        Storage::disk($field->disk)->delete($this->attachment);
+        Storage::disk($this->disk)->delete($this->attachment);
 
         $this->delete();
     }

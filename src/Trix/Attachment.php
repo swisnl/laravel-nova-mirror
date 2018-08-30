@@ -25,12 +25,11 @@ class Attachment extends Model
     /**
      * Purge the attachment.
      *
-     * @param  \Laravel\Nova\Fields\Trix  $field
      * @return void
      */
-    public function purge(Trix $field)
+    public function purge()
     {
-        Storage::disk($field->disk)->delete($this->attachment);
+        Storage::disk($this->disk)->delete($this->attachment);
 
         $this->delete();
     }
