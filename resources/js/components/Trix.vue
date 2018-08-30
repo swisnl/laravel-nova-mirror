@@ -7,6 +7,7 @@
         @trix-attachment-remove="handleRemoveFile"
         :value="value"
         :placeholder="placeholder"
+        class="trix-content"
     />
 </template>
 
@@ -16,7 +17,14 @@ import 'trix/dist/trix.css'
 
 export default {
     name: 'trix-vue',
-    props: ['name', 'value', 'placeholder'],
+
+    props: {
+        name: { type: String },
+        value: { type: String },
+        placeholder: { type: String },
+        acceptFiles: { type: Boolean, default: true },
+    },
+
     methods: {
         initialize() {
             this.$refs.theEditor.editor.insertHTML(this.value)
