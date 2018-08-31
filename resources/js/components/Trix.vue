@@ -5,6 +5,7 @@
         @trix-initialize="initialize"
         @trix-attachment-add="handleAddFile"
         @trix-attachment-remove="handleRemoveFile"
+        @trix-file-accept="handleFileAccept"
         :value="value"
         :placeholder="placeholder"
         class="trix-content"
@@ -22,7 +23,7 @@ export default {
         name: { type: String },
         value: { type: String },
         placeholder: { type: String },
-        acceptFiles: { type: Boolean, default: true },
+        withFiles: { type: Boolean, default: true },
     },
 
     methods: {
@@ -32,6 +33,12 @@ export default {
 
         handleChange() {
             this.$emit('change', this.$refs.theEditor.value)
+        },
+
+        handleFileAccept(e) {
+            if (!this.withFiles) {
+                e.preventDefault()
+            }
         },
 
         handleAddFile(event) {
