@@ -11,7 +11,12 @@ class Text extends Field
      */
     public $component = 'text-field';
 
-    protected $asHtml = false;
+    /**
+     * Indicates if the field should be shown as raw HTML in Vue.
+     *
+     * @var bool
+     */
+    public $asHtml = false;
 
     /**
      * Display the field as raw HTML inside Vue.
