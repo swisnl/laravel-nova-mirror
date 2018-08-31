@@ -14,7 +14,7 @@ class Text extends Field
     protected $asHtml = false;
 
     /**
-     * Display the field as raw HTML inside Vue
+     * Display the field as raw HTML inside Vue.
      *
      * @return $this
      */
