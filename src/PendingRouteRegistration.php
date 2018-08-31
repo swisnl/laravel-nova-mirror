@@ -80,10 +80,11 @@ class PendingRouteRegistration
             });
 
         Event::listen(NovaServiceProviderRegistered::class, function () {
-            Route::view(Nova::path(), 'nova::router')
-                ->domain(config('nova.domain', null))
+            Route::domain(config('nova.domain', null))
                 ->middleware(config('nova.middleware', []))
-                ->name('nova.index');
+                ->group(function () {
+                    Route::view(Nova::path(), 'nova::router')->name('nova.index');
+                });
 
             Route::middleware(config('nova.middleware', []))
                 ->domain(config('nova.domain', null))
