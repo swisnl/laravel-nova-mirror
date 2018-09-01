@@ -12,7 +12,7 @@ class Text extends Field
     public $component = 'text-field';
 
     /**
-     * Display the field as raw HTML inside Vue.
+     * Display the field as raw HTML using Vue.
      *
      * @return $this
      */
