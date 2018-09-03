@@ -1,8 +1,9 @@
-# Automated Laravel Nova Mirror
+# Automated Laravel Nova Mirror builder
 
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/swisnl/laravel-nova-mirror.svg)](https://packagist.org/packages/swisnl/laravel-nova-mirror)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/swisnl/laravel-nova-mirror.svg)](https://packagist.org/packages/swisnl/laravel-nova-mirror)
 
+> **This repository is not a public mirror. It can sync Nova downloads using your personal credentials to a private repository of your choice.**
 
 This application enables you to update a private mirror of Laravel Nova automatically. It downloads releases from the Nova site and updates a repository with the correct releases. 
 
