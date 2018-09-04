@@ -139,11 +139,14 @@ class Trix extends Field implements DeletableContract
     /**
      * Specify that file uploads should not be allowed.
      *
+     * @param  string  $disk
      * @return $this
      */
-    public function withFiles()
+    public function withFiles($disk = null)
     {
         $this->withFiles = true;
+
+        $this->disk($disk);
 
         $this->attach(new StorePendingAttachment($this))
              ->detach(new DetachAttachment($this))
