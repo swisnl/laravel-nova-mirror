@@ -24,6 +24,7 @@ class PendingRouteRegistration
     public function withAuthenticationRoutes($middleware = ['web'])
     {
         Route::namespace('Laravel\Nova\Http\Controllers')
+            ->domain(config('nova.domain', null))
             ->middleware($middleware)
             ->as('nova.')
             ->prefix(Nova::path())
@@ -46,6 +47,7 @@ class PendingRouteRegistration
         Nova::$resetsPasswords = true;
 
         Route::namespace('Laravel\Nova\Http\Controllers')
+            ->domain(config('nova.domain', null))
             ->middleware($middleware)
             ->as('nova.')
             ->prefix(Nova::path())
@@ -69,6 +71,7 @@ class PendingRouteRegistration
         $this->registered = true;
 
         Route::namespace('Laravel\Nova\Http\Controllers')
+            ->domain(config('nova.domain', null))
             ->middleware(config('nova.middleware', []))
             ->as('nova.')
             ->prefix(Nova::path())
@@ -77,11 +80,14 @@ class PendingRouteRegistration
             });
 
         Event::listen(NovaServiceProviderRegistered::class, function () {
-            Route::view(Nova::path(), 'nova::router')
+            Route::domain(config('nova.domain', null))
                 ->middleware(config('nova.middleware', []))
-                ->name('nova.index');
+                ->group(function () {
+                    Route::view(Nova::path(), 'nova::router')->name('nova.index');
+                });
 
             Route::middleware(config('nova.middleware', []))
+                ->domain(config('nova.domain', null))
                 ->as('nova.')
                 ->prefix(Nova::path())
                 ->get('/{view}', 'Laravel\Nova\Http\Controllers\RouterController@show')
