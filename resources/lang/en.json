@@ -1,5 +1,6 @@
 {
     "Actions": "Actions",
+    "Attach": "Attach",
     "Details": "Details",
     "If you did not request a password reset, no further action is required.": "If you did not request a password reset, no further action is required.",
     "Reset Password": "Reset Password",
@@ -22,7 +23,9 @@
     "Detach Resource": "Detach Resource",
     "Detach": "Detach",
     "Detach Selected": "Detach Selected",
+    "Details": "Details",
     "Delete Selected": "Delete Selected",
+    "Edit": "Edit",
     "Force Delete Selected": "Force Delete Selected",
     "Restore Selected": "Restore Selected",
     "Restore Resource": "Restore Resource",

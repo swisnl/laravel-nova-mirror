@@ -1,5 +1,19 @@
 <template>
     <div v-if="!loading">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ul class="list-reset flex items-center mb-3">
+                <li v-else class="breadcrumb-item">
+                    <router-link
+                        :to="{ name: 'index', params: {resourceName} }"
+                        class="cursor-pointer text-primary no-underline dim"
+                    >{{ resourceInformation.label }}</router-link>
+                </li>
+
+                <li class="breadcrumb-item">{{__('Edit')}} {{ singularName }}</li>
+            </ul>
+        </nav>
+
         <heading class="mb-3">{{__('Edit')}} {{ singularName }}</heading>
 
         <card class="overflow-hidden">

@@ -1,5 +1,25 @@
 <template>
     <loading-view :loading="loading">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ul class="list-reset flex items-center mb-3">
+                <li v-if="viaRelationship" class="breadcrumb-item">
+                    <router-link
+                        :to="{
+                            name: 'detail',
+                            params: {
+                                resourceName,
+                                resourceId
+                            }
+                        }"
+                        class="cursor-pointer text-primary no-underline dim"
+                    >{{ resourceInformation.singularLabel }}</router-link>
+                </li>
+
+                <li class="breadcrumb-item">{{__('Attach')}} {{ relatedResourceLabel }}</li>
+            </ul>
+        </nav>
+
         <heading class="mb-3">{{__('Attach')}} {{ relatedResourceLabel }}</heading>
 
         <card class="overflow-hidden">
@@ -109,10 +129,15 @@
 </template>
 
 <script>
-import { PerformsSearches, TogglesTrashed, Errors } from 'laravel-nova'
+import {
+    PerformsSearches,
+    TogglesTrashed,
+    InteractsWithResourceInformation,
+    Errors,
+} from 'laravel-nova'
 
 export default {
-    mixins: [PerformsSearches, TogglesTrashed],
+    mixins: [PerformsSearches, TogglesTrashed, InteractsWithResourceInformation],
 
     props: {
         resourceName: {
@@ -328,19 +353,16 @@ export default {
          * Get the attachment endpoint for the relationship type.
          */
         attachmentEndpoint() {
-            return this.polymorphic
-                ? '/nova-api/' +
-                      this.resourceName +
-                      '/' +
-                      this.resourceId +
-                      '/attach-morphed/' +
-                      this.relatedResourceName
-                : '/nova-api/' +
-                      this.resourceName +
-                      '/' +
-                      this.resourceId +
-                      '/attach/' +
-                      this.relatedResourceName
+            const attachSegment = this.polymorphic ? '/attach-morphed/' : '/attach/'
+
+            return (
+                '/nova-api/' +
+                this.resourceName +
+                '/' +
+                this.resourceId +
+                attachSegment +
+                this.relatedResourceName
+            )
         },
 
         /**

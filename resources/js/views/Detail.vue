@@ -20,6 +20,22 @@
             />
         </div>
 
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ul class="list-reset flex items-center mb-3">
+                <li class="breadcrumb-item">
+                    <router-link
+                        :to="{ name: 'index', params: {resourceName} }"
+                        class="cursor-pointer text-primary no-underline dim"
+                    >
+                        {{ resourceInformation.label }}
+                    </router-link>
+                </li>
+
+                <li class="breadcrumb-item">{{ resourceInformation.singularLabel }} {{ __('Details') }}</li>
+            </ul>
+        </nav>
+
         <!-- Resource Detail -->
         <div :dusk="resourceName + '-detail-component'" class="mb-8" :key="panel.id" v-for="panel in availablePanels">
             <component
@@ -297,7 +313,9 @@ export default {
         async confirmDelete() {
             this.deleteResources([this.resource], () => {
                 this.$toasted.show(
-                    this.__('The :resource was deleted!', {resource: this.resourceInformation.singularLabel.toLowerCase()}),
+                    this.__('The :resource was deleted!', {
+                        resource: this.resourceInformation.singularLabel.toLowerCase(),
+                    }),
                     { type: 'success' }
                 )
 
@@ -334,7 +352,9 @@ export default {
         async confirmRestore() {
             this.restoreResources([this.resource], () => {
                 this.$toasted.show(
-                     this.__('The :resource was restored!', {resource: this.resourceInformation.singularLabel.toLowerCase()}),
+                    this.__('The :resource was restored!', {
+                        resource: this.resourceInformation.singularLabel.toLowerCase(),
+                    }),
                     { type: 'success' }
                 )
 
@@ -363,7 +383,9 @@ export default {
         async confirmForceDelete() {
             this.forceDeleteResources([this.resource], () => {
                 this.$toasted.show(
-                    this.__('The :resource was deleted!', {resource: this.resourceInformation.singularLabel.toLowerCase()}),
+                    this.__('The :resource was deleted!', {
+                        resource: this.resourceInformation.singularLabel.toLowerCase(),
+                    }),
                     { type: 'success' }
                 )
 

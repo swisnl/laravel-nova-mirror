@@ -358,7 +358,7 @@ input[type='search']::-webkit-search-cancel-button {
 .sidebar-link {
 }
 
-.router-link-active {
+.sidebar .router-link-active {
   @apply font-extrabold !important;
 }
 
@@ -811,6 +811,24 @@ input[type='search']::-webkit-search-cancel-button {
 .ct-point {
   stroke: var(--primary) !important;
   stroke-width: 6px !important;
+}
+
+/* Breadcrumbs
+---------------------------------------------------------------------------- */
+.breadcrumb {
+}
+
+.breadcrumb-item .router-link-active {
+  @apply font-normal;
+}
+
+.breadcrumb-item {
+  @apply inline-block mr-3 text-80;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  @apply inline-block mr-3 text-80;
+  content: '/';
 }
 
 /* Tailwind Utilities

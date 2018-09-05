@@ -1,6 +1,33 @@
 <template>
     <loading-view :loading="loading">
-        <heading class="mb-3">{{__('New')}} {{ singularName }}</heading>
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ul class="list-reset flex items-center mb-3">
+                <li v-if="viaResource" class="breadcrumb-item">
+                    <router-link
+                        :to="{
+                            name: 'detail',
+                            params: {
+                                resourceName: viaResource,
+                                resourceId: viaResourceId
+                            }
+                        }"
+                        class="cursor-pointer text-primary no-underline dim"
+                    >{{ viaResourceInformation.singularLabel }}</router-link>
+                </li>
+
+                <li v-else class="breadcrumb-item">
+                    <router-link
+                        :to="{ name: 'index', params: {resourceName} }"
+                        class="cursor-pointer text-primary no-underline dim"
+                    >{{ resourceInformation.label }}</router-link>
+                </li>
+
+                <li class="breadcrumb-item">{{__('New')}} {{ singularName }}</li>
+            </ul>
+        </nav>
+
+        <heading class="mb-6">{{__('New')}} {{ singularName }}</heading>
 
         <card class="overflow-hidden">
             <form v-if="fields" @submit.prevent="createResource">
