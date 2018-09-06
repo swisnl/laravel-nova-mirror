@@ -3,7 +3,7 @@
         <div class="w-1/5 px-8 py-6">
             <slot>
                 <form-label :for="field.name">
-                    {{ field.name || fieldName }}
+                    {{ field.singularLabel || field.name || fieldName }}
                 </form-label>
 
                 <help-text :show-help-text="showHelpText">

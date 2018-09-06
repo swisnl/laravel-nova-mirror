@@ -294,6 +294,8 @@ class BelongsTo extends Field
             'belongsToRelationship' => $this->belongsToRelationship,
             'belongsToId' => $this->belongsToId,
             'searchable' => $this->searchable,
+            'singularLabel' => $this->resourceClass::singularLabel(),
+            'label' => $this->resourceClass::label(),
         ], $this->meta);
     }
 }
