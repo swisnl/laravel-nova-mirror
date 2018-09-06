@@ -35,21 +35,21 @@
                     </span>
 
                     <span v-else>
-                        No Increase
+                        {{__('No Increase')}}
                     </span>
                 </span>
 
                 <span v-else>
                     <span v-if="previous == '0' && value != '0'">
-                        No Prior Data
+                        {{__('No Prior Data')}}
                     </span>
 
                     <span v-if="value == '0' && previous != '0'">
-                        No Current Data
+                        {{__('No Current Data')}}
                     </span>
 
                     <span v-if="value == '0' && previous == '0'">
-                        No Data
+                        {{__('No Data')}}
                     </span>
                 </span>
             </p>
