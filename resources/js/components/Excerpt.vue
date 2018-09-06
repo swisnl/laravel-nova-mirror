@@ -31,7 +31,7 @@ export default {
 
     computed: {
         showHideLabel() {
-            return !this.expanded ? 'Show Content' : 'Hide Content'
+            return !this.expanded ? this.__('Show Content') : this.__('Hide Content')
         },
     },
 }

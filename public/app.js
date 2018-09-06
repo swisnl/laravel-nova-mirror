@@ -16794,7 +16794,7 @@ var render = function() {
                     attrs: {
                       "data-testid": "search-input",
                       dusk: "search",
-                      placeholder: "Search",
+                      placeholder: _vm.__("Search"),
                       type: "search"
                     },
                     domProps: { value: _vm.search },
@@ -17212,7 +17212,9 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              "\n                                Trashed:\n                            "
+                                              "\n                                " +
+                                                _vm._s(_vm.__("Trashed")) +
+                                                ":\n                            "
                                             )
                                           ]
                                         ),
@@ -17500,11 +17502,16 @@ var render = function() {
                         { staticClass: "text-base text-80 font-normal mb-6" },
                         [
                           _vm._v(
-                            "\n                    No " +
+                            "\n                    " +
                               _vm._s(
-                                _vm.resourceInformation.label.toLowerCase()
+                                _vm.__(
+                                  "No :resource matched the given criteria.",
+                                  {
+                                    resource: _vm.resourceInformation.label.toLowerCase()
+                                  }
+                                )
                               ) +
-                              " matched the given criteria.\n                "
+                              "\n                "
                           )
                         ]
                       ),
@@ -24490,7 +24497,7 @@ exports.default = {
 
     computed: {
         showHideLabel: function showHideLabel() {
-            return !this.expanded ? 'Show Content' : 'Hide Content';
+            return !this.expanded ? this.__('Show Content') : this.__('Hide Content');
         }
     }
 };
