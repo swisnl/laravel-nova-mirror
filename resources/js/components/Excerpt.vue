@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="expanded" class="markdown" v-html="content" />
+        <div v-if="expanded" class="markdown leading-normal" v-html="content" />
 
         <a
             @click="toggle"

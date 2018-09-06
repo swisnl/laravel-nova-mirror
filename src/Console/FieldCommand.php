@@ -191,7 +191,7 @@ class FieldCommand extends Command
         }
 
         $process->run(function ($type, $line) {
-            $this->command->output->write($line);
+            $this->output->write($line);
         });
     }
 

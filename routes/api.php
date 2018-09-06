@@ -11,6 +11,9 @@ Route::get('/search', 'SearchController@index');
 
 // Fields...
 Route::get('/{resource}/field/{field}', 'FieldController@show');
+Route::post('/{resource}/trix-attachment/{field}', 'TrixAttachmentController@store');
+Route::delete('/{resource}/trix-attachment/{field}', 'TrixAttachmentController@destroyAttachment');
+Route::delete('/{resource}/trix-attachment/{field}/{draftId}', 'TrixAttachmentController@destroyPending');
 Route::get('/{resource}/creation-fields', 'CreationFieldController@index');
 Route::get('/{resource}/{resourceId}/update-fields', 'UpdateFieldController@index');
 Route::get('/{resource}/creation-pivot-fields/{relatedResource}', 'CreationPivotFieldController@index');

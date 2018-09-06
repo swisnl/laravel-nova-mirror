@@ -36,8 +36,7 @@
 </template>
 
 <script>
-import { Errors, Minimum } from 'laravel-nova'
-import { Capitalize, Inflector, InteractsWithResourceInformation } from 'laravel-nova'
+import { Errors, Minimum, InteractsWithResourceInformation } from 'laravel-nova'
 
 export default {
     mixins: [InteractsWithResourceInformation],
@@ -91,7 +90,9 @@ export default {
                 const response = await this.createRequest()
 
                 this.$toasted.show(
-                    this.__('The :resource was created!', {resource: this.resourceInformation.singularLabel.toLowerCase()}),
+                    this.__('The :resource was created!', {
+                        resource: this.resourceInformation.singularLabel.toLowerCase(),
+                    }),
                     { type: 'success' }
                 )
 
@@ -117,12 +118,16 @@ export default {
                 const response = await this.createRequest()
 
                 this.$toasted.show(
-                    this.__('The :resource was created!', {resource: this.resourceInformation.singularLabel.toLowerCase()}),
+                    this.__('The :resource was created!', {
+                        resource: this.resourceInformation.singularLabel.toLowerCase(),
+                    }),
                     { type: 'success' }
                 )
 
                 // Reset the form by refetching the fields
                 this.getFields()
+
+                this.validationErrors = new Errors()
             } catch (error) {
                 if (error.response.status == 422) {
                     this.validationErrors = new Errors(error.response.data.errors)
@@ -158,7 +163,7 @@ export default {
 
     computed: {
         singularName() {
-            return Capitalize(Inflector.singularize(this.resourceName))
+            return this.resourceInformation.singularLabel
         },
     },
 }

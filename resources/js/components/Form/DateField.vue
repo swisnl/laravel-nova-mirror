@@ -3,8 +3,8 @@
         <template slot="field">
             <date-time-picker
                 class="w-full form-control form-input form-input-bordered"
-                :name="field.name"
                 :field="field"
+                :name="field.name"
                 :value="value"
                 dateFormat="Y-m-d"
                 :placeholder="placeholder"

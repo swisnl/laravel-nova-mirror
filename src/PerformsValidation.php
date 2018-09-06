@@ -234,7 +234,7 @@ trait PerformsValidation
     {
         return (new static(static::newModel()))
                     ->availableFields($request)
-                    ->firstWhere('attribute', $field)
+                    ->firstWhere('resourceName', $field)
                     ->getValidationAttribute($request);
     }
 

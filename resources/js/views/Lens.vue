@@ -184,25 +184,27 @@
             </div>
 
             <!-- Resource Table -->
-            <resource-table
-                :authorized-to-relate="authorizedToRelate"
-                :resource-name="resourceName"
-                :resources="resources"
-                :singular-name="singularName"
-                :selected-resources="selectedResources"
-                :selected-resource-ids="selectedResourceIds"
-                :actions-are-available="allActions.length > 0"
-                :should-show-checkboxes="shouldShowCheckBoxes"
-                :via-resource="viaResource"
-                :via-resource-id="viaResourceId"
-                :via-relationship="viaRelationship"
-                :relationship-type="relationshipType"
-                :update-selection-status="updateSelectionStatus"
-                @order="orderByField"
-                @delete="deleteResources"
-                @restore="restoreResources"
-                ref="resourceTable"
-            />
+            <div class="overflow-hidden overflow-x-auto relative">
+                <resource-table
+                    :authorized-to-relate="authorizedToRelate"
+                    :resource-name="resourceName"
+                    :resources="resources"
+                    :singular-name="singularName"
+                    :selected-resources="selectedResources"
+                    :selected-resource-ids="selectedResourceIds"
+                    :actions-are-available="allActions.length > 0"
+                    :should-show-checkboxes="shouldShowCheckBoxes"
+                    :via-resource="viaResource"
+                    :via-resource-id="viaResourceId"
+                    :via-relationship="viaRelationship"
+                    :relationship-type="relationshipType"
+                    :update-selection-status="updateSelectionStatus"
+                    @order="orderByField"
+                    @delete="deleteResources"
+                    @restore="restoreResources"
+                    ref="resourceTable"
+                />
+            </div>
 
             <!-- Pagination -->
             <pagination-links
@@ -217,7 +219,7 @@
 </template>
 
 <script>
-import { Errors, Capitalize, Inflector, Minimum } from 'laravel-nova'
+import { Errors, Minimum } from 'laravel-nova'
 
 import {
     Deletable,
@@ -701,7 +703,7 @@ export default {
          * Get the singular name for the resource
          */
         singularName() {
-            return Capitalize(Inflector.singularize(this.resourceName))
+            return this.resourceInformation.singularLabel
         },
 
         /**

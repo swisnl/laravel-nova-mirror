@@ -16,7 +16,7 @@ export default {
 
     computed: {
         label() {
-            return this.field.value == true ? 'True' : 'False'
+            return this.field.value == true ? this.__('Yes') : this.__('No')
         },
     },
 }
