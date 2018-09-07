@@ -1,6 +1,6 @@
 <template>
     <div>
-        <default-field :field="field" :field-name="fieldType">
+        <default-field :field="field" :field-name="fieldName">
             <select
                 :disabled="isLocked"
                 :data-testid="`${field.attribute}-type`"
@@ -23,7 +23,7 @@
             </select>
         </default-field>
 
-        <default-field :field="field" :show-help-text="false" :field-name="fieldName">
+        <default-field :field="field" :show-help-text="false" :field-name="fieldTypeName">
             <template slot="field">
                 <search-input
                     v-if="isSearchable && !isLocked"
@@ -66,7 +66,7 @@
                     <option
                         value=""
                         disabled
-                        :selected="selectedResourceId == ''">{{__('Choose')}} {{ fieldName }}</option>
+                        :selected="selectedResourceId == ''">{{__('Choose')}} {{ fieldTypeName }}</option>
 
                     <option
                         v-for="resource in availableResources"
@@ -296,22 +296,21 @@ export default {
         /**
          * Return the morphable type label for the field
          */
-        fieldType() {
-            return this.field.resourceLabel || `${this.field.name} Type`
-            // return `${this.field.name} Type`
+        fieldName() {
+            return this.field.name
         },
 
         /**
          * Return the selected morphable type's label
          */
-        fieldName() {
+        fieldTypeName() {
             if (this.resourceType) {
                 return _.find(this.field.morphToTypes, type => {
                     return type.value == this.resourceType
                 }).singularLabel
             }
 
-            return 'Type'
+            return ''
         },
     },
 }

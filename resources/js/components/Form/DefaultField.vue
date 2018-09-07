@@ -5,7 +5,7 @@
                 <form-label :for="field.name" :class="{
                     'mb-6': field.helpText && showHelpText
                 }">
-                    {{ fieldName || field.singularLabel || field.name }}
+                    {{ fieldLabel }}
                 </form-label>
 
                 <help-text :show-help-text="showHelpText">
@@ -25,6 +25,18 @@ export default {
         field: { type: Object, required: true },
         fieldName: { type: String },
         showHelpText: { type: Boolean, default: true },
+    },
+
+    computed: {
+        fieldLabel() {
+            // If the field name is purposefully an empty string, then
+            // let's show it as such
+            if (this.fieldName === '') {
+                return ''
+            }
+
+            return this.fieldName || this.field.singularLabel || this.field.name
+        },
     },
 }
 </script>

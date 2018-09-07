@@ -2985,6 +2985,18 @@ exports.default = {
         field: { type: Object, required: true },
         fieldName: { type: String },
         showHelpText: { type: Boolean, default: true }
+    },
+
+    computed: {
+        fieldLabel: function fieldLabel() {
+            // If the field name is purposefully an empty string, then
+            // let's show it as such
+            if (this.fieldName === '') {
+                return '';
+            }
+
+            return this.fieldName || this.field.singularLabel || this.field.name;
+        }
     }
 };
 
@@ -3826,16 +3838,15 @@ exports.default = {
         /**
          * Return the morphable type label for the field
          */
-        fieldType: function fieldType() {
-            return this.field.resourceLabel || this.field.name + ' Type';
-            // return `${this.field.name} Type`
+        fieldName: function fieldName() {
+            return this.field.name;
         },
 
 
         /**
          * Return the selected morphable type's label
          */
-        fieldName: function fieldName() {
+        fieldTypeName: function fieldTypeName() {
             var _this5 = this;
 
             if (this.resourceType) {
@@ -3844,7 +3855,7 @@ exports.default = {
                 }).singularLabel;
             }
 
-            return 'Type';
+            return '';
         }
     }
 }; //
@@ -34144,11 +34155,7 @@ var render = function() {
             },
             [
               _vm._v(
-                "\n                " +
-                  _vm._s(
-                    _vm.fieldName || _vm.field.singularLabel || _vm.field.name
-                  ) +
-                  "\n            "
+                "\n                " + _vm._s(_vm.fieldLabel) + "\n            "
               )
             ]
           ),
@@ -38812,7 +38819,7 @@ var render = function() {
     [
       _c(
         "default-field",
-        { attrs: { field: _vm.field, "field-name": _vm.fieldType } },
+        { attrs: { field: _vm.field, "field-name": _vm.fieldName } },
         [
           _c(
             "select",
@@ -38867,7 +38874,7 @@ var render = function() {
           attrs: {
             field: _vm.field,
             "show-help-text": false,
-            "field-name": _vm.fieldName
+            "field-name": _vm.fieldTypeName
           }
         },
         [
@@ -38978,7 +38985,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(_vm.__("Choose")) +
                               " " +
-                              _vm._s(_vm.fieldName)
+                              _vm._s(_vm.fieldTypeName)
                           )
                         ]
                       ),
