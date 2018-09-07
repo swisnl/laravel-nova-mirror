@@ -319,7 +319,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     /**
      * Set the validation rules for the field.
      *
-     * @param  \Closure|array  $rules
+     * @param  callable|array|string  $rules
      * @return $this
      */
     public function rules($rules)
@@ -362,7 +362,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     /**
      * Set the creation validation rules for the field.
      *
-     * @param  callable|array  $rules
+     * @param  callable|array|string  $rules
      * @return $this
      */
     public function creationRules($rules)
@@ -392,7 +392,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     /**
      * Set the creation validation rules for the field.
      *
-     * @param  callable|array  $rules
+     * @param  callable|array|string  $rules
      * @return $this
      */
     public function updateRules($rules)
