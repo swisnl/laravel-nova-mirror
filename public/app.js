@@ -2977,6 +2977,8 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
 
 exports.default = {
     props: {
@@ -3811,9 +3813,38 @@ exports.default = {
                 }
             };
         },
+
+
+        /**
+         * Determine if the field is locked
+         */
         isLocked: function isLocked() {
             return Boolean(this.viaResource);
-            // return this.viaResource == this.field.resourceName
+        },
+
+
+        /**
+         * Return the morphable type label for the field
+         */
+        fieldType: function fieldType() {
+            return this.field.resourceLabel || this.field.name + ' Type';
+            // return `${this.field.name} Type`
+        },
+
+
+        /**
+         * Return the selected morphable type's label
+         */
+        fieldName: function fieldName() {
+            var _this5 = this;
+
+            if (this.resourceType) {
+                return _lodash2.default.find(this.field.morphToTypes, function (type) {
+                    return type.value == _this5.resourceType;
+                }).singularLabel;
+            }
+
+            return 'Type';
         }
     }
 }; //
@@ -34071,7 +34102,7 @@ var render = function() {
   return _c(
     "label",
     {
-      staticClass: "inline-block text-80 h-9 pt-2",
+      staticClass: "inline-block text-80 pt-2 leading-tight",
       attrs: { for: _vm.labelFor }
     },
     [_vm._t("default")],
@@ -34103,15 +34134,24 @@ var render = function() {
       { staticClass: "w-1/5 px-8 py-6" },
       [
         _vm._t("default", [
-          _c("form-label", { attrs: { for: _vm.field.name } }, [
-            _vm._v(
-              "\n                " +
-                _vm._s(
-                  _vm.field.singularLabel || _vm.field.name || _vm.fieldName
-                ) +
-                "\n            "
-            )
-          ]),
+          _c(
+            "form-label",
+            {
+              class: {
+                "mb-6": _vm.field.helpText && _vm.showHelpText
+              },
+              attrs: { for: _vm.field.name }
+            },
+            [
+              _vm._v(
+                "\n                " +
+                  _vm._s(
+                    _vm.fieldName || _vm.field.singularLabel || _vm.field.name
+                  ) +
+                  "\n            "
+              )
+            ]
+          ),
           _vm._v(" "),
           _c("help-text", { attrs: { "show-help-text": _vm.showHelpText } }, [
             _vm._v(
@@ -38772,7 +38812,7 @@ var render = function() {
     [
       _c(
         "default-field",
-        { attrs: { field: _vm.field, "field-name": _vm.field.name + " Type" } },
+        { attrs: { field: _vm.field, "field-name": _vm.fieldType } },
         [
           _c(
             "select",
@@ -38809,7 +38849,7 @@ var render = function() {
                   [
                     _vm._v(
                       "\n                " +
-                        _vm._s(option.display) +
+                        _vm._s(option.singularLabel) +
                         "\n            "
                     )
                   ]
@@ -38827,7 +38867,7 @@ var render = function() {
           attrs: {
             field: _vm.field,
             "show-help-text": false,
-            "field-name": _vm.field.name
+            "field-name": _vm.fieldName
           }
         },
         [
@@ -38938,7 +38978,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(_vm.__("Choose")) +
                               " " +
-                              _vm._s(_vm.field.name)
+                              _vm._s(_vm.fieldName)
                           )
                         ]
                       ),

@@ -357,6 +357,7 @@ class MorphTo extends Field
             return [
                 'type' => is_numeric($key) ? $display : $key,
                 'display' => (is_string($display) && is_numeric($key)) ? $display::singularLabel() : $display,
+                'singularLabel' => $key::singularLabel(),
                 'value' => is_numeric($key) ? $display::uriKey() : $key::uriKey(),
             ];
         })->values()->all();
