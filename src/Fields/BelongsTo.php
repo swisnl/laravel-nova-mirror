@@ -291,11 +291,11 @@ class BelongsTo extends Field
     {
         return array_merge([
             'resourceName' => $this->resourceName,
+            'label' => forward_static_call([$this->resourceClass, 'label']),
+            'singularLabel' => forward_static_call([$this->resourceClass, 'singularLabel']),
             'belongsToRelationship' => $this->belongsToRelationship,
             'belongsToId' => $this->belongsToId,
             'searchable' => $this->searchable,
-            'singularLabel' => $this->resourceClass::singularLabel(),
-            'label' => $this->resourceClass::label(),
         ], $this->meta);
     }
 }
