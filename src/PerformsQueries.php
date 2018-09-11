@@ -58,11 +58,11 @@ trait PerformsQueries
      */
     protected static function applySearch($query, $search)
     {
-        if (is_numeric($search) && in_array($query->getModel()->getKeyType(), ['int', 'integer'])) {
-            $query->whereKey($search);
-        }
+        return $query->where(function ($query) use ($search) {
+            if (is_numeric($search) && in_array($query->getModel()->getKeyType(), ['int', 'integer'])) {
+                $query->orWhere($query->getModel()->getQualifiedKeyName(), $search);
+            }
 
-        return $query->orWhere(function ($query) use ($search) {
             $model = $query->getModel();
 
             foreach (static::searchableColumns() as $column) {
