@@ -185,6 +185,10 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
      */
     protected function resolveAttribute($resource, $attribute)
     {
+        if (Str::contains($attribute, '->')) {
+            return object_get($resource, str_replace('->', '.', $attribute));
+        }
+
         return data_get($resource, $attribute);
     }
 
