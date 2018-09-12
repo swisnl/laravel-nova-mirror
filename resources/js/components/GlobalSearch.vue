@@ -17,7 +17,7 @@
                     @keydown.up.prevent="move(-1)"
                     v-model="searchTerm"
                     type="search"
-                    placeholder="Search"
+                    :placeholder="__('Search')"
                     class="pl-search form-control form-input form-input-bordered w-full"
                 />
             </div>
