@@ -36,7 +36,7 @@
                 class="bg-white overflow-hidden absolute rounded-lg shadow-lg w-full mt-2 max-h-search overflow-y-auto"
             >
                 <h3 class="text-xs uppercase tracking-wide text-80 bg-40 py-4 px-3">
-                    No Results Found.
+                    {{ __('No Results Found.') }}
                 </h3>
             </div>
 
