@@ -62,10 +62,10 @@ class NovaUpdateService
         $this->repository = $repository;
     }
 
-    public function createRelease($version, string $releaseTag)
+    public function createRelease($version, string $releaseTag, string $message)
     {
         $this->repository->run('add', ['.']);
-        $this->repository->run('commit', ['-m "Nova release '.$version.'"']);
+        $this->repository->run('commit', ['-m Nova release '.  $version . '', '-m ' . $message]);
         $this->repository->run('tag', ['v'.$version]);
         $this->repository->run('tag', [$releaseTag]);
     }
