@@ -24,7 +24,7 @@ class NovaFilesHelper
             $releaseFiles = $filesystem->files($directory);
 
             if ($i++ > 5) {
-                throw new \RuntimeException('WAiting for files timed out.');
+                throw new \RuntimeException('Waiting for release file in `downloaded-releases` timed out.');
             }
         }
 
@@ -38,7 +38,7 @@ class NovaFilesHelper
             clearstatcache(false, $zipPath);
 
             if ($i++ > 5) {
-                throw new \RuntimeException('WAiting for files timed out.');
+                throw new \RuntimeException('Waiting for existence of zip-file timed out.');
             }
         }
 
@@ -48,7 +48,7 @@ class NovaFilesHelper
             clearstatcache(false, $zipPath);
 
             if ($i++ > 5) {
-                throw new \RuntimeException('WAiting for files timed out.');
+                throw new \RuntimeException('Waiting for end of writes timed out.');
             }
         }
 
