@@ -22,9 +22,9 @@ class Panel extends MergeValue implements JsonSerializable
     public $data;
 
     /**
-     * Indicates whether the detail toolbar should be visible on this panel
+     * Indicates whether the detail toolbar should be visible on this panel.
      *
-     * @var boolean
+     * @var bool
      */
     public $showToolbar = false;
 
@@ -67,7 +67,7 @@ class Panel extends MergeValue implements JsonSerializable
     }
 
     /**
-     * Display the toolbar when showing this panel
+     * Display the toolbar when showing this panel.
      *
      * @return $this
      */
