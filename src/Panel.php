@@ -22,6 +22,13 @@ class Panel extends MergeValue implements JsonSerializable
     public $data;
 
     /**
+     * Indicates whether the detail toolbar should be visible on this panel.
+     *
+     * @var bool
+     */
+    public $showToolbar = false;
+
+    /**
      * Create a new panel instance.
      *
      * @param  string  $name
@@ -60,6 +67,18 @@ class Panel extends MergeValue implements JsonSerializable
     }
 
     /**
+     * Display the toolbar when showing this panel.
+     *
+     * @return $this
+     */
+    public function withToolbar()
+    {
+        $this->showToolbar = true;
+
+        return $this;
+    }
+
+    /**
      * Prepare the panel for JSON serialization.
      *
      * @return array
@@ -69,6 +88,7 @@ class Panel extends MergeValue implements JsonSerializable
         return [
             'component' => 'panel',
             'name' => $this->name,
+            'showToolbar' => $this->showToolbar,
         ];
     }
 }

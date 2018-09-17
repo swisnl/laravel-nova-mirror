@@ -239,7 +239,7 @@ trait ResolvesFields
         $default = Panel::defaultNameFor($request->newResource());
 
         return $panels->when($panels->where('name', $default)->isEmpty(), function ($panels) use ($default) {
-            return $panels->push(new Panel($default));
+            return $panels->push((new Panel($default))->withToolbar());
         })->all();
     }
 
