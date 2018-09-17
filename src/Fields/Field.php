@@ -439,7 +439,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
      */
     public function computed()
     {
-        return (is_callable($this->attribute) && !is_string($this->attribute)) ||
+        return (is_callable($this->attribute) && ! is_string($this->attribute)) ||
                $this->attribute == 'ComputedField';
     }
 
