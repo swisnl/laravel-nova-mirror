@@ -217,6 +217,38 @@ class Nova
     }
 
     /**
+     * Get the available resource groups for the given request
+     *
+     * @param  Request $request
+     * @return array
+     */
+    public static function groups(Request $request)
+    {
+        return collect(static::availableResources($request))
+            ->map(function ($item, $key) {
+                return $item::$group;
+            })
+            ->unique()
+            ->values();
+    }
+
+    /**
+     * Get the grouped resources available for the given request
+     *
+     * @param  Request $request
+     * @return array
+     */
+    public static function groupedResources(Request $request)
+    {
+        return collect(static::availableResources($request))
+            ->groupBy(function ($item, $key) {
+                return $item::$group;
+            })
+            ->sortKeys()
+            ->all();
+    }
+
+    /**
      * Register all of the resource classes in the given directory.
      *
      * @param  string  $directory
