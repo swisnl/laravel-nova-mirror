@@ -217,7 +217,7 @@ class Nova
     }
 
     /**
-     * Get the available resource groups for the given request
+     * Get the available resource groups for the given request.
      *
      * @param  Request $request
      * @return array
@@ -233,7 +233,7 @@ class Nova
     }
 
     /**
-     * Get the grouped resources available for the given request
+     * Get the grouped resources available for the given request.
      *
      * @param  Request $request
      * @return array
