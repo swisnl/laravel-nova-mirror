@@ -139,6 +139,9 @@ export default {
 
                 // Reset the form by refetching the fields
                 this.getFields()
+
+                this.validationErrors = new Errors()
+
                 this.updateLastRetrievedAtTimestamp()
             } catch (error) {
                 if (error.response.status == 422) {

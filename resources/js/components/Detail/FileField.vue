@@ -28,7 +28,7 @@
             >
                 <a
                     v-if="field.downloadable"
-                    :dusk="field.attribute + '-download-link'""
+                    :dusk="field.attribute + '-download-link'"
                     @keydown.enter.prevent="download"
                     @click.prevent="download"
                     tabindex="0"

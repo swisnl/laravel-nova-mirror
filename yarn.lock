@@ -5046,9 +5046,9 @@ laravel-mix@^1.0:
     webpack-notifier "^1.5.0"
     yargs "^8.0.1"
 
-laravel-nova@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/laravel-nova/-/laravel-nova-1.0.3.tgz#9bd1af8b2eb36bd82fcd98cbaec610782ffd6ace"
+laravel-nova@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/laravel-nova/-/laravel-nova-1.0.4.tgz#c9945031d3545aa933352b48363a574f068bb861"
   dependencies:
     form-backend-validation "^2.3.3"
     inflector-js "^1.0.1"

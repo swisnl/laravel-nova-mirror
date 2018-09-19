@@ -117,7 +117,7 @@ abstract class Trend extends RangedMetric
                         ? $model->getModel()->getQualifiedKeyName()
                         : (new $model)->getQualifiedKeyName();
 
-        return $this->aggregate($request, $model, $unit, 'count', $keyName);
+        return $this->aggregate($request, $model, $unit, 'count', $keyName, $column);
     }
 
     /**
