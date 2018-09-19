@@ -1,6 +1,7 @@
 <template>
     <trix-editor
         ref="theEditor"
+        @keydown.stop
         @trix-change="handleChange"
         @trix-initialize="initialize"
         @trix-attachment-add="handleAddFile"
