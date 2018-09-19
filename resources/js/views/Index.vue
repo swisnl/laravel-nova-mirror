@@ -1,5 +1,11 @@
 <template>
     <loading-view :loading="initialLoading" :dusk="resourceName + '-index-component'">
+        <custom-index-header
+            v-if="!viaResource"
+            class="mb-3"
+            :resource-name="resourceName"
+        />
+
         <div v-if="shouldShowCards">
             <cards
                 v-if="smallCards.length > 0"
@@ -18,9 +24,9 @@
 
         <heading v-if="resourceResponse" class="mb-3">{{ resourceResponse.label }}</heading>
 
-        <div class="flex justify-between">
+        <div class="flex">
             <!-- Search -->
-            <div v-if="resourceInformation.searchable && ! viaHasOne" class="relative h-9 mb-6">
+            <div v-if="resourceInformation.searchable && ! viaHasOne" class="relative h-9 mb-6 flex-no-shrink">
                 <icon type="search" class="absolute search-icon-center ml-3 text-70" />
 
                 <input
@@ -35,18 +41,25 @@
                 >
             </div>
 
-            <!-- Create / Attach Button -->
-            <create-resource-button
-                :singular-name="singularName"
-                :resource-name="resourceName"
-                :via-resource="viaResource"
-                :via-resource-id="viaResourceId"
-                :via-relationship="viaRelationship"
-                :relationship-type="relationshipType"
-                :authorized-to-create="authorizedToCreate && ! resourceIsFull"
-                :authorized-to-relate="authorizedToRelate"
-                class="mb-6"
-            />
+            <div class="ml-3 w-full flex items-center mb-6">
+                <custom-index-toolbar
+                    v-if="!viaResource"
+                    :resource-name="resourceName"
+                />
+
+                <!-- Create / Attach Button -->
+                <create-resource-button
+                    :singular-name="singularName"
+                    :resource-name="resourceName"
+                    :via-resource="viaResource"
+                    :via-resource-id="viaResourceId"
+                    :via-relationship="viaRelationship"
+                    :relationship-type="relationshipType"
+                    :authorized-to-create="authorizedToCreate && ! resourceIsFull"
+                    :authorized-to-relate="authorizedToRelate"
+                    class="flex-no-shrink ml-3"
+                />
+            </div>
         </div>
 
         <loading-card :loading="loading" :class="{ 'overflow-hidden border border-50': !shouldShowToolbar }">
