@@ -13,7 +13,6 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\ResourceToolElement;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Tests\Fixtures\ColumnFilter;
 
 class UserResource extends Resource
 {
