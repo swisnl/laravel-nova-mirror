@@ -150,7 +150,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
         }
 
         $value = Str::contains($attribute, '->')
-            ? object_get($resource, str_replace('->', '.', $attribute), '___missing')
+            ? data_get($resource, str_replace('->', '.', $attribute), '___missing')
             : data_get($resource, $attribute, '___missing');
 
         if (is_callable($this->displayCallback) && $value !== '___missing') {
@@ -181,7 +181,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
         }
 
         $value = Str::contains($attribute, '->')
-            ? object_get($resource, str_replace('->', '.', $attribute), '___missing')
+            ? data_get($resource, str_replace('->', '.', $attribute), '___missing')
             : data_get($resource, $attribute, '___missing');
 
         if (is_callable($this->resolveCallback) && $value !== '___missing') {
@@ -201,7 +201,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     protected function resolveAttribute($resource, $attribute)
     {
         if (Str::contains($attribute, '->')) {
-            return object_get($resource, str_replace('->', '.', $attribute));
+            return data_get($resource, str_replace('->', '.', $attribute));
         }
 
         return data_get($resource, $attribute);
