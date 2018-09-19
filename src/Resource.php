@@ -111,16 +111,6 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     }
 
     /**
-     * Return the logical group associated with the resource.
-     *
-     * @return string
-     */
-    public static function group()
-    {
-        return static::$group;
-    }
-
-    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -136,6 +126,16 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     public function model()
     {
         return $this->resource;
+    }
+
+    /**
+     * Get the logical group associated with the resource.
+     *
+     * @return string
+     */
+    public static function group()
+    {
+        return static::$group;
     }
 
     /**

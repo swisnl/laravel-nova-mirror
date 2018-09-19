@@ -225,11 +225,9 @@ class Nova
     public static function groups(Request $request)
     {
         return collect(static::availableResources($request))
-            ->map(function ($item, $key) {
-                return $item::$group;
-            })
-            ->unique()
-            ->values();
+                    ->map(function ($item, $key) {
+                        return $item::group();
+                    })->unique()->values();
     }
 
     /**
@@ -241,11 +239,9 @@ class Nova
     public static function groupedResources(Request $request)
     {
         return collect(static::availableResources($request))
-            ->groupBy(function ($item, $key) {
-                return $item::$group;
-            })
-            ->sortKeys()
-            ->all();
+                    ->groupBy(function ($item, $key) {
+                        return $item::group();
+                    })->sortKeys()->all();
     }
 
     /**
