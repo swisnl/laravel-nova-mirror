@@ -149,9 +149,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
             $this->resolve($resource, $attribute);
         }
 
-        $value = Str::contains($attribute, '->')
-            ? data_get($resource, str_replace('->', '.', $attribute), '___missing')
-            : data_get($resource, $attribute, '___missing');
+        $value = data_get($resource, str_replace('->', '.', $attribute), '___missing');
 
         if (is_callable($this->displayCallback) && $value !== '___missing') {
             $this->value = call_user_func(
@@ -180,9 +178,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
             $this->value = $this->resolveAttribute($resource, $attribute);
         }
 
-        $value = Str::contains($attribute, '->')
-            ? data_get($resource, str_replace('->', '.', $attribute), '___missing')
-            : data_get($resource, $attribute, '___missing');
+        $value = data_get($resource, str_replace('->', '.', $attribute), '___missing');
 
         if (is_callable($this->resolveCallback) && $value !== '___missing') {
             $this->value = call_user_func(
@@ -200,11 +196,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
      */
     protected function resolveAttribute($resource, $attribute)
     {
-        if (Str::contains($attribute, '->')) {
-            return data_get($resource, str_replace('->', '.', $attribute));
-        }
-
-        return data_get($resource, $attribute);
+        return data_get($resource, str_replace('->', '.', $attribute));
     }
 
     /**
