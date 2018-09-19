@@ -411,7 +411,7 @@ class Nova
         return function ($command) {
             return [
                 $command->ask('Name'),
-                $command->ask('Username / Email Address'),
+                $command->ask('Email Address'),
                 $command->secret('Password'),
             ];
         };
