@@ -86,7 +86,7 @@ class InstallCommand extends Command
     protected function setAppNamespaceOn($file, $namespace)
     {
         file_put_contents($file, str_replace(
-            "App\\",
+            'App\\',
             $namespace,
             file_get_contents($file)
         ));
