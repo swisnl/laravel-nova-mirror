@@ -18,13 +18,13 @@
                     @continue
                 @endif
 
-                <li class="leading-wide mb-4 text-sm">
+                <li class="leading-tight mb-4 ml-8 text-sm">
                     <router-link :to="{
                         name: 'index',
                         params: {
                             resourceName: '{{ $resource::uriKey() }}'
                         }
-                    }" class="text-white ml-8 no-underline dim">
+                    }" class="text-white text-justify no-underline dim">
                         {{ $resource::label() }}
                     </router-link>
                 </li>
