@@ -152,9 +152,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
         $value = data_get($resource, str_replace('->', '.', $attribute), '___missing');
 
         if (is_callable($this->displayCallback) && $value !== '___missing') {
-            $this->value = call_user_func(
-                $this->displayCallback, data_get($resource, $attribute)
-            );
+            $this->value = call_user_func($this->displayCallback, $value);
         }
     }
 
@@ -181,9 +179,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
         $value = data_get($resource, str_replace('->', '.', $attribute), '___missing');
 
         if (is_callable($this->resolveCallback) && $value !== '___missing') {
-            $this->value = call_user_func(
-                $this->resolveCallback, data_get($resource, $attribute)
-            );
+            $this->value = call_user_func($this->resolveCallback, $value);
         }
     }
 
