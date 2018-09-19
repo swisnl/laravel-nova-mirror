@@ -3,7 +3,6 @@
 namespace Laravel\Nova\Query;
 
 use Illuminate\Http\Request;
-use Illuminate\Container\Container;
 
 class ApplyFilter
 {
