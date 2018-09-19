@@ -158,6 +158,7 @@ class NovaServiceProvider extends ServiceProvider
     {
         $this->commands([
             Console\ActionCommand::class,
+            Console\AssetCommand::class,
             Console\BaseResourceCommand::class,
             Console\CardCommand::class,
             Console\FilterCommand::class,
