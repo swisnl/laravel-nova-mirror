@@ -21,6 +21,13 @@ class Code extends Field
     public $json = false;
 
     /**
+     * The JSON encoding options.
+     *
+     * @var int|null
+     */
+    public $jsonOptions;
+
+    /**
      * Indicates if the element should be shown on the index view.
      *
      * @var bool
@@ -40,8 +47,8 @@ class Code extends Field
 
         if ($this->json) {
             return is_array($value)
-                    ? json_encode($value, JSON_PRETTY_PRINT)
-                    : json_encode(json_decode($value), JSON_PRETTY_PRINT);
+                    ? json_encode($value, $this->jsonOptions ?? JSON_PRETTY_PRINT)
+                    : json_encode(json_decode($value), $this->jsonOptions ?? JSON_PRETTY_PRINT);
         }
 
         return $value;
@@ -68,11 +75,14 @@ class Code extends Field
     /**
      * Indicate that the code field is used to manipulate JSON.
      *
+     * @param  int|null  $options
      * @return $this
      */
-    public function json()
+    public function json($options = null)
     {
         $this->json = true;
+
+        $this->jsonOptions = $options ?? JSON_PRETTY_PRINT;
 
         return $this->options(['mode' => 'application/json']);
     }
