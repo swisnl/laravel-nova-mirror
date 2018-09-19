@@ -115,7 +115,7 @@ module.exports = {
 
     borderColors: global.Object.assign(
         {
-            default: colors['grey-light'],
+            default: colors['black'],
         },
         colors
     ),

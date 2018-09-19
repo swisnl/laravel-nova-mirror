@@ -110,7 +110,7 @@ class Nova
      */
     public static function version()
     {
-        return '1.0.0';
+        return '1.0.18';
     }
 
     /**
@@ -217,6 +217,34 @@ class Nova
     }
 
     /**
+     * Get the available resource groups for the given request.
+     *
+     * @param  Request $request
+     * @return array
+     */
+    public static function groups(Request $request)
+    {
+        return collect(static::availableResources($request))
+                    ->map(function ($item, $key) {
+                        return $item::group();
+                    })->unique()->values();
+    }
+
+    /**
+     * Get the grouped resources available for the given request.
+     *
+     * @param  Request $request
+     * @return array
+     */
+    public static function groupedResources(Request $request)
+    {
+        return collect(static::availableResources($request))
+                    ->groupBy(function ($item, $key) {
+                        return $item::group();
+                    })->sortKeys()->all();
+    }
+
+    /**
      * Register all of the resource classes in the given directory.
      *
      * @param  string  $directory
@@ -263,7 +291,7 @@ class Nova
      * Get a new resource instance with the given model instance.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return \Laravel\Nova\Resources
+     * @return \Laravel\Nova\Resource
      */
     public static function newResourceFromModel($model)
     {

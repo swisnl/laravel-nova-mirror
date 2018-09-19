@@ -24,11 +24,11 @@
                 <div class="px-3" v-if="shouldShowCheckBoxes">
                     <!-- Select All -->
                     <dropdown width="250" active-class="" class="h-9 flex items-center" dusk="select-all-dropdown">
-                        <div slot="default" class="flex items-center">
+                        <dropdown-trigger slot-scope="{toggle}" :handle-click="toggle">
                             <fake-checkbox :checked="selectAllChecked" />
-                        </div>
+                        </dropdown-trigger>
 
-                        <div slot="menu">
+                        <dropdown-menu slot="menu" direction="ltr" width="250">
                             <div class="p-4">
                                 <ul class="list-reset">
                                     <li class="flex items-center">
@@ -40,7 +40,7 @@
                                             <checkbox :checked="selectAllChecked" />
 
                                             <span class="ml-2">
-                                                Select All
+                                                {{__('Select All')}}
                                             </span>
                                         </label>
                                     </li>
@@ -57,14 +57,14 @@
                                             />
 
                                             <span class="ml-2">
-                                                Select All Matching
+                                                {{__('Select All Matching')}}
                                                 <span>({{ allMatchingResourceCount }})</span>
                                             </span>
                                         </label>
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </dropdown-menu>
                     </dropdown>
                 </div>
 
@@ -91,10 +91,17 @@
                         @actionExecuted="getResources"
                     />
 
-                    <dropdown direction="rtl" width="290" class="dropdown-alt" :dark="true" dusk="filter-selector">
-                        <icon type="filter" class="text-80" />
+                    <dropdown
+                        v-if="filters.length > 0 || softDeletes || !viaResource"
+                        data-testid="filter-selector"
+                        dusk="filter-selector"
+                        class="bg-30 hover:bg-40 rounded"
+                    >
+                        <dropdown-trigger slot-scope="{toggle}" :handle-click="toggle" class="px-3">
+                            <icon type="filter" class="text-80" />
+                        </dropdown-trigger>
 
-                        <div slot="menu">
+                        <dropdown-menu slot="menu" width="290" direction="rtl" :dark="true">
                             <!-- Filters -->
                             <filter-selector
                                 :filters="filters"
@@ -106,7 +113,7 @@
                             <!-- Per Page -->
                             <filter-select v-if="!viaResource">
                                 <h3 slot="default" class="text-sm uppercase tracking-wide text-80 bg-30 p-3">
-                                    Per Page:
+                                    {{__('Per Page:')}}
                                 </h3>
 
                                 <select slot="select"
@@ -119,7 +126,7 @@
                                     <option value="100">100</option>
                                 </select>
                             </filter-select>
-                        </div>
+                        </dropdown-menu>
                     </dropdown>
 
                     <delete-menu
@@ -152,12 +159,14 @@
                 </div>
             </div>
 
+
+
             <div v-if="!resources.length" class="flex justify-center items-center px-6 py-8">
                 <div class="text-center">
                     <svg class="mb-3" xmlns="http://www.w3.org/2000/svg" width="65" height="51" viewBox="0 0 65 51"><g id="Page-1" fill="none" fill-rule="evenodd"><g id="05-blank-state" fill="#A8B9C5" fill-rule="nonzero" transform="translate(-779 -695)"><path id="Combined-Shape" d="M835 735h2c.552285 0 1 .447715 1 1s-.447715 1-1 1h-2v2c0 .552285-.447715 1-1 1s-1-.447715-1-1v-2h-2c-.552285 0-1-.447715-1-1s.447715-1 1-1h2v-2c0-.552285.447715-1 1-1s1 .447715 1 1v2zm-5.364125-8H817v8h7.049375c.350333-3.528515 2.534789-6.517471 5.5865-8zm-5.5865 10H785c-3.313708 0-6-2.686292-6-6v-30c0-3.313708 2.686292-6 6-6h44c3.313708 0 6 2.686292 6 6v25.049375c5.053323.501725 9 4.765277 9 9.950625 0 5.522847-4.477153 10-10 10-5.185348 0-9.4489-3.946677-9.950625-9zM799 725h16v-8h-16v8zm0 2v8h16v-8h-16zm34-2v-8h-16v8h16zm-52 0h16v-8h-16v8zm0 2v4c0 2.209139 1.790861 4 4 4h12v-8h-16zm18-12h16v-8h-16v8zm34 0v-8h-16v8h16zm-52 0h16v-8h-16v8zm52-10v-4c0-2.209139-1.790861-4-4-4h-44c-2.209139 0-4 1.790861-4 4v4h52zm1 39c4.418278 0 8-3.581722 8-8s-3.581722-8-8-8-8 3.581722-8 8 3.581722 8 8 8z"/></g></g></svg>
 
                     <h3 class="text-base text-80 font-normal mb-6">
-                        No {{resourceInformation.label.toLowerCase()}} matched the given criteria.
+                        {{__('No :resource matched the given criteria.', {resource: resourceInformation.label.toLowerCase()})}}
                     </h3>
 
                     <create-resource-button
@@ -175,25 +184,27 @@
             </div>
 
             <!-- Resource Table -->
-            <resource-table
-                :authorized-to-relate="authorizedToRelate"
-                :resource-name="resourceName"
-                :resources="resources"
-                :singular-name="singularName"
-                :selected-resources="selectedResources"
-                :selected-resource-ids="selectedResourceIds"
-                :actions-are-available="allActions.length > 0"
-                :should-show-checkboxes="shouldShowCheckBoxes"
-                :via-resource="viaResource"
-                :via-resource-id="viaResourceId"
-                :via-relationship="viaRelationship"
-                :relationship-type="relationshipType"
-                :update-selection-status="updateSelectionStatus"
-                @order="orderByField"
-                @delete="deleteResources"
-                @restore="restoreResources"
-                ref="resourceTable"
-            />
+            <div class="overflow-hidden overflow-x-auto relative">
+                <resource-table
+                    :authorized-to-relate="authorizedToRelate"
+                    :resource-name="resourceName"
+                    :resources="resources"
+                    :singular-name="singularName"
+                    :selected-resources="selectedResources"
+                    :selected-resource-ids="selectedResourceIds"
+                    :actions-are-available="allActions.length > 0"
+                    :should-show-checkboxes="shouldShowCheckBoxes"
+                    :via-resource="viaResource"
+                    :via-resource-id="viaResourceId"
+                    :via-relationship="viaRelationship"
+                    :relationship-type="relationshipType"
+                    :update-selection-status="updateSelectionStatus"
+                    @order="orderByField"
+                    @delete="deleteResources"
+                    @restore="restoreResources"
+                    ref="resourceTable"
+                />
+            </div>
 
             <!-- Pagination -->
             <pagination-links
@@ -208,7 +219,7 @@
 </template>
 
 <script>
-import { Errors, Capitalize, Inflector, Minimum } from 'laravel-nova'
+import { Errors, Minimum } from 'laravel-nova'
 
 import {
     Deletable,
@@ -692,7 +703,7 @@ export default {
          * Get the singular name for the resource
          */
         singularName() {
-            return Capitalize(Inflector.singularize(this.resourceName))
+            return this.resourceInformation.singularLabel
         },
 
         /**

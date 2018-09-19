@@ -9,7 +9,8 @@
         </div>
         <div class="w-3/4 py-4">
             <slot name="value">
-                <p v-if="field.value" class="text-90">{{ field.value }}</p>
+                <p v-if="fieldValue && !shouldDisplayAsHtml" class="text-90">{{ fieldValue }}</p>
+                <div v-else-if="fieldValue && shouldDisplayAsHtml" v-html="field.value"></div>
                 <p v-else>&mdash;</p>
             </slot>
         </div>
@@ -31,6 +32,22 @@ export default {
     computed: {
         label() {
             return this.fieldName || this.field.name
+        },
+
+        fieldValue() {
+            if (
+                this.field.value === '' ||
+                this.field.value === null ||
+                this.field.value === undefined
+            ) {
+                return false
+            }
+
+            return String(this.field.value)
+        },
+
+        shouldDisplayAsHtml() {
+            return this.field.asHtml
         },
     },
 }

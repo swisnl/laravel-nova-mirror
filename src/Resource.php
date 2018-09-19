@@ -8,7 +8,6 @@ use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Scout\Searchable;
-use Laravel\Nova\Filters\Filter;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Contracts\Routing\UrlRoutable;
@@ -38,6 +37,13 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     public $resource;
 
     /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'Other';
+
+    /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
@@ -57,6 +63,13 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
      * @var array
      */
     public static $search = [];
+
+    /**
+     * Indicates if the resource should be displayed in the sidebar.
+     *
+     * @var bool
+     */
+    public static $displayInNavigation = true;
 
     /**
      * Indicates if the resoruce should be globally searchable.
@@ -113,6 +126,16 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     public function model()
     {
         return $this->resource;
+    }
+
+    /**
+     * Get the logical group associated with the resource.
+     *
+     * @return string
+     */
+    public static function group()
+    {
+        return static::$group;
     }
 
     /**
@@ -175,7 +198,7 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     }
 
     /**
-     * Get the displayble label of the resource.
+     * Get the displayable label of the resource.
      *
      * @return string
      */
@@ -185,7 +208,7 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     }
 
     /**
-     * Get the displayble singular label of the resource.
+     * Get the displayable singular label of the resource.
      *
      * @return string
      */

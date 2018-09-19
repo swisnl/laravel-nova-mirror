@@ -4,7 +4,6 @@ namespace Laravel\Nova\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AssociatableController extends Controller
 {

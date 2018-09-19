@@ -1,6 +1,6 @@
 <template>
     <div v-if="!loading">
-        <heading class="mb-3">Edit {{ singularName }}</heading>
+        <heading class="mb-3">{{__('Edit')}} {{ singularName }}</heading>
 
         <card class="overflow-hidden">
             <form v-if="fields" @submit.prevent="updateResource">
@@ -22,11 +22,11 @@
                 <!-- Update Button -->
                 <div class="bg-30 flex px-8 py-4">
                     <button type="button" dusk="update-and-continue-editing-button" @click="updateAndContinueEditing" class="ml-auto btn btn-default btn-primary mr-3">
-                        Update &amp; Continue Editing
+                        {{__('Update &amp; Continue Editing')}}
                     </button>
 
                     <button dusk="update-button" class="btn btn-default btn-primary">
-                        Update {{ singularName }}
+                        {{__('Update')}} {{ singularName }}
                     </button>
                 </div>
             </form>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { Errors, Capitalize, Inflector, InteractsWithResourceInformation } from 'laravel-nova'
+import { Errors, InteractsWithResourceInformation } from 'laravel-nova'
 
 export default {
     mixins: [InteractsWithResourceInformation],
@@ -72,14 +72,14 @@ export default {
 
             this.fields = []
 
-            const { data: fields } = await Nova.request().get(
-                `/nova-api/${this.resourceName}/${this.resourceId}/update-fields`
-            ).catch(error => {
-                if (error.response.status == 404) {
-                    this.$router.push({ name: '404' })
-                    return
-                }
-            })
+            const { data: fields } = await Nova.request()
+                .get(`/nova-api/${this.resourceName}/${this.resourceId}/update-fields`)
+                .catch(error => {
+                    if (error.response.status == 404) {
+                        this.$router.push({ name: '404' })
+                        return
+                    }
+                })
 
             this.fields = fields
 
@@ -94,7 +94,9 @@ export default {
                 const response = await this.updateRequest()
 
                 this.$toasted.show(
-                    'The ' + this.resourceInformation.singularLabel.toLowerCase() + ' was updated!',
+                    this.__('The :resource was updated!', {
+                        resource: this.resourceInformation.singularLabel.toLowerCase(),
+                    }),
                     { type: 'success' }
                 )
 
@@ -112,7 +114,9 @@ export default {
 
                 if (error.response.status == 409) {
                     this.$toasted.show(
-                        'Another user has updated this resource since this page was loaded. Please refresh the page and try again.',
+                        this.__(
+                            'Another user has updated this resource since this page was loaded. Please refresh the page and try again.'
+                        ),
                         { type: 'error' }
                     )
                 }
@@ -127,12 +131,17 @@ export default {
                 const response = await this.updateRequest()
 
                 this.$toasted.show(
-                    'The ' + this.resourceInformation.singularLabel.toLowerCase() + ' was updated!',
+                    this.__('The :resource was updated!', {
+                        resource: this.resourceInformation.singularLabel.toLowerCase(),
+                    }),
                     { type: 'success' }
                 )
 
                 // Reset the form by refetching the fields
                 this.getFields()
+
+                this.validationErrors = new Errors()
+
                 this.updateLastRetrievedAtTimestamp()
             } catch (error) {
                 if (error.response.status == 422) {
@@ -141,7 +150,9 @@ export default {
 
                 if (error.response.status == 409) {
                     this.$toasted.show(
-                        'Another user has updated this resource since this page was loaded. Please refresh the page and try again.',
+                        this.__(
+                            'Another user has updated this resource since this page was loaded. Please refresh the page and try again.'
+                        ),
                         { type: 'error' }
                     )
                 }
@@ -182,7 +193,7 @@ export default {
         },
 
         singularName() {
-            return Capitalize(Inflector.singularize(this.resourceName))
+            return this.resourceInformation.singularLabel
         },
     },
 }

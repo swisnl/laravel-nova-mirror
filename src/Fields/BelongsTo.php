@@ -2,7 +2,6 @@
 
 namespace Laravel\Nova\Fields;
 
-use Laravel\Nova\Resource;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\TrashedStatus;
@@ -153,7 +152,7 @@ class BelongsTo extends Field
         );
 
         return array_merge_recursive(parent::getRules($request), [
-            $this->attribute => ['required', new Relatable($request, $query)],
+            $this->attribute => [new Relatable($request, $query)],
         ]);
     }
 
@@ -247,6 +246,7 @@ class BelongsTo extends Field
     /**
      * Specify if the relationship should be searchable.
      *
+     * @param  bool  $value
      * @return $this
      */
     public function searchable($value = true)
@@ -291,6 +291,8 @@ class BelongsTo extends Field
     {
         return array_merge([
             'resourceName' => $this->resourceName,
+            'label' => forward_static_call([$this->resourceClass, 'label']),
+            'singularLabel' => forward_static_call([$this->resourceClass, 'singularLabel']),
             'belongsToRelationship' => $this->belongsToRelationship,
             'belongsToId' => $this->belongsToId,
             'searchable' => $this->searchable,

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <heading v-if="cards.length > 1" class="mb-6">Dashboard</heading>
+        <heading v-if="cards.length > 1" class="mb-6">{{__('Dashboard')}}</heading>
 
         <div v-if="shouldShowCards">
             <cards v-if="smallCards.length > 0" :cards="smallCards" class="mb-3"/>

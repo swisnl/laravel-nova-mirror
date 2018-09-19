@@ -1,6 +1,6 @@
 <template>
     <loading-view :loading="loading">
-        <heading class="mb-3">Attach {{ relatedResourceLabel }}</heading>
+        <heading class="mb-3">{{__('Attach')}} {{ relatedResourceLabel }}</heading>
 
         <card class="overflow-hidden">
             <form v-if="field" @submit.prevent="attachResource">
@@ -51,7 +51,7 @@
                             :data-testid="`${field.resourceName}-select`"
                             @change="selectResourceFromSelectControl"
                         >
-                            <option value="" disabled selected>Choose {{ field.name }}</option>
+                            <option value="" disabled selected>{{__('Choose')}} {{ field.name }}</option>
 
                             <option
                                 v-for="resource in availableResources"
@@ -69,7 +69,7 @@
                                 <checkbox :dusk="field.resourceName + '-with-trashed-checkbox'" :checked="withTrashed" />
 
                                 <span class="ml-2">
-                                    With Trashed
+                                    {{__('With Trashed')}}
                                 </span>
                             </label>
                         </div>
@@ -96,11 +96,11 @@
                 <!-- Attach Button -->
                 <div class="bg-30 flex px-8 py-4">
                     <button dusk="attach-and-attach-another-button" type="button" @click="attachAndAttachAnother" class="ml-auto btn btn-default btn-primary mr-3">
-                        Attach &amp; Attach Another
+                        {{__('Attach &amp; Attach Another')}}
                     </button>
 
                     <button dusk="attach-button" class="btn btn-default btn-primary">
-                        Attach {{ relatedResourceLabel }}
+                        {{__('Attach')}} {{ relatedResourceLabel }}
                     </button>
                 </div>
             </form>

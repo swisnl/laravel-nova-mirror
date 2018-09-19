@@ -29,7 +29,7 @@
                         @click="confirmRemoval"
                     >
                         <span class="class ml-2 mt-1">
-                            Delete
+                            {{__('Delete')}}
                         </span>
                     </DeleteButton>
                 </p>
@@ -56,7 +56,7 @@
                     @change="fileChange"
                 />
                 <label :for="labelFor" class="form-file-btn btn btn-default btn-primary">
-                    Choose File
+                    {{__('Choose File')}}
                 </label>
             </span>
 

@@ -2,7 +2,6 @@
 
 namespace Laravel\Nova\Console;
 
-use Laravel\Nova\Nova;
 use Illuminate\Console\Command;
 
 class PublishCommand extends Command
@@ -12,7 +11,7 @@ class PublishCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'nova:publish';
+    protected $signature = 'nova:publish {--force : Overwrite any existing files}';
 
     /**
      * The console command description.
@@ -30,6 +29,7 @@ class PublishCommand extends Command
     {
         $this->call('vendor:publish', [
             '--tag' => 'nova-config',
+            '--force' => $this->option('force'),
         ]);
 
         $this->call('vendor:publish', [
@@ -39,10 +39,14 @@ class PublishCommand extends Command
 
         $this->call('vendor:publish', [
             '--tag' => 'nova-lang',
+            '--force' => $this->option('force'),
         ]);
 
         $this->call('vendor:publish', [
             '--tag' => 'nova-views',
+            '--force' => $this->option('force'),
         ]);
+
+        $this->call('view:clear');
     }
 }

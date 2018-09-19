@@ -2,7 +2,6 @@
 
 namespace Laravel\Nova;
 
-use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\MorphTo;
 use Illuminate\Support\Collection;
@@ -33,8 +32,14 @@ trait ResolvesFields
                    ! $field->showOnIndex ||
                    ! $field->authorize($request);
         })->each(function ($field) use ($request) {
-            if ($field instanceof Resolvable) {
+            if ($field instanceof Resolvable && ! $field->pivot) {
                 $field->resolveForDisplay($this->resource);
+            }
+
+            if ($field instanceof Resolvable && $field->pivot) {
+                $accessor = $this->pivotAccessorFor($request, $request->viaResource);
+
+                $field->resolveForDisplay($this->{$accessor} ?? new Pivot);
             }
         });
     }
@@ -52,8 +57,13 @@ trait ResolvesFields
         })->when(in_array(Actionable::class, class_uses_recursive(static::newModel())), function ($fields) {
             return $fields->push(MorphMany::make('Actions', 'actions', ActionResource::class));
         })->each(function ($field) use ($request) {
-            if ($field instanceof Resolvable) {
+            if ($field instanceof Resolvable && ! $field->pivot) {
                 $field->resolveForDisplay($this->resource);
+            }
+            if ($field instanceof Resolvable && $field->pivot) {
+                $accessor = $this->pivotAccessorFor($request, $request->viaResource);
+
+                $field->resolveForDisplay($this->{$accessor} ?? new Pivot);
             }
         });
     }
@@ -73,7 +83,8 @@ trait ResolvesFields
      * Resolve the creation pivot fields for a related resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @return \Illuminate\Support\Collection
+     * @param  \Illuminate\Support\Collection  $relatedResource
+     * @return Collection
      */
     public function creationPivotFields(NovaRequest $request, $relatedResource)
     {
@@ -114,7 +125,8 @@ trait ResolvesFields
      * Resolve the update pivot fields for a related resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @return \Illuminate\Support\Collection
+     * @param  \Illuminate\Support\Collection  $relatedResource
+     * @return Collection
      */
     public function updatePivotFields(NovaRequest $request, $relatedResource)
     {
@@ -238,7 +250,7 @@ trait ResolvesFields
         $default = Panel::defaultNameFor($request->newResource());
 
         return $panels->when($panels->where('name', $default)->isEmpty(), function ($panels) use ($default) {
-            return $panels->push(new Panel($default));
+            return $panels->push((new Panel($default))->withToolbar());
         })->all();
     }
 
@@ -310,7 +322,9 @@ trait ResolvesFields
         if ($field && isset($field->fieldsCallback)) {
             return collect(array_values(
                 $this->filter(call_user_func($field->fieldsCallback, $request))
-            ));
+            ))->each(function ($field) {
+                $field->pivot = true;
+            });
         }
 
         return collect([]);

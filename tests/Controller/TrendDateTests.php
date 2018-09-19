@@ -531,6 +531,54 @@ trait TrendDateTests
     /**
      * @dataProvider trendDateProvider
      */
+    public function test_trend_sum_can_be_retrieved_by_hour($date)
+    {
+        $_SERVER['nova.postCountUnit'] = 'hour';
+
+        Chronos::setTestNow($date);
+
+        factory(Post::class, 5)->create(['word_count' => 100]);
+
+        $post = Post::find(1);
+        $post->created_at = $date;
+        $post->save();
+
+        $post = Post::find(2);
+        $post->word_count = 25000;
+        $post->created_at = Chronos::now()->subHours(4);
+        $post->save();
+
+        $post = Post::find(3);
+        $post->word_count = 25000;
+        $post->created_at = Chronos::now()->subHours(4);
+        $post->save();
+
+        $post = Post::find(4);
+        $post->word_count = 150;
+        $post->created_at = Chronos::now()->subHour(5);
+        $post->save();
+
+        $post = Post::find(5);
+        $post->word_count = 500;
+        $post->created_at = Chronos::now()->subHour(5);
+        $post->save();
+
+        $response = $this->withExceptionHandling()
+                        ->get('/nova-api/posts/metrics/post-sum-trend?range=6');
+
+        unset($_SERVER['nova.postCountUnit']);
+
+        $response->assertStatus(200);
+        $this->assertEquals(650, $response->original['value']->trend[Chronos::now()->subHours(5)->format('F j - G:00')]);
+        $this->assertEquals(50000, $response->original['value']->trend[Chronos::now()->subHours(4)->format('F j - G:00')]);
+        $this->assertEquals(100, $response->original['value']->trend[Chronos::now()->format('F j - G:00')]);
+
+        Chronos::setTestNow();
+    }
+
+    /**
+     * @dataProvider trendDateProvider
+     */
     public function test_trend_max_can_be_retrieved_by_month($date)
     {
         Chronos::setTestNow($date);
@@ -599,6 +647,7 @@ trait TrendDateTests
         return [
             [Chronos::create(2018, 12, 31)],
             [Chronos::create(2018, 12, 31, 23, 59, 59)],
+            [Chronos::create(2018, 12, 31, 13, 0, 0)],
             [Chronos::create(2018, 2, 28)],
             [Chronos::create(2018, 1, 1)],
         ];

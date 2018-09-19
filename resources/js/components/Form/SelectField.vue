@@ -2,13 +2,13 @@
     <default-field :field="field">
         <template slot="field">
             <select
-                :id="field.name"
+                :id="field.attribute"
                 v-model="value"
                 class="w-full form-control form-select"
                 :class="errorClasses"
             >
                 <option value="" selected disabled>
-                    Choose an option
+                    {{__('Choose an option')}}
                 </option>
 
                 <option

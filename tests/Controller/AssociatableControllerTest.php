@@ -4,6 +4,7 @@ namespace Laravel\Nova\Tests\Controller;
 
 use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\Fixtures\UserResource;
 
 class AssociatableControllerTest extends IntegrationTest
 {
@@ -38,6 +39,8 @@ class AssociatableControllerTest extends IntegrationTest
 
     public function test_can_retrieve_associatable_resources_via_search()
     {
+        UserResource::$search = ['id'];
+
         $user = factory(User::class, 2)->create();
 
         $response = $this->withExceptionHandling()
@@ -55,6 +58,8 @@ class AssociatableControllerTest extends IntegrationTest
 
         $this->assertTrue($response->original['softDeletes']);
         $this->assertFalse($response->original['withTrashed']);
+
+        UserResource::$search = ['id', 'name', 'email'];
     }
 
     public function test_only_the_first_matching_record_may_be_retrieved()

@@ -20,11 +20,12 @@ abstract class Value extends RangedMetric
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
      * @param  string|null  $column
+     * @param  string|null  $dateColumn
      * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function count($request, $model, $column = null)
+    public function count($request, $model, $column = null, $dateColumn = null)
     {
-        return $this->aggregate($request, $model, 'count', $column);
+        return $this->aggregate($request, $model, 'count', $column, $dateColumn);
     }
 
     /**
@@ -33,11 +34,12 @@ abstract class Value extends RangedMetric
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
      * @param  string  $column
+     * @param  string|null  $dateColumn
      * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function average($request, $model, $column)
+    public function average($request, $model, $column, $dateColumn = null)
     {
-        return $this->aggregate($request, $model, 'avg', $column);
+        return $this->aggregate($request, $model, 'avg', $column, $dateColumn);
     }
 
     /**
@@ -46,11 +48,12 @@ abstract class Value extends RangedMetric
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
      * @param  string  $column
+     * @param  string|null  $dateColumn
      * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function sum($request, $model, $column)
+    public function sum($request, $model, $column, $dateColumn = null)
     {
-        return $this->aggregate($request, $model, 'sum', $column);
+        return $this->aggregate($request, $model, 'sum', $column, $dateColumn);
     }
 
     /**
@@ -59,11 +62,12 @@ abstract class Value extends RangedMetric
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
      * @param  string  $column
+     * @param  string|null  $dateColumn
      * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function max($request, $model, $column)
+    public function max($request, $model, $column, $dateColumn = null)
     {
-        return $this->aggregate($request, $model, 'max', $column);
+        return $this->aggregate($request, $model, 'max', $column, $dateColumn);
     }
 
     /**
@@ -72,11 +76,12 @@ abstract class Value extends RangedMetric
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
      * @param  string  $column
+     * @param  string|null  $dateColumn
      * @return \Laravel\Nova\Metrics\ValueResult
      */
-    public function min($request, $model, $column)
+    public function min($request, $model, $column, $dateColumn = null)
     {
-        return $this->aggregate($request, $model, 'min', $column);
+        return $this->aggregate($request, $model, 'min', $column, $dateColumn);
     }
 
     /**
@@ -86,21 +91,22 @@ abstract class Value extends RangedMetric
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
      * @param  string  $function
      * @param  string|null  $column
+     * @param  string|null  $dateColumn
      * @return \Laravel\Nova\Metrics\ValueResult
      */
-    protected function aggregate($request, $model, $function, $column = null)
+    protected function aggregate($request, $model, $function, $column = null, $dateColumn = null)
     {
         $query = $model instanceof Builder ? $model : (new $model)->newQuery();
 
         $column = $column ?? $query->getModel()->getQualifiedKeyName();
 
-        $previousValue = number_format(with(clone $query)->whereBetween(
-            $query->getModel()->getCreatedAtColumn(), $this->previousRange($request->range)
+        $previousValue = round(with(clone $query)->whereBetween(
+            $dateColumn ?? $query->getModel()->getCreatedAtColumn(), $this->previousRange($request->range)
         )->{$function}($column), 0);
 
         return $this->result(
-            number_format(with(clone $query)->whereBetween(
-                $query->getModel()->getCreatedAtColumn(), $this->currentRange($request->range)
+            round(with(clone $query)->whereBetween(
+                $dateColumn ?? $query->getModel()->getCreatedAtColumn(), $this->currentRange($request->range)
             )->{$function}($column), 0)
         )->previous($previousValue);
     }

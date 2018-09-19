@@ -45,16 +45,48 @@ class NovaApplicationServiceProvider extends ServiceProvider
      */
     protected function authorization()
     {
-        Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
-        });
+        $this->gate();
 
         Nova::auth(function ($request) {
             return app()->environment('local') ||
                    Gate::check('viewNova', [$request->user()]);
         });
+    }
+
+    /**
+     * Register the Nova gate.
+     *
+     * This gate determines who can access Nova in non-local environments.
+     *
+     * @return void
+     */
+    protected function gate()
+    {
+        Gate::define('viewNova', function ($user) {
+            return in_array($user->email, [
+                //
+            ]);
+        });
+    }
+
+    /**
+     * Get the cards that should be displayed on the Nova dashboard.
+     *
+     * @return array
+     */
+    protected function cards()
+    {
+        return [];
+    }
+
+    /**
+     * Get the tools that should be listed in the Nova sidebar.
+     *
+     * @return array
+     */
+    public function tools()
+    {
+        return [];
     }
 
     /**

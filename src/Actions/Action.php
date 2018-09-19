@@ -5,7 +5,6 @@ namespace Laravel\Nova\Actions;
 use Closure;
 use JsonSerializable;
 use Laravel\Nova\Nova;
-use Laravel\Nova\Resource;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\ProxiesCanSeeToGate;
@@ -148,6 +147,7 @@ class Action implements JsonSerializable
      *
      * @param  \Laravel\Nova\Http\Requests\ActionRequest  $request
      * @return mixed
+     * @throws MissingActionHandlerException
      */
     public function handleRequest(ActionRequest $request)
     {

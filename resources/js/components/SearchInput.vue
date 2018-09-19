@@ -22,7 +22,7 @@
                 />
 
                 <slot name="default">
-                    <div class="text-70">Click to choose</div>
+                    <div class="text-70">{{__('Click to choose')}}</div>
                 </slot>
             </div>
 

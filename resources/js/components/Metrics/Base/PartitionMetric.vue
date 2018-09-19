@@ -2,10 +2,10 @@
     <loading-card :loading="loading" class="px-6 py-4">
         <h3 class="flex mb-3 text-base text-80 font-bold">
             {{ title }}
-            <span class="ml-auto font-semibold text-70 text-sm">({{ formattedTotal}} total)</span>
+            <span class="ml-auto font-semibold text-70 text-sm">({{ formattedTotal}} {{__('total')}})</span>
         </h3>
 
-        <div class="overflow-hidden overflow-y-scroll max-h-90px">
+        <div class="overflow-hidden overflow-y-auto max-h-90px">
             <ul class="list-reset">
                 <li v-for="item in formattedItems" class="text-xs text-80 leading-normal">
                     <span class="inline-block rounded-full w-2 h-2 mr-2" :style="{

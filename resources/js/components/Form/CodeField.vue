@@ -4,6 +4,10 @@
             <form-label>
                 {{ field.name }}
             </form-label>
+
+            <help-text>
+                {{ field.helpText }}
+            </help-text>
         </div>
 
         <div class="w-4/5 px-8 py-6">

@@ -8,7 +8,7 @@
                 v-model="selectedActionKey"
                 class="form-control form-select mr-2"
             >
-                <option value="" disabled selected>Select Action</option>
+                <option value="" disabled selected>{{__('Select Action')}}</option>
 
                 <optgroup
                     v-if="actions.length > 0"
@@ -157,7 +157,7 @@ export default {
             this.working = true
 
             if (this.selectedResources.length == 0) {
-                alert('Please select a resource to perform this action on.')
+                alert(this.__('Please select a resource to perform this action on.'))
                 return
             }
 
@@ -218,7 +218,7 @@ export default {
                 window.location = response.redirect
             } else {
                 this.$emit('actionExecuted')
-                this.$toasted.show('The action ran successfully!', { type: 'success' })
+                this.$toasted.show(this.__('The action ran successfully!'), { type: 'success' })
             }
         },
     },

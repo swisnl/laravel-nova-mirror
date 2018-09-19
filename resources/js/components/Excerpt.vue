@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div v-if="expanded" class="markdown" v-html="content" />
+    <div v-if="hasContent">
+        <div v-if="expanded" class="markdown leading-normal" v-html="content" />
 
         <a
             @click="toggle"
@@ -10,6 +10,9 @@
         >
             {{ showHideLabel }}
         </a>
+    </div>
+    <div v-else>
+        &mdash;
     </div>
 </template>
 
@@ -30,8 +33,12 @@ export default {
     },
 
     computed: {
+        hasContent() {
+            return this.content !== '' && this.content !== null
+        },
+
         showHideLabel() {
-            return !this.expanded ? 'Show Content' : 'Hide Content'
+            return !this.expanded ? this.__('Show Content') : this.__('Hide Content')
         },
     },
 }

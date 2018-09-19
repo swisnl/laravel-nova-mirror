@@ -47,7 +47,7 @@ class NovaServiceProvider extends ServiceProvider
         ], 'nova-config');
 
         $this->publishes([
-            __DIR__.'/../public' => public_path('nova-assets'),
+            __DIR__.'/../public' => public_path('vendor/nova'),
         ], 'nova-assets');
 
         $this->publishes([
@@ -72,6 +72,7 @@ class NovaServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'nova');
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'nova');
+        $this->loadJsonTranslationsFrom(resource_path('lang/vendor/nova'));
 
         if (Nova::runsMigrations()) {
             $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
@@ -101,6 +102,7 @@ class NovaServiceProvider extends ServiceProvider
     {
         return [
             'namespace' => 'Laravel\Nova\Http\Controllers',
+            'domain' => config('nova.domain', null),
             'as' => 'nova.api.',
             'prefix' => 'nova-api',
             'middleware' => 'nova',
@@ -141,6 +143,7 @@ class NovaServiceProvider extends ServiceProvider
         Nova::serving(function (ServingNova $event) {
             Nova::provideToScript([
                 'timezone' => config('app.timezone', 'UTC'),
+                'translations' => $this->getTranslations(),
                 'userTimezone' => Nova::resolveUserTimezone($event->request),
             ]);
         });
@@ -165,10 +168,27 @@ class NovaServiceProvider extends ServiceProvider
             Console\PublishCommand::class,
             Console\ResourceCommand::class,
             Console\ResourceToolCommand::class,
+            Console\ThemeCommand::class,
             Console\ToolCommand::class,
             Console\TrendCommand::class,
             Console\UserCommand::class,
             Console\ValueCommand::class,
         ]);
+    }
+
+    /**
+     * Get the translation keys from file.
+     *
+     * @return array
+     */
+    private static function getTranslations()
+    {
+        $translationFile = resource_path('lang/vendor/nova/'.app()->getLocale().'.json');
+
+        if (! is_readable($translationFile)) {
+            return [];
+        }
+
+        return json_decode(file_get_contents($translationFile), true);
     }
 }

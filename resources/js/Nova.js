@@ -19,13 +19,22 @@ export default class Nova {
     }
 
     /**
+     * Execute all of the booting callbacks.
+     */
+    boot() {
+        this.bootingCallbacks.forEach(callback => callback(Vue, router))
+
+        this.bootingCallbacks = []
+    }
+
+    /**
      * Start the Nova app by calling each of the tool's callbacks and then creating
      * the underlying Vue instance.
      */
     liftOff() {
-        this.bootingCallbacks.forEach(callback => callback(Vue, router))
-
         let _this = this
+
+        this.boot()
 
         this.app = new Vue({
             el: '#nova',

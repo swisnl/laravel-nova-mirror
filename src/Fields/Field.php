@@ -2,14 +2,17 @@
 
 namespace Laravel\Nova\Fields;
 
+use Closure;
 use JsonSerializable;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Laravel\Nova\Contracts\Resolvable;
+use Illuminate\Support\Traits\Macroable;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 abstract class Field extends FieldElement implements JsonSerializable, Resolvable
 {
+    use Macroable;
+
     /**
      * The displayable name of the field.
      *
@@ -81,6 +84,13 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     public $sortable = false;
 
     /**
+     * Indicates if the field was resolved as a pivot field.
+     *
+     * @var bool
+     */
+    public $pivot = false;
+
+    /**
      * The text alignment for the field's text in tables.
      *
      * @var string
@@ -139,8 +149,11 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
             $this->resolve($resource, $attribute);
         }
 
-        if (is_callable($this->displayCallback) &&
-            data_get($resource, $attribute, '___missing') !== '___missing') {
+        $value = Str::contains($attribute, '->')
+            ? data_get($resource, str_replace('->', '.', $attribute), '___missing')
+            : data_get($resource, $attribute, '___missing');
+
+        if (is_callable($this->displayCallback) && $value !== '___missing') {
             $this->value = call_user_func(
                 $this->displayCallback, data_get($resource, $attribute)
             );
@@ -158,14 +171,20 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     {
         $attribute = $attribute ?? $this->attribute;
 
-        if (is_callable($attribute)) {
+        if ($attribute instanceof Closure ||
+           (is_callable($attribute) && is_object($attribute))) {
             return $this->resolveComputedAttribute($attribute);
         }
 
         if (! $this->resolveCallback) {
             $this->value = $this->resolveAttribute($resource, $attribute);
-        } elseif (is_callable($this->resolveCallback) &&
-                  data_get($resource, $attribute, '___missing') !== '___missing') {
+        }
+
+        $value = Str::contains($attribute, '->')
+            ? data_get($resource, str_replace('->', '.', $attribute), '___missing')
+            : data_get($resource, $attribute, '___missing');
+
+        if (is_callable($this->resolveCallback) && $value !== '___missing') {
             $this->value = call_user_func(
                 $this->resolveCallback, data_get($resource, $attribute)
             );
@@ -181,6 +200,10 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
      */
     protected function resolveAttribute($resource, $attribute)
     {
+        if (Str::contains($attribute, '->')) {
+            return data_get($resource, str_replace('->', '.', $attribute));
+        }
+
         return data_get($resource, $attribute);
     }
 
@@ -315,7 +338,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     /**
      * Set the validation rules for the field.
      *
-     * @param  \Closure|array  $rules
+     * @param  callable|array|string  $rules
      * @return $this
      */
     public function rules($rules)
@@ -358,7 +381,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     /**
      * Set the creation validation rules for the field.
      *
-     * @param  callable|array  $rules
+     * @param  callable|array|string  $rules
      * @return $this
      */
     public function creationRules($rules)
@@ -388,7 +411,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     /**
      * Set the creation validation rules for the field.
      *
-     * @param  callable|array  $rules
+     * @param  callable|array|string  $rules
      * @return $this
      */
     public function updateRules($rules)
@@ -431,7 +454,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
      */
     public function computed()
     {
-        return is_callable($this->attribute) ||
+        return (is_callable($this->attribute) && ! is_string($this->attribute)) ||
                $this->attribute == 'ComputedField';
     }
 

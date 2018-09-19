@@ -356,6 +356,7 @@ class MorphTo extends Field
         $this->morphToTypes = collect($types)->map(function ($display, $key) {
             return [
                 'type' => is_numeric($key) ? $display : $key,
+                'singularLabel' => is_numeric($key) ? $display::singularLabel() : $key::singularLabel(),
                 'display' => (is_string($display) && is_numeric($key)) ? $display::singularLabel() : $display,
                 'value' => is_numeric($key) ? $display::uriKey() : $key::uriKey(),
             ];
@@ -416,6 +417,7 @@ class MorphTo extends Field
     /**
      * Specify if the relationship should be searchable.
      *
+     * @param  bool  $value
      * @return $this
      */
     public function searchable($value = true)

@@ -5,7 +5,9 @@
         :via-resource-id="resourceId"
         :via-relationship="field.belongsToManyRelationship"
         :relationship-type="'belongsToMany'"
-        @actionExecuted="actionExecuted" />
+        @actionExecuted="actionExecuted"
+        :load-cards="false"
+    />
 </template>
 
 <script>

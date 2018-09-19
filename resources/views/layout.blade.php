@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('/nova-assets/app.css') }}">
+    <link rel="stylesheet" href="{{ mix('app.css', 'vendor/nova') }}">
 
     <!-- Tool Styles -->
     @foreach(Nova::availableStyles(request()) as $name => $path)
@@ -66,17 +66,17 @@
     </div>
 
     <script>
-        window.config = JSON.parse('@json(Nova::jsonVariables(request()))');
+        window.config = @json(Nova::jsonVariables(request()));
     </script>
 
     <!-- Scripts -->
-    <script src="/nova-assets/manifest.js"></script>
-    <script src="/nova-assets/vendor.js"></script>
-    <script src="/nova-assets/app.js"></script>
+    <script src="{{ mix('manifest.js', 'vendor/nova') }}"></script>
+    <script src="{{ mix('vendor.js', 'vendor/nova') }}"></script>
+    <script src="{{ mix('app.js', 'vendor/nova') }}"></script>
 
     <!-- Build Nova Instance -->
     <script>
-        const Nova = new CreateNova(config)
+        window.Nova = new CreateNova(config)
     </script>
 
     <!-- Tool Scripts -->

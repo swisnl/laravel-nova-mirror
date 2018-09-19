@@ -21,7 +21,7 @@
 
     <div class="mb-6 {{ $errors->has('email') ? ' has-error' : '' }}">
         <label class="block font-bold mb-2" for="email">{{ __('Email Address') }}</label>
-        <input class="form-control form-input form-input-bordered w-full" id="email" type="email" name="email" value="{{ $email or old('email') }}" required autofocus>
+        <input class="form-control form-input form-input-bordered w-full" id="email" type="email" name="email" value="{{ $email ?? old('email') }}" required autofocus>
     </div>
 
     <div class="mb-6 {{ $errors->has('password') ? ' has-error' : '' }}">
@@ -30,7 +30,7 @@
     </div>
 
     <div class="mb-6 {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-        <label class="block font-bold mb-2" for="password-confirm" control-label">{{ __('Confirm Password') }}</label>
+        <label class="block font-bold mb-2" for="password-confirm">{{ __('Confirm Password') }}</label>
         <input class="form-control form-input form-input-bordered w-full" id="password-confirm" type="password" name="password_confirmation" required>
     </div>
 

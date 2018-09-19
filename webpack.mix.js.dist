@@ -40,13 +40,14 @@ mix
         'axios',
         'laravel-nova',
     ])
+    .setPublicPath('public')
     .postCss('resources/css/app.css', 'public', [tailwindcss('tailwind.js')])
-    .copy('public', '../nova-app/public/nova')
+    .copy('public', '../nova-app/public/vendor/nova')
     .webpackConfig({
         resolve: {
-            symlinks: false,
             alias: {
                 '@': path.resolve(__dirname, 'resources/js/'),
             },
         },
     })
+    .version()

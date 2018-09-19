@@ -63,19 +63,19 @@ class ActionResource extends Resource
     {
         return [
             ID::make('ID', 'id'),
-            Text::make('Name', 'name'),
+            Text::make(__('Action Name'), 'name'),
 
-            Text::make('Initiated By', function () {
+            Text::make(__('Action Initiated By'), function () {
                 return $this->user->name ?? $this->user->getKey;
             }),
 
-            MorphToActionTarget::make('Target', 'target'),
+            MorphToActionTarget::make(__('Action Target'), 'target'),
 
-            Status::make('Status', 'status', function ($value) {
+            Status::make(__('Action Status'), 'status', function ($value) {
                 return ucfirst($value);
             })->loadingWhen(['Waiting', 'Running'])->failedWhen(['Failed']),
 
-            DateTime::make('Happened At', 'created_at')->exceptOnForms(),
+            DateTime::make(__('Action Happened At'), 'created_at')->exceptOnForms(),
         ];
     }
 
@@ -113,7 +113,7 @@ class ActionResource extends Resource
     }
 
     /**
-     * Get the displayble label of the resource.
+     * Get the displayable label of the resource.
      *
      * @return string
      */

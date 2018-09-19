@@ -6,6 +6,7 @@
         :via-relationship="field.morphToManyRelationship"
         :relationship-type="'morphToMany'"
         @actionExecuted="actionExecuted"
+        :load-cards="false"
     />
 </template>
 
