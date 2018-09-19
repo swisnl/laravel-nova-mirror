@@ -84,6 +84,13 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     public $sortable = false;
 
     /**
+     * Indicates if the field was resolved as a pivot field.
+     *
+     * @var bool
+     */
+    public $pivot = false;
+
+    /**
      * The text alignment for the field's text in tables.
      *
      * @var string

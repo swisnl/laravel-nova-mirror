@@ -32,8 +32,14 @@ trait ResolvesFields
                    ! $field->showOnIndex ||
                    ! $field->authorize($request);
         })->each(function ($field) use ($request) {
-            if ($field instanceof Resolvable) {
+            if ($field instanceof Resolvable && ! $field->pivot) {
                 $field->resolveForDisplay($this->resource);
+            }
+
+            if ($field instanceof Resolvable && $field->pivot) {
+                $accessor = $this->pivotAccessorFor($request, $request->viaResource);
+
+                $field->resolveForDisplay($this->{$accessor} ?? new Pivot);
             }
         });
     }
@@ -51,8 +57,13 @@ trait ResolvesFields
         })->when(in_array(Actionable::class, class_uses_recursive(static::newModel())), function ($fields) {
             return $fields->push(MorphMany::make('Actions', 'actions', ActionResource::class));
         })->each(function ($field) use ($request) {
-            if ($field instanceof Resolvable) {
+            if ($field instanceof Resolvable && ! $field->pivot) {
                 $field->resolveForDisplay($this->resource);
+            }
+            if ($field instanceof Resolvable && $field->pivot) {
+                $accessor = $this->pivotAccessorFor($request, $request->viaResource);
+
+                $field->resolveForDisplay($this->{$accessor} ?? new Pivot);
             }
         });
     }
@@ -311,7 +322,9 @@ trait ResolvesFields
         if ($field && isset($field->fieldsCallback)) {
             return collect(array_values(
                 $this->filter(call_user_func($field->fieldsCallback, $request))
-            ));
+            ))->each(function ($field) {
+                $field->pivot = true;
+            });
         }
 
         return collect([]);
