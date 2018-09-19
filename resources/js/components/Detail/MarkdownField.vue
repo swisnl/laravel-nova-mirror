@@ -17,7 +17,7 @@ export default {
 
     computed: {
         excerpt() {
-            return md.render(this.field.value)
+            return md.render(this.field.value || '')
         },
     },
 }
