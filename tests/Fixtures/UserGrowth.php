@@ -15,7 +15,7 @@ class UserGrowth extends Value
      */
     public function calculate(Request $request)
     {
-        return $this->count($request, User::class, null, 'created_at');
+        return $this->count($request, User::class, null, $_SERVER['__nova.userGrowthColumn'] ?? 'created_at');
     }
 
     /**
