@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\ResourceToolElement;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Tests\Fixtures\ColumnFilter;
 
 class UserResource extends Resource
 {
@@ -184,6 +185,10 @@ class UserResource extends Resource
         return [
             (new IdFilter)->canSee(function ($request) {
                 return $_SERVER['nova.idFilter.canSee'] ?? true;
+            }),
+
+            (new ColumnFilter('id'))->canSee(function ($request) {
+                return $_SERVER['nova.columnFilter.canSee'] ?? true;
             }),
         ];
     }

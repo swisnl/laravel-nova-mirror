@@ -8,11 +8,11 @@ use Illuminate\Container\Container;
 class ApplyFilter
 {
     /**
-     * The class name of the filter being applied.
+     * The filter instance.
      *
-     * @var string
+     * @var \Laravel\Nova\Filters\Filter
      */
-    public $class;
+    public $filter;
 
     /**
      * The value of the filter.
@@ -24,14 +24,14 @@ class ApplyFilter
     /**
      * Create a new invokable filter applier.
      *
-     * @param  string  $class
+     * @param  \Laravel\Nova\Filters\Filter  $filter
      * @param  mixed  $value
      * @return void
      */
-    public function __construct($class, $value)
+    public function __construct($filter, $value)
     {
-        $this->class = $class;
         $this->value = $value;
+        $this->filter = $filter;
     }
 
     /**
@@ -43,7 +43,7 @@ class ApplyFilter
      */
     public function __invoke(Request $request, $query)
     {
-        Container::getInstance()->make($this->class)->apply(
+        $this->filter->apply(
             $request, $query, $this->value
         );
 
