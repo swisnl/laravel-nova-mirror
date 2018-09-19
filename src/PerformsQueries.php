@@ -65,8 +65,12 @@ trait PerformsQueries
 
             $model = $query->getModel();
 
+            $connectionType = $query->getModel()->getConnection()->getDriverName();
+
+            $likeOperator = $connectionType == 'pgsql' ? 'ilike' : 'like';
+
             foreach (static::searchableColumns() as $column) {
-                $query->orWhere($model->qualifyColumn($column), 'like', '%'.$search.'%');
+                $query->orWhere($model->qualifyColumn($column), $likeOperator, '%'.$search.'%');
             }
         });
     }
