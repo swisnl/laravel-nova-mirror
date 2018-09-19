@@ -1,5 +1,12 @@
 <template>
     <loading-view :loading="initialLoading">
+        <custom-detail-header
+            class="mb-3"
+            :resource="resource"
+            :resource-id="resourceId"
+            :resource-name="resourceName"
+        />
+
         <div v-if="shouldShowCards">
             <cards
                 v-if="smallCards.length > 0"
@@ -35,9 +42,14 @@
                 :panel="panel"
             >
                 <div v-if="panel.showToolbar" class="flex items-center mb-3">
-                    <h4 class="text-90 font-normal text-2xl">{{ panel.name }}</h4>
+                    <h4 class="text-90 font-normal text-2xl flex-no-shrink">{{ panel.name }}</h4>
 
-                    <div class="ml-auto flex">
+                    <div class="ml-3 w-full flex items-center">
+                        <custom-detail-toolbar
+                            :resource="resource"
+                            :resource-name="resourceName"
+                            :resource-id="resourceName"
+                        />
 
                         <!-- Actions -->
                         <action-selector
@@ -45,7 +57,6 @@
                             :resource-name="resourceName"
                             :actions="actions"
                             :pivot-actions="{ actions: [] }"
-                            :errors="actionValidationErrors"
                             :selected-resources="selectedResources"
                             :query-string="{
                                 currentSearch,
@@ -56,6 +67,7 @@
                                 viaRelationship
                             }"
                             @actionExecuted="actionExecuted"
+                            class="ml-3"
                         />
 
                         <button

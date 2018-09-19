@@ -1,5 +1,11 @@
 <template>
     <loading-view :loading="initialLoading" :dusk="resourceName + '-index-component'">
+        <custom-index-header
+            v-if="!viaResource"
+            class="mb-3"
+            :resource-name="resourceName"
+        />
+
         <div v-if="shouldShowCards">
             <cards
                 v-if="smallCards.length > 0"
@@ -20,7 +26,7 @@
 
         <div class="flex">
             <!-- Search -->
-            <div v-if="resourceInformation.searchable && ! viaHasOne" class="relative h-9 mb-6">
+            <div v-if="resourceInformation.searchable && ! viaHasOne" class="relative h-9 mb-6 flex-no-shrink">
                 <icon type="search" class="absolute search-icon-center ml-3 text-70" />
 
                 <input
@@ -35,8 +41,11 @@
                 >
             </div>
 
-            <div class="ml-auto flex items-center mb-6">
-                <custom-index-buttons :resource-name="resourceName" />
+            <div class="ml-3 w-full flex items-center mb-6">
+                <custom-index-toolbar
+                    v-if="!viaResource"
+                    :resource-name="resourceName"
+                />
 
                 <!-- Create / Attach Button -->
                 <create-resource-button
@@ -48,7 +57,7 @@
                     :relationship-type="relationshipType"
                     :authorized-to-create="authorizedToCreate && ! resourceIsFull"
                     :authorized-to-relate="authorizedToRelate"
-                    class="ml-3"
+                    class="flex-no-shrink ml-3"
                 />
             </div>
         </div>
