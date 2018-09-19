@@ -24,7 +24,7 @@ class Currency extends Number
         parent::__construct($name, $attribute, $resolveCallback);
 
         $this->step('0.01')->displayUsing(function ($value) {
-            return $value ? money_format($this->format ?? '%i', $value) : null;
+            return !is_null($value) ? money_format($this->format ?? '%i', $value) : null;
         });
     }
 
