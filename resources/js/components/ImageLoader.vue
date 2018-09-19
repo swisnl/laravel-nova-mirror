@@ -29,20 +29,20 @@ export default {
 
     mounted() {
         Minimum(
-            Nova.request().get(this.src, {
-                responseType: 'blob',
+            new Promise((resolve, reject) => {
+                let image = new Image()
+                image.addEventListener('load', () => resolve(image))
+                image.addEventListener('error', () => reject())
+                image.src = this.src
             })
         )
-            .then(({ headers, data }) => {
-                const blob = new Blob([data], { type: headers['content-type'] })
-                let newImage = new Image()
-                newImage.src = window.URL.createObjectURL(blob)
-                newImage.className = 'block w-full'
-                newImage.draggable = false
-                this.$refs.card.$el.appendChild(newImage)
+            .then(image => {
+                image.className = 'block w-full'
+                image.draggable = false
+                this.$refs.card.$el.appendChild(image)
                 this.loading = false
             })
-            .catch(error => {
+            .catch(() => {
                 this.missing = true
                 this.$emit('missing', true)
                 this.loading = false
