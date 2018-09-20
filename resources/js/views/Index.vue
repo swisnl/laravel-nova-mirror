@@ -511,7 +511,9 @@ export default {
          * Get the relatable authorization status for the resource.
          */
         getAuthorizationToRelate() {
-            if (!this.authorizedToCreate) {
+            if (!this.authorizedToCreate &&
+                (this.relationshipType != 'belongsToMany' &&
+                 this.relationshipType != 'morphToMany')) {
                 return
             }
 
