@@ -47,7 +47,7 @@
                     class="outline-none search-input-input w-full px-2 py-1.5 text-sm leading-normal bg-white rounded"
                     tabindex="-1"
                     type="text"
-                    placeholder="Search…"
+                    :placeholder="__('Search')"
                     spellcheck="false" />
             </div>
 
