@@ -1,5 +1,5 @@
 <template>
-    <div class="flex w-full justify-end items-center" />
+    <div class="flex w-full justify-end items-center mx-3" />
 </template>
 
 <script>

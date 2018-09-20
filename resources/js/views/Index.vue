@@ -41,7 +41,7 @@
                 >
             </div>
 
-            <div class="ml-3 w-full flex items-center mb-6">
+            <div class="w-full flex items-center mb-6">
                 <custom-index-toolbar
                     v-if="!viaResource"
                     :resource-name="resourceName"
@@ -57,7 +57,7 @@
                     :relationship-type="relationshipType"
                     :authorized-to-create="authorizedToCreate && ! resourceIsFull"
                     :authorized-to-relate="authorizedToRelate"
-                    class="flex-no-shrink ml-3"
+                    class="flex-no-shrink ml-auto"
                 />
             </div>
         </div>
@@ -511,9 +511,10 @@ export default {
          * Get the relatable authorization status for the resource.
          */
         getAuthorizationToRelate() {
-            if (!this.authorizedToCreate &&
-                (this.relationshipType != 'belongsToMany' &&
-                 this.relationshipType != 'morphToMany')) {
+            if (
+                !this.authorizedToCreate &&
+                (this.relationshipType != 'belongsToMany' && this.relationshipType != 'morphToMany')
+            ) {
                 return
             }
 
