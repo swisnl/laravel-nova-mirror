@@ -18,7 +18,7 @@ class ResourceRelationshipGuesser
 
         return str_replace(
             class_basename($results[3]['class']),
-            Str::singular($name),
+            Str::studly(Str::singular($name)),
             $results[3]['class']
         );
     }

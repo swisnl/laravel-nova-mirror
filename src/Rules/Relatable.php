@@ -52,7 +52,7 @@ class Relatable implements Rule
             return false;
         }
 
-        if ($this->relationshipIsFull($attribute, $model)) {
+        if ($this->relationshipIsFull($model, $attribute, $value)) {
             return false;
         }
 
@@ -66,16 +66,25 @@ class Relatable implements Rule
     /**
      * Determine if the relationship is "full".
      *
-     * @param  string  $attribute
      * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  string  $attribute
+     * @param  mixed  $value
      * @return bool
      */
-    protected function relationshipIsFull($attribute, $model)
+    protected function relationshipIsFull($model, $attribute, $value)
     {
         $inverseRelation = $this->request->newResource()
                     ->resolveInverseFieldsForAttribute($this->request, $attribute)->first(function ($field) {
                         return $field instanceof HasOne || $field instanceof MorphOne;
                     });
+
+        if ($this->request->resourceId) {
+            $modelBeingUpdated = $this->request->findModelOrFail();
+
+            if ($modelBeingUpdated->{$attribute}->getKey() == $value) {
+                return false;
+            }
+        }
 
         return $inverseRelation &&
                $model->{$inverseRelation->attribute}()->count() > 0;
