@@ -78,7 +78,7 @@ class Relatable implements Rule
                         return $field instanceof HasOne || $field instanceof MorphOne;
                     });
 
-        if ($this->request->resourceId) {
+        if ($inverseRelation && $this->request->resourceId) {
             $modelBeingUpdated = $this->request->findModelOrFail();
 
             if ($modelBeingUpdated->{$attribute}->getKey() == $value) {
