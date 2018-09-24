@@ -1,12 +1,12 @@
 <template>
-    <div v-if="alwaysShow && hasContent">
+    <div v-if="shouldShow && hasContent">
         <div class="markdown leading-normal" v-html="content" />
     </div>
     <div v-else-if="hasContent">
         <div v-if="expanded" class="markdown leading-normal" v-html="content" />
 
         <a
-            v-if="!alwaysShow"
+            v-if="!shouldShow"
             @click="toggle"
             class="cursor-pointer dim inline-block text-primary font-bold"
             :class="{ 'mt-6': expanded }"
@@ -23,7 +23,7 @@
 <script>
 export default {
     props: {
-        alwaysShow: {
+        shouldShow: {
             type: Boolean,
             default: false,
         },

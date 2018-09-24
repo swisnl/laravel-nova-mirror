@@ -187,6 +187,7 @@ class Trix extends Field implements DeletableContract
     public function jsonSerialize()
     {
         return array_merge(parent::jsonSerialize(), [
+            'shouldShow' => $this->fieldShouldBeExpanded(),
             'withFiles' => $this->withFiles,
         ]);
     }

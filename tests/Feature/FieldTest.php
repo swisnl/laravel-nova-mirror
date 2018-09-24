@@ -4,6 +4,8 @@ namespace Laravel\Nova\Tests\Feature;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Tests\IntegrationTest;
 use Laravel\Nova\Tests\Fixtures\UserResource;
@@ -82,5 +84,42 @@ class FieldTest extends IntegrationTest
 
         $this->assertTrue($callback($request));
         $this->assertEquals('view-profile', $_SERVER['__nova.ability']);
+    }
+
+    public function test_textarea_fields_dont_show_their_content_by_default()
+    {
+        $textarea = Textarea::make('Name');
+        $trix = Trix::make('Name');
+        $markdown = Trix::make('Name');
+
+        $this->assertFalse($textarea->shouldBeExpanded());
+        $this->assertFalse($trix->shouldBeExpanded());
+        $this->assertFalse($markdown->shouldBeExpanded());
+    }
+
+    public function test_textarea_fields_can_be_set_to_always_show_their_content()
+    {
+        $textarea = Textarea::make('Name')->alwaysShow();
+        $trix = Trix::make('Name')->alwaysShow();
+        $markdown = Trix::make('Name')->alwaysShow();
+
+        $this->assertTrue($textarea->shouldBeExpanded());
+        $this->assertTrue($trix->shouldBeExpanded());
+        $this->assertTrue($markdown->shouldBeExpanded());
+    }
+
+    public function test_textarea_fields_can_have_custom_should_show_callback()
+    {
+        $callback = function () {
+            return true;
+        };
+
+        $textarea = Textarea::make('Name')->shouldShow($callback);
+        $trix = Trix::make('Name')->shouldShow($callback);
+        $markdown = Trix::make('Name')->shouldShow($callback);
+
+        $this->assertTrue($textarea->shouldBeExpanded());
+        $this->assertTrue($trix->shouldBeExpanded());
+        $this->assertTrue($markdown->shouldBeExpanded());
     }
 }
