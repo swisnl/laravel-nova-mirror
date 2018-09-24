@@ -426,7 +426,9 @@ class Nova
     {
         return function ($name, $email, $password) {
             $guard = config('nova.guard') ?: config('auth.defaults.guard');
+
             $provider = config("auth.guards.{$guard}.provider");
+
             $model = config("auth.providers.{$provider}.model");
 
             return tap((new $model)->forceFill([
