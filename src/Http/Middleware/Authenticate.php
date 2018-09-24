@@ -24,7 +24,7 @@ class Authenticate extends BaseAuthenticationMiddleware
         try {
             $guard = config('nova.guard');
 
-            if (!empty($guard)) {
+            if (! empty($guard)) {
                 $guards[] = $guard;
             }
 
