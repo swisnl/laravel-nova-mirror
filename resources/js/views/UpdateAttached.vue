@@ -3,7 +3,7 @@
         <heading class="mb-3">{{__('Update')}} {{ relatedResourceLabel }}</heading>
 
         <card class="overflow-hidden">
-            <form v-if="field" @submit.prevent="updateAttachedResource">
+            <form v-if="field" @submit.prevent="updateAttachedResource" autocomplete="off">
                 <!-- Related Resource -->
                 <field-wrapper>
                     <div class="w-1/5 px-8 py-6">
@@ -170,17 +170,19 @@ export default {
         async getPivotFields() {
             this.fields = []
 
-            const { data } = await Nova.request().get(
-                `/nova-api/${this.resourceName}/${this.resourceId}/update-pivot-fields/${
-                    this.relatedResourceName
-                }/${this.relatedResourceId}`,
-                { params: { viaRelationship: this.viaRelationship } }
-            ).catch(error => {
-                if (error.response.status == 404) {
-                    this.$router.push({ name: '404' })
-                    return
-                }
-            })
+            const { data } = await Nova.request()
+                .get(
+                    `/nova-api/${this.resourceName}/${this.resourceId}/update-pivot-fields/${
+                        this.relatedResourceName
+                    }/${this.relatedResourceId}`,
+                    { params: { viaRelationship: this.viaRelationship } }
+                )
+                .catch(error => {
+                    if (error.response.status == 404) {
+                        this.$router.push({ name: '404' })
+                        return
+                    }
+                })
 
             this.fields = data
 
@@ -251,7 +253,9 @@ export default {
 
                 if (error.response.status == 409) {
                     this.$toasted.show(
-                        this.__('Another user has updated this resource since this page was loaded. Please refresh the page and try again.'),
+                        this.__(
+                            'Another user has updated this resource since this page was loaded. Please refresh the page and try again.'
+                        ),
                         { type: 'error' }
                     )
                 }
@@ -277,7 +281,9 @@ export default {
 
                 if (error.response.status == 409) {
                     this.$toasted.show(
-                        this.__('Another user has updated this resource since this page was loaded. Please refresh the page and try again.'),
+                        this.__(
+                            'Another user has updated this resource since this page was loaded. Please refresh the page and try again.'
+                        ),
                         { type: 'error' }
                     )
                 }

@@ -7,6 +7,7 @@
         @modal-close="handleClose"
     >
         <form
+            autocomplete="off"
             @keydown="handleKeydown"
             @submit.prevent.stop="handleConfirm"
             class="bg-white rounded-lg shadow-lg overflow-hidden"

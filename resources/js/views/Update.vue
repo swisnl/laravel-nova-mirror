@@ -3,7 +3,7 @@
         <heading class="mb-3">{{__('Edit')}} {{ singularName }}</heading>
 
         <card class="overflow-hidden">
-            <form v-if="fields" @submit.prevent="updateResource">
+            <form v-if="fields" @submit.prevent="updateResource" autocomplete="off">
                 <!-- Validation Errors -->
                 <validation-errors :errors="validationErrors" />
 

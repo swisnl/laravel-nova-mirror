@@ -3,7 +3,7 @@
         <heading class="mb-3">{{__('Attach')}} {{ relatedResourceLabel }}</heading>
 
         <card class="overflow-hidden">
-            <form v-if="field" @submit.prevent="attachResource">
+            <form v-if="field" @submit.prevent="attachResource" autocomplete="off">
                 <!-- Related Resource -->
                 <field-wrapper>
                     <div class="w-1/5 px-8 py-6">
