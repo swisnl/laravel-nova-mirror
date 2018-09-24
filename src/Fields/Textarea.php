@@ -4,6 +4,8 @@ namespace Laravel\Nova\Fields;
 
 class Textarea extends Field
 {
+    use Expandable;
+
     /**
      * The field's component.
      *

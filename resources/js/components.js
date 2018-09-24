@@ -23,6 +23,7 @@ import DropdownMenu from '@/components/DropdownMenu'
 import DropdownTrigger from '@/components/DropdownTrigger'
 import Error404 from '@/views/Error404'
 import Error403 from '@/views/Error403'
+import Excerpt from '@/components/Excerpt'
 import Bold from '@/components/Icons/Editor/Bold'
 import FullScreen from '@/components/Icons/Editor/FullScreen'
 import GlobalSearch from '@/components/GlobalSearch'
@@ -93,6 +94,7 @@ Vue.component('editor-italic', Italic)
 Vue.component('editor-link', Link)
 Vue.component('error-403', Error403)
 Vue.component('error-404', Error404)
+Vue.component('excerpt', Excerpt)
 Vue.component('fake-checkbox', FakeCheckbox)
 Vue.component('filter-select', FilterSelect)
 Vue.component('filter-selector', FilterSelector)

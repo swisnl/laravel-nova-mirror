@@ -12,7 +12,7 @@ use Laravel\Nova\Contracts\Deletable as DeletableContract;
 
 class Trix extends Field implements DeletableContract
 {
-    use Deletable;
+    use Deletable, Expandable;
 
     /**
      * The field's component.

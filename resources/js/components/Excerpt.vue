@@ -1,8 +1,12 @@
 <template>
-    <div v-if="hasContent">
+    <div v-if="alwaysShow && hasContent">
+        <div class="markdown leading-normal" v-html="content" />
+    </div>
+    <div v-else-if="hasContent">
         <div v-if="expanded" class="markdown leading-normal" v-html="content" />
 
         <a
+            v-if="!alwaysShow"
             @click="toggle"
             class="cursor-pointer dim inline-block text-primary font-bold"
             :class="{ 'mt-6': expanded }"
@@ -19,6 +23,10 @@
 <script>
 export default {
     props: {
+        alwaysShow: {
+            type: Boolean,
+            default: false,
+        },
         content: {
             type: String,
         },
