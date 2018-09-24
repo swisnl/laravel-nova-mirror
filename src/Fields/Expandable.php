@@ -5,7 +5,7 @@ namespace Laravel\Nova\Fields;
 trait Expandable
 {
     /**
-     * Disable automatic hiding of textarea fields inside Nova
+     * Disable automatic hiding of textarea fields inside Nova.
      *
      * @return $this
      */
