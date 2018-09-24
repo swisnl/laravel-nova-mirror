@@ -75,6 +75,17 @@ class ValueResult implements JsonSerializable
      */
     public function dollars($symbol = '$')
     {
+        return $this->currency($symbol);
+    }
+
+    /**
+     * Indicate that the metric represents a currency value.
+     *
+     * @param  string  $symbol
+     * @return $this
+     */
+    public function currency($symbol = '$')
+    {
         return $this->prefix($symbol);
     }
 
