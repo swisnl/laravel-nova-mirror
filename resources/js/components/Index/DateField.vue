@@ -1,5 +1,6 @@
 <template>
-    <span class="whitespace-no-wrap">{{ formattedDate }}</span>
+    <span v-if="field.value" class="whitespace-no-wrap">{{ formattedDate }}</span>
+    <span v-else>&mdash;</span>
 </template>
 
 <script>
@@ -8,12 +9,12 @@ export default {
 
     computed: {
         formattedDate() {
-          if (this.field.format) {
-              return moment(this.field.value).format(this.field.format)
-          }
+            if (this.field.format) {
+                return moment(this.field.value).format(this.field.format)
+            }
 
-          return this.field.value
-        }
-    }
+            return this.field.value
+        },
+    },
 }
 </script>
