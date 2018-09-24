@@ -1,7 +1,20 @@
 import Vue from 'vue'
+import Toasted from 'vue-toasted'
 import router from '@/router'
 import axios from '@/util/axios'
+import PortalVue from 'portal-vue'
 import Loading from '@/components/Loading'
+import AsyncComputed from 'vue-async-computed'
+
+Vue.use(PortalVue)
+Vue.use(AsyncComputed)
+
+Vue.use(Toasted, {
+    router,
+    theme: 'nova',
+    position: 'bottom-right',
+    duration: 6000,
+})
 
 export default class Nova {
     constructor(config) {
@@ -77,7 +90,7 @@ export default class Nova {
     }
 
     /**
-     * De-register a listener on the event bus
+     * Unregister an listener on the event bus
      */
     $off(...args) {
         this.bus.$off(...args)
