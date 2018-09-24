@@ -14,7 +14,7 @@ trait Expandable
     /**
      * Whether to always show the content for the field expanded or not.
      *
-     * @var boolean
+     * @var bool
      */
     public $alwaysShow = false;
 
@@ -37,7 +37,8 @@ trait Expandable
      * @param  callable $expandableCallback
      * @return $this
      */
-    public function shouldShow(callable $expandableCallback) {
+    public function shouldShow(callable $expandableCallback)
+    {
         $this->expandableCallback = $expandableCallback;
 
         return $this;
