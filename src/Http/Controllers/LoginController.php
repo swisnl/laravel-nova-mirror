@@ -2,10 +2,10 @@
 
 namespace Laravel\Nova\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Nova;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
@@ -31,7 +31,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('nova.guest:' . config('nova.guard'))->except('logout');
+        $this->middleware('nova.guest:'.config('nova.guard'))->except('logout');
     }
 
     /**
