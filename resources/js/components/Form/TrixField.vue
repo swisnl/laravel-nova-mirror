@@ -1,17 +1,6 @@
 <template>
-    <field-wrapper>
-        <div class="w-1/5 px-8 py-6">
-            <slot>
-                <form-label :for="field.name">
-                    {{ field.name }}
-                </form-label>
-
-                <help-text>
-                    {{ field.helpText }}
-                </help-text>
-            </slot>
-        </div>
-        <div class="w-4/5 px-8 py-6">
+    <default-field :field="field" :errors="errors" :full-width-content="true">
+        <template slot="field">
             <trix
                 name="trixman"
                 :value="field.value"
@@ -22,12 +11,8 @@
                 :class="{'border-danger': hasError}"
                 :with-files="field.withFiles"
             />
-
-            <p v-if="hasError" class="my-2 text-danger">
-                {{ firstError }}
-            </p>
-        </div>
-    </field-wrapper>
+        </template>
+    </default-field>
 </template>
 
 <script>

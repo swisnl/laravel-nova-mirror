@@ -1,5 +1,5 @@
 <template>
-    <default-field :field="field">
+    <default-field :field="field" :errors="errors">
         <template slot="field">
             <input :id="field.name" type="text"
                 class="w-full form-control form-input form-input-bordered"
@@ -7,10 +7,6 @@
                 :placeholder="field.name"
                 v-model="value"
             />
-
-            <p v-if="hasError" class="my-2 text-danger">
-                {{ firstError }}
-            </p>
         </template>
     </default-field>
 </template>
@@ -28,22 +24,22 @@ export default {
          * Set the initial, internal value for the field.
          */
         setInitialValue() {
-          this.value = this.field.value || ''
+            this.value = this.field.value || ''
         },
 
         /**
          * Fill the given FormData object with the field's internal value.
          */
         fill(formData) {
-          formData.append(this.field.attribute, this.value || '')
+            formData.append(this.field.attribute, this.value || '')
         },
 
         /**
          * Update the field's internal value.
          */
         handleChange(value) {
-          this.value = value
-        }
-    }
+            this.value = value
+        },
+    },
 }
 </script>

@@ -1,17 +1,6 @@
 <template>
-    <field-wrapper>
-        <div class="w-1/5 px-8 py-6">
-            <slot>
-                <form-label :for="field.name">
-                    {{ field.name }}
-                </form-label>
-
-                <help-text>
-                    {{ field.helpText }}
-                </help-text>
-            </slot>
-        </div>
-        <div class="w-4/5 px-8 py-6">
+    <default-field :field="field" :errors="errors" :full-width-content="true">
+        <template slot="field">
             <div class="bg-white rounded-lg" :class="{
                 'fixed pin z-50': fullScreen,
                 'form-input form-input-bordered px-0': ! fullScreen,
@@ -36,64 +25,60 @@
                     <div class="markdown" v-if="mode == 'preview'" v-html="previewContent"></div>
                 </div>
             </div>
-
-            <p v-if="hasError" class="my-2 text-danger">
-                {{ firstError }}
-            </p>
-        </div>
-    </field-wrapper>
+        </template>
+    </default-field>
 </template>
 
 <script>
-    import _ from 'lodash'
-    import marked from 'marked'
-    import CodeMirror from 'codemirror'
-    import 'codemirror/mode/markdown/markdown'
-    import { FormField, HandlesValidationErrors } from 'laravel-nova'
+import _ from 'lodash'
+import marked from 'marked'
+import CodeMirror from 'codemirror'
+import 'codemirror/mode/markdown/markdown'
+import { FormField, HandlesValidationErrors } from 'laravel-nova'
 
-    const actions = {
-        bold() {
-            this.insertAround('**', '**')
-        },
+const actions = {
+    bold() {
+        this.insertAround('**', '**')
+    },
 
-        italicize() {
-            this.insertAround('*', '*')
-        },
+    italicize() {
+        this.insertAround('*', '*')
+    },
 
-        image() {
-            this.insertBefore('![](http://)', 2)
-        },
+    image() {
+        this.insertBefore('![](http://)', 2)
+    },
 
-        link() {
-            this.insertAround('[', '](http://)')
-        },
+    link() {
+        this.insertAround('[', '](http://)')
+    },
 
-        toggleFullScreen() {
-            this.fullScreen = !this.fullScreen
-        },
+    toggleFullScreen() {
+        this.fullScreen = !this.fullScreen
+    },
 
-        fullScreen() {
-            this.fullScreen = true
-        },
+    fullScreen() {
+        this.fullScreen = true
+    },
 
-        exitFullScreen() {
-            this.fullScreen = false
-        },
-    }
+    exitFullScreen() {
+        this.fullScreen = false
+    },
+}
 
-    const keyMaps = {
-        'Cmd-B': 'bold',
-        'Cmd-I': 'italicize',
-        'Cmd-Alt-I': 'image',
-        'Cmd-K': 'link',
-        F11: 'fullScreen',
-        Esc: 'exitFullScreen',
-    }
+const keyMaps = {
+    'Cmd-B': 'bold',
+    'Cmd-I': 'italicize',
+    'Cmd-Alt-I': 'image',
+    'Cmd-K': 'link',
+    F11: 'fullScreen',
+    Esc: 'exitFullScreen',
+}
 
-    export default {
-        mixins: [HandlesValidationErrors, FormField],
+export default {
+    mixins: [HandlesValidationErrors, FormField],
 
-        data: () => ({
+    data: () => ({
         fullScreen: false,
         codemirror: null,
         mode: 'write',
@@ -125,10 +110,10 @@
             extraKeys: {
                 Enter: 'newlineAndIndentContinueMarkdownList',
                 ..._.map(this.tools, tool => {
-                return tool.action
-            }),
-    },
-    })
+                    return tool.action
+                }),
+            },
+        })
 
         _.each(keyMaps, (action, map) => {
             const realMap = map.replace(
@@ -136,11 +121,11 @@
                 CodeMirror.keyMap['default'] == CodeMirror.keyMap.macDefault ? 'Cmd-' : 'Ctrl-'
             )
             this.codemirror.options.extraKeys[realMap] = actions[keyMaps[map]].bind(this)
-    })
+        })
 
         this.doc.on('change', (cm, changeObj) => {
             this.value = cm.getValue()
-    })
+        })
 
         if (this.field.value) {
             this.doc.setValue(this.field.value)
@@ -191,11 +176,11 @@
                     const pos = [selection.head.line, selection.anchor.line].sort()
 
                     for (let i = pos[0]; i <= pos[1]; i++) {
-                    this.doc.replaceRange(insertion, { line: i, ch: 0 })
-                }
+                        this.doc.replaceRange(insertion, { line: i, ch: 0 })
+                    }
 
-                this.doc.setCursor({ line: pos[0], ch: cursorOffset || 0 })
-            })
+                    this.doc.setCursor({ line: pos[0], ch: cursorOffset || 0 })
+                })
             } else {
                 this.doc.replaceRange(insertion, {
                     line: this.cursor.line,
@@ -231,7 +216,7 @@
             return marked(this.rawContent)
         },
     },
-    }
+}
 </script>
 
 <style src="codemirror/lib/codemirror.css" />

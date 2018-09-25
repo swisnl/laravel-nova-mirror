@@ -1,5 +1,5 @@
 <template>
-    <default-field :field="field">
+    <default-field :field="field" :errors="errors">
         <template slot="field">
             <select
                 :id="field.attribute"
@@ -19,10 +19,6 @@
                     {{ option.label }}
                 </option>
             </select>
-
-            <p v-if="hasError" class="my-2 text-danger">
-                {{ firstError }}
-            </p>
         </template>
     </default-field>
 </template>

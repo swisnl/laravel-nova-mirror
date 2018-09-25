@@ -1,30 +1,41 @@
 <template>
     <field-wrapper>
-        <div class="w-1/5 px-8 py-6">
+        <div class="w-1/5 py-6 px-8">
             <slot>
-                <form-label :for="field.name" :class="{
-                    'mb-2': field.helpText && showHelpText
-                }">
+                <form-label :for="field.name" :class="{'mb-2': field.helpText && showHelpText }">
                     {{ fieldLabel }}
+                    <span class="text-danger">
+                        *
+                    </span>
                 </form-label>
-
-                <help-text :show-help-text="showHelpText">
-                    {{ field.helpText }}
-                </help-text>
             </slot>
         </div>
-        <div class="w-1/2 px-8 py-6">
+        <div class="py-6 px-8" :class="fieldClasses">
             <slot name="field"/>
+
+            <help-text class="error-text mt-2 text-danger" v-if="hasError && showErrors">
+                {{ firstError }}
+            </help-text>
+
+            <help-text class="help-text mt-2" v-if="showHelpText">
+                {{ field.helpText }}
+            </help-text>
         </div>
     </field-wrapper>
 </template>
 
 <script>
+import { HandlesValidationErrors, Errors } from 'laravel-nova'
+
 export default {
+    mixins: [HandlesValidationErrors],
+
     props: {
         field: { type: Object, required: true },
         fieldName: { type: String },
         showHelpText: { type: Boolean, default: true },
+        showErrors: { type: Boolean, default: true },
+        fullWidthContent: { type: Boolean, default: false },
     },
 
     computed: {
@@ -36,6 +47,10 @@ export default {
             }
 
             return this.fieldName || this.field.singularLabel || this.field.name
+        },
+
+        fieldClasses() {
+            return this.fullWidthContent ? 'w-4/5' : 'w-1/2'
         },
     },
 }

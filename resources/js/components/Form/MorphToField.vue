@@ -1,6 +1,6 @@
 <template>
     <div>
-        <default-field :field="field" :field-name="fieldName">
+        <default-field :field="field" :show-errors="false" :field-name="fieldName">
             <select
                 :disabled="isLocked"
                 :data-testid="`${field.attribute}-type`"
@@ -23,7 +23,7 @@
             </select>
         </default-field>
 
-        <default-field :field="field" :show-help-text="false" :field-name="fieldTypeName">
+        <default-field :field="field" :errors="errors" :show-help-text="false" :field-name="fieldTypeName">
             <template slot="field">
                 <search-input
                     v-if="isSearchable && !isLocked"
@@ -88,10 +88,6 @@
                         </span>
                     </label>
                 </div>
-
-                <p v-if="hasError" class="my-2 text-danger">
-                    {{ firstError }}
-                </p>
             </template>
         </default-field>
     </div>

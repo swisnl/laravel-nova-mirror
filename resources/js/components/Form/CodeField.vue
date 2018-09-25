@@ -1,25 +1,11 @@
 <template>
-    <field-wrapper>
-        <div class="w-1/5 px-8 py-6">
-            <form-label>
-                {{ field.name }}
-            </form-label>
-
-            <help-text>
-                {{ field.helpText }}
-            </help-text>
-        </div>
-
-        <div class="w-4/5 px-8 py-6">
+    <default-field :field="field" :errors="errors" :full-width-content="true">
+        <template slot="field">
             <div class="form-input form-input-bordered px-0 overflow-hidden">
                 <textarea ref="theTextarea" />
             </div>
-
-            <p v-if="hasError" class="my-2 text-danger">
-                {{ firstError }}
-            </p>
-        </div>
-    </field-wrapper>
+        </template>
+    </default-field>
 </template>
 
 <style src="codemirror/lib/codemirror.css" />
