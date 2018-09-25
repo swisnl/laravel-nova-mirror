@@ -28,7 +28,7 @@ class Textarea extends Field
     public function jsonSerialize()
     {
         return array_merge(parent::jsonSerialize(), [
-            'shouldShow' => $this->fieldShouldBeExpanded(),
+            'shouldShow' => $this->shouldBeExpanded(),
         ]);
     }
 }
