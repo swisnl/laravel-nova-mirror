@@ -656,6 +656,12 @@ input[type='search']::-webkit-search-cancel-button {
   transform: perspective(1px) translateY(-50%);
 }
 
+/* Modal Content
+-----------------------------------------------------------------------------*/
+.modal-content {
+  max-height: calc(100%);
+}
+
 /* Override Form Field Widths For ConfirmActionModal
 -----------------------------------------------------------------------------*/
 .action .w-1\/5 {

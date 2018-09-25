@@ -162,6 +162,8 @@ module.exports = {
         full: '100%',
         screen: '100vw',
         error: '65rem',
+        action: '460px',
+        'action-fields': '767px',
     },
 
     height: {

@@ -12,8 +12,8 @@
             @submit.prevent.stop="handleConfirm"
             class="bg-white rounded-lg shadow-lg overflow-hidden"
             :class="{
-                'w-600': selectedAction.fields.length > 0,
-                'w-460': selectedAction.fields.length == 0,
+                'w-action-fields': selectedAction.fields.length > 0,
+                'w-action': selectedAction.fields.length == 0,
             }"
         >
             <div>
@@ -115,13 +115,3 @@ export default {
     },
 }
 </script>
-
-<style scoped>
-.w-460 {
-    width: 460px;
-}
-
-.w-600 {
-    width: 600px;
-}
-</style>
