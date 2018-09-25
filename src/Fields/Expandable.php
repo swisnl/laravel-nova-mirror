@@ -31,10 +31,9 @@ trait Expandable
     }
 
     /**
-     * Define the callback that should be used to resolve whether the field
-     * should be collapsed or not.
+     * Define the callback that should be used to determine whether the field should be collapsed.
      *
-     * @param  callable $expandableCallback
+     * @param  callable
      * @return $this
      */
     public function shouldShow(callable $expandableCallback)
@@ -56,7 +55,7 @@ trait Expandable
         }
 
         return isset($this->expandableCallback)
-            ? call_user_func($this->expandableCallback)
-            : false;
+                        ? call_user_func($this->expandableCallback)
+                        : false;
     }
 }
