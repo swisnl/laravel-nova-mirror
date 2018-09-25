@@ -1,7 +1,6 @@
 <template>
     <modal
         data-testid="confirm-action-modal"
-        class="modal"
         tabindex="-1"
         role="dialog"
         @modal-close="handleClose"
