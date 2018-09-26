@@ -733,6 +733,16 @@ input[type='search']::-webkit-search-cancel-button {
   margin-right: 7.5rem;
 }
 
+/* Help Text
+---------------------------------------------------------------------------- */
+.help-text {
+  @apply text-xs leading-normal text-80 italic;
+}
+
+.help-text a {
+  @apply text-primary no-underline;
+}
+
 /* Charts
 ---------------------------------------------------------------------------- */
 /* Partition Metric */

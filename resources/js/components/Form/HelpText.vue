@@ -1,7 +1,5 @@
 <template>
-    <p class="text-xs leading-normal text-80 italic">
-        <slot />
-    </p>
+    <div class="help-text" v-html="$slots.default[0].text" />
 </template>
 
 <script>
