@@ -4,6 +4,7 @@
             v-for="card in filteredCards"
             :card="card"
             :size="size"
+            :resource="resource"
             :resource-name="resourceName"
             :resource-id="resourceId"
             :key="`${card.component}.${card.name}`"
@@ -19,6 +20,10 @@ export default {
         size: {
             type: String,
             default: '',
+        },
+
+        resource: {
+            type: Object,
         },
 
         resourceName: {

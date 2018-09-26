@@ -8,6 +8,7 @@
             :class="cardSizeClass"
             :is="card.component"
             :card="card"
+            :resource="resource"
             :resourceName="resourceName"
             :resourceId="resourceId"
         />
@@ -27,6 +28,10 @@ export default {
         size: {
             type: String,
             default: '',
+        },
+
+        resource: {
+            type: Object,
         },
 
         resourceName: {

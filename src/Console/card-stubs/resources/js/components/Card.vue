@@ -8,7 +8,13 @@
 
 <script>
 export default {
-    props: ['card'],
+    props: [
+        'card',
+        // These props are only used on resource detail cards
+        // 'resource',
+        // 'resourceId',
+        // 'resourceName',
+    ],
 
     mounted() {
         //
