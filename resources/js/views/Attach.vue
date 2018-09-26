@@ -5,15 +5,8 @@
         <card class="overflow-hidden">
             <form v-if="field" @submit.prevent="attachResource" autocomplete="off">
                 <!-- Related Resource -->
-                <field-wrapper>
-                    <div class="w-1/5 px-8 py-6">
-                        <slot>
-                            <form-label>
-                                {{ relatedResourceLabel }}
-                            </form-label>
-                        </slot>
-                    </div>
-                    <div class="w-1/2 px-8 py-6">
+                <default-field :field="field" :errors="validationErrors">
+                    <template slot="field">
                         <search-input
                             v-if="field.searchable"
                             :data-testid="`${field.resourceName}-search-input`"
@@ -73,12 +66,8 @@
                                 </span>
                             </label>
                         </div>
-
-                        <p v-if="true" class="my-2 text-danger">
-                            {{ validationErrors.first(relatedResourceName) }}
-                        </p>
-                    </div>
-                </field-wrapper>
+                    </template>
+                </default-field>
 
                 <!-- Pivot Fields -->
                 <div v-for="field in fields">
