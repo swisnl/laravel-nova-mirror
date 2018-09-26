@@ -4,9 +4,6 @@
             <slot>
                 <form-label :for="field.name" :class="{'mb-2': field.helpText && showHelpText }">
                     {{ fieldLabel }}
-                    <span class="text-danger">
-                        *
-                    </span>
                 </form-label>
             </slot>
         </div>
