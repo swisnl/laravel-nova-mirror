@@ -10,7 +10,8 @@
 export default {
     props: [
         'card',
-        // These props are only used on resource detail cards
+
+        // The following props are only available on resource detail cards...
         // 'resource',
         // 'resourceId',
         // 'resourceName',
