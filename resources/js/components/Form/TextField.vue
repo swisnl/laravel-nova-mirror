@@ -2,17 +2,11 @@
     <default-field :field="field">
         <template slot="field">
             <input
+                class="w-full form-control form-input form-input-bordered"
                 :id="field.attribute"
                 :dusk="field.attribute"
-                :type="inputType"
-                :min="inputMin"
-                :max="inputMax"
-                :step="inputStep"
-                :pattern="inputPattern"
                 v-model="value"
-                class="w-full form-control form-input form-input-bordered"
-                :class="errorClasses"
-                :placeholder="field.name"
+                v-bind="extraAttributes"
             />
 
             <p v-if="hasError" class="my-2 text-danger">
@@ -29,39 +23,28 @@ export default {
     mixins: [HandlesValidationErrors, FormField],
 
     computed: {
-        /**
-         * Get the input type.
-         */
-        inputType() {
-            return this.field.type || 'text'
+        defaultAttributes() {
+            return {
+                type: this.field.type || 'text',
+                min: this.field.min,
+                max: this.field.max,
+                step: this.field.step,
+                pattern: this.field.pattern,
+                placeholder: this.field.placeholder || this.field.name,
+                class: this.errorClasses,
+            }
         },
 
-        /**
-         * Get the input step amount.
-         */
-        inputStep() {
-            return this.field.step
-        },
+        extraAttributes() {
+            const attrs = this.field.extraAttributes
 
-        /**
-         * Get the input minimum amount.
-         */
-        inputMin() {
-            return this.field.min
-        },
-
-        /**
-         * Get the input maximum amount.
-         */
-        inputMax() {
-            return this.field.max
-        },
-
-        /**
-         * Get the pattern that should be used for the field
-         */
-        inputPattern() {
-            return this.field.pattern
+            return {
+                // Leave the default attributes even though we can now specify
+                // whatever attributes we like because the old number field still
+                // uses the old field attributes
+                ...this.defaultAttributes,
+                ...attrs,
+            }
         },
     },
 }

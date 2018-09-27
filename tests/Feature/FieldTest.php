@@ -122,4 +122,32 @@ class FieldTest extends IntegrationTest
         $this->assertTrue($trix->shouldBeExpanded());
         $this->assertTrue($markdown->shouldBeExpanded());
     }
+
+    public function test_text_fields_can_be_serialized()
+    {
+        $field = Text::make('Name');
+
+        $this->assertContains([
+            "component" => "text-field",
+            "prefixComponent" => true,
+            "indexName" => "Name",
+            "name" => "Name",
+            "attribute" => "name",
+            "value" => null,
+            "panel" => null,
+            "sortable" => false,
+            "textAlign" => "left",
+        ], $field->jsonSerialize());
+    }
+
+    public function test_text_fields_can_have_extra_meta_data()
+    {
+        $field = Text::make('Name')->withMeta(['extraAttributes' => [
+            'placeholder' => 'This is a placeholder'
+        ]]);
+
+        $this->assertContains([
+            'extraAttributes' => ['placeholder' => 'This is a placeholder']
+        ], $field->jsonSerialize());
+    }
 }
