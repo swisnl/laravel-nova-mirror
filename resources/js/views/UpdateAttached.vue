@@ -5,16 +5,9 @@
         <card class="overflow-hidden">
             <form v-if="field" @submit.prevent="updateAttachedResource" autocomplete="off">
                 <!-- Related Resource -->
-                <field-wrapper>
-                    <div class="w-1/5 px-8 py-6">
-                        <slot>
-                            <form-label>
-                                {{ relatedResourceLabel }}
-                            </form-label>
-                        </slot>
-                    </div>
-                    <div class="w-1/2 px-8 py-6">
-                        <select
+                <default-field :field="field" :errors="validationErrors">
+                    <template slot="field">
+                       <select
                             class="form-control form-select mb-3 w-full"
                             dusk="attachable-select"
                             :class="{ 'border-danger': validationErrors.has(field.attribute) }"
@@ -33,12 +26,8 @@
                                 {{ resource.display}}
                             </option>
                         </select>
-
-                        <p v-if="true" class="my-2 text-danger">
-                            {{ validationErrors.first(relatedResourceName) }}
-                        </p>
-                    </div>
-                </field-wrapper>
+                    </template>
+                </default-field>
 
                 <!-- Pivot Fields -->
                 <div v-for="field in fields">

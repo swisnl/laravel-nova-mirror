@@ -1,5 +1,5 @@
 <template>
-    <default-field :field="field">
+    <default-field :field="field" :errors="errors">
         <template slot="field">
             <search-input
                 v-if="isSearchable && !isLocked"
@@ -62,10 +62,6 @@
                     </span>
                 </label>
             </div>
-
-            <p v-if="hasError" class="my-2 text-danger">
-                {{ firstError }}
-            </p>
         </template>
     </default-field>
 </template>

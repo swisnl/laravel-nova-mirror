@@ -737,6 +737,16 @@ textarea.form-input:read-only,
   margin-right: 7.5rem;
 }
 
+/* Help Text
+---------------------------------------------------------------------------- */
+.help-text {
+  @apply text-xs leading-normal text-80 italic;
+}
+
+.help-text a {
+  @apply text-primary no-underline;
+}
+
 /* Charts
 ---------------------------------------------------------------------------- */
 /* Partition Metric */

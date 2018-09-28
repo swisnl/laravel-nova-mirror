@@ -1,5 +1,5 @@
 <template>
-    <default-field :field="field">
+    <default-field :field="field" :errors="errors">
         <template slot="field">
             <input
                 class="w-full form-control form-input form-input-bordered"
@@ -8,10 +8,6 @@
                 v-model="value"
                 v-bind="extraAttributes"
             />
-
-            <p v-if="hasError" class="my-2 text-danger">
-                {{ firstError }}
-            </p>
         </template>
     </default-field>
 </template>
