@@ -44,7 +44,14 @@
 
             <div class="bg-30 px-6 py-3 flex">
                 <div class="flex items-center ml-auto">
-                    <button dusk="cancel-action-button" type="button" @click.prevent="handleClose" class="btn text-80 font-normal h-9 px-3 mr-3 btn-link">Cancel</button>
+                    <button
+                        dusk="cancel-action-button"
+                        type="button"
+                        @click.prevent="handleClose"
+                        class="btn text-80 font-normal h-9 px-3 mr-3 btn-link"
+                    >
+                        {{__('Cancel')}}
+                    </button>
 
                     <button
                         dusk="confirm-action-button"

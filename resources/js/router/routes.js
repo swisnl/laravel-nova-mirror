@@ -56,6 +56,9 @@ export default [
             return {
                 resourceName: route.params.resourceName,
                 resourceId: route.params.resourceId,
+                viaResource: route.query.viaResource,
+                viaResourceId: route.query.viaResourceId,
+                viaRelationship: route.query.viaRelationship,
             }
         },
     },

@@ -44,7 +44,7 @@
                             :data-testid="`${field.resourceName}-select`"
                             @change="selectResourceFromSelectControl"
                         >
-                            <option value="" disabled selected>{{__('Choose')}} {{ field.name }}</option>
+                            <option value="" disabled selected>{{__('Choose')}} {{ relatedResourceLabel }}</option>
 
                             <option
                                 v-for="resource in availableResources"
@@ -356,9 +356,9 @@ export default {
          * Get the label for the related resource.
          */
         relatedResourceLabel() {
-            return _.find(Nova.config.resources, resource => {
-                return resource.uriKey == this.relatedResourceName
-            }).singularLabel
+            if (this.field) {
+                return this.field.singularLabel
+            }
         },
 
         /**

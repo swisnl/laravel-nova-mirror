@@ -2,6 +2,7 @@
 
 namespace Laravel\Nova\Fields;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\Contracts\ListableField;
 
@@ -34,6 +35,13 @@ class HasMany extends Field implements ListableField
      * @var string
      */
     public $hasManyRelationship;
+
+    /**
+     * The displayable singular label of the relation.
+     *
+     * @var string
+     */
+    public $singularLabel;
 
     /**
      * Create a new field.
@@ -80,6 +88,18 @@ class HasMany extends Field implements ListableField
     }
 
     /**
+     * Set the displayable singular label of the resource.
+     *
+     * @return string
+     */
+    public function singularLabel($singularLabel)
+    {
+        $this->singularLabel = $singularLabel;
+
+        return $this;
+    }
+
+    /**
      * Get additional meta information to merge with the field payload.
      *
      * @return array
@@ -90,6 +110,7 @@ class HasMany extends Field implements ListableField
             'resourceName' => $this->resourceName,
             'hasManyRelationship' => $this->hasManyRelationship,
             'listable' => true,
+            'singularLabel' => $this->singularLabel ?? Str::singular($this->name),
         ], $this->meta);
     }
 }
