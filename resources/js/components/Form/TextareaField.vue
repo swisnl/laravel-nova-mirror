@@ -2,12 +2,11 @@
     <default-field :field="field" :errors="errors" :full-width-content="true">
         <template slot="field">
             <textarea
-                :data-testid="field.attribute"
+                class="w-full form-control form-input form-input-bordered py-3 h-auto"
+                :id="field.attribute"
                 :dusk="field.attribute"
-                type="text"
                 v-model="value"
-                class="w-full form-control form-input form-input-bordered py-3 min-h-textarea"
-                :class="errorClasses"
+                v-bind="extraAttributes"
             />
         </template>
     </default-field>
@@ -20,8 +19,29 @@ export default {
     mixins: [FormField, HandlesValidationErrors],
 
     props: {
-        resourceName: {},
-        field: {},
+        resourceName: { type: String },
+        field: {
+            type: Object,
+            required: true,
+        },
+    },
+
+    computed: {
+        defaultAttributes() {
+            return {
+                rows: this.field.rows,
+                class: this.errorClasses,
+            }
+        },
+
+        extraAttributes() {
+            const attrs = this.field.extraAttributes
+
+            return {
+                ...this.defaultAttributes,
+                ...attrs,
+            }
+        },
     },
 }
 </script>

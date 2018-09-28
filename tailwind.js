@@ -200,7 +200,7 @@ module.exports = {
 
     minHeight: {
         '0': '0',
-        textarea: '8.375rem',
+        textarea: '4.875rem',
         full: '100%',
         screen: '100vh',
     },

@@ -20,7 +20,7 @@
 
                 <div class="p-4">
                     <div v-show="mode == 'write'">
-                        <textarea ref="theTextarea"></textarea>
+                        <textarea ref="theTextarea"/>
                     </div>
                     <div class="markdown" v-if="mode == 'preview'" v-html="previewContent"></div>
                 </div>
