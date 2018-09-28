@@ -71,10 +71,18 @@
                     v-else
                     class="cursor-pointer text-70 hover:text-primary mr-3"
                     :dusk="`${resource['id'].value}-edit-button`"
-                    :to="{ name: 'edit', params: {
-                        resourceName: resourceName,
-                        resourceId: resource['id'].value
-                    }}"
+                    :to="{
+                        name: 'edit',
+                        params: {
+                            resourceName: resourceName,
+                            resourceId: resource['id'].value
+                        },
+                        query: {
+                            viaResource: viaResource,
+                            viaResourceId: viaResourceId,
+                            viaRelationship: viaRelationship
+                        }
+                    }"
                     :title="__('Edit')"
                 >
                     <icon type="edit" />

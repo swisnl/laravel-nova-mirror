@@ -1,5 +1,6 @@
 <template>
     <resource-index
+        :field="field"
         :resource-name="field.resourceName"
         :via-resource="resourceName"
         :via-resource-id="resourceId"

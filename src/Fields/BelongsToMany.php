@@ -79,6 +79,13 @@ class BelongsToMany extends Field implements DeletableContract, ListableField
     public $searchable = false;
 
     /**
+     * The displayable singular label of the relation.
+     *
+     * @var string
+     */
+    public $singularLabel;
+
+    /**
      * Create a new field.
      *
      * @param  string  $name
@@ -285,6 +292,18 @@ class BelongsToMany extends Field implements DeletableContract, ListableField
     }
 
     /**
+     * Set the displayable singular label of the resource.
+     *
+     * @return string
+     */
+    public function singularLabel($singularLabel)
+    {
+        $this->singularLabel = $singularLabel;
+
+        return $this;
+    }
+
+    /**
      * Get additional meta information to merge with the field payload.
      *
      * @return array
@@ -296,6 +315,7 @@ class BelongsToMany extends Field implements DeletableContract, ListableField
             'belongsToManyRelationship' => $this->manyToManyRelationship,
             'searchable' => $this->searchable,
             'listable' => true,
+            'singularLabel' => $this->singularLabel ?? Str::singular($this->name),
         ], $this->meta);
     }
 }

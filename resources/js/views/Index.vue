@@ -22,7 +22,7 @@
             />
         </div>
 
-        <heading v-if="resourceResponse" class="mb-3">{{ resourceResponse.label }}</heading>
+        <heading v-if="resourceResponse" class="mb-3">{{ headingTitle }}</heading>
 
         <div class="flex">
             <!-- Search -->
@@ -315,6 +315,9 @@ export default {
     ],
 
     props: {
+        field: {
+            type: Object,
+        },
         resourceName: {
             type: String,
             required: true,
@@ -876,6 +879,10 @@ export default {
          * Get the singular name for the resource
          */
         singularName() {
+            if (this.isRelation && this.field) {
+                return Capitalize(this.field.singularLabel)
+            }
+
             return Capitalize(this.resourceInformation.singularLabel)
         },
 
@@ -1000,6 +1007,20 @@ export default {
                     this.authorizedToRestoreSelectedResources ||
                     this.selectAllMatchingChecked
             )
+        },
+
+        /**
+         * Determine if the index is a relation field
+         */
+        isRelation() {
+            return Boolean(this.viaResourceId && this.viaRelationship)
+        },
+
+        /**
+         * Return the heading for the view
+         */
+        headingTitle() {
+            return this.isRelation && this.field ? this.field.name : this.resourceResponse.label
         },
     },
 }
