@@ -99,7 +99,6 @@ class HasMany extends Field implements ListableField
         return $this;
     }
 
-
     /**
      * Get additional meta information to merge with the field payload.
      *
