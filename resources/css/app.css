@@ -156,7 +156,8 @@ input[type='search']::-webkit-search-cancel-button {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6"><path fill="#35393C" fill-rule="nonzero" d="M8.293.293a1 1 0 0 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4A1 1 0 0 1 1.707.293L5 3.586 8.293.293z"/></svg>');
 }
 
-.form-input:read-only,
+input.form-input:read-only,
+textarea.form-input:read-only,
 .form-input:active:disabled,
 .form-input:focus:disabled,
 .form-select:active:disabled,
@@ -165,7 +166,8 @@ input[type='search']::-webkit-search-cancel-button {
   @apply shadow;
 }
 
-.form-input:read-only,
+input.form-input:read-only,
+textarea.form-input:read-only,
 .form-input:disabled,
 .form-select:disabled {
   @apply .bg-30;

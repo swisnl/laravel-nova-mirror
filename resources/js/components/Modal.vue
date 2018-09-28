@@ -5,9 +5,6 @@
                 <slot />
             </div>
         </div>
-        <portal to="modal-background">
-            <div class="absolute pin bg-80 z-20 opacity-75" />
-        </portal>
     </div>
 </template>
 
@@ -19,11 +16,23 @@ export default {
 
     created() {
         document.addEventListener('keydown', this.handleEscape)
+        document.body.classList.add('overflow-hidden')
+
+        const modalBg = document.createElement('div')
+        modalBg.classList = 'fixed pin bg-80 z-20 opacity-75'
+
+        this.modalBg = modalBg
+
+        document.body.appendChild(this.modalBg)
     },
 
     destroyed() {
         document.removeEventListener('keydown', this.handleEscape)
+        document.body.classList.remove('overflow-hidden')
+        document.body.removeChild(this.modalBg)
     },
+
+    data: () => ({ modalBg: null }),
 
     methods: {
         handleEscape(e) {

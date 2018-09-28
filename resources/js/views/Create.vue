@@ -58,12 +58,22 @@ export default {
     },
 
     data: () => ({
+        relationResponse: null,
         loading: true,
         fields: [],
         validationErrors: new Errors(),
     }),
 
-    created() {
+    async created() {
+        // If this create is via a relation index, then let's grab the field
+        // and use the label for that as the one we use for the title and buttons
+        if (this.isRelation) {
+            const { data } = await Nova.request(
+                '/nova-api/' + this.viaResource + '/field/' + this.viaRelationship
+            )
+            this.relationResponse = data
+        }
+
         this.getFields()
     },
 
@@ -163,7 +173,15 @@ export default {
 
     computed: {
         singularName() {
+            if (this.relationResponse) {
+                return this.relationResponse.singularLabel
+            }
+
             return this.resourceInformation.singularLabel
+        },
+
+        isRelation() {
+            return Boolean(this.viaResourceId && this.viaRelationship)
         },
     },
 }

@@ -63,7 +63,6 @@
                 </div>
             </div>
         </div>
-        <portal-target name="modal-background" slim></portal-target>
     </div>
 
     <script>
