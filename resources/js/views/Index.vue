@@ -441,7 +441,15 @@ export default {
          */
         handleKeydown(e) {
             // `c`
-            if (!e.ctrlKey && !e.altKey && !e.metaKey && !e.shiftKey && e.keyCode == 67) {
+            if (
+                !e.ctrlKey &&
+                !e.altKey &&
+                !e.metaKey &&
+                !e.shiftKey &&
+                e.keyCode == 67 &&
+                e.target.tagName != 'INPUT' &&
+                e.target.tagName != 'TEXTAREA'
+            ) {
                 this.$router.push({ name: 'create', params: { resourceName: this.resourceName } })
             }
         },

@@ -215,7 +215,15 @@ export default {
          * Handle the keydown event
          */
         handleKeydown(e) {
-            if (!e.ctrlKey && !e.altKey && !e.metaKey && !e.shiftKey && e.keyCode == 69) {
+            if (
+                !e.ctrlKey &&
+                !e.altKey &&
+                !e.metaKey &&
+                !e.shiftKey &&
+                e.keyCode == 69 &&
+                e.target.tagName != 'INPUT' &&
+                e.target.tagName != 'TEXTAREA'
+            ) {
                 this.$router.push({ name: 'edit', params: { id: this.resource.id } })
             }
         },
