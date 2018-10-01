@@ -22,7 +22,7 @@ class FieldDestroyController extends Controller
 
         $resource->authorizeToUpdate($request);
 
-        $field = $resource->detailFields($request)
+        $field = $resource->availableFields($request)
                     ->whereInstanceOf(File::class)
                     ->findFieldByAttribute($request->field, function () {
                         abort(404);
