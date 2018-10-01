@@ -46,7 +46,7 @@ class Code extends Field
         $value = parent::resolveAttribute($resource, $attribute);
 
         if ($this->json) {
-            return is_array($value)
+            return is_array($value) || is_object($value)
                     ? json_encode($value, $this->jsonOptions ?? JSON_PRETTY_PRINT)
                     : json_encode(json_decode($value), $this->jsonOptions ?? JSON_PRETTY_PRINT);
         }
