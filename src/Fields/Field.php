@@ -179,7 +179,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
         $value = data_get($resource, str_replace('->', '.', $attribute), '___missing');
 
         if (is_callable($this->resolveCallback) && $value !== '___missing') {
-            $this->value = call_user_func($this->resolveCallback, $value);
+            $this->value = call_user_func($this->resolveCallback, $value, $resource);
         }
     }
 
