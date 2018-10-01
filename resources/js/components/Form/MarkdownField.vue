@@ -2,8 +2,9 @@
     <default-field :field="field" :errors="errors" :full-width-content="true">
         <template slot="field">
             <div class="bg-white rounded-lg" :class="{
-                'fixed pin z-50': fullScreen,
-                'form-input form-input-bordered px-0': ! fullScreen,
+                'markdown-fullscreen fixed pin z-50': isFullScreen,
+                'form-input form-input-bordered px-0': ! isFullScreen,
+                'form-control-focus': isFocused,
                 'border-danger': errors.has('body'),
             }">
                 <header class="flex items-center content-center justify-between border-b border-60">
@@ -18,12 +19,18 @@
                     </ul>
                 </header>
 
-                <div class="p-4">
-                    <div v-show="mode == 'write'">
-                        <textarea ref="theTextarea"/>
-                    </div>
-                    <div class="markdown" v-if="mode == 'preview'" v-html="previewContent"></div>
+                <div
+                    v-show="mode == 'write'"
+                    class="flex markdown-content relative p-4"
+                >
+                    <textarea ref="theTextarea"/>
                 </div>
+
+                <div
+                    v-if="mode == 'preview'"
+                    class="markdown overflow-scroll p-4"
+                    v-html="previewContent"
+                ></div>
             </div>
         </template>
     </default-field>
@@ -55,6 +62,7 @@ const actions = {
 
     toggleFullScreen() {
         this.fullScreen = !this.fullScreen
+        this.$nextTick(() => this.codemirror.refresh())
     },
 
     fullScreen() {
@@ -80,6 +88,7 @@ export default {
 
     data: () => ({
         fullScreen: false,
+        isFocused: false,
         codemirror: null,
         mode: 'write',
         tools: [
@@ -127,9 +136,14 @@ export default {
             this.value = cm.getValue()
         })
 
+        this.codemirror.on('focus', () => (this.isFocused = true))
+        this.codemirror.on('blur', () => (this.isFocused = false))
+
         if (this.field.value) {
             this.doc.setValue(this.field.value)
         }
+
+        this.$nextTick(() => this.codemirror.refresh())
     },
 
     methods: {
@@ -204,6 +218,10 @@ export default {
             return this.codemirror.getDoc()
         },
 
+        isFullScreen() {
+            return this.fullScreen == true
+        },
+
         cursor() {
             return this.doc.getCursor()
         },
@@ -266,34 +284,15 @@ export default {
 
 .CodeMirror {
     height: auto;
-    min-height: 50px;
     font: 14px/1.5 Menlo, Consolas, Monaco, 'Andale Mono', monospace;
     box-sizing: border-box;
-    height: auto;
-    margin: auto;
-    position: relative;
-    z-index: 0;
 }
 
-.CodeMirror-scroll {
-    height: auto;
-    overflow: visible;
-    box-sizing: border-box;
+.markdown-fullscreen .markdown-content {
+    height: calc(100vh - 30px);
 }
 
-/* Fullscreen Mode */
-:-webkit-full-screen {
-    width: 100%;
+.markdown-fullscreen .CodeMirror {
     height: 100%;
-}
-
-:-moz-full-screen .CodeMirror-scroll {
-    height: 100%;
-    overflow: scroll;
-}
-
-:-webkit-full-screen .CodeMirror-scroll {
-    height: 100%;
-    overflow: scroll;
 }
 </style>
