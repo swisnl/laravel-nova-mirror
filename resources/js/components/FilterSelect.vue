@@ -1,10 +1,7 @@
 <template>
     <div>
-        <slot name="default"></slot>
-
-        <div class="p-3">
-            <slot name="select"></slot>
-        </div>
+        <slot />
+        <slot name="select" />
     </div>
 </template>
 

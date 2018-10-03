@@ -21,6 +21,13 @@ abstract class Filter implements JsonSerializable
     public $name;
 
     /**
+     * The field's component.
+     *
+     * @var string
+     */
+    public $component = 'select-filter';
+
+    /**
      * The callback used to authorize viewing the filter.
      *
      * @var \Closure|null
@@ -91,6 +98,7 @@ abstract class Filter implements JsonSerializable
         return [
             'class' => get_class($this),
             'name' => $this->name(),
+            'component' => $this->component,
             'options' => collect($this->options($container->make(Request::class)))->map(function ($value, $key) {
                 return ['name' => $key, 'value' => $value];
             })->values()->all(),

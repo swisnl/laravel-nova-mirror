@@ -1,16 +1,18 @@
 <template>
-    <select
-        :dusk="filter.name + '-filter-select'"
-        class="block w-full form-control-sm form-select"
-        :value="value"
-        @change="filterChanged"
-    >
-        <option value="" selected>&mdash;</option>
+    <div class="p-2">
+        <select
+            :dusk="filter.name + '-filter-select'"
+            class="block w-full form-control-sm form-select"
+            :value="value"
+            @change="filterChanged"
+        >
+            <option value="" selected>&mdash;</option>
 
-        <option v-for="option in filter.options" :value="option.value">
-            {{ option.name }}
-        </option>
-    </select>
+            <option v-for="option in filter.options" :value="option.value">
+                {{ option.name }}
+            </option>
+        </select>
+    </div>
 </template>
 
 <script>

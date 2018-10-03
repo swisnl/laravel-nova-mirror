@@ -564,6 +564,8 @@ export default {
                 .then(response => {
                     this.filters = response.data
                     this.initializeFilterValuesFromQueryString()
+
+                    console.log(this.filters, this.currentFilters)
                 })
         },
 
@@ -1011,6 +1013,10 @@ export default {
          */
         headingTitle() {
             return this.isRelation && this.field ? this.field.name : this.resourceResponse.label
+        },
+
+        hasFiltersApplied() {
+            return btoa(JSON.stringify(this.filters)) != btoa(JSON.stringify(this.currentFilters))
         },
     },
 }

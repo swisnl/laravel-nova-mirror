@@ -33,16 +33,18 @@
                         {{__('Trashed')}}:
                     </h3>
 
-                    <select slot="select"
-                        class="block w-full form-control-sm form-select"
-                        dusk="trashed-select"
-                        :value="trashed"
-                        @change="trashedChanged"
-                    >
-                        <option value="" selected>&mdash;</option>
-                        <option value="with">{{__('With Trashed')}}</option>
-                        <option value="only">{{__('Only Trashed')}}</option>
-                    </select>
+                    <div class="p-2">
+                        <select slot="select"
+                            class="block w-full form-control-sm form-select"
+                            dusk="trashed-select"
+                            :value="trashed"
+                            @change="trashedChanged"
+                        >
+                            <option value="" selected>&mdash;</option>
+                            <option value="with">{{__('With Trashed')}}</option>
+                            <option value="only">{{__('Only Trashed')}}</option>
+                        </select>
+                    </div>
                 </filter-select>
 
                 <!-- Per Page -->
@@ -51,16 +53,18 @@
                         {{__('Per Page')}}
                     </h3>
 
-                    <select slot="select"
-                        dusk="per-page-select"
-                        class="block w-full form-control-sm form-select"
-                        :value="perPage"
-                        @change="perPageChanged"
-                    >
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select>
+                    <div class="p-2">
+                        <select slot="select"
+                            dusk="per-page-select"
+                            class="block w-full form-control-sm form-select"
+                            :value="perPage"
+                            @change="perPageChanged"
+                        >
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
                 </filter-select>
             </scroll-wrap>
         </dropdown-menu>
@@ -80,7 +84,7 @@ export default {
             type: String,
             validator: value => ['', 'with', 'only'].indexOf(value) != -1,
         },
-        perPage: String,
+        perPage: [String, Number],
         showTrashedOption: {
             type: Boolean,
             default: true,

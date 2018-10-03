@@ -5,8 +5,9 @@
                 {{ filter.name }}
             </h3>
 
-            <SelectFilter
+            <component
                 slot="select"
+                :is="filter.component"
                 :filter="filter"
                 v-model="filter.currentValue"
                 @change="filterChanged(filter)"
