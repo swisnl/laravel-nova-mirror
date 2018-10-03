@@ -37,17 +37,17 @@ export default {
          * Handle a filter selection change.
          */
         filterChanged(filter) {
-            this.current = _.reject(this.current, f => f.class == filter.class)
+            let newCurrent = _.reject(this.currentFilters, f => f.class == filter.class)
 
             if (filter.currentValue !== '') {
-                this.current.push({
+                newCurrent.push({
                     class: filter.class,
                     value: filter.currentValue,
                 })
             }
 
-            this.$emit('update:currentFilters', this.current)
-            this.$emit('changed')
+            // Broadcast the new filter selections to the parent component
+            this.$emit('changed', newCurrent)
         },
     },
 }
