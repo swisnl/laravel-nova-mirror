@@ -77,7 +77,6 @@
                         :actions="actions"
                         :pivot-actions="pivotActions"
                         :pivot-name="pivotName"
-                        :errors="actionValidationErrors"
                         :selected-resources="selectedResourcesForActionSelector"
                         :endpoint="lensActionEndpoint"
                         :query-string="{
@@ -91,43 +90,20 @@
                         @actionExecuted="getResources"
                     />
 
-                    <dropdown
-                        v-if="filters.length > 0 || softDeletes || !viaResource"
-                        data-testid="filter-selector"
-                        dusk="filter-selector"
-                        class="bg-30 hover:bg-40 rounded"
-                    >
-                        <dropdown-trigger slot-scope="{toggle}" :handle-click="toggle" class="px-3">
-                            <icon type="filter" class="text-80" />
-                        </dropdown-trigger>
-
-                        <dropdown-menu slot="menu" width="290" direction="rtl" :dark="true">
-                            <!-- Filters -->
-                            <filter-selector
-                                :filters="filters"
-                                :current-filters.sync="currentFilters"
-                                @changed="filterChanged"
-                                v-if="! viaHasOne">
-                            </filter-selector>
-
-                            <!-- Per Page -->
-                            <filter-select v-if="!viaResource">
-                                <h3 slot="default" class="text-sm uppercase tracking-wide text-80 bg-30 p-3">
-                                    {{__('Per Page:')}}
-                                </h3>
-
-                                <select slot="select"
-                                    dusk="per-page-select"
-                                    class="block w-full form-control-sm form-select"
-                                    v-model="perPage" @change="perPageChanged"
-                                >
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                </select>
-                            </filter-select>
-                        </dropdown-menu>
-                    </dropdown>
+                    <filter-menu
+                        :filters="filters"
+                        :soft-deletes="softDeletes"
+                        :via-resource="viaResource"
+                        :via-has-one="viaHasOne"
+                        :current-filters="currentFilters"
+                        :trashed="trashed"
+                        :per-page="perPage"
+                        :show-trashed-option="false"
+                        @clear-selected-filters="clearSelectedFilters"
+                        @filter-changed="updateFilters"
+                        @trashed-changed="trashedChanged"
+                        @per-page-changed="updatePerPageChanged"
+                    />
 
                     <delete-menu
                         v-if="shouldShowDeleteMenu"
@@ -452,6 +428,22 @@ export default {
         },
 
         /**
+         * Clear filters and reset the resource table
+         */
+        clearSelectedFilters() {
+            this.clearAllFilters()
+            this.filterChanged()
+        },
+
+        /**
+         * Update the currentFilters with newFilters
+         */
+        updateFilters(newFilters) {
+            this.currentFilters = newFilters
+            this.filterChanged()
+        },
+
+        /**
          * Clear the selected resouces and the "select all" states.
          */
         clearResourceSelections() {
@@ -513,8 +505,17 @@ export default {
         /**
          * Update the trashed constraint for the resource listing.
          */
-        trashedChanged() {
+        trashedChanged(trashedStatus) {
+            this.trashed = trashedStatus
             this.updateQueryString({ [this.trashedParameter]: this.trashed })
+        },
+
+        /**
+         * Update the per page parameter in the query string
+         */
+        updatePerPageChanged(perPage) {
+            this.perPage = perPage
+            this.perPageChanged()
         },
     },
 

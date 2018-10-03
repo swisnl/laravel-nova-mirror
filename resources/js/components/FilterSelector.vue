@@ -5,25 +5,25 @@
                 {{ filter.name }}
             </h3>
 
-            <select slot="select"
-                    :dusk="filter.name + '-filter-select'"
-                    class="block w-full form-control-sm form-select"
-                    v-model="filter.currentValue"
-                    @change="filterChanged(filter)"
-            >
-                <option value="" selected>&mdash;</option>
-
-                <option v-for="option in filter.options" :value="option.value">
-                    {{ option.name }}
-                </option>
-            </select>
+            <SelectFilter
+                slot="select"
+                :filter="filter"
+                v-model="filter.currentValue"
+                @change="filterChanged(filter)"
+            />
         </filter-select>
     </div>
 </template>
 
 <script>
+import SelectFilter from '@/components/Filters/SelectFilter'
+
 export default {
     props: ['filters', 'currentFilters'],
+
+    components: {
+        SelectFilter,
+    },
 
     /**
      * Mount the component.
@@ -37,17 +37,17 @@ export default {
          * Handle a filter selection change.
          */
         filterChanged(filter) {
-            this.current = _.reject(this.current, f => f.class == filter.class)
+            let newCurrent = _.reject(this.currentFilters, f => f.class == filter.class)
 
             if (filter.currentValue !== '') {
-                this.current.push({
+                newCurrent.push({
                     class: filter.class,
                     value: filter.currentValue,
                 })
             }
 
-            this.$emit('update:currentFilters', this.current)
-            this.$emit('changed')
+            // Broadcast the new filter selections to the parent component
+            this.$emit('changed', newCurrent)
         },
     },
 }
