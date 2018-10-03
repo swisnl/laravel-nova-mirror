@@ -9,7 +9,7 @@
         </dropdown-trigger>
 
         <dropdown-menu slot="menu" width="290" direction="rtl" :dark="true">
-            <scroll-wrap>
+            <scroll-wrap :height="350">
                 <div class="bg-30 border-b border-60 ">
                     <button
                         @click="clearSelectedFilters"
@@ -48,7 +48,7 @@
                 <!-- Per Page -->
                 <filter-select v-if="!viaResource">
                     <h3 slot="default" class="text-sm uppercase tracking-wide text-80 bg-30 p-3">
-                        {{__('Per Page:')}}
+                        {{__('Per Page')}}
                     </h3>
 
                     <select slot="select"

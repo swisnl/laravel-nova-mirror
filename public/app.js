@@ -2364,8 +2364,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
 
 exports.default = {
     props: (_props = {
@@ -2435,32 +2433,19 @@ exports.default = {};
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+var _SelectFilter = __webpack_require__("./resources/js/components/Filters/SelectFilter.vue");
+
+var _SelectFilter2 = _interopRequireDefault(_SelectFilter);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
     props: ['filters', 'currentFilters'],
+
+    components: {
+        SelectFilter: _SelectFilter2.default
+    },
 
     /**
      * Mount the component.
@@ -2488,6 +2473,70 @@ exports.default = {
 
             // Broadcast the new filter selections to the parent component
             this.$emit('changed', newCurrent);
+        }
+    }
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],[\"env\"]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-runtime\",\"transform-vue-jsx\",\"syntax-jsx\",\"transform-object-rest-spread\"],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/Filters/SelectFilter.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+    props: {
+        filter: {
+            type: Object,
+            required: true
+        },
+
+        value: {
+            type: [String, Number],
+            required: true
+        }
+    },
+
+    methods: {
+        filterChanged: function filterChanged(event) {
+            this.$emit('input', event.target.value);
+            this.$emit('change');
         }
     }
 };
@@ -40144,7 +40193,7 @@ var render = function() {
         "dropdown",
         {
           staticClass: "bg-30 hover:bg-40 rounded",
-          attrs: { "data-testid": "filter-selector", dusk: "filter-selector" },
+          attrs: { dusk: "filter-selector" },
           scopedSlots: _vm._u([
             {
               key: "default",
@@ -40180,6 +40229,7 @@ var render = function() {
             [
               _c(
                 "scroll-wrap",
+                { attrs: { height: 350 } },
                 [
                   _c("div", { staticClass: "bg-30 border-b border-60 " }, [
                     _c(
@@ -40233,11 +40283,7 @@ var render = function() {
                           {
                             staticClass:
                               "block w-full form-control-sm form-select",
-                            attrs: {
-                              slot: "select",
-                              "data-testid": "trashed-select",
-                              dusk: "trashed-select"
-                            },
+                            attrs: { slot: "select", dusk: "trashed-select" },
                             domProps: { value: _vm.trashed },
                             on: { change: _vm.trashedChanged },
                             slot: "select"
@@ -40274,7 +40320,7 @@ var render = function() {
                           [
                             _vm._v(
                               "\n                    " +
-                                _vm._s(_vm.__("Per Page:")) +
+                                _vm._s(_vm.__("Per Page")) +
                                 "\n                "
                             )
                           ]
@@ -40954,6 +41000,45 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-5f19d19d", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-5f7f3e33\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/Filters/SelectFilter.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "select",
+    {
+      staticClass: "block w-full form-control-sm form-select",
+      attrs: { dusk: _vm.filter.name + "-filter-select" },
+      domProps: { value: _vm.value },
+      on: { change: _vm.filterChanged }
+    },
+    [
+      _c("option", { attrs: { value: "", selected: "" } }, [_vm._v("—")]),
+      _vm._v(" "),
+      _vm._l(_vm.filter.options, function(option) {
+        return _c("option", { domProps: { value: option.value } }, [
+          _vm._v("\n        " + _vm._s(option.name) + "\n    ")
+        ])
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5f7f3e33", module.exports)
   }
 }
 
@@ -41887,68 +41972,39 @@ var render = function() {
   return _c(
     "div",
     _vm._l(_vm.filters, function(filter) {
-      return _c("filter-select", { key: filter.name }, [
-        _c(
-          "h3",
-          {
-            staticClass: "text-sm uppercase tracking-wide text-80 bg-30 p-3",
-            attrs: { slot: "default" },
-            slot: "default"
-          },
-          [_vm._v("\n            " + _vm._s(filter.name) + "\n        ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: filter.currentValue,
-                expression: "filter.currentValue"
-              }
-            ],
-            staticClass: "block w-full form-control-sm form-select",
-            attrs: { slot: "select", dusk: filter.name + "-filter-select" },
-            on: {
-              change: [
-                function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.$set(
-                    filter,
-                    "currentValue",
-                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                  )
-                },
-                function($event) {
-                  _vm.filterChanged(filter)
-                }
-              ]
+      return _c(
+        "filter-select",
+        { key: filter.name },
+        [
+          _c(
+            "h3",
+            {
+              staticClass: "text-sm uppercase tracking-wide text-80 bg-30 p-3",
+              attrs: { slot: "default" },
+              slot: "default"
             },
-            slot: "select"
-          },
-          [
-            _c("option", { attrs: { value: "", selected: "" } }, [_vm._v("—")]),
-            _vm._v(" "),
-            _vm._l(filter.options, function(option) {
-              return _c("option", { domProps: { value: option.value } }, [
-                _vm._v(
-                  "\n                " + _vm._s(option.name) + "\n            "
-                )
-              ])
-            })
-          ],
-          2
-        )
-      ])
+            [_vm._v("\n            " + _vm._s(filter.name) + "\n        ")]
+          ),
+          _vm._v(" "),
+          _c("SelectFilter", {
+            attrs: { slot: "select", filter: filter },
+            on: {
+              change: function($event) {
+                _vm.filterChanged(filter)
+              }
+            },
+            slot: "select",
+            model: {
+              value: filter.currentValue,
+              callback: function($$v) {
+                _vm.$set(filter, "currentValue", $$v)
+              },
+              expression: "filter.currentValue"
+            }
+          })
+        ],
+        1
+      )
     })
   )
 }
@@ -50874,6 +50930,54 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-754a0322", Component.options)
   } else {
     hotAPI.reload("data-v-754a0322", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Filters/SelectFilter.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],[\"env\"]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-runtime\",\"transform-vue-jsx\",\"syntax-jsx\",\"transform-object-rest-spread\"],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/Filters/SelectFilter.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-5f7f3e33\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/Filters/SelectFilter.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Filters/SelectFilter.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5f7f3e33", Component.options)
+  } else {
+    hotAPI.reload("data-v-5f7f3e33", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
