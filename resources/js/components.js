@@ -29,7 +29,6 @@ import Error404 from '@/views/Error404'
 import Excerpt from '@/components/Excerpt'
 import FakeCheckbox from '@/components/Index/FakeCheckbox'
 import Filter from '@/components/Icons/Filter'
-import FilterSelect from '@/components/FilterSelect'
 import FilterSelector from '@/components/FilterSelector'
 import FilterMenu from '@/components/FilterMenu'
 import ForceDelete from '@/components/Icons/ForceDelete'
@@ -100,7 +99,6 @@ Vue.component('error-403', Error403)
 Vue.component('error-404', Error404)
 Vue.component('excerpt', Excerpt)
 Vue.component('fake-checkbox', FakeCheckbox)
-Vue.component('filter-select', FilterSelect)
 Vue.component('filter-selector', FilterSelector)
 Vue.component('filter-menu', FilterMenu)
 Vue.component('form-label', Label)

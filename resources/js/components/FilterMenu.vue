@@ -20,15 +20,24 @@
                 </div>
 
                 <!-- Custom Filters -->
-                <filter-selector
+                <component
+                    v-for="filter in filters"
+                    :key="filter.name"
+                    :is="filter.component"
+                    :filter="filter"
+                    :value="filter.currentValue"
+                    @input="filterChanged(filter)"
+                    @change="filterChanged(filter)"
+                />
+<!--                 <filter-selector
                     :filters="filters"
                     :current-filters="currentFilters"
                     @changed="filterChanged"
                     v-if="! viaHasOne">
                 </filter-selector>
-
+ -->
                 <!-- Soft Deletes -->
-                <filter-select v-if="softDeletes && showTrashedOption">
+                <div v-if="softDeletes && showTrashedOption">
                     <h3 slot="default" class="text-sm uppercase tracking-wide text-80 bg-30 p-3">
                         {{__('Trashed')}}:
                     </h3>
@@ -45,10 +54,10 @@
                             <option value="only">{{__('Only Trashed')}}</option>
                         </select>
                     </div>
-                </filter-select>
+                </div>
 
                 <!-- Per Page -->
-                <filter-select v-if="!viaResource">
+                <div v-if="!viaResource">
                     <h3 slot="default" class="text-sm uppercase tracking-wide text-80 bg-30 p-3">
                         {{__('Per Page')}}
                     </h3>
@@ -65,7 +74,7 @@
                             <option value="100">100</option>
                         </select>
                     </div>
-                </filter-select>
+                </div>
             </scroll-wrap>
         </dropdown-menu>
     </dropdown>
@@ -75,7 +84,7 @@
 export default {
     props: {
         filters: Array,
-        currentFilters: Array,
+        // currentFilters: Array,
         softDeletes: Boolean,
         viaResource: String,
         viaHasOne: Boolean,
@@ -94,6 +103,7 @@ export default {
     methods: {
         clearSelectedFilters() {
             this.$emit('clear-selected-filters')
+            // Nova.$emit('clear-selected-filters')
         },
 
         filterChanged(newFilters) {

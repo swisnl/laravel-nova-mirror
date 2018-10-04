@@ -1,30 +1,19 @@
 <template>
     <div>
-        <filter-select v-for="filter in filters" :key="filter.name">
-            <h3 slot="default" class="text-sm uppercase tracking-wide text-80 bg-30 p-3">
-                {{ filter.name }}
-            </h3>
-
-            <component
-                slot="select"
-                :is="filter.component"
-                :filter="filter"
-                v-model="filter.currentValue"
-                @change="filterChanged(filter)"
-            />
-        </filter-select>
+        <component
+            v-for="filter in filters"
+            :key="filter.name"
+            :is="filter.component"
+            :filter="filter"
+            v-model="filter.currentValue"
+            @change="filterChanged(filter)"
+        />
     </div>
 </template>
 
 <script>
-import SelectFilter from '@/components/Filters/SelectFilter'
-
 export default {
     props: ['filters', 'currentFilters'],
-
-    components: {
-        SelectFilter,
-    },
 
     /**
      * Mount the component.

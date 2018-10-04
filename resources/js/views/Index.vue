@@ -564,8 +564,6 @@ export default {
                 .then(response => {
                     this.filters = response.data
                     this.initializeFilterValuesFromQueryString()
-
-                    console.log(this.filters, this.currentFilters)
                 })
         },
 
@@ -573,16 +571,21 @@ export default {
          * Clear filters and reset the resource table
          */
         clearSelectedFilters() {
-            this.clearAllFilters()
-            this.filterChanged()
+            //     console.log('clearing selected filters')
+            //     // Nova.$emit('clear-selected-filters')
+            //     this.filterChanged()
+            //     this.clearAllFilters()
+            //     // this.$nextTick(() => this.filterChanged())
+            //     // this.clearAllFilters()
+            //     this.syncFilterValues()
         },
 
         /**
          * Update the currentFilters with newFilters
          */
         updateFilters(newFilters) {
-            this.currentFilters = newFilters
-            this.filterChanged()
+            //     this.currentFilters = newFilters
+            //     this.filterChanged()
         },
 
         /**
@@ -1013,10 +1016,6 @@ export default {
          */
         headingTitle() {
             return this.isRelation && this.field ? this.field.name : this.resourceResponse.label
-        },
-
-        hasFiltersApplied() {
-            return btoa(JSON.stringify(this.filters)) != btoa(JSON.stringify(this.currentFilters))
         },
     },
 }

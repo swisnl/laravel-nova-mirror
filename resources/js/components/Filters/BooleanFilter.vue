@@ -1,7 +1,11 @@
 <template>
-    <div class="my-2">
+    <div>
+        <h3 class="text-sm uppercase tracking-wide text-80 bg-30 p-3">
+            {{ filter.name }}
+        </h3>
+
         <label
-            v-for="option in filter.options"
+            v-for="option in options"
             class="flex items-center m-2"
         >
             <div class="flex-no-shrink">
@@ -33,28 +37,65 @@ export default {
         value: {},
     },
 
-    data: () => ({ options: null }),
+    // watch: {
+    //     value: function(newData, oldData) {
+    //         console.log('watcher fired')
+    //         this.hydrateOptions()
+    //     },
+    //     //     filter: function(newData, oldData) {
+    //     //         this.hydrateOptions()
+    //     //     },
+    // },
 
-    created() {
-        this.options = _.map(this.filter.options, option => {
-            return {
-                name: option.name,
-                value: option.value,
-                checked: false,
-            }
-        })
-    },
+    // data: () => ({ options: null }),
 
-    methods: {
-        updateCheckedState(event, key) {
-            const option = _(this.options).find(option => option.value == key)
+    // created() {
+    //     this.hydrateOptions()
 
-            option.checked = !option.checked
+    //     // Nova.$on('clear-selected-filters', () => {
+    //     //     console.log('clearing-selected-filters')
+    //     //     //     // this.$nextTick(() => {
+    //     //     // _(this.options).each(option => {
+    //     //     //     console.log(option.checked)
+    //     //     //     return (option.checked = false)
+    //     //     //     console.log(option.checked)
+    //     //     // })
 
-            this.$emit('input', this.options)
+    //     //     this.$emit(
+    //     //         'input',
+    //     //         _(this.options).map(option => {
+    //     //             return {
+    //     //                 ...option,
+    //     //                 ...{ checked: false },
+    //     //             }
+    //     //         })
+    //     //     )
 
-            this.$emit('change')
-        },
-    },
+    //     //     this.$emit('change')
+    //     // })
+    // },
+
+    // methods: {
+    //     hydrateOptions() {
+    //         this.options = _.map(this.filter.options, option => {
+    //             return {
+    //                 name: option.name,
+    //                 value: option.value,
+    //                 checked: false,
+    //             }
+    //         })
+    //     },
+
+    //     updateCheckedState(event, key) {
+    //         console.log(`Updating checked state for ${key}`)
+    //         const option = _(this.options).find(option => option.value == key)
+
+    //         option.checked = !option.checked
+
+    //         this.$emit('input', this.options)
+
+    //         this.$emit('change')
+    //     },
+    // },
 }
 </script>

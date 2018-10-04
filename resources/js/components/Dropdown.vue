@@ -3,7 +3,7 @@
         <slot :toggle="toggle" />
 
         <transition name="fade">
-            <slot v-if="visible" name="menu" />
+            <slot v-if="true" name="menu" />
         </transition>
     </div>
 </template>

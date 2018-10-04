@@ -14,7 +14,7 @@ var _lodash = __webpack_require__("./node_modules/lodash/lodash.js");
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -358,7 +358,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 exports.default = {
     props: {
@@ -1484,7 +1484,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.InteractsWithDates],
@@ -1904,7 +1904,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.BehavesAsPanel],
@@ -1979,7 +1979,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.BehavesAsPanel]
@@ -2412,11 +2412,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     props: (_props = {
         filters: Array,
-        currentFilters: Array,
+        // currentFilters: Array,
         softDeletes: Boolean,
         viaResource: String,
         viaHasOne: Boolean
@@ -2433,6 +2442,7 @@ exports.default = {
     methods: {
         clearSelectedFilters: function clearSelectedFilters() {
             this.$emit('clear-selected-filters');
+            // Nova.$emit('clear-selected-filters')
         },
         filterChanged: function filterChanged(newFilters) {
             this.$emit('filter-changed', newFilters);
@@ -2448,27 +2458,6 @@ exports.default = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],[\"env\"]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-runtime\",\"transform-vue-jsx\",\"syntax-jsx\",\"transform-object-rest-spread\"],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/FilterSelect.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {};
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],[\"env\"]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-runtime\",\"transform-vue-jsx\",\"syntax-jsx\",\"transform-object-rest-spread\"],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/FilterSelector.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2478,19 +2467,22 @@ exports.default = {};
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _SelectFilter = __webpack_require__("./resources/js/components/Filters/SelectFilter.vue");
-
-var _SelectFilter2 = _interopRequireDefault(_SelectFilter);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     props: ['filters', 'currentFilters'],
-
-    components: {
-        SelectFilter: _SelectFilter2.default
-    },
 
     /**
      * Mount the component.
@@ -2520,24 +2512,7 @@ exports.default = {
             this.$emit('changed', newCurrent);
         }
     }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+};
 
 /***/ }),
 
@@ -2567,37 +2542,73 @@ exports.default = {
         },
 
         value: {}
-    },
-
-    data: function data() {
-        return { options: null };
-    },
-
-    created: function created() {
-        this.options = _.map(this.filter.options, function (option) {
-            return {
-                name: option.name,
-                value: option.value,
-                checked: false
-            };
-        });
-    },
-
-
-    methods: {
-        updateCheckedState: function updateCheckedState(event, key) {
-            var option = _(this.options).find(function (option) {
-                return option.value == key;
-            });
-
-            option.checked = !option.checked;
-
-            this.$emit('input', this.options);
-
-            this.$emit('change');
-        }
     }
+
+    // watch: {
+    //     value: function(newData, oldData) {
+    //         console.log('watcher fired')
+    //         this.hydrateOptions()
+    //     },
+    //     //     filter: function(newData, oldData) {
+    //     //         this.hydrateOptions()
+    //     //     },
+    // },
+
+    // data: () => ({ options: null }),
+
+    // created() {
+    //     this.hydrateOptions()
+
+    //     // Nova.$on('clear-selected-filters', () => {
+    //     //     console.log('clearing-selected-filters')
+    //     //     //     // this.$nextTick(() => {
+    //     //     // _(this.options).each(option => {
+    //     //     //     console.log(option.checked)
+    //     //     //     return (option.checked = false)
+    //     //     //     console.log(option.checked)
+    //     //     // })
+
+    //     //     this.$emit(
+    //     //         'input',
+    //     //         _(this.options).map(option => {
+    //     //             return {
+    //     //                 ...option,
+    //     //                 ...{ checked: false },
+    //     //             }
+    //     //         })
+    //     //     )
+
+    //     //     this.$emit('change')
+    //     // })
+    // },
+
+    // methods: {
+    //     hydrateOptions() {
+    //         this.options = _.map(this.filter.options, option => {
+    //             return {
+    //                 name: option.name,
+    //                 value: option.value,
+    //                 checked: false,
+    //             }
+    //         })
+    //     },
+
+    //     updateCheckedState(event, key) {
+    //         console.log(`Updating checked state for ${key}`)
+    //         const option = _(this.options).find(option => option.value == key)
+
+    //         option.checked = !option.checked
+
+    //         this.$emit('input', this.options)
+
+    //         this.$emit('change')
+    //     },
+    // },
 }; //
+//
+//
+//
+//
 //
 //
 //
@@ -2646,6 +2657,12 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     props: {
@@ -2662,8 +2679,17 @@ exports.default = {
 
     methods: {
         filterChanged: function filterChanged(event) {
-            this.$emit('input', event.target.value);
-            this.$emit('change');
+            // this.$emit('input', event.target.value)
+            // this.$emit('change')
+        }
+    },
+
+    computed: {
+        decodedFilters: function decodedFilters() {
+            var encodedFilters = $route.query['users_filter'];
+            var currentFilters = JSON.parse(atob(this.encodedFilters));
+
+            console.log('current:', currentFilters);
         }
     }
 };
@@ -2688,7 +2714,7 @@ var _BelongsToFieldStorage = __webpack_require__("./resources/js/storage/Belongs
 
 var _BelongsToFieldStorage2 = _interopRequireDefault(_BelongsToFieldStorage);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 var _vueClickaway = __webpack_require__("./node_modules/vue-clickaway/dist/vue-clickaway.common.js");
 
@@ -2996,7 +3022,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.HandlesValidationErrors, _laravelNova.FormField],
@@ -3095,7 +3121,7 @@ __webpack_require__("./node_modules/codemirror/keymap/vim.js");
 
 __webpack_require__("./node_modules/codemirror/mode/sql/sql.js");
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3224,7 +3250,7 @@ var _DateTimePicker = __webpack_require__("./resources/js/components/DateTimePic
 
 var _DateTimePicker2 = _interopRequireDefault(_DateTimePicker);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3274,7 +3300,7 @@ var _DateTimePicker = __webpack_require__("./resources/js/components/DateTimePic
 
 var _DateTimePicker2 = _interopRequireDefault(_DateTimePicker);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3343,7 +3369,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.HandlesValidationErrors],
@@ -3422,7 +3448,7 @@ var _DeleteButton = __webpack_require__("./resources/js/components/DeleteButton.
 
 var _DeleteButton2 = _interopRequireDefault(_DeleteButton);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3743,7 +3769,7 @@ var _codemirror2 = _interopRequireDefault(_codemirror);
 
 __webpack_require__("./node_modules/codemirror/mode/markdown/markdown.js");
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3996,7 +4022,7 @@ var _MorphToFieldStorage = __webpack_require__("./resources/js/storage/MorphToFi
 
 var _MorphToFieldStorage2 = _interopRequireDefault(_MorphToFieldStorage);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4368,7 +4394,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.HandlesValidationErrors, _laravelNova.FormField]
@@ -4402,7 +4428,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.HandlesValidationErrors, _laravelNova.FormField],
@@ -4788,7 +4814,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.HandlesValidationErrors, _laravelNova.FormField],
@@ -4843,7 +4869,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.HandlesValidationErrors, _laravelNova.FormField],
@@ -4897,7 +4923,7 @@ var _extends2 = __webpack_require__("./node_modules/babel-runtime/helpers/extend
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4953,7 +4979,7 @@ var _extends2 = __webpack_require__("./node_modules/babel-runtime/helpers/extend
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5012,7 +5038,7 @@ var _Trix = __webpack_require__("./resources/js/components/Trix.vue");
 
 var _Trix2 = _interopRequireDefault(_Trix);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5148,7 +5174,7 @@ var _asyncToGenerator2 = __webpack_require__("./node_modules/babel-runtime/helpe
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 var _vueClickaway = __webpack_require__("./node_modules/vue-clickaway/dist/vue-clickaway.common.js");
 
@@ -5697,7 +5723,7 @@ var _promise = __webpack_require__("./node_modules/babel-runtime/core-js/promise
 
 var _promise2 = _interopRequireDefault(_promise);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5914,7 +5940,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.InteractsWithDates],
@@ -6825,7 +6851,7 @@ __webpack_require__("./node_modules/chartist-plugin-tooltips/dist/chartist-plugi
 
 __webpack_require__("./node_modules/chartist/dist/chartist.min.css");
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 __webpack_require__("./node_modules/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css");
 
@@ -7000,7 +7026,7 @@ var _numeral = __webpack_require__("./node_modules/numeral/numeral.js");
 
 var _numeral2 = _interopRequireDefault(_numeral);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7144,7 +7170,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 var _PartitionMetric = __webpack_require__("./resources/js/components/Metrics/Base/PartitionMetric.vue");
 
@@ -7240,7 +7266,7 @@ var _lodash = __webpack_require__("./node_modules/lodash/lodash.js");
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 var _TrendMetric = __webpack_require__("./resources/js/components/Metrics/Base/TrendMetric.vue");
 
@@ -7384,7 +7410,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 var _ValueMetric = __webpack_require__("./resources/js/components/Metrics/Base/ValueMetric.vue");
 
@@ -7569,7 +7595,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 exports.default = {
     props: {
@@ -8028,7 +8054,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.InteractsWithResourceInformation],
@@ -8642,7 +8668,7 @@ var _asyncToGenerator2 = __webpack_require__("./node_modules/babel-runtime/helpe
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9090,7 +9116,7 @@ var _asyncToGenerator2 = __webpack_require__("./node_modules/babel-runtime/helpe
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9402,7 +9428,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.HasCards],
@@ -9451,7 +9477,7 @@ var _asyncToGenerator2 = __webpack_require__("./node_modules/babel-runtime/helpe
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10063,10 +10089,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _stringify = __webpack_require__("./node_modules/babel-runtime/core-js/json/stringify.js");
-
-var _stringify2 = _interopRequireDefault(_stringify);
-
 var _defineProperty2 = __webpack_require__("./node_modules/babel-runtime/helpers/defineProperty.js");
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
@@ -10079,7 +10101,7 @@ var _asyncToGenerator2 = __webpack_require__("./node_modules/babel-runtime/helpe
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10633,8 +10655,6 @@ exports.default = {
             return Nova.request().get('/nova-api/' + this.resourceName + '/filters').then(function (response) {
                 _this6.filters = response.data;
                 _this6.initializeFilterValuesFromQueryString();
-
-                console.log(_this6.filters, _this6.currentFilters);
             });
         },
 
@@ -10643,8 +10663,13 @@ exports.default = {
          * Clear filters and reset the resource table
          */
         clearSelectedFilters: function clearSelectedFilters() {
-            this.clearAllFilters();
-            this.filterChanged();
+            //     console.log('clearing selected filters')
+            //     // Nova.$emit('clear-selected-filters')
+            //     this.filterChanged()
+            //     this.clearAllFilters()
+            //     // this.$nextTick(() => this.filterChanged())
+            //     // this.clearAllFilters()
+            //     this.syncFilterValues()
         },
 
 
@@ -10652,8 +10677,8 @@ exports.default = {
          * Update the currentFilters with newFilters
          */
         updateFilters: function updateFilters(newFilters) {
-            this.currentFilters = newFilters;
-            this.filterChanged();
+            //     this.currentFilters = newFilters
+            //     this.filterChanged()
         },
 
 
@@ -11117,9 +11142,6 @@ exports.default = {
          */
         headingTitle: function headingTitle() {
             return this.isRelation && this.field ? this.field.name : this.resourceResponse.label;
-        },
-        hasFiltersApplied: function hasFiltersApplied() {
-            return btoa((0, _stringify2.default)(this.filters)) != btoa((0, _stringify2.default)(this.currentFilters));
         }
     }
 };
@@ -11140,7 +11162,7 @@ var _defineProperty2 = __webpack_require__("./node_modules/babel-runtime/helpers
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11986,7 +12008,7 @@ var _asyncToGenerator2 = __webpack_require__("./node_modules/babel-runtime/helpe
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12340,7 +12362,7 @@ var _lodash = __webpack_require__("./node_modules/lodash/lodash.js");
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35907,27 +35929,6 @@ if (false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-24370702\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/FilterSelect.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [_vm._t("default"), _vm._v(" "), _vm._t("select")], 2)
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-24370702", module.exports)
-  }
-}
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-24b50e7a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/CustomDetailHeader.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -40368,26 +40369,32 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n                    " +
+                          "\n                        " +
                             _vm._s(_vm.__("× Clear Filters")) +
-                            "\n                "
+                            "\n                    "
                         )
                       ]
                     )
                   ]),
                   _vm._v(" "),
-                  !_vm.viaHasOne
-                    ? _c("filter-selector", {
-                        attrs: {
-                          filters: _vm.filters,
-                          "current-filters": _vm.currentFilters
+                  _vm._l(_vm.filters, function(filter) {
+                    return _c(filter.component, {
+                      key: filter.name,
+                      tag: "component",
+                      attrs: { filter: filter, value: filter.currentValue },
+                      on: {
+                        input: function($event) {
+                          _vm.filterChanged(filter)
                         },
-                        on: { changed: _vm.filterChanged }
-                      })
-                    : _vm._e(),
+                        change: function($event) {
+                          _vm.filterChanged(filter)
+                        }
+                      }
+                    })
+                  }),
                   _vm._v(" "),
                   _vm.softDeletes && _vm.showTrashedOption
-                    ? _c("filter-select", [
+                    ? _c("div", [
                         _c(
                           "h3",
                           {
@@ -40398,9 +40405,9 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                    " +
+                              "\n                        " +
                                 _vm._s(_vm.__("Trashed")) +
-                                ":\n                "
+                                ":\n                    "
                             )
                           ]
                         ),
@@ -40437,7 +40444,7 @@ var render = function() {
                     : _vm._e(),
                   _vm._v(" "),
                   !_vm.viaResource
-                    ? _c("filter-select", [
+                    ? _c("div", [
                         _c(
                           "h3",
                           {
@@ -40448,9 +40455,9 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                    " +
+                              "\n                        " +
                                 _vm._s(_vm.__("Per Page")) +
-                                "\n                "
+                                "\n                    "
                             )
                           ]
                         ),
@@ -40487,7 +40494,7 @@ var render = function() {
                       ])
                     : _vm._e()
                 ],
-                1
+                2
               )
             ],
             1
@@ -41146,26 +41153,36 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "p-2" }, [
+  return _c("div", [
     _c(
-      "select",
-      {
-        staticClass: "block w-full form-control-sm form-select",
-        attrs: { dusk: _vm.filter.name + "-filter-select" },
-        domProps: { value: _vm.value },
-        on: { change: _vm.filterChanged }
-      },
-      [
-        _c("option", { attrs: { value: "", selected: "" } }, [_vm._v("—")]),
-        _vm._v(" "),
-        _vm._l(_vm.filter.options, function(option) {
-          return _c("option", { domProps: { value: option.value } }, [
-            _vm._v("\n            " + _vm._s(option.name) + "\n        ")
-          ])
-        })
-      ],
-      2
-    )
+      "h3",
+      { staticClass: "text-sm uppercase tracking-wide text-80 bg-30 p-3" },
+      [_vm._v("\n        " + _vm._s(_vm.filter.name) + "\n    ")]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "p-2" }, [
+      _c(
+        "select",
+        {
+          staticClass: "block w-full form-control-sm form-select",
+          attrs: { dusk: _vm.filter.name + "-filter-select" },
+          domProps: { value: _vm.value },
+          on: { change: _vm.filterChanged }
+        },
+        [
+          _c("option", { attrs: { value: "", selected: "" } }, [_vm._v("—")]),
+          _vm._v(" "),
+          _vm._l(_vm.filter.options, function(option) {
+            return _c("option", { domProps: { value: option.value } }, [
+              _vm._v(
+                "\n                " + _vm._s(option.name) + "\n            "
+              )
+            ])
+          })
+        ],
+        2
+      )
+    ])
   ])
 }
 var staticRenderFns = []
@@ -42082,36 +42099,44 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "my-2" },
-    _vm._l(_vm.filter.options, function(option) {
-      return _c("label", { staticClass: "flex items-center m-2" }, [
-        _c(
-          "div",
-          { staticClass: "flex-no-shrink" },
-          [
-            _c("Checkbox", {
-              on: {
-                input: function($event) {
-                  _vm.updateCheckedState($event, option.value)
-                }
-              },
-              model: {
-                value: option.checked,
-                callback: function($$v) {
-                  _vm.$set(option, "checked", $$v)
+    [
+      _c(
+        "h3",
+        { staticClass: "text-sm uppercase tracking-wide text-80 bg-30 p-3" },
+        [_vm._v("\n        " + _vm._s(_vm.filter.name) + "\n    ")]
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.options, function(option) {
+        return _c("label", { staticClass: "flex items-center m-2" }, [
+          _c(
+            "div",
+            { staticClass: "flex-no-shrink" },
+            [
+              _c("Checkbox", {
+                on: {
+                  input: function($event) {
+                    _vm.updateCheckedState($event, option.value)
+                  }
                 },
-                expression: "option.checked"
-              }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "ml-2" }, [
-          _vm._v("\n            " + _vm._s(option.name) + "\n        ")
+                model: {
+                  value: option.checked,
+                  callback: function($$v) {
+                    _vm.$set(option, "checked", $$v)
+                  },
+                  expression: "option.checked"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "ml-2" }, [
+            _vm._v("\n            " + _vm._s(option.name) + "\n        ")
+          ])
         ])
-      ])
-    })
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -42161,40 +42186,23 @@ var render = function() {
   return _c(
     "div",
     _vm._l(_vm.filters, function(filter) {
-      return _c(
-        "filter-select",
-        { key: filter.name },
-        [
-          _c(
-            "h3",
-            {
-              staticClass: "text-sm uppercase tracking-wide text-80 bg-30 p-3",
-              attrs: { slot: "default" },
-              slot: "default"
-            },
-            [_vm._v("\n            " + _vm._s(filter.name) + "\n        ")]
-          ),
-          _vm._v(" "),
-          _c(filter.component, {
-            tag: "component",
-            attrs: { slot: "select", filter: filter },
-            on: {
-              change: function($event) {
-                _vm.filterChanged(filter)
-              }
-            },
-            slot: "select",
-            model: {
-              value: filter.currentValue,
-              callback: function($$v) {
-                _vm.$set(filter, "currentValue", $$v)
-              },
-              expression: "filter.currentValue"
-            }
-          })
-        ],
-        1
-      )
+      return _c(filter.component, {
+        key: filter.name,
+        tag: "component",
+        attrs: { filter: filter },
+        on: {
+          change: function($event) {
+            _vm.filterChanged(filter)
+          }
+        },
+        model: {
+          value: filter.currentValue,
+          callback: function($$v) {
+            _vm.$set(filter, "currentValue", $$v)
+          },
+          expression: "filter.currentValue"
+        }
+      })
     })
   )
 }
@@ -45006,7 +45014,7 @@ var render = function() {
       _c(
         "transition",
         { attrs: { name: "fade" } },
-        [_vm.visible ? _vm._t("menu") : _vm._e()],
+        [true ? _vm._t("menu") : _vm._e()],
         2
       )
     ],
@@ -49082,10 +49090,6 @@ var _Filter = __webpack_require__("./resources/js/components/Icons/Filter.vue");
 
 var _Filter2 = _interopRequireDefault(_Filter);
 
-var _FilterSelect = __webpack_require__("./resources/js/components/FilterSelect.vue");
-
-var _FilterSelect2 = _interopRequireDefault(_FilterSelect);
-
 var _FilterSelector = __webpack_require__("./resources/js/components/FilterSelector.vue");
 
 var _FilterSelector2 = _interopRequireDefault(_FilterSelector);
@@ -49273,7 +49277,6 @@ _vue2.default.component('error-403', _Error2.default);
 _vue2.default.component('error-404', _Error4.default);
 _vue2.default.component('excerpt', _Excerpt2.default);
 _vue2.default.component('fake-checkbox', _FakeCheckbox2.default);
-_vue2.default.component('filter-select', _FilterSelect2.default);
 _vue2.default.component('filter-selector', _FilterSelector2.default);
 _vue2.default.component('filter-menu', _FilterMenu2.default);
 _vue2.default.component('form-label', _Label2.default);
@@ -51242,54 +51245,6 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-5ba13222", Component.options)
   } else {
     hotAPI.reload("data-v-5ba13222", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/js/components/FilterSelect.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],[\"env\"]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-runtime\",\"transform-vue-jsx\",\"syntax-jsx\",\"transform-object-rest-spread\"],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/FilterSelect.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-24370702\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/FilterSelect.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/FilterSelect.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-24370702", Component.options)
-  } else {
-    hotAPI.reload("data-v-24370702", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
