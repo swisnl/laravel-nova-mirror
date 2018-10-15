@@ -1,13 +1,7 @@
 <template>
-    <p v-if="showHelpText" class="text-sm leading-normal text-80 italic">
-        <slot />
-    </p>
+    <div class="help-text" v-html="$slots.default[0].text" />
 </template>
 
 <script>
-export default {
-    props: {
-        showHelpText: { type: Boolean, default: true },
-    },
-}
+export default {}
 </script>

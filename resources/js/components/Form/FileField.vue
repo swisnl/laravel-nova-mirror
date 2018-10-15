@@ -1,5 +1,5 @@
 <template>
-    <default-field :field="field">
+    <default-field :field="field" :errors="errors">
         <template slot="field">
             <div v-if="hasValue" class="mb-6">
                 <template v-if="shouldShowLoader">
@@ -64,7 +64,7 @@
                 {{ currentLabel }}
             </span>
 
-            <p v-if="hasError" class="mt-4 text-danger">
+            <p v-if="hasError" class="text-xs mt-2 text-danger">
                 {{ firstError }}
             </p>
         </template>
@@ -95,7 +95,9 @@ export default {
 
     mounted() {
         this.field.fill = formData => {
-            formData.append(this.field.attribute, this.file, this.fileName)
+            if (this.file) {
+                formData.append(this.field.attribute, this.file, this.fileName)
+            }
         }
     },
 
@@ -160,17 +162,12 @@ export default {
 
     computed: {
         hasError() {
-            return (
-                this.errors.has(this.fieldAttribute) || this.uploadErrors.has(this.fieldAttribute)
-            )
+            return this.uploadErrors.has(this.fieldAttribute)
         },
 
         firstError() {
             if (this.hasError) {
-                return (
-                    this.errors.first(this.fieldAttribute) ||
-                    this.uploadErrors.first(this.fieldAttribute)
-                )
+                return this.uploadErrors.first(this.fieldAttribute)
             }
         },
 

@@ -5046,9 +5046,9 @@ laravel-mix@^1.0:
     webpack-notifier "^1.5.0"
     yargs "^8.0.1"
 
-laravel-nova@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/laravel-nova/-/laravel-nova-1.0.2.tgz#35d355378518c68940feb4440d80013d2c887659"
+laravel-nova@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/laravel-nova/-/laravel-nova-1.0.4.tgz#c9945031d3545aa933352b48363a574f068bb861"
   dependencies:
     form-backend-validation "^2.3.3"
     inflector-js "^1.0.1"
@@ -6396,7 +6396,7 @@ popper.js@^1.14.3:
   version "1.14.4"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.4.tgz#8eec1d8ff02a5a3a152dd43414a15c7b79fd69b6"
 
-portal-vue@^1.2.2:
+portal-vue@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/portal-vue/-/portal-vue-1.3.0.tgz#479630547c12bc94200d3485d40f21368955f809"
 

@@ -110,7 +110,7 @@ class Nova
      */
     public static function version()
     {
-        return '1.0.8';
+        return '1.1.4';
     }
 
     /**
@@ -214,6 +214,34 @@ class Nova
         static::$resources = array_merge(static::$resources, $resources);
 
         return new static;
+    }
+
+    /**
+     * Get the available resource groups for the given request.
+     *
+     * @param  Request $request
+     * @return array
+     */
+    public static function groups(Request $request)
+    {
+        return collect(static::availableResources($request))
+                    ->map(function ($item, $key) {
+                        return $item::group();
+                    })->unique()->values();
+    }
+
+    /**
+     * Get the grouped resources available for the given request.
+     *
+     * @param  Request $request
+     * @return array
+     */
+    public static function groupedResources(Request $request)
+    {
+        return collect(static::availableResources($request))
+                    ->groupBy(function ($item, $key) {
+                        return $item::group();
+                    })->sortKeys()->all();
     }
 
     /**
@@ -383,7 +411,7 @@ class Nova
         return function ($command) {
             return [
                 $command->ask('Name'),
-                $command->ask('Username / Email Address'),
+                $command->ask('Email Address'),
                 $command->secret('Password'),
             ];
         };
@@ -397,7 +425,11 @@ class Nova
     protected static function defaultCreateUserCallback()
     {
         return function ($name, $email, $password) {
-            $model = config('auth.providers.users.model');
+            $guard = config('nova.guard') ?: config('auth.defaults.guard');
+
+            $provider = config("auth.guards.{$guard}.provider");
+
+            $model = config("auth.providers.{$provider}.model");
 
             return tap((new $model)->forceFill([
                 'name' => $name,

@@ -73,7 +73,7 @@ class UserResource extends Resource
                             ->updateRules('required', 'string', 'max:255'),
             ]),
 
-            Text::make('Email')->rules('required', 'email', 'max:255')
+            Text::make('Email')->rules('required', 'email', 'max:254')
                                 ->creationRules(function ($request) {
                                     return ['unique:users,email'];
                                 })
@@ -184,6 +184,10 @@ class UserResource extends Resource
         return [
             (new IdFilter)->canSee(function ($request) {
                 return $_SERVER['nova.idFilter.canSee'] ?? true;
+            }),
+
+            (new ColumnFilter('id'))->canSee(function ($request) {
+                return $_SERVER['nova.columnFilter.canSee'] ?? true;
             }),
         ];
     }

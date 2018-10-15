@@ -4,6 +4,8 @@ namespace Laravel\Nova\Fields;
 
 class Markdown extends Field
 {
+    use Expandable;
+
     /**
      * The field's component.
      *
@@ -17,4 +19,16 @@ class Markdown extends Field
      * @var bool
      */
     public $showOnIndex = false;
+
+    /**
+     * Prepare the element for JSON serialization.
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return array_merge(parent::jsonSerialize(), [
+            'shouldShow' => $this->shouldBeExpanded(),
+        ]);
+    }
 }

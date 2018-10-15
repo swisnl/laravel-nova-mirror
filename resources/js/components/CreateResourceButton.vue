@@ -1,5 +1,5 @@
 <template>
-    <span v-if="shouldShowButtons" class="ml-auto">
+    <div v-if="shouldShowButtons">
         <!-- Attach Related Models -->
         <router-link
             v-if="shouldShowAttachButton"
@@ -20,7 +20,7 @@
             }"
         >
             <slot>
-                {{__('Attach')}} {{singularName}}
+                {{ __('Attach') }} {{ singularName }}
             </slot>
         </router-link>
 
@@ -42,9 +42,9 @@
                 }
             }"
         >
-            {{__('Create')}} {{singularName}}
+            {{ __('Create') }} {{ singularName }}
         </router-link>
-    </span>
+    </div>
 </template>
 
 <script>

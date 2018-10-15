@@ -5,18 +5,7 @@
  */
 import Vue from 'vue'
 import Nova from './Nova'
-import Toasted from 'vue-toasted'
-import PortalVue from 'portal-vue'
-import AsyncComputed from 'vue-async-computed'
 import './plugins'
-
-Vue.use(Toasted, {
-    theme: 'nova',
-    position: 'bottom-right',
-    duration: 6000,
-})
-Vue.use(PortalVue)
-Vue.use(AsyncComputed)
 
 Vue.config.productionTip = false
 

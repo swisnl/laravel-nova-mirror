@@ -1,5 +1,5 @@
 <template>
-    <default-field :field="field">
+    <default-field :field="field" :errors="errors">
         <template slot="field">
             <div class="flex items-center">
                 <date-time-picker
@@ -12,10 +12,6 @@
 
                 <span class="text-80 text-sm ml-2">({{ userTimezone }})</span>
             </div>
-
-            <p v-if="hasError" class="my-2 text-danger">
-                {{ firstError }}
-            </p>
         </template>
     </default-field>
 </template>

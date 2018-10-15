@@ -130,8 +130,8 @@ input[type='search']::-webkit-search-cancel-button {
 }
 
 .form-control-focus {
-  outline: none;
-  box-shadow: 0 0 8px config('colors.primary');
+  outline: none !important;
+  box-shadow: 0 0 8px config('colors.primary') !important;
 }
 
 .form-input:focus,
@@ -156,6 +156,8 @@ input[type='search']::-webkit-search-cancel-button {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6"><path fill="#35393C" fill-rule="nonzero" d="M8.293.293a1 1 0 0 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4A1 1 0 0 1 1.707.293L5 3.586 8.293.293z"/></svg>');
 }
 
+input.form-input:read-only,
+textarea.form-input:read-only,
 .form-input:active:disabled,
 .form-input:focus:disabled,
 .form-select:active:disabled,
@@ -164,6 +166,8 @@ input[type='search']::-webkit-search-cancel-button {
   @apply shadow;
 }
 
+input.form-input:read-only,
+textarea.form-input:read-only,
 .form-input:disabled,
 .form-select:disabled {
   @apply .bg-30;
@@ -731,6 +735,16 @@ input[type='search']::-webkit-search-cancel-button {
 
 .illustration {
   margin-right: 7.5rem;
+}
+
+/* Help Text
+---------------------------------------------------------------------------- */
+.help-text {
+  @apply text-xs leading-normal text-80 italic;
+}
+
+.help-text a {
+  @apply text-primary no-underline;
 }
 
 /* Charts

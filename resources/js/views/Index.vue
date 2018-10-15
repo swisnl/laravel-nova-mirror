@@ -1,5 +1,11 @@
 <template>
     <loading-view :loading="initialLoading" :dusk="resourceName + '-index-component'">
+        <custom-index-header
+            v-if="!viaResource"
+            class="mb-3"
+            :resource-name="resourceName"
+        />
+
         <div v-if="shouldShowCards">
             <cards
                 v-if="smallCards.length > 0"
@@ -16,18 +22,18 @@
             />
         </div>
 
-        <heading v-if="resourceResponse" class="mb-3">{{ resourceResponse.label }}</heading>
+        <heading v-if="resourceResponse" class="mb-3">{{ headingTitle }}</heading>
 
-        <div class="flex justify-between">
+        <div class="flex">
             <!-- Search -->
-            <div v-if="resourceInformation.searchable && ! viaHasOne" class="relative h-9 mb-6">
+            <div v-if="resourceInformation.searchable && ! viaHasOne" class="relative h-9 mb-6 flex-no-shrink">
                 <icon type="search" class="absolute search-icon-center ml-3 text-70" />
 
                 <input
                     data-testid="search-input"
                     dusk="search"
                     class="appearance-none form-control form-input w-search pl-search"
-                    placeholder="Search"
+                    :placeholder="__('Search')"
                     type="search"
                     v-model="search"
                     @keydown.stop="performSearch"
@@ -35,18 +41,25 @@
                 >
             </div>
 
-            <!-- Create / Attach Button -->
-            <create-resource-button
-                :singular-name="singularName"
-                :resource-name="resourceName"
-                :via-resource="viaResource"
-                :via-resource-id="viaResourceId"
-                :via-relationship="viaRelationship"
-                :relationship-type="relationshipType"
-                :authorized-to-create="authorizedToCreate && ! resourceIsFull"
-                :authorized-to-relate="authorizedToRelate"
-                class="mb-6"
-            />
+            <div class="w-full flex items-center mb-6">
+                <custom-index-toolbar
+                    v-if="!viaResource"
+                    :resource-name="resourceName"
+                />
+
+                <!-- Create / Attach Button -->
+                <create-resource-button
+                    :singular-name="singularName"
+                    :resource-name="resourceName"
+                    :via-resource="viaResource"
+                    :via-resource-id="viaResourceId"
+                    :via-relationship="viaRelationship"
+                    :relationship-type="relationshipType"
+                    :authorized-to-create="authorizedToCreate && ! resourceIsFull"
+                    :authorized-to-relate="authorizedToRelate"
+                    class="flex-no-shrink ml-auto"
+                />
+            </div>
         </div>
 
         <loading-card :loading="loading" :class="{ 'overflow-hidden border border-50': !shouldShowToolbar }">
@@ -131,63 +144,20 @@
                         </dropdown-menu>
                     </dropdown>
 
-                    <dropdown
-                        v-if="filters.length > 0 || softDeletes || !viaResource"
-                        data-testid="filter-selector"
-                        dusk="filter-selector"
-                        class="bg-30 hover:bg-40 rounded"
-                    >
-                        <dropdown-trigger slot-scope="{toggle}" :handle-click="toggle" class="px-3">
-                            <icon type="filter" class="text-80" />
-                        </dropdown-trigger>
-
-                        <dropdown-menu slot="menu" width="290" direction="rtl" :dark="true">
-                            <!-- Filters -->
-                            <filter-selector
-                                :filters="filters"
-                                :current-filters.sync="currentFilters"
-                                @changed="filterChanged"
-                                v-if="! viaHasOne">
-                            </filter-selector>
-
-                            <!-- Soft Deletes -->
-                            <filter-select v-if="softDeletes">
-                                <h3 slot="default" class="text-sm uppercase tracking-wide text-80 bg-30 p-3">
-                                    Trashed:
-                                </h3>
-
-                                <select slot="select"
-                                    class="block w-full form-control-sm form-select"
-                                    data-testid="trashed-select"
-                                    dusk="trashed-select"
-                                    v-model="trashed"
-                                    @change="trashedChanged"
-                                >
-                                    <option value="" selected>&mdash;</option>
-                                    <option value="with">{{__('With Trashed')}}</option>
-                                    <option value="only">{{__('Only Trashed')}}</option>
-                                </select>
-                            </filter-select>
-
-                            <!-- Per Page -->
-                            <filter-select v-if="!viaResource">
-                                <h3 slot="default" class="text-sm uppercase tracking-wide text-80 bg-30 p-3">
-                                    {{__('Per Page:')}}
-                                </h3>
-
-                                <select slot="select"
-                                    dusk="per-page-select"
-                                    class="block w-full form-control-sm form-select"
-                                    v-model="perPage"
-                                    @change="perPageChanged"
-                                >
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                </select>
-                            </filter-select>
-                        </dropdown-menu>
-                    </dropdown>
+                    <!-- Filters -->
+                    <filter-menu
+                        :filters="filters"
+                        :soft-deletes="softDeletes"
+                        :via-resource="viaResource"
+                        :via-has-one="viaHasOne"
+                        :current-filters="currentFilters"
+                        :trashed="trashed"
+                        :per-page="perPage"
+                        @clear-selected-filters="clearSelectedFilters"
+                        @filter-changed="updateFilters"
+                        @trashed-changed="trashedChanged"
+                        @per-page-changed="updatePerPageChanged"
+                    />
 
                     <delete-menu
                         v-if="shouldShowDeleteMenu"
@@ -223,7 +193,7 @@
                     <svg class="mb-3" xmlns="http://www.w3.org/2000/svg" width="65" height="51" viewBox="0 0 65 51"><g id="Page-1" fill="none" fill-rule="evenodd"><g id="05-blank-state" fill="#A8B9C5" fill-rule="nonzero" transform="translate(-779 -695)"><path id="Combined-Shape" d="M835 735h2c.552285 0 1 .447715 1 1s-.447715 1-1 1h-2v2c0 .552285-.447715 1-1 1s-1-.447715-1-1v-2h-2c-.552285 0-1-.447715-1-1s.447715-1 1-1h2v-2c0-.552285.447715-1 1-1s1 .447715 1 1v2zm-5.364125-8H817v8h7.049375c.350333-3.528515 2.534789-6.517471 5.5865-8zm-5.5865 10H785c-3.313708 0-6-2.686292-6-6v-30c0-3.313708 2.686292-6 6-6h44c3.313708 0 6 2.686292 6 6v25.049375c5.053323.501725 9 4.765277 9 9.950625 0 5.522847-4.477153 10-10 10-5.185348 0-9.4489-3.946677-9.950625-9zM799 725h16v-8h-16v8zm0 2v8h16v-8h-16zm34-2v-8h-16v8h16zm-52 0h16v-8h-16v8zm0 2v4c0 2.209139 1.790861 4 4 4h12v-8h-16zm18-12h16v-8h-16v8zm34 0v-8h-16v8h16zm-52 0h16v-8h-16v8zm52-10v-4c0-2.209139-1.790861-4-4-4h-44c-2.209139 0-4 1.790861-4 4v4h52zm1 39c4.418278 0 8-3.581722 8-8s-3.581722-8-8-8-8 3.581722-8 8 3.581722 8 8 8z"/></g></g></svg>
 
                     <h3 class="text-base text-80 font-normal mb-6">
-                        No {{resourceInformation.label.toLowerCase()}} matched the given criteria.
+                        {{__('No :resource matched the given criteria.', {resource: singularName.toLowerCase()})}}
                     </h3>
 
                     <create-resource-button
@@ -302,6 +272,9 @@ export default {
     ],
 
     props: {
+        field: {
+            type: Object,
+        },
         resourceName: {
             type: String,
             required: true,
@@ -425,7 +398,15 @@ export default {
          */
         handleKeydown(e) {
             // `c`
-            if (!e.ctrlKey && !e.altKey && !e.metaKey && !e.shiftKey && e.keyCode == 67) {
+            if (
+                !e.ctrlKey &&
+                !e.altKey &&
+                !e.metaKey &&
+                !e.shiftKey &&
+                e.keyCode == 67 &&
+                e.target.tagName != 'INPUT' &&
+                e.target.tagName != 'TEXTAREA'
+            ) {
                 this.$router.push({ name: 'create', params: { resourceName: this.resourceName } })
             }
         },
@@ -498,7 +479,10 @@ export default {
          * Get the relatable authorization status for the resource.
          */
         getAuthorizationToRelate() {
-            if (!this.authorizedToCreate) {
+            if (
+                !this.authorizedToCreate &&
+                (this.relationshipType != 'belongsToMany' && this.relationshipType != 'morphToMany')
+            ) {
                 return
             }
 
@@ -584,6 +568,22 @@ export default {
         },
 
         /**
+         * Clear filters and reset the resource table
+         */
+        clearSelectedFilters() {
+            this.clearAllFilters()
+            this.filterChanged()
+        },
+
+        /**
+         * Update the currentFilters with newFilters
+         */
+        updateFilters(newFilters) {
+            this.currentFilters = newFilters
+            this.filterChanged()
+        },
+
+        /**
          * Execute a search against the resource.
          */
         performSearch(event) {
@@ -664,8 +664,17 @@ export default {
         /**
          * Update the trashed constraint for the resource listing.
          */
-        trashedChanged() {
+        trashedChanged(trashedStatus) {
+            this.trashed = trashedStatus
             this.updateQueryString({ [this.trashedParameter]: this.trashed })
+        },
+
+        /**
+         * Update the per page parameter in the query string
+         */
+        updatePerPageChanged(perPage) {
+            this.perPage = perPage
+            this.perPageChanged()
         },
     },
 
@@ -860,6 +869,10 @@ export default {
          * Get the singular name for the resource
          */
         singularName() {
+            if (this.isRelation && this.field) {
+                return Capitalize(this.field.singularLabel)
+            }
+
             return Capitalize(this.resourceInformation.singularLabel)
         },
 
@@ -984,6 +997,20 @@ export default {
                     this.authorizedToRestoreSelectedResources ||
                     this.selectAllMatchingChecked
             )
+        },
+
+        /**
+         * Determine if the index is a relation field
+         */
+        isRelation() {
+            return Boolean(this.viaResourceId && this.viaRelationship)
+        },
+
+        /**
+         * Return the heading for the view
+         */
+        headingTitle() {
+            return this.isRelation && this.field ? this.field.name : this.resourceResponse.label
         },
     },
 }

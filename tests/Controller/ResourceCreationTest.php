@@ -243,4 +243,18 @@ class ResourceCreationTest extends IntegrationTest
 
         $response->assertStatus(422);
     }
+
+    public function test_related_resource_should_be_able_to_be_updated_even_when_full()
+    {
+        $user = factory(User::class)->create();
+        $user->address()->save($address = factory(Address::class)->make());
+
+        $response = $this->withExceptionHandling()
+                        ->putJson('/nova-api/addresses/'.$address->id.'?viaResource=users&viaResourceId=1&viaRelationship=address', [
+                            'user' => $user->id,
+                            'name' => 'Fake Name',
+                        ]);
+
+        $response->assertStatus(200);
+    }
 }

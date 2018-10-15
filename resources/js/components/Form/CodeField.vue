@@ -1,21 +1,11 @@
 <template>
-    <field-wrapper>
-        <div class="w-1/5 px-8 py-6">
-            <form-label>
-                {{ field.name }}
-            </form-label>
-        </div>
-
-        <div class="w-4/5 px-8 py-6">
+    <default-field :field="field" :errors="errors" :full-width-content="true">
+        <template slot="field">
             <div class="form-input form-input-bordered px-0 overflow-hidden">
                 <textarea ref="theTextarea" />
             </div>
-
-            <p v-if="hasError" class="my-2 text-danger">
-                {{ firstError }}
-            </p>
-        </div>
-    </field-wrapper>
+        </template>
+    </default-field>
 </template>
 
 <style src="codemirror/lib/codemirror.css" />
@@ -93,6 +83,7 @@ import 'codemirror/mode/xml/xml'
 import 'codemirror/mode/vue/vue'
 import 'codemirror/mode/dockerfile/dockerfile'
 import 'codemirror/keymap/vim'
+import 'codemirror/mode/sql/sql'
 
 import { FormField, HandlesValidationErrors } from 'laravel-nova'
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <default-field :field="field" :field-name="`${field.name} Type`">
+        <default-field :field="field" :show-errors="false" :field-name="fieldName">
             <select
                 :disabled="isLocked"
                 :data-testid="`${field.attribute}-type`"
@@ -18,12 +18,12 @@
                     :value="option.value"
                     :selected="resourceType == option.value"
                 >
-                    {{ option.display }}
+                    {{ option.singularLabel }}
                 </option>
             </select>
         </default-field>
 
-        <default-field :field="field" :show-help-text="false" :field-name="field.name">
+        <default-field :field="field" :errors="errors" :show-help-text="false" :field-name="fieldTypeName">
             <template slot="field">
                 <search-input
                     v-if="isSearchable && !isLocked"
@@ -66,7 +66,7 @@
                     <option
                         value=""
                         disabled
-                        :selected="selectedResourceId == ''">{{__('Choose')}} {{ field.name }}</option>
+                        :selected="selectedResourceId == ''">{{__('Choose')}} {{ fieldTypeName }}</option>
 
                     <option
                         v-for="resource in availableResources"
@@ -74,7 +74,7 @@
                         :value="resource.value"
                         :selected="selectedResourceId == resource.value"
                     >
-                        {{ resource.display}}
+                        {{ resource.display }}
                     </option>
                 </select>
 
@@ -88,10 +88,6 @@
                         </span>
                     </label>
                 </div>
-
-                <p v-if="hasError" class="my-2 text-danger">
-                    {{ firstError }}
-                </p>
             </template>
         </default-field>
     </div>
@@ -286,9 +282,31 @@ export default {
             }
         },
 
+        /**
+         * Determine if the field is locked
+         */
         isLocked() {
             return Boolean(this.viaResource)
-            // return this.viaResource == this.field.resourceName
+        },
+
+        /**
+         * Return the morphable type label for the field
+         */
+        fieldName() {
+            return this.field.name
+        },
+
+        /**
+         * Return the selected morphable type's label
+         */
+        fieldTypeName() {
+            if (this.resourceType) {
+                return _.find(this.field.morphToTypes, type => {
+                    return type.value == this.resourceType
+                }).singularLabel
+            }
+
+            return ''
         },
     },
 }

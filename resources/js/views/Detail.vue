@@ -1,10 +1,18 @@
 <template>
     <loading-view :loading="initialLoading">
+        <custom-detail-header
+            class="mb-3"
+            :resource="resource"
+            :resource-id="resourceId"
+            :resource-name="resourceName"
+        />
+
         <div v-if="shouldShowCards">
             <cards
                 v-if="smallCards.length > 0"
                 :cards="smallCards"
                 class="mb-3"
+                :resource="resource"
                 :resource-id="resourceId"
                 :resource-name="resourceName"
                 :only-on-detail="true"
@@ -14,6 +22,7 @@
                 v-if="largeCards.length > 0"
                 :cards="largeCards"
                 size="large"
+                :resource="resource"
                 :resource-id="resourceId"
                 :resource-name="resourceName"
                 :only-on-detail="true"
@@ -21,7 +30,12 @@
         </div>
 
         <!-- Resource Detail -->
-        <div :dusk="resourceName + '-detail-component'" class="mb-8" :key="panel.id" v-for="panel in availablePanels">
+        <div
+            v-for="panel in availablePanels"
+            :dusk="resourceName + '-detail-component'"
+            class="mb-8"
+            :key="panel.id"
+        >
             <component
                 :is="panel.component"
                 :resource-name="resourceName"
@@ -29,10 +43,15 @@
                 :resource="resource"
                 :panel="panel"
             >
-                <div v-if="panel.name.includes('Details')" class="flex items-center mb-3">
-                    <h4 class="text-90 font-normal text-2xl">{{ panel.name }}</h4>
+                <div v-if="panel.showToolbar" class="flex items-center mb-3">
+                    <h4 class="text-90 font-normal text-2xl flex-no-shrink">{{ panel.name }}</h4>
 
-                    <div class="ml-auto flex">
+                    <div class="ml-3 w-full flex items-center">
+                        <custom-detail-toolbar
+                            :resource="resource"
+                            :resource-name="resourceName"
+                            :resource-id="resourceName"
+                        />
 
                         <!-- Actions -->
                         <action-selector
@@ -40,7 +59,6 @@
                             :resource-name="resourceName"
                             :actions="actions"
                             :pivot-actions="{ actions: [] }"
-                            :errors="actionValidationErrors"
                             :selected-resources="selectedResources"
                             :query-string="{
                                 currentSearch,
@@ -51,6 +69,7 @@
                                 viaRelationship
                             }"
                             @actionExecuted="actionExecuted"
+                            class="ml-3"
                         />
 
                         <button
@@ -196,7 +215,15 @@ export default {
          * Handle the keydown event
          */
         handleKeydown(e) {
-            if (!e.ctrlKey && !e.altKey && !e.metaKey && !e.shiftKey && e.keyCode == 69) {
+            if (
+                !e.ctrlKey &&
+                !e.altKey &&
+                !e.metaKey &&
+                !e.shiftKey &&
+                e.keyCode == 69 &&
+                e.target.tagName != 'INPUT' &&
+                e.target.tagName != 'TEXTAREA'
+            ) {
                 this.$router.push({ name: 'edit', params: { id: this.resource.id } })
             }
         },
@@ -297,7 +324,9 @@ export default {
         async confirmDelete() {
             this.deleteResources([this.resource], () => {
                 this.$toasted.show(
-                    this.__('The :resource was deleted!', {resource: this.resourceInformation.singularLabel.toLowerCase()}),
+                    this.__('The :resource was deleted!', {
+                        resource: this.resourceInformation.singularLabel.toLowerCase(),
+                    }),
                     { type: 'success' }
                 )
 
@@ -334,7 +363,9 @@ export default {
         async confirmRestore() {
             this.restoreResources([this.resource], () => {
                 this.$toasted.show(
-                     this.__('The :resource was restored!', {resource: this.resourceInformation.singularLabel.toLowerCase()}),
+                    this.__('The :resource was restored!', {
+                        resource: this.resourceInformation.singularLabel.toLowerCase(),
+                    }),
                     { type: 'success' }
                 )
 
@@ -363,7 +394,9 @@ export default {
         async confirmForceDelete() {
             this.forceDeleteResources([this.resource], () => {
                 this.$toasted.show(
-                    this.__('The :resource was deleted!', {resource: this.resourceInformation.singularLabel.toLowerCase()}),
+                    this.__('The :resource was deleted!', {
+                        resource: this.resourceInformation.singularLabel.toLowerCase(),
+                    }),
                     { type: 'success' }
                 )
 

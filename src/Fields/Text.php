@@ -10,4 +10,14 @@ class Text extends Field
      * @var string
      */
     public $component = 'text-field';
+
+    /**
+     * Display the field as raw HTML using Vue.
+     *
+     * @return $this
+     */
+    public function asHtml()
+    {
+        return $this->withMeta(['asHtml' => true]);
+    }
 }

@@ -3,18 +3,11 @@
         <heading class="mb-3">{{__('Update')}} {{ relatedResourceLabel }}</heading>
 
         <card class="overflow-hidden">
-            <form v-if="field" @submit.prevent="updateAttachedResource">
+            <form v-if="field" @submit.prevent="updateAttachedResource" autocomplete="off">
                 <!-- Related Resource -->
-                <field-wrapper>
-                    <div class="w-1/5 px-8 py-6">
-                        <slot>
-                            <form-label>
-                                {{ relatedResourceLabel }}
-                            </form-label>
-                        </slot>
-                    </div>
-                    <div class="w-1/2 px-8 py-6">
-                        <select
+                <default-field :field="field" :errors="validationErrors">
+                    <template slot="field">
+                       <select
                             class="form-control form-select mb-3 w-full"
                             dusk="attachable-select"
                             :class="{ 'border-danger': validationErrors.has(field.attribute) }"
@@ -33,12 +26,8 @@
                                 {{ resource.display}}
                             </option>
                         </select>
-
-                        <p v-if="true" class="my-2 text-danger">
-                            {{ validationErrors.first(relatedResourceName) }}
-                        </p>
-                    </div>
-                </field-wrapper>
+                    </template>
+                </default-field>
 
                 <!-- Pivot Fields -->
                 <div v-for="field in fields">
@@ -170,17 +159,19 @@ export default {
         async getPivotFields() {
             this.fields = []
 
-            const { data } = await Nova.request().get(
-                `/nova-api/${this.resourceName}/${this.resourceId}/update-pivot-fields/${
-                    this.relatedResourceName
-                }/${this.relatedResourceId}`,
-                { params: { viaRelationship: this.viaRelationship } }
-            ).catch(error => {
-                if (error.response.status == 404) {
-                    this.$router.push({ name: '404' })
-                    return
-                }
-            })
+            const { data } = await Nova.request()
+                .get(
+                    `/nova-api/${this.resourceName}/${this.resourceId}/update-pivot-fields/${
+                        this.relatedResourceName
+                    }/${this.relatedResourceId}`,
+                    { params: { viaRelationship: this.viaRelationship } }
+                )
+                .catch(error => {
+                    if (error.response.status == 404) {
+                        this.$router.push({ name: '404' })
+                        return
+                    }
+                })
 
             this.fields = data
 
@@ -251,7 +242,9 @@ export default {
 
                 if (error.response.status == 409) {
                     this.$toasted.show(
-                        this.__('Another user has updated this resource since this page was loaded. Please refresh the page and try again.'),
+                        this.__(
+                            'Another user has updated this resource since this page was loaded. Please refresh the page and try again.'
+                        ),
                         { type: 'error' }
                     )
                 }
@@ -277,7 +270,9 @@ export default {
 
                 if (error.response.status == 409) {
                     this.$toasted.show(
-                        this.__('Another user has updated this resource since this page was loaded. Please refresh the page and try again.'),
+                        this.__(
+                            'Another user has updated this resource since this page was loaded. Please refresh the page and try again.'
+                        ),
                         { type: 'error' }
                     )
                 }
@@ -381,9 +376,9 @@ export default {
          * Get the label for the related resource.
          */
         relatedResourceLabel() {
-            return _.find(Nova.config.resources, resource => {
-                return resource.uriKey == this.relatedResourceName
-            }).singularLabel
+            if (this.field) {
+                return this.field.singularLabel
+            }
         },
 
         /**

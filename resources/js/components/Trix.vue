@@ -1,28 +1,54 @@
+<template>
+    <trix-editor
+        ref="theEditor"
+        @keydown.stop
+        @trix-change="handleChange"
+        @trix-initialize="initialize"
+        @trix-attachment-add="handleAddFile"
+        @trix-attachment-remove="handleRemoveFile"
+        @trix-file-accept="handleFileAccept"
+        :value="value"
+        :placeholder="placeholder"
+        class="trix-content"
+    />
+</template>
+
 <script>
-import 'trix'
+import Trix from 'trix'
 import 'trix/dist/trix.css'
 
 export default {
     name: 'trix-vue',
-    props: ['name', 'value', 'placeholder'],
+
+    props: {
+        name: { type: String },
+        value: { type: String },
+        placeholder: { type: String },
+        withFiles: { type: Boolean, default: true },
+    },
+
     methods: {
-        onInitialize() {
+        initialize() {
             this.$refs.theEditor.editor.insertHTML(this.value)
         },
-        onChange() {
+
+        handleChange() {
             this.$emit('change', this.$refs.theEditor.value)
+        },
+
+        handleFileAccept(e) {
+            if (!this.withFiles) {
+                e.preventDefault()
+            }
+        },
+
+        handleAddFile(event) {
+            this.$emit('file-add', event)
+        },
+
+        handleRemoveFile(event) {
+            this.$emit('file-remove', event)
         },
     },
 }
 </script>
-
-<template>
-    <trix-editor
-        ref="theEditor"
-        @trix-change="onChange"
-        @trix-initialize="onInitialize"
-        @trix-file-accept="e => e.preventDefault()"
-        :value="value"
-        :placeholder="placeholder"
-    />
-</template>

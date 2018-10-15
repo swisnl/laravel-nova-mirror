@@ -36,8 +36,12 @@ class ActionModelCollection extends EloquentCollection
      */
     protected function filterByResourceAuthorization(ActionRequest $request)
     {
-        $models = $this->mapInto($request->resource())
-                       ->filter->authorizedToUpdate($request)->map->resource;
+        if ($request->action()->runCallback) {
+            $models = $this->mapInto($request->resource())->map->resource;
+        } else {
+            $models = $this->mapInto($request->resource())
+                           ->filter->authorizedToUpdate($request)->map->resource;
+        }
 
         $action = $request->action();
 

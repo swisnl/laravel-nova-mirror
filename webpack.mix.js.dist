@@ -42,7 +42,7 @@ mix
     ])
     .setPublicPath('public')
     .postCss('resources/css/app.css', 'public', [tailwindcss('tailwind.js')])
-    .copy('public', '../nova-app/public/nova')
+    .copy('public', '../nova-app/public/vendor/nova')
     .webpackConfig({
         resolve: {
             alias: {

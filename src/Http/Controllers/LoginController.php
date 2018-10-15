@@ -5,6 +5,7 @@ namespace Laravel\Nova\Http\Controllers;
 use Laravel\Nova\Nova;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
@@ -30,7 +31,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('nova.guest')->except('logout');
+        $this->middleware('nova.guest:'.config('nova.guard'))->except('logout');
     }
 
     /**
@@ -66,5 +67,15 @@ class LoginController extends Controller
     public function redirectPath()
     {
         return Nova::path();
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard(config('nova.guard'));
     }
 }

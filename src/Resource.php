@@ -37,6 +37,13 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     public $resource;
 
     /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'Other';
+
+    /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
@@ -119,6 +126,16 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     public function model()
     {
         return $this->resource;
+    }
+
+    /**
+     * Get the logical group associated with the resource.
+     *
+     * @return string
+     */
+    public static function group()
+    {
+        return static::$group;
     }
 
     /**

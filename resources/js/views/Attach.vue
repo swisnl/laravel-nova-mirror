@@ -3,17 +3,10 @@
         <heading class="mb-3">{{__('Attach')}} {{ relatedResourceLabel }}</heading>
 
         <card class="overflow-hidden">
-            <form v-if="field" @submit.prevent="attachResource">
+            <form v-if="field" @submit.prevent="attachResource" autocomplete="off">
                 <!-- Related Resource -->
-                <field-wrapper>
-                    <div class="w-1/5 px-8 py-6">
-                        <slot>
-                            <form-label>
-                                {{ relatedResourceLabel }}
-                            </form-label>
-                        </slot>
-                    </div>
-                    <div class="w-1/2 px-8 py-6">
+                <default-field :field="field" :errors="validationErrors">
+                    <template slot="field">
                         <search-input
                             v-if="field.searchable"
                             :data-testid="`${field.resourceName}-search-input`"
@@ -51,7 +44,7 @@
                             :data-testid="`${field.resourceName}-select`"
                             @change="selectResourceFromSelectControl"
                         >
-                            <option value="" disabled selected>{{__('Choose')}} {{ field.name }}</option>
+                            <option value="" disabled selected>{{__('Choose')}} {{ relatedResourceLabel }}</option>
 
                             <option
                                 v-for="resource in availableResources"
@@ -73,12 +66,8 @@
                                 </span>
                             </label>
                         </div>
-
-                        <p v-if="true" class="my-2 text-danger">
-                            {{ validationErrors.first(relatedResourceName) }}
-                        </p>
-                    </div>
-                </field-wrapper>
+                    </template>
+                </default-field>
 
                 <!-- Pivot Fields -->
                 <div v-for="field in fields">
@@ -367,9 +356,9 @@ export default {
          * Get the label for the related resource.
          */
         relatedResourceLabel() {
-            return _.find(Nova.config.resources, resource => {
-                return resource.uriKey == this.relatedResourceName
-            }).singularLabel
+            if (this.field) {
+                return this.field.singularLabel
+            }
         },
 
         /**

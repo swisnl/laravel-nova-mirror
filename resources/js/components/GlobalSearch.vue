@@ -17,11 +17,30 @@
                     @keydown.up.prevent="move(-1)"
                     v-model="searchTerm"
                     type="search"
-                    placeholder="Search"
+                    :placeholder="__('Search')"
                     class="pl-search form-control form-input form-input-bordered w-full"
                 />
             </div>
 
+            <!-- Loader -->
+            <div
+                v-if="loading"
+                class="bg-white py-3 overflow-hidden absolute rounded-lg shadow-lg w-full mt-2 max-h-search overflow-y-auto"
+            >
+                <loader class="text-60" width="40" />
+            </div>
+
+            <!-- No Results Found -->
+            <div
+                v-if="shouldShowNoResults"
+                class="bg-white overflow-hidden absolute rounded-lg shadow-lg w-full mt-2 max-h-search overflow-y-auto"
+            >
+                <h3 class="text-xs uppercase tracking-wide text-80 bg-40 py-4 px-3">
+                    {{ __('No Results Found.') }}
+                </h3>
+            </div>
+
+            <!-- Results -->
             <div
                 v-if="shouldShowResults"
                 class="overflow-hidden absolute rounded-lg shadow-lg w-full mt-2 max-h-search overflow-y-auto"
@@ -70,6 +89,7 @@ export default {
     mixins: [clickaway],
 
     data: () => ({
+        loading: false,
         currentlySearching: false,
         searchTerm: '',
         results: [],
@@ -117,6 +137,7 @@ export default {
             this.clearResults()
             this.$refs.input.blur()
             this.currentlySearching = false
+            this.loading = false
         },
 
         clearSearch() {
@@ -129,10 +150,16 @@ export default {
 
         search(event) {
             this.highlightedResultIndex = 0
+            this.loading = true
 
-            this.debouncer(() => {
-                this.fetchResults(event.target.value)
-            }, 500)
+            if (this.searchTerm == '') {
+                this.loading = false
+                this.results = []
+            } else {
+                this.debouncer(() => {
+                    this.fetchResults(event.target.value)
+                }, 500)
+            }
         },
 
         async fetchResults(search) {
@@ -140,12 +167,17 @@ export default {
 
             if (search !== '') {
                 try {
-                    const { data: results } = await Nova.request().get('/nova-api/search', {
-                        params: { search },
-                    })
+                    const { data: results } = await Minimum(
+                        Nova.request().get('/nova-api/search', {
+                            params: { search },
+                        })
+                    )
 
                     this.results = results
+
+                    this.loading = false
                 } catch (e) {
+                    this.loading = false
                     throw e
                 }
             }
@@ -226,8 +258,18 @@ export default {
             return this.results.length > 0
         },
 
+        hasSearchTerm() {
+            return this.searchTerm !== ''
+        },
+
+        shouldShowNoResults() {
+            return (
+                this.currentlySearching && !this.loading && !this.hasResults && this.hasSearchTerm
+            )
+        },
+
         shouldShowResults() {
-            return this.currentlySearching && this.hasResults
+            return this.currentlySearching && this.hasResults && !this.loading
         },
 
         indexedResults() {

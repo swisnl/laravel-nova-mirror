@@ -2,7 +2,9 @@
 
 namespace Laravel\Nova;
 
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
+use Laravel\Nova\Events\NovaServiceProviderRegistered;
 
 class PendingRouteRegistration
 {
@@ -22,6 +24,7 @@ class PendingRouteRegistration
     public function withAuthenticationRoutes($middleware = ['web'])
     {
         Route::namespace('Laravel\Nova\Http\Controllers')
+            ->domain(config('nova.domain', null))
             ->middleware($middleware)
             ->as('nova.')
             ->prefix(Nova::path())
@@ -44,6 +47,7 @@ class PendingRouteRegistration
         Nova::$resetsPasswords = true;
 
         Route::namespace('Laravel\Nova\Http\Controllers')
+            ->domain(config('nova.domain', null))
             ->middleware($middleware)
             ->as('nova.')
             ->prefix(Nova::path())
@@ -67,22 +71,28 @@ class PendingRouteRegistration
         $this->registered = true;
 
         Route::namespace('Laravel\Nova\Http\Controllers')
+            ->domain(config('nova.domain', null))
             ->middleware(config('nova.middleware', []))
             ->as('nova.')
             ->prefix(Nova::path())
             ->group(function () {
-                Route::get('/logout', 'LoginController@logout');
+                Route::get('/logout', 'LoginController@logout')->name('logout');
             });
 
-        Route::view(Nova::path(), 'nova::router')
-            ->middleware(config('nova.middleware', []))
-            ->name('nova.index');
+        Event::listen(NovaServiceProviderRegistered::class, function () {
+            Route::domain(config('nova.domain', null))
+                ->middleware(config('nova.middleware', []))
+                ->group(function () {
+                    Route::view(Nova::path(), 'nova::router')->name('nova.index');
+                });
 
-        Route::middleware(config('nova.middleware', []))
-            ->as('nova.')
-            ->prefix(Nova::path())
-            ->get('/{view}', 'Laravel\Nova\Http\Controllers\RouterController@show')
-            ->where('view', '.*');
+            Route::middleware(config('nova.middleware', []))
+                ->domain(config('nova.domain', null))
+                ->as('nova.')
+                ->prefix(Nova::path())
+                ->get('/{view}', 'Laravel\Nova\Http\Controllers\RouterController@show')
+                ->where('view', '.*');
+        });
     }
 
     /**

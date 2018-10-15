@@ -11,7 +11,7 @@
 
             <p class="text-white-50% text-lg">
                 You can edit this tool's component at:
-                <code class="ml-1 border border-80 text-sm font-mono text-white bg-black rounded px-2 py-1">/nova-tools/{{ class }}/resources/js/components/Tool.vue</code>
+                <code class="ml-1 border border-80 text-sm font-mono text-white bg-black rounded px-2 py-1">/nova-components/{{ class }}/resources/js/components/Tool.vue</code>
             </p>
         </card>
     </div>
@@ -26,5 +26,5 @@ export default {
 </script>
 
 <style>
-    /* Scoped Styles */
+/* Scoped Styles */
 </style>

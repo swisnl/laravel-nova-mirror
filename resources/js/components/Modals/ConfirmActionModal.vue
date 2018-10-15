@@ -1,18 +1,18 @@
 <template>
     <modal
         data-testid="confirm-action-modal"
-        class="modal"
         tabindex="-1"
         role="dialog"
         @modal-close="handleClose"
     >
         <form
+            autocomplete="off"
             @keydown="handleKeydown"
             @submit.prevent.stop="handleConfirm"
             class="bg-white rounded-lg shadow-lg overflow-hidden"
             :class="{
-                'w-600': selectedAction.fields.length > 0,
-                'w-460': selectedAction.fields.length == 0,
+                'w-action-fields': selectedAction.fields.length > 0,
+                'w-action': selectedAction.fields.length == 0,
             }"
         >
             <div>
@@ -44,7 +44,14 @@
 
             <div class="bg-30 px-6 py-3 flex">
                 <div class="flex items-center ml-auto">
-                    <button dusk="cancel-action-button" type="button" @click.prevent="handleClose" class="btn text-80 font-normal h-9 px-3 mr-3 btn-link">Cancel</button>
+                    <button
+                        dusk="cancel-action-button"
+                        type="button"
+                        @click.prevent="handleClose"
+                        class="btn text-80 font-normal h-9 px-3 mr-3 btn-link"
+                    >
+                        {{__('Cancel')}}
+                    </button>
 
                     <button
                         dusk="confirm-action-button"
@@ -114,13 +121,3 @@ export default {
     },
 }
 </script>
-
-<style scoped>
-.w-460 {
-    width: 460px;
-}
-
-.w-600 {
-    width: 600px;
-}
-</style>
