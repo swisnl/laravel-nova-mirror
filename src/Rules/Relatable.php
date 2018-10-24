@@ -46,6 +46,10 @@ class Relatable implements Rule
      */
     public function passes($attribute, $value)
     {
+        if (is_null($value)) {
+            return true;
+        }
+
         $model = $this->query->select('*')->whereKey($value)->first();
 
         if (! $model) {
