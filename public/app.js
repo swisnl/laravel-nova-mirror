@@ -38916,15 +38916,11 @@ var render = function() {
                   on: { change: _vm.selectResourceFromSelectControl }
                 },
                 [
-                  _c(
-                    "option",
-                    { attrs: { value: "", disabled: "", selected: "" } },
-                    [
-                      _vm._v(
-                        _vm._s(_vm.__("Choose")) + " " + _vm._s(_vm.field.name)
-                      )
-                    ]
-                  ),
+                  _c("option", { attrs: { value: "", selected: "" } }, [
+                    _vm._v(
+                      _vm._s(_vm.__("Choose")) + " " + _vm._s(_vm.field.name)
+                    )
+                  ]),
                   _vm._v(" "),
                   _vm._l(_vm.availableResources, function(resource) {
                     return _c(

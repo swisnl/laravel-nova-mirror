@@ -40,7 +40,7 @@
                 @change="selectResourceFromSelectControl"
                 :disabled="isLocked"
             >
-                <option value="" disabled selected>{{__('Choose')}} {{ field.name }}</option>
+                <option value="" selected>{{__('Choose')}} {{ field.name }}</option>
 
                 <option
                     v-for="resource in availableResources"
