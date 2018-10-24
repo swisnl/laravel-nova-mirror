@@ -2635,6 +2635,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     mixins: [_laravelNova.TogglesTrashed, _laravelNova.PerformsSearches, _laravelNova.HandlesValidationErrors],
@@ -2729,10 +2735,9 @@ exports.default = {
          * Fill the forms formData with details from this field
          */
         fill: function fill(formData) {
-            if (this.selectedResource) {
-                formData.append(this.field.attribute, this.selectedResource.value);
-                formData.append(this.field.attribute + '_trashed', this.withTrashed);
-            }
+            formData.append(this.field.attribute, this.selectedResource ? this.selectedResource.value : '');
+
+            formData.append(this.field.attribute + '_trashed', this.withTrashed);
         },
 
 
@@ -38916,11 +38921,17 @@ var render = function() {
                   on: { change: _vm.selectResourceFromSelectControl }
                 },
                 [
-                  _c("option", { attrs: { value: "", selected: "" } }, [
-                    _vm._v(
-                      _vm._s(_vm.__("Choose")) + " " + _vm._s(_vm.field.name)
-                    )
-                  ]),
+                  _c(
+                    "option",
+                    {
+                      attrs: {
+                        value: "",
+                        selected: "",
+                        disabled: !_vm.field.nullable
+                      }
+                    },
+                    [_vm._v("\n                —\n            ")]
+                  ),
                   _vm._v(" "),
                   _vm._l(_vm.availableResources, function(resource) {
                     return _c(
