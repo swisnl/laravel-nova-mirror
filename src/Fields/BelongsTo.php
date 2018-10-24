@@ -55,6 +55,13 @@ class BelongsTo extends Field
     public $display;
 
     /**
+     * Indicates if the field is nullable.
+     *
+     * @var bool
+     */
+    public $nullable = false;
+
+    /**
      * Indicates if this relationship is searchable.
      *
      * @var bool
@@ -152,7 +159,10 @@ class BelongsTo extends Field
         );
 
         return array_merge_recursive(parent::getRules($request), [
-            $this->attribute => [new Relatable($request, $query)],
+            $this->attribute => array_filter([
+                $this->nullable ? 'nullable' : null,
+                new Relatable($request, $query)
+            ]),
         ]);
     }
 
@@ -283,6 +293,19 @@ class BelongsTo extends Field
     }
 
     /**
+     * Indicate that the field should be nullable.
+     *
+     * @param  bool  $nullable
+     * @return $this
+     */
+    public function nullable($nullable = true)
+    {
+        $this->nullable = $nullable;
+
+        return $this;
+    }
+
+    /**
      * Get additional meta information to merge with the field payload.
      *
      * @return array
@@ -295,6 +318,7 @@ class BelongsTo extends Field
             'singularLabel' => forward_static_call([$this->resourceClass, 'singularLabel']),
             'belongsToRelationship' => $this->belongsToRelationship,
             'belongsToId' => $this->belongsToId,
+            'nullable' => $this->nullable,
             'searchable' => $this->searchable,
         ], $this->meta);
     }
