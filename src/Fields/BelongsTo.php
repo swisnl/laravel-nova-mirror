@@ -160,7 +160,7 @@ class BelongsTo extends Field
 
         return array_merge_recursive(parent::getRules($request), [
             $this->attribute => array_filter([
-                $this->nullable ? 'nullable' : null,
+                $this->nullable ? 'nullable' : 'required',
                 new Relatable($request, $query)
             ]),
         ]);
