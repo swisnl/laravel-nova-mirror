@@ -80,7 +80,7 @@ export default {
             type: String,
             validator: value => ['', 'with', 'only'].indexOf(value) != -1,
         },
-        perPage: String,
+        perPage: [String, Number],
         showTrashedOption: {
             type: Boolean,
             default: true,
