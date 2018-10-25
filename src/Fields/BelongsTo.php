@@ -83,6 +83,13 @@ class BelongsTo extends Field
     public $inverse;
 
     /**
+     * The displayable singular label of the relation.
+     *
+     * @var string
+     */
+    public $singularLabel;
+
+    /**
      * Create a new field.
      *
      * @param  string  $name
@@ -306,6 +313,18 @@ class BelongsTo extends Field
     }
 
     /**
+     * Set the displayable singular label of the resource.
+     *
+     * @return string
+     */
+    public function singularLabel($singularLabel)
+    {
+        $this->singularLabel = $singularLabel;
+
+        return $this;
+    }
+
+    /**
      * Get additional meta information to merge with the field payload.
      *
      * @return array
@@ -315,7 +334,7 @@ class BelongsTo extends Field
         return array_merge([
             'resourceName' => $this->resourceName,
             'label' => forward_static_call([$this->resourceClass, 'label']),
-            'singularLabel' => forward_static_call([$this->resourceClass, 'singularLabel']),
+            'singularLabel' => $this->singularLabel ?? $this->name ?? forward_static_call([$this->resourceClass, 'singularLabel']),
             'belongsToRelationship' => $this->belongsToRelationship,
             'belongsToId' => $this->belongsToId,
             'nullable' => $this->nullable,
