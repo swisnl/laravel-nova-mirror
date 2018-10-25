@@ -1805,6 +1805,8 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
 
 exports.default = {
     props: ['resourceName', 'resourceId', 'field']
@@ -3943,11 +3945,15 @@ exports.default = {
          * Fill the forms formData with details from this field
          */
         fill: function fill(formData) {
-            if (this.selectedResource) {
+            if (this.selectedResource && this.resourceType) {
                 formData.append(this.field.attribute, this.selectedResource.value);
                 formData.append(this.field.attribute + '_type', this.resourceType);
-                formData.append(this.field.attribute + '_trashed', this.withTrashed);
+            } else {
+                formData.append(this.field.attribute, '');
+                formData.append(this.field.attribute + '_type', '');
             }
+
+            formData.append(this.field.attribute + '_trashed', this.withTrashed);
         },
 
 
@@ -4022,7 +4028,7 @@ exports.default = {
                                 this.determineIfSoftDeletes();
                                 // }
 
-                                if (!this.isSearchable) {
+                                if (!this.isSearchable && this.resourceType) {
                                     this.getAvailableResources();
                                 }
 
@@ -4139,6 +4145,15 @@ exports.default = {
         }
     }
 }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -39635,8 +39650,20 @@ var render = function() {
             [
               _c(
                 "option",
-                { attrs: { value: "", disabled: "", selected: "" } },
-                [_vm._v(_vm._s(_vm.__("Choose Type")))]
+                {
+                  attrs: {
+                    value: "",
+                    selected: "",
+                    disabled: !_vm.field.nullable
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.__("Choose Type")) +
+                      "\n            "
+                  )
+                ]
               ),
               _vm._v(" "),
               _vm._l(_vm.field.morphToTypes, function(option) {
@@ -39775,14 +39802,16 @@ var render = function() {
                       _c(
                         "option",
                         {
-                          attrs: { value: "", disabled: "" },
+                          attrs: { value: "", disabled: !_vm.field.nullable },
                           domProps: { selected: _vm.selectedResourceId == "" }
                         },
                         [
                           _vm._v(
-                            _vm._s(_vm.__("Choose")) +
+                            "\n                    " +
+                              _vm._s(_vm.__("Choose")) +
                               " " +
-                              _vm._s(_vm.fieldTypeName)
+                              _vm._s(_vm.fieldTypeName) +
+                              "\n                "
                           )
                         ]
                       ),
@@ -40397,22 +40426,28 @@ var render = function() {
         "template",
         { slot: "value" },
         [
-          _c(
-            "router-link",
-            {
-              staticClass: "no-underline font-bold dim text-primary",
-              attrs: {
-                to: {
-                  name: "detail",
-                  params: {
-                    resourceName: _vm.field.resourceName,
-                    resourceId: _vm.field.morphToId
+          _vm.field.value
+            ? _c(
+                "router-link",
+                {
+                  staticClass: "no-underline font-bold dim text-primary",
+                  attrs: {
+                    to: {
+                      name: "detail",
+                      params: {
+                        resourceName: _vm.field.resourceName,
+                        resourceId: _vm.field.morphToId
+                      }
+                    }
                   }
-                }
-              }
-            },
-            [_vm._v("\n            " + _vm._s(_vm.field.value) + "\n        ")]
-          )
+                },
+                [
+                  _vm._v(
+                    "\n            " + _vm._s(_vm.field.value) + "\n        "
+                  )
+                ]
+              )
+            : _c("p", [_vm._v("—")])
         ],
         1
       )

@@ -235,9 +235,13 @@ class MorphTo extends Field
      */
     public function fill(NovaRequest $request, $model)
     {
-        $model->{$model->{$this->attribute}()->getMorphType()} = $this->getMorphAliasForClass(
-            get_class(Nova::modelInstanceForKey($request->{$this->attribute.'_type'}))
-        );
+        $instance = Nova::modelInstanceForKey($request->{$this->attribute.'_type'});
+
+        if ($instance) {
+            $model->{$model->{$this->attribute}()->getMorphType()} = $this->getMorphAliasForClass(
+                get_class($instance)
+            );
+        }
 
         parent::fillInto($request, $model, $model->{$this->attribute}()->getForeignKey());
     }
