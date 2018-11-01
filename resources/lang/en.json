@@ -356,5 +356,7 @@
     "Action Initiated By": "Initiated By",
     "Action Target": "Target",
     "Action Status": "Status",
-    "Action Happened At": "Happened At"
+    "Action Happened At": "Happened At",
+    "resource": "resource",
+    "resources": "resources"
 }
