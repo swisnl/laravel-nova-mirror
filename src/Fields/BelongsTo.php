@@ -55,6 +55,13 @@ class BelongsTo extends Field
     public $display;
 
     /**
+     * Indicates if the field is nullable.
+     *
+     * @var bool
+     */
+    public $nullable = false;
+
+    /**
      * Indicates if this relationship is searchable.
      *
      * @var bool
@@ -74,6 +81,13 @@ class BelongsTo extends Field
      * @var string
      */
     public $inverse;
+
+    /**
+     * The displayable singular label of the relation.
+     *
+     * @var string
+     */
+    public $singularLabel;
 
     /**
      * Create a new field.
@@ -152,7 +166,10 @@ class BelongsTo extends Field
         );
 
         return array_merge_recursive(parent::getRules($request), [
-            $this->attribute => [new Relatable($request, $query)],
+            $this->attribute => array_filter([
+                $this->nullable ? 'nullable' : 'required',
+                new Relatable($request, $query)
+            ]),
         ]);
     }
 
@@ -283,6 +300,31 @@ class BelongsTo extends Field
     }
 
     /**
+     * Indicate that the field should be nullable.
+     *
+     * @param  bool  $nullable
+     * @return $this
+     */
+    public function nullable($nullable = true)
+    {
+        $this->nullable = $nullable;
+
+        return $this;
+    }
+
+    /**
+     * Set the displayable singular label of the resource.
+     *
+     * @return string
+     */
+    public function singularLabel($singularLabel)
+    {
+        $this->singularLabel = $singularLabel;
+
+        return $this;
+    }
+
+    /**
      * Get additional meta information to merge with the field payload.
      *
      * @return array
@@ -292,9 +334,10 @@ class BelongsTo extends Field
         return array_merge([
             'resourceName' => $this->resourceName,
             'label' => forward_static_call([$this->resourceClass, 'label']),
-            'singularLabel' => forward_static_call([$this->resourceClass, 'singularLabel']),
+            'singularLabel' => $this->singularLabel ?? $this->name ?? forward_static_call([$this->resourceClass, 'singularLabel']),
             'belongsToRelationship' => $this->belongsToRelationship,
             'belongsToId' => $this->belongsToId,
+            'nullable' => $this->nullable,
             'searchable' => $this->searchable,
         ], $this->meta);
     }

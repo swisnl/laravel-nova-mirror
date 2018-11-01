@@ -113,12 +113,41 @@ class ResourceAttachmentTest extends IntegrationTest
         $response->assertStatus(422);
     }
 
-    public function test_cant_attach_resources_that_arent_relatable_at_all()
+    // This behavior was changed...
+    // public function test_cant_attach_resources_that_arent_relatable_at_all()
+    // {
+    //     $user = factory(User::class)->create();
+    //     $role = factory(Role::class)->create();
+
+    //     $_SERVER['nova.user.authorizable'] = true;
+    //     $_SERVER['nova.user.attachAnyRole'] = false;
+
+    //     Gate::policy(User::class, UserPolicy::class);
+
+    //     $response = $this->withExceptionHandling()
+    //                     ->postJson('/nova-api/users/'.$user->id.'/attach/roles', [
+    //                         'roles' => $role->id,
+    //                         'admin' => 'Y',
+    //                         'viaRelationship' => 'roles',
+    //                     ]);
+
+    //     unset($_SERVER['nova.user.authorizable']);
+    //     unset($_SERVER['nova.user.attachAnyRole']);
+
+    //     $response->assertStatus(422);
+    //     $this->assertInstanceOf(User::class, $_SERVER['nova.user.attachAnyRoleUser']);
+    //     $this->assertEquals($user->id, $_SERVER['nova.user.attachAnyRoleUser']->id);
+
+    //     unset($_SERVER['nova.user.attachAnyRoleUser']);
+    // }
+
+    public function test_cant_attach_things_to_resources_that_prevent_the_attachment_via_a_policy()
     {
         $user = factory(User::class)->create();
         $role = factory(Role::class)->create();
 
         $_SERVER['nova.user.authorizable'] = true;
+        $_SERVER['nova.user.attachRole'] = false;
         $_SERVER['nova.user.attachAnyRole'] = false;
 
         Gate::policy(User::class, UserPolicy::class);
@@ -131,34 +160,8 @@ class ResourceAttachmentTest extends IntegrationTest
                         ]);
 
         unset($_SERVER['nova.user.authorizable']);
-        unset($_SERVER['nova.user.attachAnyRole']);
-
-        $response->assertStatus(422);
-        $this->assertInstanceOf(User::class, $_SERVER['nova.user.attachAnyRoleUser']);
-        $this->assertEquals($user->id, $_SERVER['nova.user.attachAnyRoleUser']->id);
-
-        unset($_SERVER['nova.user.attachAnyRoleUser']);
-    }
-
-    public function test_cant_attach_things_to_resources_that_prevent_the_attachment_via_a_policy()
-    {
-        $user = factory(User::class)->create();
-        $role = factory(Role::class)->create();
-
-        $_SERVER['nova.user.authorizable'] = true;
-        $_SERVER['nova.user.attachRole'] = false;
-
-        Gate::policy(User::class, UserPolicy::class);
-
-        $response = $this->withExceptionHandling()
-                        ->postJson('/nova-api/users/'.$user->id.'/attach/roles', [
-                            'roles' => $role->id,
-                            'admin' => 'Y',
-                            'viaRelationship' => 'roles',
-                        ]);
-
-        unset($_SERVER['nova.user.authorizable']);
         unset($_SERVER['nova.user.attachRole']);
+        unset($_SERVER['nova.user.attachAnyRole']);
 
         $response->assertStatus(422);
         $this->assertInstanceOf(User::class, $_SERVER['nova.user.attachRoleUser']);

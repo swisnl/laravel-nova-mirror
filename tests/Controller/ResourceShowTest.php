@@ -4,6 +4,7 @@ namespace Laravel\Nova\Tests\Controller;
 
 use Laravel\Nova\Nova;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\Role;
 use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\IntegrationTest;
@@ -42,6 +43,21 @@ class ResourceShowTest extends IntegrationTest
         $this->assertTrue($response->original['resource']['softDeletes']);
 
         $this->assertEquals('Primary', $response->original['panels'][0]->name);
+    }
+
+    public function test_can_show_resource_with_null_relation()
+    {
+        $post = factory(Post::class)->create([
+            'user_id' => null,
+        ]);
+
+        $response = $this->withExceptionHandling()
+                        ->getJson('/nova-api/posts/1');
+
+        $response->assertStatus(200);
+
+        $this->assertNull($post->user_id);
+        $this->assertNull($response->original['resource']['fields'][0]->value);
     }
 
     public function test_authorization_information_is_correctly_adjusted_when_unauthorized()

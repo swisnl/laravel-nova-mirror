@@ -14,7 +14,7 @@ var _lodash = __webpack_require__("./node_modules/lodash/lodash.js");
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -358,7 +358,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 exports.default = {
     props: {
@@ -1484,7 +1484,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.InteractsWithDates],
@@ -1849,6 +1849,8 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
 
 exports.default = {
     props: ['resourceName', 'resourceId', 'field']
@@ -1904,7 +1906,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.BehavesAsPanel],
@@ -1979,7 +1981,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.BehavesAsPanel]
@@ -2714,12 +2716,18 @@ var _BelongsToFieldStorage = __webpack_require__("./resources/js/storage/Belongs
 
 var _BelongsToFieldStorage2 = _interopRequireDefault(_BelongsToFieldStorage);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 var _vueClickaway = __webpack_require__("./node_modules/vue-clickaway/dist/vue-clickaway.common.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2882,10 +2890,9 @@ exports.default = {
          * Fill the forms formData with details from this field
          */
         fill: function fill(formData) {
-            if (this.selectedResource) {
-                formData.append(this.field.attribute, this.selectedResource.value);
-                formData.append(this.field.attribute + '_trashed', this.withTrashed);
-            }
+            formData.append(this.field.attribute, this.selectedResource ? this.selectedResource.value : '');
+
+            formData.append(this.field.attribute + '_trashed', this.withTrashed);
         },
 
 
@@ -3022,7 +3029,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.HandlesValidationErrors, _laravelNova.FormField],
@@ -3121,7 +3128,7 @@ __webpack_require__("./node_modules/codemirror/keymap/vim.js");
 
 __webpack_require__("./node_modules/codemirror/mode/sql/sql.js");
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3250,7 +3257,7 @@ var _DateTimePicker = __webpack_require__("./resources/js/components/DateTimePic
 
 var _DateTimePicker2 = _interopRequireDefault(_DateTimePicker);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3300,7 +3307,7 @@ var _DateTimePicker = __webpack_require__("./resources/js/components/DateTimePic
 
 var _DateTimePicker2 = _interopRequireDefault(_DateTimePicker);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3369,7 +3376,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.HandlesValidationErrors],
@@ -3448,7 +3455,7 @@ var _DeleteButton = __webpack_require__("./resources/js/components/DeleteButton.
 
 var _DeleteButton2 = _interopRequireDefault(_DeleteButton);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3769,7 +3776,7 @@ var _codemirror2 = _interopRequireDefault(_codemirror);
 
 __webpack_require__("./node_modules/codemirror/mode/markdown/markdown.js");
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4022,7 +4029,7 @@ var _MorphToFieldStorage = __webpack_require__("./resources/js/storage/MorphToFi
 
 var _MorphToFieldStorage2 = _interopRequireDefault(_MorphToFieldStorage);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4091,11 +4098,15 @@ exports.default = {
          * Fill the forms formData with details from this field
          */
         fill: function fill(formData) {
-            if (this.selectedResource) {
+            if (this.selectedResource && this.resourceType) {
                 formData.append(this.field.attribute, this.selectedResource.value);
                 formData.append(this.field.attribute + '_type', this.resourceType);
-                formData.append(this.field.attribute + '_trashed', this.withTrashed);
+            } else {
+                formData.append(this.field.attribute, '');
+                formData.append(this.field.attribute + '_type', '');
             }
+
+            formData.append(this.field.attribute + '_trashed', this.withTrashed);
         },
 
 
@@ -4170,7 +4181,7 @@ exports.default = {
                                 this.determineIfSoftDeletes();
                                 // }
 
-                                if (!this.isSearchable) {
+                                if (!this.isSearchable && this.resourceType) {
                                     this.getAvailableResources();
                                 }
 
@@ -4381,6 +4392,15 @@ exports.default = {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 
@@ -4394,7 +4414,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.HandlesValidationErrors, _laravelNova.FormField]
@@ -4428,7 +4448,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.HandlesValidationErrors, _laravelNova.FormField],
@@ -4814,7 +4834,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.HandlesValidationErrors, _laravelNova.FormField],
@@ -4869,7 +4889,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.HandlesValidationErrors, _laravelNova.FormField],
@@ -4923,7 +4943,7 @@ var _extends2 = __webpack_require__("./node_modules/babel-runtime/helpers/extend
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4979,7 +4999,7 @@ var _extends2 = __webpack_require__("./node_modules/babel-runtime/helpers/extend
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5038,7 +5058,7 @@ var _Trix = __webpack_require__("./resources/js/components/Trix.vue");
 
 var _Trix2 = _interopRequireDefault(_Trix);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5174,7 +5194,7 @@ var _asyncToGenerator2 = __webpack_require__("./node_modules/babel-runtime/helpe
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 var _vueClickaway = __webpack_require__("./node_modules/vue-clickaway/dist/vue-clickaway.common.js");
 
@@ -5723,7 +5743,7 @@ var _promise = __webpack_require__("./node_modules/babel-runtime/core-js/promise
 
 var _promise2 = _interopRequireDefault(_promise);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5940,7 +5960,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.InteractsWithDates],
@@ -6851,7 +6871,7 @@ __webpack_require__("./node_modules/chartist-plugin-tooltips/dist/chartist-plugi
 
 __webpack_require__("./node_modules/chartist/dist/chartist.min.css");
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 __webpack_require__("./node_modules/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css");
 
@@ -7026,7 +7046,7 @@ var _numeral = __webpack_require__("./node_modules/numeral/numeral.js");
 
 var _numeral2 = _interopRequireDefault(_numeral);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7170,7 +7190,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 var _PartitionMetric = __webpack_require__("./resources/js/components/Metrics/Base/PartitionMetric.vue");
 
@@ -7266,7 +7286,7 @@ var _lodash = __webpack_require__("./node_modules/lodash/lodash.js");
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 var _TrendMetric = __webpack_require__("./resources/js/components/Metrics/Base/TrendMetric.vue");
 
@@ -7410,7 +7430,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 var _ValueMetric = __webpack_require__("./resources/js/components/Metrics/Base/ValueMetric.vue");
 
@@ -7595,7 +7615,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 exports.default = {
     props: {
@@ -7945,6 +7965,8 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
 
 exports.default = {
     props: ['resourceName', 'resources', 'resourceResponse'],
@@ -8054,7 +8076,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.InteractsWithResourceInformation],
@@ -8668,7 +8690,7 @@ var _asyncToGenerator2 = __webpack_require__("./node_modules/babel-runtime/helpe
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9116,7 +9138,7 @@ var _asyncToGenerator2 = __webpack_require__("./node_modules/babel-runtime/helpe
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9428,7 +9450,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 exports.default = {
     mixins: [_laravelNova.HasCards],
@@ -9477,7 +9499,7 @@ var _asyncToGenerator2 = __webpack_require__("./node_modules/babel-runtime/helpe
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10101,10 +10123,15 @@ var _asyncToGenerator2 = __webpack_require__("./node_modules/babel-runtime/helpe
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -11142,6 +11169,14 @@ exports.default = {
          */
         headingTitle: function headingTitle() {
             return this.isRelation && this.field ? this.field.name : this.resourceResponse.label;
+        },
+
+
+        /**
+         * Return the resource count label
+         */
+        resourceCountLabel: function resourceCountLabel() {
+            return this.resources.length && this.resources.length + '/' + this.allMatchingResourceCount + ' ' + (0, _laravelNova.SingularOrPlural)(this.allMatchingResourceCount, this.__('resource'));
         }
     }
 };
@@ -11162,7 +11197,7 @@ var _defineProperty2 = __webpack_require__("./node_modules/babel-runtime/helpers
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12008,7 +12043,7 @@ var _asyncToGenerator2 = __webpack_require__("./node_modules/babel-runtime/helpe
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12362,7 +12397,7 @@ var _lodash = __webpack_require__("./node_modules/lodash/lodash.js");
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
+var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27715,8 +27750,9 @@ CodeMirror.defineMode("xml", function(editorConf, config_) {
         stream.next();
       }
       return style;
-    };
+    }
   }
+
   function doctype(depth) {
     return function(stream, state) {
       var ch;
@@ -36547,53 +36583,64 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "bg-20 rounded-b" }, [
     _vm.resources.length > 0
-      ? _c("nav", { staticClass: "flex" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-link py-3 px-4",
-              class: {
-                "text-primary dim": _vm.hasPreviousPages,
-                "text-80 opacity-50": !_vm.hasPreviousPages
-              },
-              attrs: {
-                disabled: !_vm.hasPreviousPages,
-                rel: "prev",
-                dusk: "previous"
-              },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  _vm.selectPreviousPage()
+      ? _c(
+          "nav",
+          { staticClass: "flex justify-between items-center" },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-link py-3 px-4",
+                class: {
+                  "text-primary dim": _vm.hasPreviousPages,
+                  "text-80 opacity-50": !_vm.hasPreviousPages
+                },
+                attrs: {
+                  disabled: !_vm.hasPreviousPages,
+                  rel: "prev",
+                  dusk: "previous"
+                },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.selectPreviousPage()
+                  }
                 }
-              }
-            },
-            [
-              _vm._v(
-                "\n            " + _vm._s(_vm.__("Previous")) + "\n        "
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "ml-auto btn btn-link py-3 px-4",
-              class: {
-                "text-primary dim": _vm.hasMorePages,
-                "text-80 opacity-50": !_vm.hasMorePages
               },
-              attrs: { disabled: !_vm.hasMorePages, rel: "next", dusk: "next" },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  _vm.selectNextPage()
+              [
+                _vm._v(
+                  "\n            " + _vm._s(_vm.__("Previous")) + "\n        "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _vm._t("default"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-link py-3 px-4",
+                class: {
+                  "text-primary dim": _vm.hasMorePages,
+                  "text-80 opacity-50": !_vm.hasMorePages
+                },
+                attrs: {
+                  disabled: !_vm.hasMorePages,
+                  rel: "next",
+                  dusk: "next"
+                },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.selectNextPage()
+                  }
                 }
-              }
-            },
-            [_vm._v("\n            " + _vm._s(_vm.__("Next")) + "\n        ")]
-          )
-        ])
+              },
+              [_vm._v("\n            " + _vm._s(_vm.__("Next")) + "\n        ")]
+            )
+          ],
+          2
+        )
       : _vm._e()
   ])
 }
@@ -38430,203 +38477,209 @@ var render = function() {
                 "div",
                 { staticClass: "py-3 flex items-center border-b border-50" },
                 [
-                  _vm.shouldShowCheckBoxes
-                    ? _c(
-                        "div",
-                        { staticClass: "px-3" },
-                        [
-                          _c(
-                            "dropdown",
-                            {
-                              attrs: { dusk: "select-all-dropdown" },
-                              scopedSlots: _vm._u([
-                                {
-                                  key: "default",
-                                  fn: function(ref) {
-                                    var toggle = ref.toggle
-                                    return _c(
-                                      "dropdown-trigger",
-                                      { attrs: { "handle-click": toggle } },
-                                      [
-                                        _c("fake-checkbox", {
-                                          attrs: {
-                                            checked: _vm.selectAllChecked
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  }
-                                }
-                              ])
-                            },
-                            [
-                              _c(
-                                "dropdown-menu",
-                                {
-                                  attrs: {
-                                    slot: "menu",
-                                    direction: "ltr",
-                                    width: "250"
-                                  },
-                                  slot: "menu"
-                                },
-                                [
-                                  _c("div", { staticClass: "p-4" }, [
-                                    _c("ul", { staticClass: "list-reset" }, [
-                                      _c(
-                                        "li",
-                                        {
-                                          staticClass: "flex items-center mb-4"
-                                        },
+                  _c("div", { staticClass: "flex items-center" }, [
+                    _vm.shouldShowCheckBoxes
+                      ? _c(
+                          "div",
+                          { staticClass: "px-3" },
+                          [
+                            _c(
+                              "dropdown",
+                              {
+                                attrs: { dusk: "select-all-dropdown" },
+                                scopedSlots: _vm._u([
+                                  {
+                                    key: "default",
+                                    fn: function(ref) {
+                                      var toggle = ref.toggle
+                                      return _c(
+                                        "dropdown-trigger",
+                                        { attrs: { "handle-click": toggle } },
                                         [
-                                          _c(
-                                            "label",
-                                            {
-                                              staticClass: "flex items-center",
-                                              on: {
-                                                input: _vm.toggleSelectAll,
-                                                keydown: function($event) {
-                                                  if (
-                                                    !("button" in $event) &&
-                                                    _vm._k(
-                                                      $event.keyCode,
-                                                      "space",
-                                                      32,
-                                                      $event.key,
-                                                      " "
-                                                    ) &&
-                                                    _vm._k(
-                                                      $event.keyCode,
-                                                      "enter",
-                                                      13,
-                                                      $event.key,
-                                                      "Enter"
-                                                    )
-                                                  ) {
-                                                    return null
-                                                  }
-                                                  $event.preventDefault()
-                                                  return _vm.toggleSelectAll(
-                                                    $event
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _c("checkbox", {
-                                                attrs: {
-                                                  checked: _vm.selectAllChecked
-                                                }
-                                              }),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                { staticClass: "ml-2" },
-                                                [
-                                                  _vm._v(
-                                                    "\n                                            " +
-                                                      _vm._s(
-                                                        _vm.__("Select All")
-                                                      ) +
-                                                      "\n                                        "
-                                                  )
-                                                ]
-                                              )
-                                            ],
-                                            1
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "li",
-                                        { staticClass: "flex items-center" },
-                                        [
-                                          _c(
-                                            "label",
-                                            {
-                                              staticClass: "flex items-center",
-                                              on: {
-                                                input:
-                                                  _vm.toggleSelectAllMatching,
-                                                keydown: function($event) {
-                                                  if (
-                                                    !("button" in $event) &&
-                                                    _vm._k(
-                                                      $event.keyCode,
-                                                      "space",
-                                                      32,
-                                                      $event.key,
-                                                      " "
-                                                    ) &&
-                                                    _vm._k(
-                                                      $event.keyCode,
-                                                      "enter",
-                                                      13,
-                                                      $event.key,
-                                                      "Enter"
-                                                    )
-                                                  ) {
-                                                    return null
-                                                  }
-                                                  $event.preventDefault()
-                                                  return _vm.toggleSelectAllMatching(
-                                                    $event
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _c("checkbox", {
-                                                attrs: {
-                                                  dusk:
-                                                    "select-all-matching-button",
-                                                  checked:
-                                                    _vm.selectAllMatchingChecked
-                                                }
-                                              }),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                { staticClass: "ml-2" },
-                                                [
-                                                  _vm._v(
-                                                    "\n                                            " +
-                                                      _vm._s(
-                                                        _vm.__(
-                                                          "Select All Matching"
-                                                        )
-                                                      ) +
-                                                      "\n                                            "
-                                                  ),
-                                                  _c("span", [
-                                                    _vm._v(
-                                                      "(" +
-                                                        _vm._s(
-                                                          _vm.allMatchingResourceCount
-                                                        ) +
-                                                        ")"
-                                                    )
-                                                  ])
-                                                ]
-                                              )
-                                            ],
-                                            1
-                                          )
-                                        ]
+                                          _c("fake-checkbox", {
+                                            attrs: {
+                                              checked: _vm.selectAllChecked
+                                            }
+                                          })
+                                        ],
+                                        1
                                       )
+                                    }
+                                  }
+                                ])
+                              },
+                              [
+                                _c(
+                                  "dropdown-menu",
+                                  {
+                                    attrs: {
+                                      slot: "menu",
+                                      direction: "ltr",
+                                      width: "250"
+                                    },
+                                    slot: "menu"
+                                  },
+                                  [
+                                    _c("div", { staticClass: "p-4" }, [
+                                      _c("ul", { staticClass: "list-reset" }, [
+                                        _c(
+                                          "li",
+                                          {
+                                            staticClass:
+                                              "flex items-center mb-4"
+                                          },
+                                          [
+                                            _c(
+                                              "label",
+                                              {
+                                                staticClass:
+                                                  "flex items-center",
+                                                on: {
+                                                  input: _vm.toggleSelectAll,
+                                                  keydown: function($event) {
+                                                    if (
+                                                      !("button" in $event) &&
+                                                      _vm._k(
+                                                        $event.keyCode,
+                                                        "space",
+                                                        32,
+                                                        $event.key,
+                                                        " "
+                                                      ) &&
+                                                      _vm._k(
+                                                        $event.keyCode,
+                                                        "enter",
+                                                        13,
+                                                        $event.key,
+                                                        "Enter"
+                                                      )
+                                                    ) {
+                                                      return null
+                                                    }
+                                                    $event.preventDefault()
+                                                    return _vm.toggleSelectAll(
+                                                      $event
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("checkbox", {
+                                                  attrs: {
+                                                    checked:
+                                                      _vm.selectAllChecked
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  { staticClass: "ml-2" },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                " +
+                                                        _vm._s(
+                                                          _vm.__("Select All")
+                                                        ) +
+                                                        "\n                                            "
+                                                    )
+                                                  ]
+                                                )
+                                              ],
+                                              1
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "li",
+                                          { staticClass: "flex items-center" },
+                                          [
+                                            _c(
+                                              "label",
+                                              {
+                                                staticClass:
+                                                  "flex items-center",
+                                                on: {
+                                                  input:
+                                                    _vm.toggleSelectAllMatching,
+                                                  keydown: function($event) {
+                                                    if (
+                                                      !("button" in $event) &&
+                                                      _vm._k(
+                                                        $event.keyCode,
+                                                        "space",
+                                                        32,
+                                                        $event.key,
+                                                        " "
+                                                      ) &&
+                                                      _vm._k(
+                                                        $event.keyCode,
+                                                        "enter",
+                                                        13,
+                                                        $event.key,
+                                                        "Enter"
+                                                      )
+                                                    ) {
+                                                      return null
+                                                    }
+                                                    $event.preventDefault()
+                                                    return _vm.toggleSelectAllMatching(
+                                                      $event
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("checkbox", {
+                                                  attrs: {
+                                                    dusk:
+                                                      "select-all-matching-button",
+                                                    checked:
+                                                      _vm.selectAllMatchingChecked
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  { staticClass: "ml-2" },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                " +
+                                                        _vm._s(
+                                                          _vm.__(
+                                                            "Select All Matching"
+                                                          )
+                                                        ) +
+                                                        "\n                                                "
+                                                    ),
+                                                    _c("span", [
+                                                      _vm._v(
+                                                        "(" +
+                                                          _vm._s(
+                                                            _vm.allMatchingResourceCount
+                                                          ) +
+                                                          ")"
+                                                      )
+                                                    ])
+                                                  ]
+                                                )
+                                              ],
+                                              1
+                                            )
+                                          ]
+                                        )
+                                      ])
                                     ])
-                                  ])
-                                ]
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    : _vm._e(),
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      : _vm._e()
+                  ]),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -38911,17 +38964,31 @@ var render = function() {
           ),
           _vm._v(" "),
           _vm.resourceResponse
-            ? _c("pagination-links", {
-                attrs: {
-                  "resource-name": _vm.resourceName,
-                  resources: _vm.resources,
-                  "resource-response": _vm.resourceResponse
+            ? _c(
+                "pagination-links",
+                {
+                  attrs: {
+                    "resource-name": _vm.resourceName,
+                    resources: _vm.resources,
+                    "resource-response": _vm.resourceResponse
+                  },
+                  on: {
+                    previous: _vm.selectPreviousPage,
+                    next: _vm.selectNextPage
+                  }
                 },
-                on: {
-                  previous: _vm.selectPreviousPage,
-                  next: _vm.selectNextPage
-                }
-              })
+                [
+                  _vm.resourceCountLabel
+                    ? _c("span", { staticClass: "text-sm text-80" }, [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(_vm.resourceCountLabel) +
+                            "\n                "
+                        )
+                      ])
+                    : _vm._e()
+                ]
+              )
             : _vm._e()
         ],
         1
@@ -39046,12 +39113,14 @@ var render = function() {
                 [
                   _c(
                     "option",
-                    { attrs: { value: "", disabled: "", selected: "" } },
-                    [
-                      _vm._v(
-                        _vm._s(_vm.__("Choose")) + " " + _vm._s(_vm.field.name)
-                      )
-                    ]
+                    {
+                      attrs: {
+                        value: "",
+                        selected: "",
+                        disabled: !_vm.field.nullable
+                      }
+                    },
+                    [_vm._v("\n                —\n            ")]
                   ),
                   _vm._v(" "),
                   _vm._l(_vm.availableResources, function(resource) {
@@ -39756,8 +39825,20 @@ var render = function() {
             [
               _c(
                 "option",
-                { attrs: { value: "", disabled: "", selected: "" } },
-                [_vm._v(_vm._s(_vm.__("Choose Type")))]
+                {
+                  attrs: {
+                    value: "",
+                    selected: "",
+                    disabled: !_vm.field.nullable
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.__("Choose Type")) +
+                      "\n            "
+                  )
+                ]
               ),
               _vm._v(" "),
               _vm._l(_vm.field.morphToTypes, function(option) {
@@ -39896,14 +39977,16 @@ var render = function() {
                       _c(
                         "option",
                         {
-                          attrs: { value: "", disabled: "" },
+                          attrs: { value: "", disabled: !_vm.field.nullable },
                           domProps: { selected: _vm.selectedResourceId == "" }
                         },
                         [
                           _vm._v(
-                            _vm._s(_vm.__("Choose")) +
+                            "\n                    " +
+                              _vm._s(_vm.__("Choose")) +
                               " " +
-                              _vm._s(_vm.fieldTypeName)
+                              _vm._s(_vm.fieldTypeName) +
+                              "\n                "
                           )
                         ]
                       ),
@@ -40531,22 +40614,28 @@ var render = function() {
         "template",
         { slot: "value" },
         [
-          _c(
-            "router-link",
-            {
-              staticClass: "no-underline font-bold dim text-primary",
-              attrs: {
-                to: {
-                  name: "detail",
-                  params: {
-                    resourceName: _vm.field.resourceName,
-                    resourceId: _vm.field.morphToId
+          _vm.field.value
+            ? _c(
+                "router-link",
+                {
+                  staticClass: "no-underline font-bold dim text-primary",
+                  attrs: {
+                    to: {
+                      name: "detail",
+                      params: {
+                        resourceName: _vm.field.resourceName,
+                        resourceId: _vm.field.morphToId
+                      }
+                    }
                   }
-                }
-              }
-            },
-            [_vm._v("\n            " + _vm._s(_vm.field.value) + "\n        ")]
-          )
+                },
+                [
+                  _vm._v(
+                    "\n            " + _vm._s(_vm.field.value) + "\n        "
+                  )
+                ]
+              )
+            : _c("p", [_vm._v("—")])
         ],
         1
       )

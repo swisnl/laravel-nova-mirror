@@ -38,7 +38,7 @@ class PostResource extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('User', 'user', UserResource::class),
+            BelongsTo::make('User', 'user', UserResource::class)->nullable(),
             Text::make('Title', 'title')->rules('required', 'string', 'max:255'),
             MorphMany::make('Comments', 'comments', CommentResource::class),
             MorphToMany::make('Tags', 'tags', TagResource::class)->display(function ($tag) {

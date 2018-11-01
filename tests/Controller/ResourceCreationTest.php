@@ -34,6 +34,20 @@ class ResourceCreationTest extends IntegrationTest
         $this->assertEquals('taylor@laravel.com', $user->email);
     }
 
+    public function test_can_create_resources_with_null_relation()
+    {
+        $response = $this->withExceptionHandling()
+                        ->postJson('/nova-api/posts', [
+                            'title' => 'Test Post',
+                        ]);
+
+        $response->assertStatus(201);
+
+        $post = Post::first();
+
+        $this->assertNull($post->user_id);
+    }
+
     public function test_can_create_resource_fields_that_arent_authorized()
     {
         $response = $this->withExceptionHandling()

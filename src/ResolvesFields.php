@@ -323,7 +323,7 @@ trait ResolvesFields
 
         if ($field && isset($field->fieldsCallback)) {
             return collect(array_values(
-                $this->filter(call_user_func($field->fieldsCallback, $request))
+                $this->filter(call_user_func($field->fieldsCallback, $request, $this->resource))
             ))->each(function ($field) {
                 $field->pivot = true;
             });

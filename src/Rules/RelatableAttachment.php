@@ -21,7 +21,7 @@ class RelatableAttachment extends Relatable
 
         return (new $parentResource($parentModel))->authorizedToAttachAny(
             $this->request, $model
-        ) && (new $parentResource($parentModel))->authorizedToAttach(
+        ) || (new $parentResource($parentModel))->authorizedToAttach(
             $this->request, $model
         );
     }

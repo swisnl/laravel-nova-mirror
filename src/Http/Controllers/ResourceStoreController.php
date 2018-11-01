@@ -29,8 +29,8 @@ class ResourceStoreController extends Controller
 
             if ($request->viaRelationship()) {
                 $request->findParentModelOrFail()
-                         ->{$request->viaRelationship}()
-                         ->save($model);
+                        ->{$request->viaRelationship}()
+                        ->save($model);
             } else {
                 $model->save();
             }

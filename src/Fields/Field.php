@@ -239,11 +239,11 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @param  object  $model
-     * @return void
+     * @return mixed
      */
     public function fill(NovaRequest $request, $model)
     {
-        $this->fillInto($request, $model, $this->attribute);
+        return $this->fillInto($request, $model, $this->attribute);
     }
 
     /**
@@ -251,7 +251,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @param  object  $model
-     * @return void
+     * @return mixed
      */
     public function fillForAction(NovaRequest $request, $model)
     {
@@ -265,11 +265,11 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
      * @param  object  $model
      * @param  string  $attribute
      * @param  string|null  $requestAttribute
-     * @return void
+     * @return mixed
      */
     public function fillInto(NovaRequest $request, $model, $attribute, $requestAttribute = null)
     {
-        $this->fillAttribute($request, $requestAttribute ?? $this->attribute, $model, $attribute);
+        return $this->fillAttribute($request, $requestAttribute ?? $this->attribute, $model, $attribute);
     }
 
     /**
@@ -289,7 +289,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
             );
         }
 
-        $this->fillAttributeFromRequest(
+        return $this->fillAttributeFromRequest(
             $request, $requestAttribute, $model, $attribute
         );
     }
@@ -301,7 +301,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
      * @param  string  $requestAttribute
      * @param  object  $model
      * @param  string  $attribute
-     * @return void
+     * @return mixed
      */
     protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute)
     {

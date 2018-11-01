@@ -64,50 +64,52 @@
 
         <loading-card :loading="loading" :class="{ 'overflow-hidden border border-50': !shouldShowToolbar }">
             <div v-if="shouldShowToolbar" class="py-3 flex items-center border-b border-50">
-                <div class="px-3" v-if="shouldShowCheckBoxes">
-                    <!-- Select All -->
-                    <dropdown dusk="select-all-dropdown">
-                        <dropdown-trigger slot-scope="{toggle}" :handle-click="toggle">
-                            <fake-checkbox :checked="selectAllChecked" />
-                        </dropdown-trigger>
+                <div class="flex items-center">
+                    <div class="px-3" v-if="shouldShowCheckBoxes">
+                        <!-- Select All -->
+                        <dropdown dusk="select-all-dropdown">
+                            <dropdown-trigger slot-scope="{toggle}" :handle-click="toggle">
+                                <fake-checkbox :checked="selectAllChecked" />
+                            </dropdown-trigger>
 
-                        <dropdown-menu slot="menu" direction="ltr" width="250">
-                            <div class="p-4">
-                                <ul class="list-reset">
-                                    <li class="flex items-center mb-4">
-                                        <label
-                                            class="flex items-center"
-                                            @input="toggleSelectAll"
-                                            @keydown.prevent.space.enter="toggleSelectAll"
-                                        >
-                                            <checkbox :checked="selectAllChecked" />
+                            <dropdown-menu slot="menu" direction="ltr" width="250">
+                                <div class="p-4">
+                                    <ul class="list-reset">
+                                        <li class="flex items-center mb-4">
+                                            <label
+                                                class="flex items-center"
+                                                @input="toggleSelectAll"
+                                                @keydown.prevent.space.enter="toggleSelectAll"
+                                            >
+                                                <checkbox :checked="selectAllChecked" />
 
-                                            <span class="ml-2">
-                                                {{__('Select All')}}
-                                            </span>
-                                        </label>
-                                    </li>
-                                    <li class="flex items-center">
-                                        <label
-                                            class="flex items-center"
-                                            @input="toggleSelectAllMatching"
-                                            @keydown.prevent.space.enter="toggleSelectAllMatching"
-                                        >
-                                            <checkbox
-                                                dusk="select-all-matching-button"
-                                                :checked="selectAllMatchingChecked"
-                                            />
+                                                <span class="ml-2">
+                                                    {{__('Select All')}}
+                                                </span>
+                                            </label>
+                                        </li>
+                                        <li class="flex items-center">
+                                            <label
+                                                class="flex items-center"
+                                                @input="toggleSelectAllMatching"
+                                                @keydown.prevent.space.enter="toggleSelectAllMatching"
+                                            >
+                                                <checkbox
+                                                    dusk="select-all-matching-button"
+                                                    :checked="selectAllMatchingChecked"
+                                                />
 
-                                            <span class="ml-2">
-                                                {{__('Select All Matching')}}
-                                                <span>({{ allMatchingResourceCount }})</span>
-                                            </span>
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
-                        </dropdown-menu>
-                    </dropdown>
+                                                <span class="ml-2">
+                                                    {{__('Select All Matching')}}
+                                                    <span>({{ allMatchingResourceCount }})</span>
+                                                </span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </dropdown-menu>
+                        </dropdown>
+                    </div>
                 </div>
 
                 <div class="flex items-center ml-auto px-3">
@@ -241,13 +243,16 @@
                 :resource-response="resourceResponse"
                 @previous="selectPreviousPage"
                 @next="selectNextPage">
+                    <span v-if="resourceCountLabel" class="text-sm text-80">
+                        {{ resourceCountLabel }}
+                    </span>
             </pagination-links>
         </loading-card>
     </loading-view>
 </template>
 
 <script>
-import { Capitalize, Inflector } from 'laravel-nova'
+import { Capitalize, Inflector, SingularOrPlural } from 'laravel-nova'
 import {
     Errors,
     Deletable,
@@ -1016,6 +1021,19 @@ export default {
          */
         headingTitle() {
             return this.isRelation && this.field ? this.field.name : this.resourceResponse.label
+        },
+
+        /**
+         * Return the resource count label
+         */
+        resourceCountLabel() {
+            return (
+                this.resources.length &&
+                `${this.resources.length}/${this.allMatchingResourceCount} ${SingularOrPlural(
+                    this.allMatchingResourceCount,
+                    this.__('resource')
+                )}`
+            )
         },
     },
 }
