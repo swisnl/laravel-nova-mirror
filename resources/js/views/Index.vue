@@ -318,7 +318,6 @@ export default {
 
         search: '',
         lenses: [],
-        filters: [],
 
         authorizedToRelate: false,
 
@@ -558,42 +557,6 @@ export default {
         },
 
         /**
-         * Get the filters available for the current resource.
-         */
-        getFilters() {
-            this.filters = []
-            this.currentFilters = []
-
-            return Nova.request()
-                .get('/nova-api/' + this.resourceName + '/filters')
-                .then(response => {
-                    this.filters = response.data
-                    this.initializeFilterValuesFromQueryString()
-                })
-        },
-
-        /**
-         * Clear filters and reset the resource table
-         */
-        clearSelectedFilters() {
-            //     console.log('clearing selected filters')
-            //     // Nova.$emit('clear-selected-filters')
-            //     this.filterChanged()
-            //     this.clearAllFilters()
-            //     // this.$nextTick(() => this.filterChanged())
-            //     // this.clearAllFilters()
-            //     this.syncFilterValues()
-        },
-
-        /**
-         * Update the currentFilters with newFilters
-         */
-        updateFilters(newFilters) {
-            //     this.currentFilters = newFilters
-            //     this.filterChanged()
-        },
-
-        /**
          * Execute a search against the resource.
          */
         performSearch(event) {
@@ -699,13 +662,6 @@ export default {
          */
         cardsEndpoint() {
             return `/nova-api/${this.resourceName}/cards`
-        },
-
-        /**
-         * Get the name of the filter query string variable.
-         */
-        filterParameter() {
-            return this.resourceName + '_filter'
         },
 
         /**
@@ -898,13 +854,6 @@ export default {
          */
         hasResources() {
             return Boolean(this.resources.length > 0)
-        },
-
-        /**
-         * Determine if there any filters for this resource
-         */
-        hasFilters() {
-            return Boolean(this.filters.length > 0)
         },
 
         /**

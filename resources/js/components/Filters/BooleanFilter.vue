@@ -37,64 +37,70 @@ export default {
         value: {},
     },
 
-    // watch: {
-    //     value: function(newData, oldData) {
-    //         console.log('watcher fired')
-    //         this.hydrateOptions()
-    //     },
-    //     //     filter: function(newData, oldData) {
-    //     //         this.hydrateOptions()
-    //     //     },
-    // },
+    watch: {
+        value: function(newData, oldData) {
+            console.log('watcher fired')
+            //         this.hydrateOptions()
+        },
+        //     filter: function(newData, oldData) {
+        //         this.hydrateOptions()
+        //     },
+    },
 
-    // data: () => ({ options: null }),
+    data: () => ({ options: null }),
 
-    // created() {
-    //     this.hydrateOptions()
+    created() {
+        this.hydrateOptions()
 
-    //     // Nova.$on('clear-selected-filters', () => {
-    //     //     console.log('clearing-selected-filters')
-    //     //     //     // this.$nextTick(() => {
-    //     //     // _(this.options).each(option => {
-    //     //     //     console.log(option.checked)
-    //     //     //     return (option.checked = false)
-    //     //     //     console.log(option.checked)
-    //     //     // })
+        //     // Nova.$on('clear-selected-filters', () => {
+        //     //     console.log('clearing-selected-filters')
+        //     //     //     // this.$nextTick(() => {
+        //     //     // _(this.options).each(option => {
+        //     //     //     console.log(option.checked)
+        //     //     //     return (option.checked = false)
+        //     //     //     console.log(option.checked)
+        //     //     // })
 
-    //     //     this.$emit(
-    //     //         'input',
-    //     //         _(this.options).map(option => {
-    //     //             return {
-    //     //                 ...option,
-    //     //                 ...{ checked: false },
-    //     //             }
-    //     //         })
-    //     //     )
+        //     //     this.$emit(
+        //     //         'input',
+        //     //         _(this.options).map(option => {
+        //     //             return {
+        //     //                 ...option,
+        //     //                 ...{ checked: false },
+        //     //             }
+        //     //         })
+        //     //     )
 
-    //     //     this.$emit('change')
-    //     // })
-    // },
+        //     //     this.$emit('change')
+        //     // })
+    },
 
-    // methods: {
-    //     hydrateOptions() {
-    //         this.options = _.map(this.filter.options, option => {
-    //             return {
-    //                 name: option.name,
-    //                 value: option.value,
-    //                 checked: false,
-    //             }
-    //         })
-    //     },
+    methods: {
+        hydrateOptions() {
+            this.options = _.map(this.filter.options, option => {
+                return {
+                    name: option.name,
+                    value: option.value,
+                    checked: false,
+                }
+            })
+        },
 
-    //     updateCheckedState(event, key) {
-    //         console.log(`Updating checked state for ${key}`)
-    //         const option = _(this.options).find(option => option.value == key)
+        updateCheckedState(event, key) {
+            console.log(`Updating checked state for ${key}`)
+            const option = _(this.options).find(option => option.value == key)
 
-    //         option.checked = !option.checked
+            option.checked = !option.checked
 
-    //         this.$emit('input', this.options)
+            this.$emit('input', this.options)
 
-    //         this.$emit('change')
+            this.$emit('change')
+        },
+    },
+
+    // computed: {
+    //     options() {
+    //         return this.filter.options
     //     },
     // },
 }

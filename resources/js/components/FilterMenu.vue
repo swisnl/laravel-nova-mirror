@@ -107,6 +107,7 @@ export default {
         },
 
         filterChanged(newFilters) {
+            // console.log('filter changed', newFilters)
             this.$emit('filter-changed', newFilters)
         },
 
