@@ -23,19 +23,12 @@
                 <component
                     v-for="filter in filters"
                     :key="filter.name"
+                    :filter-key="filter.class"
                     :is="filter.component"
-                    :filter="filter"
-                    :value="filter.currentValue"
-                    @input="filterChanged(filter)"
-                    @change="filterChanged(filter)"
+                    @input="filterChanged"
+                    @change="filterChanged"
                 />
-<!--                 <filter-selector
-                    :filters="filters"
-                    :current-filters="currentFilters"
-                    @changed="filterChanged"
-                    v-if="! viaHasOne">
-                </filter-selector>
- -->
+
                 <!-- Soft Deletes -->
                 <div v-if="softDeletes && showTrashedOption">
                     <h3 slot="default" class="text-sm uppercase tracking-wide text-80 bg-30 p-3">
@@ -83,8 +76,7 @@
 <script>
 export default {
     props: {
-        filters: Array,
-        // currentFilters: Array,
+        resourceName: String,
         softDeletes: Boolean,
         viaResource: String,
         viaHasOne: Boolean,
@@ -100,23 +92,60 @@ export default {
         },
     },
 
+    async created() {
+        await this.getFilters()
+    },
+
     methods: {
+        /**
+         * Get the filters available for the current resource.
+         */
+        async getFilters() {
+            this.$store.commit('resetFilters')
+            await this.$store.dispatch('fetchFilters', this.resourceName)
+
+            this.$store.commit('initializeCurrentFilterValuesFromQueryString', this.encodedFilters)
+        },
+
         clearSelectedFilters() {
-            this.$emit('clear-selected-filters')
+            // this.$emit('clear-selected-filters')
             // Nova.$emit('clear-selected-filters')
         },
 
-        filterChanged(newFilters) {
-            // console.log('filter changed', newFilters)
-            this.$emit('filter-changed', newFilters)
+        filterChanged() {
+            this.$emit('filter-changed')
         },
 
         trashedChanged(event) {
-            this.$emit('trashed-changed', event.target.value)
+            // this.$emit('trashed-changed', event.target.value)
         },
 
         perPageChanged(event) {
-            this.$emit('per-page-changed', event.target.value)
+            // this.$emit('per-page-changed', event.target.value)
+        },
+    },
+
+    computed: {
+        filters() {
+            return this.$store.getters.allFilters
+        },
+
+        currentFilters() {
+            return this.$store.getters.currentFilters
+        },
+
+        /**
+         * Get the name of the filter query string variable.
+         */
+        filterParameter() {
+            return this.resourceName + '_filter'
+        },
+
+        /**
+         * Get the encoded filters from the query string.
+         */
+        encodedFilters() {
+            return this.$route.query[this.filterParameter] || ''
         },
     },
 }

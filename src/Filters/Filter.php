@@ -25,7 +25,7 @@ abstract class Filter implements JsonSerializable
      *
      * @var string
      */
-    public $component = 'boolean-filter';
+    public $component = 'select-filter';
 
     /**
      * The callback used to authorize viewing the filter.

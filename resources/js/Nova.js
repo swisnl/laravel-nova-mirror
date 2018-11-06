@@ -19,12 +19,7 @@ Vue.use(Toasted, {
 
 export default class Nova {
     constructor(config) {
-        this.bus = new Vue({
-            data: {
-                filters: {},
-                currentFilters: {},
-            },
-        })
+        this.bus = new Vue()
         this.bootingCallbacks = []
         this.config = config
     }

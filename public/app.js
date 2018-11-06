@@ -348,6 +348,77 @@ exports.default = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],[\"env\"]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-runtime\",\"transform-vue-jsx\",\"syntax-jsx\",\"transform-object-rest-spread\"],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/BooleanOption.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _defineProperty2 = __webpack_require__("./node_modules/babel-runtime/helpers/defineProperty.js");
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _extends3 = __webpack_require__("./node_modules/babel-runtime/helpers/extends.js");
+
+var _extends4 = _interopRequireDefault(_extends3);
+
+var _Checkbox = __webpack_require__("./resources/js/components/Index/Checkbox.vue");
+
+var _Checkbox2 = _interopRequireDefault(_Checkbox);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    components: { Checkbox: _Checkbox2.default },
+
+    props: {
+        filter: Object,
+        option: Object
+    },
+
+    methods: {
+        updateCheckedState: function updateCheckedState(optionKey, value) {
+            var oldValue = this.filter.currentValue;
+            var newValue = (0, _extends4.default)({}, oldValue, (0, _defineProperty3.default)({}, optionKey, value));
+
+            this.$store.commit('updateFilterState', {
+                filterClass: this.filter.class,
+                value: newValue
+            });
+
+            this.$emit('change');
+        }
+    },
+
+    computed: {
+        isChecked: function isChecked() {
+            return this.$store.getters.filterOptionValue(this.filter.class, this.option.value) == true;
+        }
+    }
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+// import Checkbox from '@/components/Checkbox'
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],[\"env\"]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-runtime\",\"transform-vue-jsx\",\"syntax-jsx\",\"transform-object-rest-spread\"],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/CardWrapper.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -638,50 +709,6 @@ exports.default = {
         },
         cards: function cards() {
             return link('customization/cards.html');
-        }
-    }
-};
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],[\"env\"]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-runtime\",\"transform-vue-jsx\",\"syntax-jsx\",\"transform-object-rest-spread\"],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/Checkbox.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-    props: {
-        value: {
-            type: Boolean,
-            default: false
-        }
-    },
-
-    methods: {
-        toggle: function toggle(event) {
-            this.$emit('input', !this.value);
         }
     }
 };
@@ -2333,6 +2360,14 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _regenerator = __webpack_require__("./node_modules/babel-runtime/regenerator/index.js");
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = __webpack_require__("./node_modules/babel-runtime/helpers/asyncToGenerator.js");
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
 var _defineProperty2 = __webpack_require__("./node_modules/babel-runtime/helpers/defineProperty.js");
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
@@ -2416,18 +2451,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 exports.default = {
     props: (_props = {
-        filters: Array,
-        // currentFilters: Array,
+        resourceName: String,
         softDeletes: Boolean,
         viaResource: String,
         viaHasOne: Boolean
@@ -2441,20 +2468,100 @@ exports.default = {
         default: true
     }), _props),
 
+    created: function () {
+        var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+            return _regenerator2.default.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            _context.next = 2;
+                            return this.getFilters();
+
+                        case 2:
+                        case 'end':
+                            return _context.stop();
+                    }
+                }
+            }, _callee, this);
+        }));
+
+        function created() {
+            return _ref.apply(this, arguments);
+        }
+
+        return created;
+    }(),
+
+
     methods: {
+        /**
+         * Get the filters available for the current resource.
+         */
+        getFilters: function () {
+            var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
+                return _regenerator2.default.wrap(function _callee2$(_context2) {
+                    while (1) {
+                        switch (_context2.prev = _context2.next) {
+                            case 0:
+                                this.$store.commit('resetFilters');
+                                _context2.next = 3;
+                                return this.$store.dispatch('fetchFilters', this.resourceName);
+
+                            case 3:
+
+                                this.$store.commit('initializeCurrentFilterValuesFromQueryString', this.encodedFilters);
+
+                            case 4:
+                            case 'end':
+                                return _context2.stop();
+                        }
+                    }
+                }, _callee2, this);
+            }));
+
+            function getFilters() {
+                return _ref2.apply(this, arguments);
+            }
+
+            return getFilters;
+        }(),
         clearSelectedFilters: function clearSelectedFilters() {
-            this.$emit('clear-selected-filters');
+            // this.$emit('clear-selected-filters')
             // Nova.$emit('clear-selected-filters')
         },
-        filterChanged: function filterChanged(newFilters) {
-            // console.log('filter changed', newFilters)
-            this.$emit('filter-changed', newFilters);
+        filterChanged: function filterChanged() {
+            this.$emit('filter-changed');
         },
         trashedChanged: function trashedChanged(event) {
-            this.$emit('trashed-changed', event.target.value);
+            // this.$emit('trashed-changed', event.target.value)
         },
         perPageChanged: function perPageChanged(event) {
-            this.$emit('per-page-changed', event.target.value);
+            // this.$emit('per-page-changed', event.target.value)
+        }
+    },
+
+    computed: {
+        filters: function filters() {
+            return this.$store.getters.allFilters;
+        },
+        currentFilters: function currentFilters() {
+            return this.$store.getters.currentFilters;
+        },
+
+
+        /**
+         * Get the name of the filter query string variable.
+         */
+        filterParameter: function filterParameter() {
+            return this.resourceName + '_filter';
+        },
+
+
+        /**
+         * Get the encoded filters from the query string.
+         */
+        encodedFilters: function encodedFilters() {
+            return this.$route.query[this.filterParameter] || '';
         }
     }
 };
@@ -2529,105 +2636,54 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Checkbox = __webpack_require__("./resources/js/components/Checkbox.vue");
+var _BooleanOption = __webpack_require__("./resources/js/components/BooleanOption.vue");
 
-var _Checkbox2 = _interopRequireDefault(_Checkbox);
+var _BooleanOption2 = _interopRequireDefault(_BooleanOption);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import { mapGetters, mapMutations, mapActions } from 'vuex'
+// import Checkbox from '@/components/Checkbox'
+
 exports.default = {
-    components: { Checkbox: _Checkbox2.default },
+    components: { BooleanOption: _BooleanOption2.default },
 
     props: {
-        filter: {
-            type: Object,
+        filterKey: {
+            type: String,
             required: true
-        },
-
-        value: {}
-    },
-
-    watch: {
-        value: function value(newData, oldData) {
-            console.log('watcher fired');
-            //         this.hydrateOptions()
         }
-        //     filter: function(newData, oldData) {
-        //         this.hydrateOptions()
-        //     },
     },
 
-    data: function data() {
-        return { options: null };
-    },
+    mounted: function mounted() {
+        var initialState = {};
 
-    created: function created() {
-        this.hydrateOptions();
+        _.each(this.filter.options, function (o) {
+            return initialState[o.value] = '';
+        });
 
-        //     // Nova.$on('clear-selected-filters', () => {
-        //     //     console.log('clearing-selected-filters')
-        //     //     //     // this.$nextTick(() => {
-        //     //     // _(this.options).each(option => {
-        //     //     //     console.log(option.checked)
-        //     //     //     return (option.checked = false)
-        //     //     //     console.log(option.checked)
-        //     //     // })
-
-        //     //     this.$emit(
-        //     //         'input',
-        //     //         _(this.options).map(option => {
-        //     //             return {
-        //     //                 ...option,
-        //     //                 ...{ checked: false },
-        //     //             }
-        //     //         })
-        //     //     )
-
-        //     //     this.$emit('change')
-        //     // })
+        this.$store.commit('updateFilterState', {
+            filterClass: this.filterKey,
+            value: initialState
+        });
     },
 
 
     methods: {
-        hydrateOptions: function hydrateOptions() {
-            this.options = _.map(this.filter.options, function (option) {
-                return {
-                    name: option.name,
-                    value: option.value,
-                    checked: false
-                };
-            });
-        },
-        updateCheckedState: function updateCheckedState(event, key) {
-            console.log('Updating checked state for ' + key);
-            var option = _(this.options).find(function (option) {
-                return option.value == key;
-            });
-
-            option.checked = !option.checked;
-
-            this.$emit('input', this.options);
-
+        handleChange: function handleChange() {
             this.$emit('change');
         }
-    }
+    },
 
-    // computed: {
-    //     options() {
-    //         return this.filter.options
-    //     },
-    // },
+    computed: {
+        filter: function filter() {
+            return this.$store.getters.getFilter(this.filterKey);
+        },
+        options: function options() {
+            return this.$store.getters.getOptionsForFilter(this.filterKey);
+        }
+    }
 }; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2679,30 +2735,29 @@ Object.defineProperty(exports, "__esModule", {
 
 exports.default = {
     props: {
-        filter: {
-            type: Object,
-            required: true
-        },
-
-        value: {
-            type: [String, Number],
+        filterKey: {
+            type: String,
             required: true
         }
     },
 
     methods: {
         filterChanged: function filterChanged(event) {
-            // this.$emit('input', event.target.value)
-            // this.$emit('change')
+            this.$store.commit('updateFilterState', {
+                filterClass: this.filterKey,
+                value: event.target.value
+            });
+
+            this.$emit('change');
         }
     },
 
     computed: {
-        decodedFilters: function decodedFilters() {
-            var encodedFilters = $route.query['users_filter'];
-            var currentFilters = JSON.parse(atob(this.encodedFilters));
-
-            console.log('current:', currentFilters);
+        filter: function filter() {
+            return this.$store.getters.getFilter(this.filterKey);
+        },
+        value: function value() {
+            return this.filter.currentValue;
         }
     }
 };
@@ -10390,7 +10445,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
 
 exports.default = {
     mixins: [_laravelNova.Deletable, _laravelNova.Filterable, _laravelNova.HasCards, _laravelNova.Paginatable, _laravelNova.PerPageable, _laravelNova.InteractsWithResourceInformation, _laravelNova.InteractsWithQueryString],
@@ -10485,10 +10539,6 @@ exports.default = {
                             return this.getActions();
 
                         case 13:
-                            _context.next = 15;
-                            return this.getFilters();
-
-                        case 15:
 
                             this.initialLoading = false;
 
@@ -10501,7 +10551,6 @@ exports.default = {
                                 _this.initializePerPageFromQueryString();
                                 _this.initializeTrashedFromQueryString();
                                 _this.initializeOrderingFromQueryString();
-                                _this.initializeFilterValuesFromQueryString();
                             });
 
                             // Refresh the action events
@@ -10515,7 +10564,7 @@ exports.default = {
                                 }, 15 * 1000);
                             }
 
-                        case 18:
+                        case 16:
                         case 'end':
                             return _context.stop();
                     }
@@ -10786,8 +10835,19 @@ exports.default = {
     },
 
     computed: {
+        /**
+         * Determine if the resource has any filters
+         */
+        hasFilters: function hasFilters() {
+            return this.$store.getters.hasFilters;
+        },
+
+
+        /**
+         * Determine if the resource should show any cards
+         */
         shouldShowCards: function shouldShowCards() {
-            // Don't show cards if this resource is not the main one being shown (e.g. a relation)
+            // Don't show cards if this resource is beings shown via a relations
             return this.cards.length > 0 && this.resourceName == this.$route.params.resourceName;
         },
 
@@ -11132,6 +11192,9 @@ exports.default = {
          */
         resourceCountLabel: function resourceCountLabel() {
             return this.resources.length && this.resources.length + '/' + this.allMatchingResourceCount + ' ' + (0, _laravelNova.SingularOrPlural)(this.allMatchingResourceCount, this.__('resource'));
+        },
+        encodedFilters: function encodedFilters() {
+            return this.$store.getters.currentEncodedFilters;
         }
     }
 };
@@ -38729,11 +38792,10 @@ var render = function() {
                       _vm._v(" "),
                       _c("filter-menu", {
                         attrs: {
-                          filters: _vm.filters,
+                          resourceName: _vm.resourceName,
                           "soft-deletes": _vm.softDeletes,
                           "via-resource": _vm.viaResource,
                           "via-has-one": _vm.viaHasOne,
-                          "current-filters": _vm.currentFilters,
                           trashed: _vm.trashed,
                           "per-page": _vm.perPage
                         },
@@ -40407,9 +40469,9 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n                        " +
+                          "\n                    " +
                             _vm._s(_vm.__("× Clear Filters")) +
-                            "\n                    "
+                            "\n                "
                         )
                       ]
                     )
@@ -40419,14 +40481,10 @@ var render = function() {
                     return _c(filter.component, {
                       key: filter.name,
                       tag: "component",
-                      attrs: { filter: filter, value: filter.currentValue },
+                      attrs: { "filter-key": filter.class },
                       on: {
-                        input: function($event) {
-                          _vm.filterChanged(filter)
-                        },
-                        change: function($event) {
-                          _vm.filterChanged(filter)
-                        }
+                        input: _vm.filterChanged,
+                        change: _vm.filterChanged
                       }
                     })
                   }),
@@ -40443,9 +40501,9 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                        " +
+                              "\n                    " +
                                 _vm._s(_vm.__("Trashed")) +
-                                ":\n                    "
+                                ":\n                "
                             )
                           ]
                         ),
@@ -40493,9 +40551,9 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                        " +
+                              "\n                    " +
                                 _vm._s(_vm.__("Per Page")) +
-                                "\n                    "
+                                "\n                "
                             )
                           ]
                         ),
@@ -42147,37 +42205,15 @@ var render = function() {
       _c(
         "h3",
         { staticClass: "text-sm uppercase tracking-wide text-80 bg-30 p-3" },
-        [_vm._v("\n        " + _vm._s(_vm.filter.name) + "\n    ")]
+        [_vm._v(_vm._s(_vm.filter.name))]
       ),
       _vm._v(" "),
       _vm._l(_vm.options, function(option) {
-        return _c("label", { staticClass: "flex items-center m-2" }, [
-          _c(
-            "div",
-            { staticClass: "flex-no-shrink" },
-            [
-              _c("Checkbox", {
-                on: {
-                  input: function($event) {
-                    _vm.updateCheckedState($event, option.value)
-                  }
-                },
-                model: {
-                  value: option.checked,
-                  callback: function($$v) {
-                    _vm.$set(option, "checked", $$v)
-                  },
-                  expression: "option.checked"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "ml-2" }, [
-            _vm._v("\n            " + _vm._s(option.name) + "\n        ")
-          ])
-        ])
+        return _c("BooleanOption", {
+          key: "option.value",
+          attrs: { filter: _vm.filter, option: option },
+          on: { change: _vm.handleChange }
+        })
       })
     ],
     2
@@ -43375,165 +43411,6 @@ if (false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-90aed0a4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/Checkbox.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "flex items-center" },
-    [
-      _c(
-        "div",
-        {
-          staticClass: "checkbox select-none rounded",
-          attrs: { role: "checkbox" },
-          on: { click: _vm.toggle }
-        },
-        [
-          _c("div", { staticClass: "check" }, [
-            _vm.value
-              ? _c(
-                  "svg",
-                  {
-                    staticClass: "block",
-                    attrs: {
-                      width: "20",
-                      height: "20",
-                      xmlns: "http://www.w3.org/2000/svg",
-                      viewBox: "0 0 20 20"
-                    }
-                  },
-                  [
-                    _c(
-                      "g",
-                      {
-                        attrs: {
-                          id: "Page-1",
-                          fill: "none",
-                          "fill-rule": "evenodd"
-                        }
-                      },
-                      [
-                        _c(
-                          "g",
-                          {
-                            attrs: { id: "checkbox-on", "fill-rule": "nonzero" }
-                          },
-                          [
-                            _c(
-                              "g",
-                              {
-                                attrs: { id: "b-link", fill: "var(--primary)" }
-                              },
-                              [
-                                _c("rect", {
-                                  attrs: {
-                                    id: "b",
-                                    width: "20",
-                                    height: "20",
-                                    rx: "4"
-                                  }
-                                })
-                              ]
-                            ),
-                            _c("path", {
-                              attrs: {
-                                id: "Shape",
-                                fill: "#FFF",
-                                d:
-                                  "M7.7 9.3c-.23477048-.3130273-.63054226-.46037132-1.01285927-.37708287-.38231702.08328846-.68093514.38190658-.7642236.7642236C5.83962868 10.0694577 5.9869727 10.4652295 6.3 10.7l2 2c.38884351.3811429 1.01115649.3811429 1.4 0l4-4c.3130273-.23477048.4603713-.63054226.3770829-1.01285927-.0832885-.38231702-.3819066-.68093514-.7642236-.7642236C12.9305423 6.83962868 12.5347705 6.9869727 12.3 7.3L9 10.58l-1.3-1.3v.02z"
-                              }
-                            })
-                          ]
-                        )
-                      ]
-                    )
-                  ]
-                )
-              : _c(
-                  "svg",
-                  {
-                    staticClass: "block",
-                    attrs: {
-                      width: "20",
-                      height: "20",
-                      xmlns: "http://www.w3.org/2000/svg",
-                      viewBox: "0 0 20 20"
-                    }
-                  },
-                  [
-                    _c(
-                      "g",
-                      {
-                        attrs: {
-                          id: "Page-1",
-                          fill: "none",
-                          "fill-rule": "evenodd"
-                        }
-                      },
-                      [
-                        _c("g", { attrs: { id: "checkbox-off" } }, [
-                          _c(
-                            "g",
-                            {
-                              attrs: {
-                                id: "b-link",
-                                fill: "#FFF",
-                                "fill-rule": "nonzero"
-                              }
-                            },
-                            [
-                              _c("rect", {
-                                attrs: {
-                                  id: "b",
-                                  width: "20",
-                                  height: "20",
-                                  rx: "4"
-                                }
-                              })
-                            ]
-                          ),
-                          _c("rect", {
-                            attrs: {
-                              id: "Rectangle-path",
-                              width: "19",
-                              height: "19",
-                              x: ".5",
-                              y: ".5",
-                              stroke: "#CCD4DB",
-                              rx: "4"
-                            }
-                          })
-                        ])
-                      ]
-                    )
-                  ]
-                )
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _vm._t("default")
-    ],
-    2
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-90aed0a4", module.exports)
-  }
-}
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-967702d2\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/Icons/Editor/Bold.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -44080,6 +43957,47 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-b29eb166", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-b2c8d03c\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/BooleanOption.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("label", { staticClass: "flex items-center m-2" }, [
+    _c(
+      "div",
+      { staticClass: "flex-no-shrink" },
+      [
+        _c("Checkbox", {
+          attrs: { checked: _vm.isChecked },
+          on: {
+            input: function($event) {
+              _vm.updateCheckedState(_vm.option.value, $event)
+            }
+          }
+        })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "ml-2" }, [
+      _vm._v("\n        " + _vm._s(_vm.option.name) + "\n    ")
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-b2c8d03c", module.exports)
   }
 }
 
@@ -49761,12 +49679,7 @@ var Nova = function () {
     function Nova(config) {
         (0, _classCallCheck3.default)(this, Nova);
 
-        this.bus = new _vue2.default({
-            data: {
-                filters: {},
-                currentFilters: {}
-            }
-        });
+        this.bus = new _vue2.default();
         this.bootingCallbacks = [];
         this.config = config;
     }
@@ -50369,6 +50282,54 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/js/components/BooleanOption.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],[\"env\"]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-runtime\",\"transform-vue-jsx\",\"syntax-jsx\",\"transform-object-rest-spread\"],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/BooleanOption.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-b2c8d03c\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/BooleanOption.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/BooleanOption.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-b2c8d03c", Component.options)
+  } else {
+    hotAPI.reload("data-v-b2c8d03c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Card.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -50550,54 +50511,6 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-613c37e8", Component.options)
   } else {
     hotAPI.reload("data-v-613c37e8", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/js/components/Checkbox.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],[\"env\"]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-runtime\",\"transform-vue-jsx\",\"syntax-jsx\",\"transform-object-rest-spread\"],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/Checkbox.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-90aed0a4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/Checkbox.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/Checkbox.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-90aed0a4", Component.options)
-  } else {
-    hotAPI.reload("data-v-90aed0a4", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -56665,13 +56578,219 @@ var _vuex = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
+var _resources = __webpack_require__("./resources/js/store/resources.js");
+
+var _resources2 = _interopRequireDefault(_resources);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vuex2.default);
 
 exports.default = new _vuex2.default.Store({
-    modules: {}
+    modules: {
+        resources: _resources2.default
+    }
 });
+
+/***/ }),
+
+/***/ "./resources/js/store/resources.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _regenerator = __webpack_require__("./node_modules/babel-runtime/regenerator/index.js");
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = __webpack_require__("./node_modules/babel-runtime/helpers/asyncToGenerator.js");
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+var _stringify = __webpack_require__("./node_modules/babel-runtime/core-js/json/stringify.js");
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+var _lodash = __webpack_require__("./node_modules/lodash/lodash.js");
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * State
+ */
+var state = {
+    filters: []
+
+    /**
+     * Getters
+     */
+};var getters = {
+    /**
+     * Return all the filters for the resource
+     */
+    allFilters: function allFilters(state) {
+        return state.filters;
+    },
+
+    /**
+     * Determine if there are any filters for the resource
+     */
+    hasFilters: function hasFilters(state) {
+        return Boolean(state.filters.length > 0);
+    },
+
+    /**
+     * The current unencoded filter value payload
+     */
+    currentFilters: function currentFilters(state, getters) {
+        return _lodash2.default.map(getters.allFilters, function (f) {
+            return {
+                class: f.class,
+                value: f.currentValue
+            };
+        });
+    },
+
+    /**
+     * Return the current filters encoded to a string
+     */
+    currentEncodedFilters: function currentEncodedFilters(state, getters) {
+        return btoa((0, _stringify2.default)(getters.currentFilters));
+    },
+
+    /**
+     * Get a single filter from the list of filters
+     */
+    getFilter: function getFilter(state) {
+        return function (filterKey) {
+            return _lodash2.default.find(state.filters, function (filter) {
+                return filter.class == filterKey;
+            });
+        };
+    },
+
+    /**
+     * Get the options for a single filter
+     */
+    getOptionsForFilter: function getOptionsForFilter(state, getters) {
+        return function (filterKey) {
+            var filter = getters.getFilter(filterKey);
+            return filter ? filter.options : [];
+        };
+    },
+
+    /**
+     * Get the current value for a given filter at the provided key
+     */
+    filterOptionValue: function filterOptionValue(state, getters) {
+        return function (filterKey, optionKey) {
+            var filter = getters.getFilter(filterKey);
+
+            return _lodash2.default.find(filter.currentValue, function (value, key) {
+                return key == optionKey;
+            });
+        };
+    }
+
+    /**
+     * Actions
+     */
+};var actions = {
+    fetchFilters: function () {
+        var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(_ref, resourceName) {
+            var commit = _ref.commit,
+                rootGetters = _ref.rootGetters;
+
+            var _ref3, data;
+
+            return _regenerator2.default.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            _context.next = 2;
+                            return Nova.request().get('/nova-api/' + resourceName + '/filters');
+
+                        case 2:
+                            _ref3 = _context.sent;
+                            data = _ref3.data;
+
+                            commit('storeFilters', data);
+
+                            // this.initializeCurrentFilterValuesFromQueryString()
+
+                        case 5:
+                        case 'end':
+                            return _context.stop();
+                    }
+                }
+            }, _callee, this);
+        }));
+
+        function fetchFilters(_x, _x2) {
+            return _ref2.apply(this, arguments);
+        }
+
+        return fetchFilters;
+    }()
+};
+
+/**
+ * Mutations
+ */
+var mutations = {
+    updateFilterState: function updateFilterState(state, _ref4) {
+        var filterClass = _ref4.filterClass,
+            value = _ref4.value;
+
+        var filter = (0, _lodash2.default)(state.filters).find(function (f) {
+            return f.class == filterClass;
+        });
+        filter.currentValue = value;
+    },
+
+
+    /**
+     * Reset the filters in the store
+     */
+    resetFilters: function resetFilters(state) {
+        state.filters = [];
+        state.currentFilters = [];
+    },
+    storeFilters: function storeFilters(state, data) {
+        state.filters = data;
+    },
+
+
+    /**
+     * Initialize the current filter values from the decoded query string.
+     */
+    initializeCurrentFilterValuesFromQueryString: function initializeCurrentFilterValuesFromQueryString(state, encodedFilters) {
+        if (encodedFilters) {
+            var initialFilters = JSON.parse(atob(encodedFilters));
+
+            _lodash2.default.each(initialFilters, function (f) {
+                var filter = (0, _lodash2.default)(state.filters).find(function (filter) {
+                    return filter.class == f.class;
+                });
+                filter.currentValue = f.value;
+            });
+        }
+    }
+};
+
+exports.default = {
+    state: state,
+    getters: getters,
+    actions: actions,
+    mutations: mutations
+};
 
 /***/ }),
 

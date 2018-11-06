@@ -148,11 +148,10 @@
 
                     <!-- Filters -->
                     <filter-menu
-                        :filters="filters"
+                        :resourceName="resourceName"
                         :soft-deletes="softDeletes"
                         :via-resource="viaResource"
                         :via-has-one="viaHasOne"
-                        :current-filters="currentFilters"
                         :trashed="trashed"
                         :per-page="perPage"
                         @clear-selected-filters="clearSelectedFilters"
@@ -345,7 +344,6 @@ export default {
         await this.getAuthorizationToRelate()
         await this.getLenses()
         await this.getActions()
-        await this.getFilters()
 
         this.initialLoading = false
 
@@ -369,7 +367,6 @@ export default {
                 this.initializePerPageFromQueryString()
                 this.initializeTrashedFromQueryString()
                 this.initializeOrderingFromQueryString()
-                this.initializeFilterValuesFromQueryString()
             }
         )
 
@@ -652,8 +649,18 @@ export default {
     },
 
     computed: {
+        /**
+         * Determine if the resource has any filters
+         */
+        hasFilters() {
+            return this.$store.getters.hasFilters
+        },
+
+        /**
+         * Determine if the resource should show any cards
+         */
         shouldShowCards() {
-            // Don't show cards if this resource is not the main one being shown (e.g. a relation)
+            // Don't show cards if this resource is beings shown via a relations
             return this.cards.length > 0 && this.resourceName == this.$route.params.resourceName
         },
 
@@ -983,6 +990,10 @@ export default {
                     this.__('resource')
                 )}`
             )
+        },
+
+        encodedFilters() {
+            return this.$store.getters.currentEncodedFilters
         },
     },
 }

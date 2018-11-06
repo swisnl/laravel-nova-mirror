@@ -1,107 +1,57 @@
 <template>
     <div>
-        <h3 class="text-sm uppercase tracking-wide text-80 bg-30 p-3">
-            {{ filter.name }}
-        </h3>
+        <h3 class="text-sm uppercase tracking-wide text-80 bg-30 p-3">{{ filter.name }}</h3>
 
-        <label
-            v-for="option in options"
-            class="flex items-center m-2"
-        >
-            <div class="flex-no-shrink">
-                <Checkbox
-                    v-model="option.checked"
-                    @input="updateCheckedState($event, option.value)"
-                />
-            </div>
-
-            <div class="ml-2">
-                {{ option.name }}
-            </div>
-        </label>
+       <BooleanOption 
+            key="option.value" 
+            v-for="option in options" 
+            :filter="filter" 
+            :option="option" 
+            @change="handleChange"
+        />
     </div>
 </template>
 
 <script>
-import Checkbox from '@/components/Checkbox'
+import BooleanOption from '@/components/BooleanOption.vue'
+// import { mapGetters, mapMutations, mapActions } from 'vuex'
+// import Checkbox from '@/components/Checkbox'
 
 export default {
-    components: { Checkbox },
+    components: { BooleanOption },
 
     props: {
-        filter: {
-            type: Object,
+        filterKey: {
+            type: String,
             required: true,
         },
-
-        value: {},
     },
 
-    watch: {
-        value: function(newData, oldData) {
-            console.log('watcher fired')
-            //         this.hydrateOptions()
-        },
-        //     filter: function(newData, oldData) {
-        //         this.hydrateOptions()
-        //     },
-    },
+    mounted() {
+        let initialState = {}
 
-    data: () => ({ options: null }),
+        _.each(this.filter.options, o => (initialState[o.value] = ''))
 
-    created() {
-        this.hydrateOptions()
-
-        //     // Nova.$on('clear-selected-filters', () => {
-        //     //     console.log('clearing-selected-filters')
-        //     //     //     // this.$nextTick(() => {
-        //     //     // _(this.options).each(option => {
-        //     //     //     console.log(option.checked)
-        //     //     //     return (option.checked = false)
-        //     //     //     console.log(option.checked)
-        //     //     // })
-
-        //     //     this.$emit(
-        //     //         'input',
-        //     //         _(this.options).map(option => {
-        //     //             return {
-        //     //                 ...option,
-        //     //                 ...{ checked: false },
-        //     //             }
-        //     //         })
-        //     //     )
-
-        //     //     this.$emit('change')
-        //     // })
+        this.$store.commit('updateFilterState', {
+            filterClass: this.filterKey,
+            value: initialState,
+        })
     },
 
     methods: {
-        hydrateOptions() {
-            this.options = _.map(this.filter.options, option => {
-                return {
-                    name: option.name,
-                    value: option.value,
-                    checked: false,
-                }
-            })
-        },
-
-        updateCheckedState(event, key) {
-            console.log(`Updating checked state for ${key}`)
-            const option = _(this.options).find(option => option.value == key)
-
-            option.checked = !option.checked
-
-            this.$emit('input', this.options)
-
+        handleChange() {
             this.$emit('change')
         },
     },
 
-    // computed: {
-    //     options() {
-    //         return this.filter.options
-    //     },
-    // },
+    computed: {
+        filter() {
+            return this.$store.getters.getFilter(this.filterKey)
+        },
+
+        options() {
+            return this.$store.getters.getOptionsForFilter(this.filterKey)
+        },
+    },
 }
 </script>

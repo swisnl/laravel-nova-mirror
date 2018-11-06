@@ -24,30 +24,30 @@
 <script>
 export default {
     props: {
-        filter: {
-            type: Object,
-            required: true,
-        },
-
-        value: {
-            type: [String, Number],
+        filterKey: {
+            type: String,
             required: true,
         },
     },
 
     methods: {
         filterChanged(event) {
-            // this.$emit('input', event.target.value)
-            // this.$emit('change')
+            this.$store.commit('updateFilterState', {
+                filterClass: this.filterKey,
+                value: event.target.value,
+            })
+
+            this.$emit('change')
         },
     },
 
     computed: {
-        decodedFilters() {
-            let encodedFilters = $route.query['users_filter']
-            let currentFilters = JSON.parse(atob(this.encodedFilters))
+        filter() {
+            return this.$store.getters.getFilter(this.filterKey)
+        },
 
-            console.log('current:', currentFilters)
+        value() {
+            return this.filter.currentValue
         },
     },
 }

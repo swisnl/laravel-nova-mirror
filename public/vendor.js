@@ -3051,6 +3051,10 @@ function _interopRequireDefault2(obj) { return obj && obj.__esModule ? obj : { d
         value: true
       });
 
+      var _defineProperty2 = __webpack_require__(48);
+
+      var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
       var _each = __webpack_require__(226);
 
       var _each2 = _interopRequireDefault(_each);
@@ -3066,46 +3070,15 @@ function _interopRequireDefault2(obj) { return obj && obj.__esModule ? obj : { d
       exports.default = {
         data: function data() {
           return {
-            filters: [],
             currentFilters: []
           };
         },
 
         methods: {
           /**
-           * Get the filters available for the current resource.
-           */
-          getFilters: function getFilters() {
-            var _this = this;
-
-            // this.filters = []
-            // this.currentFilters = []
-
-            return Nova.request().get('/nova-api/' + this.resourceName + '/filters').then(function (response) {
-              // this.filters = response.data
-              // Nova.bus.filters[this.filterParameter]['filters'] = response.data
-              _this.initializeFilterValuesFromQueryString();
-            });
-          },
-
-          /**
-           * Initialize the current filter values from the decoded query string.
-           */
-          initializeFilterValuesFromQueryString: function initializeFilterValuesFromQueryString() {
-            console.log('initializing filter values from query string');
-            // this.clearAllFilters()
-            // if (this.encodedFilters) {
-            //   this.currentFilters = JSON.parse(atob(this.encodedFilters))
-            //   console.log(this.currentFilters)
-            //   this.syncFilterValues()
-            // }
-          },
-
-          /**
            * Clear filters and reset the resource table
            */
           clearSelectedFilters: function clearSelectedFilters() {
-            //     console.log('clearing selected filters')
             //     // Nova.$emit('clear-selected-filters')
             //     this.filterChanged()
             //     this.clearAllFilters()
@@ -3118,9 +3091,8 @@ function _interopRequireDefault2(obj) { return obj && obj.__esModule ? obj : { d
            * Update the currentFilters with newFilters
            */
           updateFilters: function updateFilters(newFilters) {
-            console.log('updating filters');
-            this.currentFilters = newFilters;
-            // this.filterChanged()
+            // this.currentFilters = newFilters
+            this.filterChanged();
           },
 
           /**
@@ -3152,11 +3124,9 @@ function _interopRequireDefault2(obj) { return obj && obj.__esModule ? obj : { d
            * Handle a filter state change.
            */
           filterChanged: function filterChanged() {
-            console.log('updating query string');
-            // this.updateQueryString({
-            //   [this.pageParameter]: 1,
-            //   [this.filterParameter]: btoa(JSON.stringify(this.currentFilters)),
-            // })
+            var _updateQueryString;
+
+            this.updateQueryString((_updateQueryString = {}, (0, _defineProperty3.default)(_updateQueryString, this.pageParameter, 1), (0, _defineProperty3.default)(_updateQueryString, this.filterParameter, this.$store.getters.currentEncodedFilters), _updateQueryString));
           }
         },
 
@@ -3166,20 +3136,6 @@ function _interopRequireDefault2(obj) { return obj && obj.__esModule ? obj : { d
            */
           filterParameter: function filterParameter() {
             return this.resourceName + '_filter';
-          },
-
-          /**
-           * Determine if there any filters for this resource
-           */
-          hasFilters: function hasFilters() {
-            return Boolean(this.filters.length > 0);
-          },
-
-          /**
-           * Get the encoded filters from the query string.
-           */
-          encodedFilters: function encodedFilters() {
-            // return this.$route.query[this.filterParameter] || ''
           }
         }
       };
