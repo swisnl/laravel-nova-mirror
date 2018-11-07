@@ -2462,10 +2462,10 @@ exports.default = {
 
     methods: {
         trashedChanged: function trashedChanged(event) {
-            // this.$emit('trashed-changed', event.target.value)
+            this.$emit('trashed-changed', event.target.value);
         },
         perPageChanged: function perPageChanged(event) {
-            // this.$emit('per-page-changed', event.target.value)
+            this.$emit('per-page-changed', event.target.value);
         }
     },
 

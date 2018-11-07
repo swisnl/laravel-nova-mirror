@@ -94,11 +94,11 @@ export default {
 
     methods: {
         trashedChanged(event) {
-            // this.$emit('trashed-changed', event.target.value)
+            this.$emit('trashed-changed', event.target.value)
         },
 
         perPageChanged(event) {
-            // this.$emit('per-page-changed', event.target.value)
+            this.$emit('per-page-changed', event.target.value)
         },
     },
 
