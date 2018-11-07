@@ -155,7 +155,7 @@
                         :trashed="trashed"
                         :per-page="perPage"
                         @clear-selected-filters="clearSelectedFilters"
-                        @filter-changed="updateFilters"
+                        @filter-changed="filterChanged"
                         @trashed-changed="trashedChanged"
                         @per-page-changed="updatePerPageChanged"
                     />
@@ -340,10 +340,12 @@ export default {
         this.initializeTrashedFromQueryString()
         this.initializeOrderingFromQueryString()
 
+        this.initializeFilters()
         await this.getResources()
         await this.getAuthorizationToRelate()
-        await this.getLenses()
-        await this.getActions()
+
+        this.getLenses()
+        this.getActions()
 
         this.initialLoading = false
 
@@ -394,6 +396,22 @@ export default {
     },
 
     methods: {
+        /**
+         * Set up filters for the current view
+         */
+        async initializeFilters() {
+            await this.$store.dispatch('fetchFilters', this.resourceName)
+
+            if (this.initialEncodedFilters) {
+                await this.$store.dispatch(
+                    'initializeCurrentFilterValuesFromQueryString',
+                    this.initialEncodedFilters
+                )
+            } else {
+                await this.$store.dispatch('resetFilterState', this.resourceName)
+            }
+        },
+
         /**
          * Handle the keydown event
          */
@@ -992,8 +1010,18 @@ export default {
             )
         },
 
+        /**
+         * Return the currently encoded filter string from the store
+         */
         encodedFilters() {
             return this.$store.getters.currentEncodedFilters
+        },
+
+        /**
+         * Return the initial encoded filters from the query string
+         */
+        initialEncodedFilters() {
+            return this.$route.query[this.filterParameter] || ''
         },
     },
 }

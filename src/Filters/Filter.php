@@ -87,6 +87,15 @@ abstract class Filter implements JsonSerializable
     }
 
     /**
+     * Set the default options for the filter.
+     *
+     * @return array
+     */
+    public function default() {
+        return '';
+    }
+
+    /**
      * Prepare the filter for JSON serialization.
      *
      * @return array
@@ -102,7 +111,7 @@ abstract class Filter implements JsonSerializable
             'options' => collect($this->options($container->make(Request::class)))->map(function ($value, $key) {
                 return ['name' => $key, 'value' => $value];
             })->values()->all(),
-            'currentValue' => '',
+            'currentValue' => $this->default() ?? '',
         ];
     }
 }

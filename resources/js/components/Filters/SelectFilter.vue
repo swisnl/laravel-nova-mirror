@@ -9,7 +9,7 @@
                 :dusk="filter.name + '-filter-select'"
                 class="block w-full form-control-sm form-select"
                 :value="value"
-                @change="filterChanged"
+                @change="handleChange"
             >
                 <option value="" selected>&mdash;</option>
 
@@ -31,7 +31,7 @@ export default {
     },
 
     methods: {
-        filterChanged(event) {
+        handleChange(event) {
             this.$store.commit('updateFilterState', {
                 filterClass: this.filterKey,
                 value: event.target.value,

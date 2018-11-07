@@ -12,10 +12,10 @@
             <scroll-wrap :height="350">
                 <div class="bg-30 border-b border-60 ">
                     <button
-                        @click="clearSelectedFilters"
+                        @click="$emit('clear-selected-filters')"
                         class="py-2 w-full block text-xs uppercase tracking-wide text-center text-80 dim font-bold focus:outline-none"
                     >
-                        {{ __('&times; Clear Filters') }}
+                        {{ __('&times; Reset Filters') }}
                     </button>
                 </div>
 
@@ -25,8 +25,8 @@
                     :key="filter.name"
                     :filter-key="filter.class"
                     :is="filter.component"
-                    @input="filterChanged"
-                    @change="filterChanged"
+                    @input="$emit('filter-changed')"
+                    @change="$emit('filter-changed')"
                 />
 
                 <!-- Soft Deletes -->
@@ -92,30 +92,7 @@ export default {
         },
     },
 
-    async created() {
-        await this.getFilters()
-    },
-
     methods: {
-        /**
-         * Get the filters available for the current resource.
-         */
-        async getFilters() {
-            this.$store.commit('resetFilters')
-            await this.$store.dispatch('fetchFilters', this.resourceName)
-
-            this.$store.commit('initializeCurrentFilterValuesFromQueryString', this.encodedFilters)
-        },
-
-        clearSelectedFilters() {
-            // this.$emit('clear-selected-filters')
-            // Nova.$emit('clear-selected-filters')
-        },
-
-        filterChanged() {
-            this.$emit('filter-changed')
-        },
-
         trashedChanged(event) {
             // this.$emit('trashed-changed', event.target.value)
         },
@@ -127,25 +104,7 @@ export default {
 
     computed: {
         filters() {
-            return this.$store.getters.allFilters
-        },
-
-        currentFilters() {
-            return this.$store.getters.currentFilters
-        },
-
-        /**
-         * Get the name of the filter query string variable.
-         */
-        filterParameter() {
-            return this.resourceName + '_filter'
-        },
-
-        /**
-         * Get the encoded filters from the query string.
-         */
-        encodedFilters() {
-            return this.$route.query[this.filterParameter] || ''
+            return this.$store.state.resources.filters
         },
     },
 }

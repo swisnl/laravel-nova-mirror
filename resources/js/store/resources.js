@@ -12,12 +12,7 @@ const state = {
  */
 const getters = {
     /**
-     * Return all the filters for the resource
-     */
-    allFilters: state => state.filters,
-
-    /**
-     * Determine if there are any filters for the resource
+     * Determine if there are any filters for the resource.
      */
     hasFilters: state => Boolean(state.filters.length > 0),
 
@@ -25,7 +20,7 @@ const getters = {
      * The current unencoded filter value payload
      */
     currentFilters: (state, getters) => {
-        return _.map(getters.allFilters, f => {
+        return _.map(state.filters, f => {
             return {
                 class: f.class,
                 value: f.currentValue,
@@ -34,12 +29,12 @@ const getters = {
     },
 
     /**
-     * Return the current filters encoded to a string
+     * Return the current filters encoded to a string.
      */
     currentEncodedFilters: (state, getters) => btoa(JSON.stringify(getters.currentFilters)),
 
     /**
-     * Get a single filter from the list of filters
+     * Get a single filter from the list of filters.
      */
     getFilter: state => filterKey => {
         return _.find(state.filters, filter => {
@@ -48,7 +43,7 @@ const getters = {
     },
 
     /**
-     * Get the options for a single filter
+     * Get the options for a single filter.
      */
     getOptionsForFilter: (state, getters) => filterKey => {
         const filter = getters.getFilter(filterKey)
@@ -56,14 +51,12 @@ const getters = {
     },
 
     /**
-     * Get the current value for a given filter at the provided key
+     * Get the current value for a given filter at the provided key.
      */
     filterOptionValue: (state, getters) => (filterKey, optionKey) => {
         const filter = getters.getFilter(filterKey)
 
-        return _.find(filter.currentValue, (value, key) => {
-            return key == optionKey
-        })
+        return _.find(filter.currentValue, (value, key) => key == optionKey)
     },
 }
 
@@ -71,11 +64,36 @@ const getters = {
  * Actions
  */
 const actions = {
-    async fetchFilters({ commit, rootGetters }, resourceName) {
+    /**
+     * Fetch the current filters for the given resource name.
+     */
+    async fetchFilters({ commit }, resourceName) {
         const { data } = await Nova.request().get('/nova-api/' + resourceName + '/filters')
         commit('storeFilters', data)
+    },
 
-        // this.initializeCurrentFilterValuesFromQueryString()
+    /**
+     * Reset the default filter state to the original filter settings.
+     */
+    async resetFilterState({ commit, state, getters }, resourceName) {
+        const { data } = await Nova.request().get('/nova-api/' + resourceName + '/filters')
+
+        _.each(data, filter =>
+            commit('updateFilterState', { filterClass: filter.class, value: filter.currentValue })
+        )
+    },
+
+    /**
+     * Initialize the current filter values from the decoded query string.
+     */
+    async initializeCurrentFilterValuesFromQueryString({ commit, getters }, encodedFilters) {
+        if (encodedFilters) {
+            const initialFilters = JSON.parse(atob(encodedFilters))
+
+            _.each(initialFilters, f => {
+                commit('updateFilterState', { filterClass: f.class, value: f.value })
+            })
+        }
     },
 }
 
@@ -89,29 +107,10 @@ const mutations = {
     },
 
     /**
-     * Reset the filters in the store
+     * Store the mutable filter settings
      */
-    resetFilters(state) {
-        state.filters = []
-        state.currentFilters = []
-    },
-
     storeFilters(state, data) {
         state.filters = data
-    },
-
-    /**
-     * Initialize the current filter values from the decoded query string.
-     */
-    initializeCurrentFilterValuesFromQueryString(state, encodedFilters) {
-        if (encodedFilters) {
-            const initialFilters = JSON.parse(atob(encodedFilters))
-
-            _.each(initialFilters, f => {
-                const filter = _(state.filters).find(filter => filter.class == f.class)
-                filter.currentValue = f.value
-            })
-        }
     },
 }
 
