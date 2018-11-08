@@ -73,6 +73,16 @@ const actions = {
     },
 
     /**
+     * Fetch the current filters for the given lens resource name.
+     */
+    async fetchLensFilters({ commit }, { resourceName, lens }) {
+        const { data } = await Nova.request().get(
+            '/nova-api/' + resourceName + '/lens/' + lens + '/filters'
+        )
+        commit('storeFilters', data)
+    },
+
+    /**
      * Reset the default filter state to the original filter settings.
      */
     async resetFilterState({ commit, state, getters }, resourceName) {

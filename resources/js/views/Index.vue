@@ -397,22 +397,6 @@ export default {
 
     methods: {
         /**
-         * Set up filters for the current view
-         */
-        async initializeFilters() {
-            await this.$store.dispatch('fetchFilters', this.resourceName)
-
-            if (this.initialEncodedFilters) {
-                await this.$store.dispatch(
-                    'initializeCurrentFilterValuesFromQueryString',
-                    this.initialEncodedFilters
-                )
-            } else {
-                await this.$store.dispatch('resetFilterState', this.resourceName)
-            }
-        },
-
-        /**
          * Handle the keydown event
          */
         handleKeydown(e) {

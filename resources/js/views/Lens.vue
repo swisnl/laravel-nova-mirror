@@ -91,16 +91,14 @@
                     />
 
                     <filter-menu
-                        :filters="filters"
+                        :resourceName="resourceName"
                         :soft-deletes="softDeletes"
                         :via-resource="viaResource"
                         :via-has-one="viaHasOne"
-                        :current-filters="currentFilters"
                         :trashed="trashed"
                         :per-page="perPage"
-                        :show-trashed-option="false"
                         @clear-selected-filters="clearSelectedFilters"
-                        @filter-changed="updateFilters"
+                        @filter-changed="filterChanged"
                         @trashed-changed="trashedChanged"
                         @per-page-changed="updatePerPageChanged"
                     />
@@ -254,8 +252,6 @@ export default {
         pivotActions: null,
         actionValidationErrors: new Errors(),
 
-        filters: [],
-
         authorizedToRelate: false,
 
         orderBy: '',
@@ -272,10 +268,10 @@ export default {
         this.initializeTrashedFromQueryString()
         this.initializeOrderingFromQueryString()
 
+        this.initializeLensFilters(this.lens)
         this.getResources()
         // this.getAuthorizationToRelate()
         this.getActions()
-        this.getFilters()
 
         this.initialLoading = false
 
@@ -299,7 +295,6 @@ export default {
                 this.initializePerPageFromQueryString()
                 this.initializeTrashedFromQueryString()
                 this.initializeOrderingFromQueryString()
-                this.initializeFilterValuesFromQueryString()
             }
         )
     },
@@ -414,36 +409,6 @@ export default {
         },
 
         /**
-         * Get the filters available for the current resource.
-         */
-        getFilters() {
-            this.filters = []
-            this.currentFilters = []
-            Nova.request()
-                .get('/nova-api/' + this.resourceName + '/lens/' + this.lens + '/filters')
-                .then(response => {
-                    this.filters = response.data
-                    this.initializeFilterValuesFromQueryString()
-                })
-        },
-
-        /**
-         * Clear filters and reset the resource table
-         */
-        clearSelectedFilters() {
-            this.clearAllFilters()
-            this.filterChanged()
-        },
-
-        /**
-         * Update the currentFilters with newFilters
-         */
-        updateFilters(newFilters) {
-            this.currentFilters = newFilters
-            this.filterChanged()
-        },
-
-        /**
          * Clear the selected resouces and the "select all" states.
          */
         clearResourceSelections() {
@@ -525,13 +490,6 @@ export default {
          */
         lensActionEndpoint() {
             return `/nova-api/${this.resourceName}/lens/${this.lens}/action`
-        },
-
-        /**
-         * Get the name of the filter query string variable.
-         */
-        filterParameter() {
-            return this.resourceName + '_filter'
         },
 
         /**
@@ -722,13 +680,6 @@ export default {
         },
 
         /**
-         * Determine if there any filters for this resource
-         */
-        hasFilters() {
-            return Boolean(this.filters.length > 0)
-        },
-
-        /**
          * Determine whether to show the toolbar for this resource index
          */
         shouldShowToolbar() {
@@ -821,6 +772,20 @@ export default {
                     this.authorizedToRestoreSelectedResources ||
                     this.authorizedToRestoreAnyResources
             )
+        },
+
+        /**
+         * Return the currently encoded filter string from the store
+         */
+        encodedFilters() {
+            return this.$store.getters.currentEncodedFilters
+        },
+
+        /**
+         * Return the initial encoded filters from the query string
+         */
+        initialEncodedFilters() {
+            return this.$route.query[this.filterParameter] || ''
         },
     },
 }

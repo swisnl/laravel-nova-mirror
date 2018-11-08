@@ -10483,51 +10483,6 @@ exports.default = {
 
     methods: {
         /**
-         * Set up filters for the current view
-         */
-        initializeFilters: function () {
-            var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
-                return _regenerator2.default.wrap(function _callee2$(_context2) {
-                    while (1) {
-                        switch (_context2.prev = _context2.next) {
-                            case 0:
-                                _context2.next = 2;
-                                return this.$store.dispatch('fetchFilters', this.resourceName);
-
-                            case 2:
-                                if (!this.initialEncodedFilters) {
-                                    _context2.next = 7;
-                                    break;
-                                }
-
-                                _context2.next = 5;
-                                return this.$store.dispatch('initializeCurrentFilterValuesFromQueryString', this.initialEncodedFilters);
-
-                            case 5:
-                                _context2.next = 9;
-                                break;
-
-                            case 7:
-                                _context2.next = 9;
-                                return this.$store.dispatch('resetFilterState', this.resourceName);
-
-                            case 9:
-                            case 'end':
-                                return _context2.stop();
-                        }
-                    }
-                }, _callee2, this);
-            }));
-
-            function initializeFilters() {
-                return _ref2.apply(this, arguments);
-            }
-
-            return initializeFilters;
-        }(),
-
-
-        /**
          * Handle the keydown event
          */
         handleKeydown: function handleKeydown(e) {
@@ -10591,8 +10546,8 @@ exports.default = {
 
                 return (0, _laravelNova.Minimum)(Nova.request().get('/nova-api/' + _this2.resourceName, {
                     params: _this2.resourceRequestQueryString
-                })).then(function (_ref3) {
-                    var data = _ref3.data;
+                })).then(function (_ref2) {
+                    var data = _ref2.data;
 
                     _this2.resources = [];
 
@@ -11360,8 +11315,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
 
 exports.default = {
     mixins: [_laravelNova.Deletable, _laravelNova.Filterable, _laravelNova.Paginatable, _laravelNova.PerPageable, _laravelNova.InteractsWithResourceInformation, _laravelNova.InteractsWithQueryString],
@@ -11405,8 +11358,6 @@ exports.default = {
             pivotActions: null,
             actionValidationErrors: new _laravelNova.Errors(),
 
-            filters: [],
-
             authorizedToRelate: false,
 
             orderBy: '',
@@ -11426,10 +11377,10 @@ exports.default = {
         this.initializeTrashedFromQueryString();
         this.initializeOrderingFromQueryString();
 
+        this.initializeLensFilters(this.lens);
         this.getResources();
         // this.getAuthorizationToRelate()
         this.getActions();
-        this.getFilters();
 
         this.initialLoading = false;
 
@@ -11442,7 +11393,6 @@ exports.default = {
             _this.initializePerPageFromQueryString();
             _this.initializeTrashedFromQueryString();
             _this.initializeOrderingFromQueryString();
-            _this.initializeFilterValuesFromQueryString();
         });
     },
 
@@ -11550,39 +11500,6 @@ exports.default = {
 
 
         /**
-         * Get the filters available for the current resource.
-         */
-        getFilters: function getFilters() {
-            var _this4 = this;
-
-            this.filters = [];
-            this.currentFilters = [];
-            Nova.request().get('/nova-api/' + this.resourceName + '/lens/' + this.lens + '/filters').then(function (response) {
-                _this4.filters = response.data;
-                _this4.initializeFilterValuesFromQueryString();
-            });
-        },
-
-
-        /**
-         * Clear filters and reset the resource table
-         */
-        clearSelectedFilters: function clearSelectedFilters() {
-            this.clearAllFilters();
-            this.filterChanged();
-        },
-
-
-        /**
-         * Update the currentFilters with newFilters
-         */
-        updateFilters: function updateFilters(newFilters) {
-            this.currentFilters = newFilters;
-            this.filterChanged();
-        },
-
-
-        /**
          * Clear the selected resouces and the "select all" states.
          */
         clearResourceSelections: function clearResourceSelections() {
@@ -11595,14 +11512,14 @@ exports.default = {
          * Get the count of all of the matching resources.
          */
         getAllMatchingResourceCount: function getAllMatchingResourceCount() {
-            var _this5 = this;
+            var _this4 = this;
 
             Nova.request().get('/nova-api/' + this.resourceName + '/lens/' + this.lens + '/count', {
                 params: this.resourceRequestQueryString
             }).then(function (response) {
                 console.log('count');
                 console.log(response.data.count);
-                _this5.allMatchingResourceCount = response.data.count;
+                _this4.allMatchingResourceCount = response.data.count;
             });
         },
 
@@ -11670,14 +11587,6 @@ exports.default = {
          */
         lensActionEndpoint: function lensActionEndpoint() {
             return '/nova-api/' + this.resourceName + '/lens/' + this.lens + '/action';
-        },
-
-
-        /**
-         * Get the name of the filter query string variable.
-         */
-        filterParameter: function filterParameter() {
-            return this.resourceName + '_filter';
         },
 
 
@@ -11888,14 +11797,6 @@ exports.default = {
 
 
         /**
-         * Determine if there any filters for this resource
-         */
-        hasFilters: function hasFilters() {
-            return Boolean(this.filters.length > 0);
-        },
-
-
-        /**
          * Determine whether to show the toolbar for this resource index
          */
         shouldShowToolbar: function shouldShowToolbar() {
@@ -11984,6 +11885,22 @@ exports.default = {
          */
         canShowDeleteMenu: function canShowDeleteMenu() {
             return Boolean(this.authorizedToDeleteSelectedResources || this.authorizedToForceDeleteSelectedResources || this.authorizedToDeleteAnyResources || this.authorizedToForceDeleteAnyResources || this.authorizedToRestoreSelectedResources || this.authorizedToRestoreAnyResources);
+        },
+
+
+        /**
+         * Return the currently encoded filter string from the store
+         */
+        encodedFilters: function encodedFilters() {
+            return this.$store.getters.currentEncodedFilters;
+        },
+
+
+        /**
+         * Return the initial encoded filters from the query string
+         */
+        initialEncodedFilters: function initialEncodedFilters() {
+            return this.$route.query[this.filterParameter] || '';
         }
     }
 };
@@ -40980,18 +40897,16 @@ var render = function() {
                       _vm._v(" "),
                       _c("filter-menu", {
                         attrs: {
-                          filters: _vm.filters,
+                          resourceName: _vm.resourceName,
                           "soft-deletes": _vm.softDeletes,
                           "via-resource": _vm.viaResource,
                           "via-has-one": _vm.viaHasOne,
-                          "current-filters": _vm.currentFilters,
                           trashed: _vm.trashed,
-                          "per-page": _vm.perPage,
-                          "show-trashed-option": false
+                          "per-page": _vm.perPage
                         },
                         on: {
                           "clear-selected-filters": _vm.clearSelectedFilters,
-                          "filter-changed": _vm.updateFilters,
+                          "filter-changed": _vm.filterChanged,
                           "trashed-changed": _vm.trashedChanged,
                           "per-page-changed": _vm.updatePerPageChanged
                         }
@@ -56690,31 +56605,28 @@ var state = {
 
 
     /**
-     * Reset the default filter state to the original filter settings.
+     * Fetch the current filters for the given lens resource name.
      */
-    resetFilterState: function () {
-        var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(_ref4, resourceName) {
-            var commit = _ref4.commit,
-                state = _ref4.state,
-                getters = _ref4.getters;
+    fetchLensFilters: function () {
+        var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(_ref4, _ref5) {
+            var commit = _ref4.commit;
+            var resourceName = _ref5.resourceName,
+                lens = _ref5.lens;
 
-            var _ref6, data;
+            var _ref7, data;
 
             return _regenerator2.default.wrap(function _callee2$(_context2) {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
                         case 0:
                             _context2.next = 2;
-                            return Nova.request().get('/nova-api/' + resourceName + '/filters');
+                            return Nova.request().get('/nova-api/' + resourceName + '/lens/' + lens + '/filters');
 
                         case 2:
-                            _ref6 = _context2.sent;
-                            data = _ref6.data;
+                            _ref7 = _context2.sent;
+                            data = _ref7.data;
 
-
-                            _lodash2.default.each(data, function (filter) {
-                                return commit('updateFilterState', { filterClass: filter.class, value: filter.currentValue });
-                            });
+                            commit('storeFilters', data);
 
                         case 5:
                         case 'end':
@@ -56724,8 +56636,51 @@ var state = {
             }, _callee2, this);
         }));
 
-        function resetFilterState(_x3, _x4) {
-            return _ref5.apply(this, arguments);
+        function fetchLensFilters(_x3, _x4) {
+            return _ref6.apply(this, arguments);
+        }
+
+        return fetchLensFilters;
+    }(),
+
+
+    /**
+     * Reset the default filter state to the original filter settings.
+     */
+    resetFilterState: function () {
+        var _ref9 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(_ref8, resourceName) {
+            var commit = _ref8.commit,
+                state = _ref8.state,
+                getters = _ref8.getters;
+
+            var _ref10, data;
+
+            return _regenerator2.default.wrap(function _callee3$(_context3) {
+                while (1) {
+                    switch (_context3.prev = _context3.next) {
+                        case 0:
+                            _context3.next = 2;
+                            return Nova.request().get('/nova-api/' + resourceName + '/filters');
+
+                        case 2:
+                            _ref10 = _context3.sent;
+                            data = _ref10.data;
+
+
+                            _lodash2.default.each(data, function (filter) {
+                                return commit('updateFilterState', { filterClass: filter.class, value: filter.currentValue });
+                            });
+
+                        case 5:
+                        case 'end':
+                            return _context3.stop();
+                    }
+                }
+            }, _callee3, this);
+        }));
+
+        function resetFilterState(_x5, _x6) {
+            return _ref9.apply(this, arguments);
         }
 
         return resetFilterState;
@@ -56736,13 +56691,13 @@ var state = {
      * Initialize the current filter values from the decoded query string.
      */
     initializeCurrentFilterValuesFromQueryString: function () {
-        var _ref8 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(_ref7, encodedFilters) {
-            var commit = _ref7.commit,
-                getters = _ref7.getters;
+        var _ref12 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(_ref11, encodedFilters) {
+            var commit = _ref11.commit,
+                getters = _ref11.getters;
             var initialFilters;
-            return _regenerator2.default.wrap(function _callee3$(_context3) {
+            return _regenerator2.default.wrap(function _callee4$(_context4) {
                 while (1) {
-                    switch (_context3.prev = _context3.next) {
+                    switch (_context4.prev = _context4.next) {
                         case 0:
                             if (encodedFilters) {
                                 initialFilters = JSON.parse(atob(encodedFilters));
@@ -56755,14 +56710,14 @@ var state = {
 
                         case 1:
                         case 'end':
-                            return _context3.stop();
+                            return _context4.stop();
                     }
                 }
-            }, _callee3, this);
+            }, _callee4, this);
         }));
 
-        function initializeCurrentFilterValuesFromQueryString(_x5, _x6) {
-            return _ref8.apply(this, arguments);
+        function initializeCurrentFilterValuesFromQueryString(_x7, _x8) {
+            return _ref12.apply(this, arguments);
         }
 
         return initializeCurrentFilterValuesFromQueryString;
@@ -56773,9 +56728,9 @@ var state = {
  * Mutations
  */
 var mutations = {
-    updateFilterState: function updateFilterState(state, _ref9) {
-        var filterClass = _ref9.filterClass,
-            value = _ref9.value;
+    updateFilterState: function updateFilterState(state, _ref13) {
+        var filterClass = _ref13.filterClass,
+            value = _ref13.value;
 
         var filter = (0, _lodash2.default)(state.filters).find(function (f) {
             return f.class == filterClass;
