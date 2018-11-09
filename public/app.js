@@ -913,11 +913,20 @@ __webpack_require__("./node_modules/flatpickr/dist/themes/airbnb.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 exports.default = {
     props: {
-        field: {
-            required: true
-        },
         value: {
             required: false
         },
@@ -961,8 +970,10 @@ exports.default = {
                 enableTime: _this.enableTime,
                 enableSeconds: _this.enableSeconds,
                 onClose: _this.onChange,
+                onChange: _this.onChange,
                 dateFormat: _this.dateFormat,
                 allowInput: true,
+                // static: true,
                 time_24hr: !_this.twelveHourTime
             });
         });
@@ -2149,9 +2160,34 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _toConsumableArray2 = __webpack_require__("./node_modules/babel-runtime/helpers/toConsumableArray.js");
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
 var _vueClickaway = __webpack_require__("./node_modules/vue-clickaway/dist/vue-clickaway.common.js");
 
+var _composedPath = __webpack_require__("./resources/js/polyfills/composedPath.js");
+
+var _composedPath2 = _interopRequireDefault(_composedPath);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 exports.default = {
+    props: {
+        classWhitelist: [Array, String]
+    },
+
     mixins: [_vueClickaway.mixin],
 
     data: function data() {
@@ -2162,20 +2198,28 @@ exports.default = {
         toggle: function toggle() {
             this.visible = !this.visible;
         },
-        close: function close() {
+        close: function close(event) {
+            var classArray = Array.isArray(this.classWhitelist) ? this.classWhitelist : [this.classWhitelist];
+
+            if (_.filter(classArray, function (className) {
+                return pathIncludesClass(event, className);
+            }).length > 0) {
+                return;
+            }
+
             this.visible = false;
         }
     }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
+};
+
+
+function pathIncludesClass(event, className) {
+    return (0, _composedPath2.default)(event).filter(function (el) {
+        return el !== document && el !== window;
+    }).flatMap(function (e) {
+        return [].concat((0, _toConsumableArray3.default)(e.classList));
+    }).includes(className);
+}
 
 /***/ }),
 
@@ -2443,6 +2487,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 
 exports.default = {
     props: (_props = {
@@ -2577,6 +2622,77 @@ exports.default = {
         }
     }
 }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],[\"env\"]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-runtime\",\"transform-vue-jsx\",\"syntax-jsx\",\"transform-object-rest-spread\"],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/Filters/DateFilter.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _DateTimePicker = __webpack_require__("./resources/js/components/DateTimePicker.vue");
+
+var _DateTimePicker2 = _interopRequireDefault(_DateTimePicker);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    components: { DateTimePicker: _DateTimePicker2.default },
+
+    props: {
+        filterKey: {
+            type: String,
+            required: true
+        }
+    },
+
+    methods: {
+        handleChange: function handleChange(value) {
+            this.$store.commit('updateFilterState', { filterClass: this.filterKey, value: value });
+            this.$emit('change');
+        }
+    },
+
+    computed: {
+        placeholder: function placeholder() {
+            return 'Choose date';
+        },
+        value: function value() {
+            return this.filter.currentValue;
+        },
+        filter: function filter() {
+            return this.$store.getters.getFilter(this.filterKey);
+        },
+        options: function options() {
+            return this.$store.getters.getOptionsForFilter(this.filterKey);
+        }
+    }
+}; //
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3270,6 +3386,7 @@ var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
 //
 //
 //
@@ -12798,6 +12915,13 @@ exports.default = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-runtime/core-js/array/from.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__("./node_modules/core-js/library/fn/array/from.js"), __esModule: true };
+
+/***/ }),
+
 /***/ "./node_modules/babel-runtime/core-js/get-iterator.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13065,6 +13189,34 @@ exports.default = function () {
     }
   };
 }();
+
+/***/ }),
+
+/***/ "./node_modules/babel-runtime/helpers/toConsumableArray.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _from = __webpack_require__("./node_modules/babel-runtime/core-js/array/from.js");
+
+var _from2 = _interopRequireDefault(_from);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+
+    return arr2;
+  } else {
+    return (0, _from2.default)(arr);
+  }
+};
 
 /***/ }),
 
@@ -28074,6 +28226,16 @@ CodeMirror.defineMIME("text/yaml", "yaml");
 
 /***/ }),
 
+/***/ "./node_modules/core-js/library/fn/array/from.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__("./node_modules/core-js/library/modules/es6.string.iterator.js");
+__webpack_require__("./node_modules/core-js/library/modules/es6.array.from.js");
+module.exports = __webpack_require__("./node_modules/core-js/library/modules/_core.js").Array.from;
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js/library/fn/get-iterator.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28279,6 +28441,22 @@ module.exports = function (it) {
 
 var core = module.exports = { version: '2.5.7' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/library/modules/_create-property.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $defineProperty = __webpack_require__("./node_modules/core-js/library/modules/_object-dp.js");
+var createDesc = __webpack_require__("./node_modules/core-js/library/modules/_property-desc.js");
+
+module.exports = function (object, index, value) {
+  if (index in object) $defineProperty.f(object, index, createDesc(0, value));
+  else object[index] = value;
+};
 
 
 /***/ }),
@@ -29537,6 +29715,51 @@ module.exports = __webpack_require__("./node_modules/core-js/library/modules/_co
     // eslint-disable-next-line no-prototype-builtins
     || Iterators.hasOwnProperty(classof(O));
 };
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/library/modules/es6.array.from.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var ctx = __webpack_require__("./node_modules/core-js/library/modules/_ctx.js");
+var $export = __webpack_require__("./node_modules/core-js/library/modules/_export.js");
+var toObject = __webpack_require__("./node_modules/core-js/library/modules/_to-object.js");
+var call = __webpack_require__("./node_modules/core-js/library/modules/_iter-call.js");
+var isArrayIter = __webpack_require__("./node_modules/core-js/library/modules/_is-array-iter.js");
+var toLength = __webpack_require__("./node_modules/core-js/library/modules/_to-length.js");
+var createProperty = __webpack_require__("./node_modules/core-js/library/modules/_create-property.js");
+var getIterFn = __webpack_require__("./node_modules/core-js/library/modules/core.get-iterator-method.js");
+
+$export($export.S + $export.F * !__webpack_require__("./node_modules/core-js/library/modules/_iter-detect.js")(function (iter) { Array.from(iter); }), 'Array', {
+  // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
+  from: function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
+    var O = toObject(arrayLike);
+    var C = typeof this == 'function' ? this : Array;
+    var aLen = arguments.length;
+    var mapfn = aLen > 1 ? arguments[1] : undefined;
+    var mapping = mapfn !== undefined;
+    var index = 0;
+    var iterFn = getIterFn(O);
+    var length, result, step, iterator;
+    if (mapping) mapfn = ctx(mapfn, aLen > 2 ? arguments[2] : undefined, 2);
+    // if object isn't iterable or it's array with default iterator - use simple case
+    if (iterFn != undefined && !(C == Array && isArrayIter(iterFn))) {
+      for (iterator = iterFn.call(O), result = new C(); !(step = iterator.next()).done; index++) {
+        createProperty(result, index, mapping ? call(iterator, mapfn, [step.value, index], true) : step.value);
+      }
+    } else {
+      length = toLength(O.length);
+      for (result = new C(length); length > index; index++) {
+        createProperty(result, index, mapping ? mapfn(O[index], index) : O[index]);
+      }
+    }
+    result.length = index;
+    return result;
+  }
+});
 
 
 /***/ }),
@@ -35554,7 +35777,8 @@ var render = function() {
             _c("date-time-picker", {
               staticClass: "w-full form-control form-input form-input-bordered",
               attrs: {
-                field: _vm.field,
+                dusk: _vm.field.attribute,
+                name: _vm.field.name,
                 value: _vm.localizedValue,
                 "twelve-hour-time": _vm.usesTwelveHourTime
               },
@@ -37506,6 +37730,59 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3d269825\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/Filters/DateFilter.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "h3",
+      { staticClass: "text-sm uppercase tracking-wide text-80 bg-30 p-3" },
+      [_vm._v(_vm._s(_vm.filter.name))]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "p-2" },
+      [
+        _c("date-time-picker", {
+          staticClass: "w-full form-control form-input form-input-bordered",
+          attrs: {
+            dusk: "date-filter",
+            name: "date-filter",
+            value: _vm.value,
+            dateFormat: "Y-m-d",
+            placeholder: _vm.placeholder,
+            "enable-time": false,
+            "enable-seconds": false
+          },
+          on: {
+            input: function($event) {
+              $event.preventDefault()
+            },
+            change: _vm.handleChange
+          }
+        })
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3d269825", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3e361632\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/SearchInput.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -37784,8 +38061,6 @@ var render = function() {
     class: { "!cursor-not-allowed": _vm.disabled },
     attrs: {
       disabled: _vm.disabled,
-      dusk: _vm.field.attribute,
-      name: _vm.field.name,
       type: "text",
       placeholder: _vm.placeholder
     },
@@ -40285,7 +40560,10 @@ var render = function() {
         "dropdown",
         {
           staticClass: "bg-30 hover:bg-40 rounded",
-          attrs: { dusk: "filter-selector" },
+          attrs: {
+            dusk: "filter-selector",
+            "class-whitelist": "flatpickr-calendar"
+          },
           scopedSlots: _vm._u([
             {
               key: "default",
@@ -44846,7 +45124,7 @@ var render = function() {
       _c(
         "transition",
         { attrs: { name: "fade" } },
-        [true ? _vm._t("menu") : _vm._e()],
+        [_vm.visible ? _vm._t("menu") : _vm._e()],
         2
       )
     ],
@@ -45024,7 +45302,7 @@ var render = function() {
           _c("date-time-picker", {
             staticClass: "w-full form-control form-input form-input-bordered",
             attrs: {
-              field: _vm.field,
+              dusk: _vm.field.attribute,
               name: _vm.field.name,
               value: _vm.value,
               dateFormat: "Y-m-d",
@@ -50030,6 +50308,10 @@ var _BooleanFilter = __webpack_require__("./resources/js/components/Filters/Bool
 
 var _BooleanFilter2 = _interopRequireDefault(_BooleanFilter);
 
+var _DateFilter = __webpack_require__("./resources/js/components/Filters/DateFilter.vue");
+
+var _DateFilter2 = _interopRequireDefault(_DateFilter);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.component('action-selector', _ActionSelector2.default);
@@ -50047,6 +50329,7 @@ _vue2.default.component('custom-detail-header', _CustomDetailHeader2.default);
 _vue2.default.component('custom-detail-toolbar', _CustomDetailToolbar2.default);
 _vue2.default.component('custom-index-header', _CustomIndexHeader2.default);
 _vue2.default.component('custom-index-toolbar', _CustomIndexToolbar2.default);
+_vue2.default.component('date-filter', _DateFilter2.default);
 _vue2.default.component('delete-menu', _DeleteMenu2.default);
 _vue2.default.component('delete-resource-modal', _DeleteResourceModal2.default);
 _vue2.default.component('dropdown', _Dropdown2.default);
@@ -52125,6 +52408,54 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-7313c331", Component.options)
   } else {
     hotAPI.reload("data-v-7313c331", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Filters/DateFilter.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],[\"env\"]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-runtime\",\"transform-vue-jsx\",\"syntax-jsx\",\"transform-object-rest-spread\"],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/Filters/DateFilter.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3d269825\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/Filters/DateFilter.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Filters/DateFilter.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3d269825", Component.options)
+  } else {
+    hotAPI.reload("data-v-3d269825", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -56035,6 +56366,73 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Set Moment as a global so you don't have to import it
  */
 window.moment = _momentTimezone2.default;
+
+/***/ }),
+
+/***/ "./resources/js/polyfills/composedPath.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = composedPath;
+/**
+ * Returns an array with all DOM elements affected by an event.
+ * The function serves as a polyfill for
+ * [`Event.composedPath()`](https://dom.spec.whatwg.org/#dom-event-composedpath).
+ *
+ * @category Event
+ * @param {Event} evt The triggered event.
+ * @return {Array.<HTMLElement>} The DOM elements affected by the event.
+ *
+ * @example
+ * let domChild = document.createElement("div"),
+ *  domParent = document.createElement("div"),
+ *  domGrandparent = document.createElement("div"),
+ *  body = document.body,
+ *  html = document.querySelector("html");
+ *
+ * domParent.appendChild(domChild);
+ * domGrandparent.appendChild(domParent);
+ * body.appendChild(domGrandparent);
+ *
+ * domChild.addEventListener("click", dealWithClick);
+ * const dealWithClick = evt => getEventPath(evt);
+ *
+ * // when domChild is clicked:
+ * // => [domChild, domParent, domGrandparent, body, html, document, window]
+ */
+
+function composedPath(evt) {
+    var path = evt.composedPath && evt.composedPath() || evt.path,
+        target = evt.target;
+
+    if (path != null) {
+        // Safari doesn't include Window, and it should.
+        path = path.indexOf(window) < 0 ? path.concat([window]) : path;
+        return path;
+    }
+
+    if (target === window) {
+        return [window];
+    }
+
+    function getParents(node, memo) {
+        memo = memo || [];
+        var parentNode = node.parentNode;
+
+        if (!parentNode) {
+            return memo;
+        } else {
+            return getParents(parentNode, memo.concat([parentNode]));
+        }
+    }
+
+    return [target].concat(getParents(target)).concat([window]);
+}
 
 /***/ }),
 

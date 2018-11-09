@@ -3,6 +3,7 @@
         v-if="filters.length > 0 || softDeletes || !viaResource"
         dusk="filter-selector"
         class="bg-30 hover:bg-40 rounded"
+        class-whitelist="flatpickr-calendar"
     >
         <dropdown-trigger slot-scope="{toggle}" :handle-click="toggle" class="px-3">
             <icon type="filter" class="text-80" />
