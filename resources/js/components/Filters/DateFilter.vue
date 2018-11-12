@@ -41,7 +41,7 @@ export default {
 
     computed: {
         placeholder() {
-            return 'Choose date'
+            return this.__('Choose date')
         },
 
         value() {

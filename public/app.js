@@ -2243,16 +2243,9 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
-//
-//
-//
 
 exports.default = {
     props: {
-        dark: {
-            type: Boolean,
-            default: false
-        },
         direction: {
             type: String,
             default: 'ltr',
@@ -2673,7 +2666,7 @@ exports.default = {
 
     computed: {
         placeholder: function placeholder() {
-            return 'Choose date';
+            return this.__('Choose date');
         },
         value: function value() {
             return this.filter.currentValue;
@@ -45173,76 +45166,6 @@ var render = function() {
       class: _vm.menuClasses
     },
     [
-      _vm.dark
-        ? _c(
-            "svg",
-            {
-              staticClass: "absolute dropdown-arrow z-50",
-              class: _vm.arrowClasses,
-              attrs: {
-                width: "46px",
-                height: "23px",
-                xmlns: "http://www.w3.org/2000/svg",
-                "xmlns:xlink": "http://www.w3.org/1999/xlink",
-                viewBox: "0 0 44 22"
-              }
-            },
-            [
-              _c("defs", [
-                _c("path", { attrs: { id: "a", d: "M0 0h44v22H0z" } }),
-                _c("path", { attrs: { id: "c", d: "M2 22L22 2l20 20z" } })
-              ]),
-              _c("g", { attrs: { fill: "none", "fill-rule": "evenodd" } }, [
-                _c("mask", { attrs: { id: "b", fill: "#fff" } }, [
-                  _c("use", { attrs: { "xlink:href": "#a" } })
-                ]),
-                _c("g", { attrs: { mask: "url(#b)" } }, [
-                  _c("use", { attrs: { fill: "#F6F8FB", "xlink:href": "#c" } }),
-                  _c("path", {
-                    attrs: {
-                      stroke: "#CCD4DB",
-                      d: "M.793 22.5L22 1.293 43.207 22.5H.793z"
-                    }
-                  })
-                ])
-              ])
-            ]
-          )
-        : _c(
-            "svg",
-            {
-              staticClass: "absolute dropdown-arrow z-50",
-              class: _vm.arrowClasses,
-              attrs: {
-                width: "46px",
-                height: "23px",
-                xmlns: "http://www.w3.org/2000/svg",
-                "xmlns:xlink": "http://www.w3.org/1999/xlink",
-                viewBox: "0 0 44 22"
-              }
-            },
-            [
-              _c("defs", [
-                _c("path", { attrs: { id: "a", d: "M0 0h44v22H0z" } }),
-                _c("path", { attrs: { id: "c", d: "M2 22L22 2l20 20z" } })
-              ]),
-              _c("g", { attrs: { fill: "none", "fill-rule": "evenodd" } }, [
-                _c("mask", { attrs: { id: "b", fill: "#fff" } }, [
-                  _c("use", { attrs: { "xlink:href": "#a" } })
-                ]),
-                _c("g", { attrs: { mask: "url(#b)" } }, [
-                  _c("use", { attrs: { fill: "#FFF", "xlink:href": "#c" } }),
-                  _c("path", {
-                    attrs: {
-                      stroke: "#CCD4DB",
-                      d: "M.793 22.5L22 1.293 43.207 22.5H.793z"
-                    }
-                  })
-                ])
-              ])
-            ]
-          ),
-      _vm._v(" "),
       _c(
         "div",
         {
