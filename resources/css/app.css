@@ -329,23 +329,13 @@ textarea.form-input:read-only,
 }
 
 .dropdown-menu-left {
-  top: 3rem;
-  left: -2rem;
-}
-
-.dropdown-arrow-left {
-  top: calc(-1.35rem);
-  left: 2.3rem;
+  top: 2.5rem;
+  left: 0rem;
 }
 
 .dropdown-menu-right {
-  top: 3rem;
-  right: -1.5rem;
-}
-
-.dropdown-arrow-right {
-  top: calc(-1.35rem);
-  right: 2rem;
+  top: 2.5rem;
+  right: 0rem;
 }
 
 .dropdown-alt .dropdown-trigger {
