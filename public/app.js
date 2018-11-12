@@ -409,13 +409,6 @@ exports.default = {
 //
 //
 //
-//
-//
-//
-//
-//
-
-// import Checkbox from '@/components/Checkbox'
 
 /***/ }),
 
@@ -5966,6 +5959,45 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     props: {
@@ -10483,6 +10515,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
 
 exports.default = {
     mixins: [_laravelNova.Deletable, _laravelNova.Filterable, _laravelNova.HasCards, _laravelNova.Paginatable, _laravelNova.PerPageable, _laravelNova.InteractsWithResourceInformation, _laravelNova.InteractsWithQueryString],
@@ -10649,7 +10683,8 @@ exports.default = {
         /**
          * Toggle the selection of all resources
          */
-        toggleSelectAll: function toggleSelectAll() {
+        toggleSelectAll: function toggleSelectAll(event) {
+            console.log('hello', event);
             if (this.selectAllChecked) return this.clearResourceSelections();
             this.selectAllResources();
         },
@@ -11258,6 +11293,8 @@ var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
 //
 //
 //
@@ -38724,27 +38761,7 @@ var render = function() {
                                           {
                                             staticClass: "flex items-center",
                                             on: {
-                                              input: _vm.toggleSelectAll,
-                                              keydown: function($event) {
-                                                if (
-                                                  !("button" in $event) &&
-                                                  _vm._k(
-                                                    $event.keyCode,
-                                                    "space",
-                                                    32,
-                                                    $event.key,
-                                                    " "
-                                                  ) &&
-                                                  _vm._k(
-                                                    $event.keyCode,
-                                                    "enter",
-                                                    13,
-                                                    $event.key,
-                                                    "Enter"
-                                                  )
-                                                ) {
-                                                  return null
-                                                }
+                                              change: function($event) {
                                                 $event.preventDefault()
                                                 return _vm.toggleSelectAll(
                                                   $event
@@ -38753,27 +38770,31 @@ var render = function() {
                                             }
                                           },
                                           [
-                                            _c("checkbox", {
-                                              attrs: {
-                                                checked: _vm.selectAllChecked
-                                              }
-                                            }),
-                                            _vm._v(" "),
                                             _c(
-                                              "span",
-                                              { staticClass: "ml-2" },
+                                              "div",
+                                              { staticClass: "flex-no-shrink" },
                                               [
-                                                _vm._v(
-                                                  " " +
-                                                    _vm._s(
-                                                      _vm.__("Select All")
-                                                    ) +
-                                                    " "
-                                                )
-                                              ]
-                                            )
-                                          ],
-                                          1
+                                                _c("checkbox", {
+                                                  attrs: {
+                                                    checked:
+                                                      _vm.selectAllChecked
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      _vm.$emit("change")
+                                                    }
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c("div", { staticClass: "ml-2" }, [
+                                              _vm._v(
+                                                _vm._s(_vm.__("SPoopelect All"))
+                                              )
+                                            ])
+                                          ]
                                         )
                                       ]
                                     ),
@@ -38787,28 +38808,7 @@ var render = function() {
                                           {
                                             staticClass: "flex items-center",
                                             on: {
-                                              input:
-                                                _vm.toggleSelectAllMatching,
-                                              keydown: function($event) {
-                                                if (
-                                                  !("button" in $event) &&
-                                                  _vm._k(
-                                                    $event.keyCode,
-                                                    "space",
-                                                    32,
-                                                    $event.key,
-                                                    " "
-                                                  ) &&
-                                                  _vm._k(
-                                                    $event.keyCode,
-                                                    "enter",
-                                                    13,
-                                                    $event.key,
-                                                    "Enter"
-                                                  )
-                                                ) {
-                                                  return null
-                                                }
+                                              change: function($event) {
                                                 $event.preventDefault()
                                                 return _vm.toggleSelectAllMatching(
                                                   $event
@@ -38823,6 +38823,11 @@ var render = function() {
                                                   "select-all-matching-button",
                                                 checked:
                                                   _vm.selectAllMatchingChecked
+                                              },
+                                              on: {
+                                                input: function($event) {
+                                                  _vm.$emit("change")
+                                                }
                                               }
                                             }),
                                             _vm._v(" "),
@@ -39765,6 +39770,7 @@ var render = function() {
                                 })
                               ]
                             ),
+                            _vm._v(" "),
                             _c("path", {
                               attrs: {
                                 id: "Shape",
@@ -39822,6 +39828,7 @@ var render = function() {
                               })
                             ]
                           ),
+                          _vm._v(" "),
                           _c("rect", {
                             attrs: {
                               id: "Rectangle-path",
@@ -41020,27 +41027,7 @@ var render = function() {
                                         {
                                           staticClass: "flex items-center",
                                           on: {
-                                            input: _vm.toggleSelectAll,
-                                            keydown: function($event) {
-                                              if (
-                                                !("button" in $event) &&
-                                                _vm._k(
-                                                  $event.keyCode,
-                                                  "space",
-                                                  32,
-                                                  $event.key,
-                                                  " "
-                                                ) &&
-                                                _vm._k(
-                                                  $event.keyCode,
-                                                  "enter",
-                                                  13,
-                                                  $event.key,
-                                                  "Enter"
-                                                )
-                                              ) {
-                                                return null
-                                              }
+                                            change: function($event) {
                                               $event.preventDefault()
                                               return _vm.toggleSelectAll($event)
                                             }
@@ -41050,6 +41037,11 @@ var render = function() {
                                           _c("checkbox", {
                                             attrs: {
                                               checked: _vm.selectAllChecked
+                                            },
+                                            on: {
+                                              input: function($event) {
+                                                _vm.$emit("change")
+                                              }
                                             }
                                           }),
                                           _vm._v(" "),
@@ -41076,28 +41068,7 @@ var render = function() {
                                             {
                                               staticClass: "flex items-center",
                                               on: {
-                                                input:
-                                                  _vm.toggleSelectAllMatching,
-                                                keydown: function($event) {
-                                                  if (
-                                                    !("button" in $event) &&
-                                                    _vm._k(
-                                                      $event.keyCode,
-                                                      "space",
-                                                      32,
-                                                      $event.key,
-                                                      " "
-                                                    ) &&
-                                                    _vm._k(
-                                                      $event.keyCode,
-                                                      "enter",
-                                                      13,
-                                                      $event.key,
-                                                      "Enter"
-                                                    )
-                                                  ) {
-                                                    return null
-                                                  }
+                                                change: function($event) {
                                                   $event.preventDefault()
                                                   return _vm.toggleSelectAllMatching(
                                                     $event
@@ -41112,6 +41083,11 @@ var render = function() {
                                                     "select-all-matching-button",
                                                   checked:
                                                     _vm.selectAllMatchingChecked
+                                                },
+                                                on: {
+                                                  input: function($event) {
+                                                    _vm.$emit("change")
+                                                  }
                                                 }
                                               }),
                                               _vm._v(" "),
@@ -44143,9 +44119,7 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "ml-2" }, [
-      _vm._v("\n        " + _vm._s(_vm.option.name) + "\n    ")
-    ])
+    _c("div", { staticClass: "ml-2" }, [_vm._v(_vm._s(_vm.option.name))])
   ])
 }
 var staticRenderFns = []

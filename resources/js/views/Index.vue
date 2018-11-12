@@ -74,25 +74,27 @@
                                         <li class="flex items-center mb-4">
                                             <label
                                                 class="flex items-center"
-                                                @input="toggleSelectAll"
-                                                @keydown.prevent.space.enter="toggleSelectAll"
+                                                @change.prevent="toggleSelectAll"
                                             >
-                                                <checkbox :checked="selectAllChecked" />
+                                                <div class="flex-no-shrink">
+                                                    <checkbox
+                                                        :checked="selectAllChecked"
+                                                        @input="$emit('change')"
+                                                    />
+                                                </div>
 
-                                                <span class="ml-2"> {{ __('Select All') }} </span>
+                                                <div class="ml-2">{{ __('SPoopelect All') }}</div>
                                             </label>
                                         </li>
                                         <li class="flex items-center">
                                             <label
                                                 class="flex items-center"
-                                                @input="toggleSelectAllMatching"
-                                                @keydown.prevent.space.enter="
-                                                    toggleSelectAllMatching
-                                                "
+                                                @change.prevent="toggleSelectAllMatching"
                                             >
                                                 <checkbox
                                                     dusk="select-all-matching-button"
                                                     :checked="selectAllMatchingChecked"
+                                                    @input="$emit('change')"
                                                 />
 
                                                 <span class="ml-2">
@@ -459,7 +461,8 @@ export default {
         /**
          * Toggle the selection of all resources
          */
-        toggleSelectAll() {
+        toggleSelectAll(event) {
+            console.log('hello', event)
             if (this.selectAllChecked) return this.clearResourceSelections()
             this.selectAllResources()
         },

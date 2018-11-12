@@ -1,20 +1,14 @@
 <template>
     <label class="flex items-center m-2">
         <div class="flex-no-shrink">
-            <Checkbox 
-                :checked="isChecked"
-                @input="updateCheckedState(option.value, $event)" 
-            />
+            <Checkbox :checked="isChecked" @input="updateCheckedState(option.value, $event)" />
         </div>
 
-        <div class="ml-2">
-            {{ option.name }}
-        </div>
+        <div class="ml-2">{{ option.name }}</div>
     </label>
 </template>
 
 <script>
-// import Checkbox from '@/components/Checkbox'
 import Checkbox from '@/components/Index/Checkbox'
 
 export default {
