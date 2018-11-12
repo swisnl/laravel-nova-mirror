@@ -10455,6 +10455,41 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     mixins: [_laravelNova.Deletable, _laravelNova.Filterable, _laravelNova.HasCards, _laravelNova.Paginatable, _laravelNova.PerPageable, _laravelNova.InteractsWithResourceInformation, _laravelNova.InteractsWithQueryString],
@@ -11086,14 +11121,6 @@ exports.default = {
 
 
         /**
-         * Determine whether to show the toolbar for this resource index
-         */
-        shouldShowToolbar: function shouldShowToolbar() {
-            return Boolean(this.shouldShowCheckBoxes || this.hasFilters || this.hasLenses || this.softDeletes);
-        },
-
-
-        /**
          * Determine whether to show the selection checkboxes for resources
          */
         shouldShowCheckBoxes: function shouldShowCheckBoxes() {
@@ -11432,6 +11459,38 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     mixins: [_laravelNova.Deletable, _laravelNova.Filterable, _laravelNova.Paginatable, _laravelNova.PerPageable, _laravelNova.InteractsWithResourceInformation, _laravelNova.InteractsWithQueryString],
@@ -11494,7 +11553,7 @@ exports.default = {
         this.initializeTrashedFromQueryString();
         this.initializeOrderingFromQueryString();
 
-        this.initializeLensFilters(this.lens);
+        this.initializeFilters(this.lens);
         this.getResources();
         // this.getAuthorizationToRelate()
         this.getActions();
@@ -11634,8 +11693,6 @@ exports.default = {
             Nova.request().get('/nova-api/' + this.resourceName + '/lens/' + this.lens + '/count', {
                 params: this.resourceRequestQueryString
             }).then(function (response) {
-                console.log('count');
-                console.log(response.data.count);
                 _this4.allMatchingResourceCount = response.data.count;
             });
         },
@@ -11910,14 +11967,6 @@ exports.default = {
          */
         hasResources: function hasResources() {
             return Boolean(this.resources.length > 0);
-        },
-
-
-        /**
-         * Determine whether to show the toolbar for this resource index
-         */
-        shouldShowToolbar: function shouldShowToolbar() {
-            return Boolean(this.shouldShowCheckBoxes || this.hasFilters);
         },
 
 
@@ -38624,375 +38673,359 @@ var render = function() {
       _vm._v(" "),
       _c(
         "loading-card",
-        {
-          class: { "overflow-hidden border border-50": !_vm.shouldShowToolbar },
-          attrs: { loading: _vm.loading }
-        },
+        { attrs: { loading: _vm.loading } },
         [
-          _vm.shouldShowToolbar
-            ? _c(
-                "div",
-                { staticClass: "py-3 flex items-center border-b border-50" },
-                [
-                  _c("div", { staticClass: "flex items-center" }, [
-                    _vm.shouldShowCheckBoxes
-                      ? _c(
-                          "div",
-                          { staticClass: "px-3" },
+          _c(
+            "div",
+            { staticClass: "py-3 flex items-center border-b border-50" },
+            [
+              _c("div", { staticClass: "flex items-center" }, [
+                _vm.shouldShowCheckBoxes
+                  ? _c(
+                      "div",
+                      { staticClass: "px-3" },
+                      [
+                        _c(
+                          "dropdown",
+                          {
+                            attrs: { dusk: "select-all-dropdown" },
+                            scopedSlots: _vm._u([
+                              {
+                                key: "default",
+                                fn: function(ref) {
+                                  var toggle = ref.toggle
+                                  return _c(
+                                    "dropdown-trigger",
+                                    { attrs: { "handle-click": toggle } },
+                                    [
+                                      _c("fake-checkbox", {
+                                        attrs: { checked: _vm.selectAllChecked }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                }
+                              }
+                            ])
+                          },
                           [
                             _c(
-                              "dropdown",
+                              "dropdown-menu",
                               {
-                                attrs: { dusk: "select-all-dropdown" },
-                                scopedSlots: _vm._u([
-                                  {
-                                    key: "default",
-                                    fn: function(ref) {
-                                      var toggle = ref.toggle
-                                      return _c(
-                                        "dropdown-trigger",
-                                        { attrs: { "handle-click": toggle } },
-                                        [
-                                          _c("fake-checkbox", {
-                                            attrs: {
-                                              checked: _vm.selectAllChecked
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      )
-                                    }
-                                  }
-                                ])
+                                attrs: {
+                                  slot: "menu",
+                                  direction: "ltr",
+                                  width: "250"
+                                },
+                                slot: "menu"
                               },
                               [
-                                _c(
-                                  "dropdown-menu",
-                                  {
-                                    attrs: {
-                                      slot: "menu",
-                                      direction: "ltr",
-                                      width: "250"
-                                    },
-                                    slot: "menu"
-                                  },
-                                  [
-                                    _c("div", { staticClass: "p-4" }, [
-                                      _c("ul", { staticClass: "list-reset" }, [
+                                _c("div", { staticClass: "p-4" }, [
+                                  _c("ul", { staticClass: "list-reset" }, [
+                                    _c(
+                                      "li",
+                                      { staticClass: "flex items-center mb-4" },
+                                      [
                                         _c(
-                                          "li",
+                                          "label",
                                           {
-                                            staticClass:
-                                              "flex items-center mb-4"
+                                            staticClass: "flex items-center",
+                                            on: {
+                                              input: _vm.toggleSelectAll,
+                                              keydown: function($event) {
+                                                if (
+                                                  !("button" in $event) &&
+                                                  _vm._k(
+                                                    $event.keyCode,
+                                                    "space",
+                                                    32,
+                                                    $event.key,
+                                                    " "
+                                                  ) &&
+                                                  _vm._k(
+                                                    $event.keyCode,
+                                                    "enter",
+                                                    13,
+                                                    $event.key,
+                                                    "Enter"
+                                                  )
+                                                ) {
+                                                  return null
+                                                }
+                                                $event.preventDefault()
+                                                return _vm.toggleSelectAll(
+                                                  $event
+                                                )
+                                              }
+                                            }
                                           },
                                           [
+                                            _c("checkbox", {
+                                              attrs: {
+                                                checked: _vm.selectAllChecked
+                                              }
+                                            }),
+                                            _vm._v(" "),
                                             _c(
-                                              "label",
-                                              {
-                                                staticClass:
-                                                  "flex items-center",
-                                                on: {
-                                                  input: _vm.toggleSelectAll,
-                                                  keydown: function($event) {
-                                                    if (
-                                                      !("button" in $event) &&
-                                                      _vm._k(
-                                                        $event.keyCode,
-                                                        "space",
-                                                        32,
-                                                        $event.key,
-                                                        " "
-                                                      ) &&
-                                                      _vm._k(
-                                                        $event.keyCode,
-                                                        "enter",
-                                                        13,
-                                                        $event.key,
-                                                        "Enter"
-                                                      )
-                                                    ) {
-                                                      return null
-                                                    }
-                                                    $event.preventDefault()
-                                                    return _vm.toggleSelectAll(
-                                                      $event
-                                                    )
-                                                  }
-                                                }
-                                              },
+                                              "span",
+                                              { staticClass: "ml-2" },
                                               [
-                                                _c("checkbox", {
-                                                  attrs: {
-                                                    checked:
-                                                      _vm.selectAllChecked
-                                                  }
-                                                }),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "span",
-                                                  { staticClass: "ml-2" },
-                                                  [
-                                                    _vm._v(
-                                                      "\n                                                " +
-                                                        _vm._s(
-                                                          _vm.__("Select All")
-                                                        ) +
-                                                        "\n                                            "
-                                                    )
-                                                  ]
+                                                _vm._v(
+                                                  " " +
+                                                    _vm._s(
+                                                      _vm.__("Select All")
+                                                    ) +
+                                                    " "
                                                 )
-                                              ],
-                                              1
+                                              ]
                                             )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "li",
-                                          { staticClass: "flex items-center" },
-                                          [
-                                            _c(
-                                              "label",
-                                              {
-                                                staticClass:
-                                                  "flex items-center",
-                                                on: {
-                                                  input:
-                                                    _vm.toggleSelectAllMatching,
-                                                  keydown: function($event) {
-                                                    if (
-                                                      !("button" in $event) &&
-                                                      _vm._k(
-                                                        $event.keyCode,
-                                                        "space",
-                                                        32,
-                                                        $event.key,
-                                                        " "
-                                                      ) &&
-                                                      _vm._k(
-                                                        $event.keyCode,
-                                                        "enter",
-                                                        13,
-                                                        $event.key,
-                                                        "Enter"
-                                                      )
-                                                    ) {
-                                                      return null
-                                                    }
-                                                    $event.preventDefault()
-                                                    return _vm.toggleSelectAllMatching(
-                                                      $event
-                                                    )
-                                                  }
-                                                }
-                                              },
-                                              [
-                                                _c("checkbox", {
-                                                  attrs: {
-                                                    dusk:
-                                                      "select-all-matching-button",
-                                                    checked:
-                                                      _vm.selectAllMatchingChecked
-                                                  }
-                                                }),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "span",
-                                                  { staticClass: "ml-2" },
-                                                  [
-                                                    _vm._v(
-                                                      "\n                                                " +
-                                                        _vm._s(
-                                                          _vm.__(
-                                                            "Select All Matching"
-                                                          )
-                                                        ) +
-                                                        "\n                                                "
-                                                    ),
-                                                    _c("span", [
-                                                      _vm._v(
-                                                        "(" +
-                                                          _vm._s(
-                                                            _vm.allMatchingResourceCount
-                                                          ) +
-                                                          ")"
-                                                      )
-                                                    ])
-                                                  ]
-                                                )
-                                              ],
-                                              1
-                                            )
-                                          ]
+                                          ],
+                                          1
                                         )
-                                      ])
-                                    ])
-                                  ]
-                                )
-                              ],
-                              1
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "li",
+                                      { staticClass: "flex items-center" },
+                                      [
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass: "flex items-center",
+                                            on: {
+                                              input:
+                                                _vm.toggleSelectAllMatching,
+                                              keydown: function($event) {
+                                                if (
+                                                  !("button" in $event) &&
+                                                  _vm._k(
+                                                    $event.keyCode,
+                                                    "space",
+                                                    32,
+                                                    $event.key,
+                                                    " "
+                                                  ) &&
+                                                  _vm._k(
+                                                    $event.keyCode,
+                                                    "enter",
+                                                    13,
+                                                    $event.key,
+                                                    "Enter"
+                                                  )
+                                                ) {
+                                                  return null
+                                                }
+                                                $event.preventDefault()
+                                                return _vm.toggleSelectAllMatching(
+                                                  $event
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("checkbox", {
+                                              attrs: {
+                                                dusk:
+                                                  "select-all-matching-button",
+                                                checked:
+                                                  _vm.selectAllMatchingChecked
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c(
+                                              "span",
+                                              { staticClass: "ml-2" },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                " +
+                                                    _vm._s(
+                                                      _vm.__(
+                                                        "Select All Matching"
+                                                      )
+                                                    ) +
+                                                    "\n                                                "
+                                                ),
+                                                _c("span", [
+                                                  _vm._v(
+                                                    "(" +
+                                                      _vm._s(
+                                                        _vm.allMatchingResourceCount
+                                                      ) +
+                                                      ")"
+                                                  )
+                                                ])
+                                              ]
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                ])
+                              ]
                             )
                           ],
                           1
                         )
-                      : _vm._e()
-                  ]),
+                      ],
+                      1
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex items-center ml-auto px-3" },
+                [
+                  _vm.selectedResources.length > 0
+                    ? _c("action-selector", {
+                        attrs: {
+                          "resource-name": _vm.resourceName,
+                          actions: _vm.actions,
+                          "pivot-actions": _vm.pivotActions,
+                          "pivot-name": _vm.pivotName,
+                          "query-string": {
+                            currentSearch: _vm.currentSearch,
+                            encodedFilters: _vm.encodedFilters,
+                            currentTrashed: _vm.currentTrashed,
+                            viaResource: _vm.viaResource,
+                            viaResourceId: _vm.viaResourceId,
+                            viaRelationship: _vm.viaRelationship
+                          },
+                          "selected-resources":
+                            _vm.selectedResourcesForActionSelector
+                        },
+                        on: { actionExecuted: _vm.getResources }
+                      })
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "flex items-center ml-auto px-3" },
-                    [
-                      _vm.selectedResources.length > 0
-                        ? _c("action-selector", {
-                            attrs: {
-                              "resource-name": _vm.resourceName,
-                              actions: _vm.actions,
-                              "pivot-actions": _vm.pivotActions,
-                              "pivot-name": _vm.pivotName,
-                              "query-string": {
-                                currentSearch: _vm.currentSearch,
-                                encodedFilters: _vm.encodedFilters,
-                                currentTrashed: _vm.currentTrashed,
-                                viaResource: _vm.viaResource,
-                                viaResourceId: _vm.viaResourceId,
-                                viaRelationship: _vm.viaRelationship
-                              },
-                              "selected-resources":
-                                _vm.selectedResourcesForActionSelector
-                            },
-                            on: { actionExecuted: _vm.getResources }
-                          })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.lenses.length > 0
-                        ? _c(
-                            "dropdown",
+                  _vm.lenses.length > 0
+                    ? _c(
+                        "dropdown",
+                        {
+                          staticClass: "bg-30 hover:bg-40 mr-3 rounded",
+                          scopedSlots: _vm._u([
                             {
-                              staticClass: "bg-30 hover:bg-40 mr-3 rounded",
-                              scopedSlots: _vm._u([
-                                {
-                                  key: "default",
-                                  fn: function(ref) {
-                                    var toggle = ref.toggle
-                                    return _c(
-                                      "dropdown-trigger",
+                              key: "default",
+                              fn: function(ref) {
+                                var toggle = ref.toggle
+                                return _c(
+                                  "dropdown-trigger",
+                                  {
+                                    staticClass: "px-3",
+                                    attrs: { "handle-click": toggle }
+                                  },
+                                  [
+                                    _c(
+                                      "h3",
                                       {
-                                        staticClass: "px-3",
-                                        attrs: { "handle-click": toggle }
+                                        staticClass:
+                                          "flex items-center font-normal text-base text-90 h-9",
+                                        attrs: { slot: "default" },
+                                        slot: "default"
                                       },
                                       [
-                                        _c(
-                                          "h3",
-                                          {
-                                            staticClass:
-                                              "flex items-center font-normal text-base text-90 h-9",
-                                            attrs: { slot: "default" },
-                                            slot: "default"
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                            " +
-                                                _vm._s(_vm.__("Lens")) +
-                                                "\n                        "
-                                            )
-                                          ]
+                                        _vm._v(
+                                          "\n                            " +
+                                            _vm._s(_vm.__("Lens")) +
+                                            "\n                        "
                                         )
                                       ]
                                     )
-                                  }
-                                }
-                              ])
+                                  ]
+                                )
+                              }
+                            }
+                          ])
+                        },
+                        [
+                          _c(
+                            "dropdown-menu",
+                            {
+                              attrs: {
+                                slot: "menu",
+                                width: "240",
+                                direction: "rtl"
+                              },
+                              slot: "menu"
                             },
                             [
-                              _c(
-                                "dropdown-menu",
-                                {
-                                  attrs: {
-                                    slot: "menu",
-                                    width: "240",
-                                    direction: "rtl"
-                                  },
-                                  slot: "menu"
-                                },
-                                [
-                                  _c("lens-selector", {
-                                    attrs: {
-                                      "resource-name": _vm.resourceName,
-                                      lenses: _vm.lenses
-                                    }
-                                  })
-                                ],
-                                1
-                              )
+                              _c("lens-selector", {
+                                attrs: {
+                                  "resource-name": _vm.resourceName,
+                                  lenses: _vm.lenses
+                                }
+                              })
                             ],
                             1
                           )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("filter-menu", {
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("filter-menu", {
+                    attrs: {
+                      resourceName: _vm.resourceName,
+                      "soft-deletes": _vm.softDeletes,
+                      "via-resource": _vm.viaResource,
+                      "via-has-one": _vm.viaHasOne,
+                      trashed: _vm.trashed,
+                      "per-page": _vm.perPage
+                    },
+                    on: {
+                      "clear-selected-filters": _vm.clearSelectedFilters,
+                      "filter-changed": _vm.filterChanged,
+                      "trashed-changed": _vm.trashedChanged,
+                      "per-page-changed": _vm.updatePerPageChanged
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.shouldShowDeleteMenu
+                    ? _c("delete-menu", {
                         attrs: {
-                          resourceName: _vm.resourceName,
+                          dusk: "delete-menu",
                           "soft-deletes": _vm.softDeletes,
-                          "via-resource": _vm.viaResource,
-                          "via-has-one": _vm.viaHasOne,
-                          trashed: _vm.trashed,
-                          "per-page": _vm.perPage
+                          resources: _vm.resources,
+                          "selected-resources": _vm.selectedResources,
+                          "via-many-to-many": _vm.viaManyToMany,
+                          "all-matching-resource-count":
+                            _vm.allMatchingResourceCount,
+                          "all-matching-selected": _vm.selectAllMatchingChecked,
+                          "authorized-to-delete-selected-resources":
+                            _vm.authorizedToDeleteSelectedResources,
+                          "authorized-to-force-delete-selected-resources":
+                            _vm.authorizedToForceDeleteSelectedResources,
+                          "authorized-to-delete-any-resources":
+                            _vm.authorizedToDeleteAnyResources,
+                          "authorized-to-force-delete-any-resources":
+                            _vm.authorizedToForceDeleteAnyResources,
+                          "authorized-to-restore-selected-resources":
+                            _vm.authorizedToRestoreSelectedResources,
+                          "authorized-to-restore-any-resources":
+                            _vm.authorizedToRestoreAnyResources
                         },
                         on: {
-                          "clear-selected-filters": _vm.clearSelectedFilters,
-                          "filter-changed": _vm.filterChanged,
-                          "trashed-changed": _vm.trashedChanged,
-                          "per-page-changed": _vm.updatePerPageChanged
+                          deleteSelected: _vm.deleteSelectedResources,
+                          deleteAllMatching: _vm.deleteAllMatchingResources,
+                          forceDeleteSelected: _vm.forceDeleteSelectedResources,
+                          forceDeleteAllMatching:
+                            _vm.forceDeleteAllMatchingResources,
+                          restoreSelected: _vm.restoreSelectedResources,
+                          restoreAllMatching: _vm.restoreAllMatchingResources,
+                          close: function($event) {
+                            _vm.deleteModalOpen = false
+                          }
                         }
-                      }),
-                      _vm._v(" "),
-                      _vm.shouldShowDeleteMenu
-                        ? _c("delete-menu", {
-                            attrs: {
-                              dusk: "delete-menu",
-                              "soft-deletes": _vm.softDeletes,
-                              resources: _vm.resources,
-                              "selected-resources": _vm.selectedResources,
-                              "via-many-to-many": _vm.viaManyToMany,
-                              "all-matching-resource-count":
-                                _vm.allMatchingResourceCount,
-                              "all-matching-selected":
-                                _vm.selectAllMatchingChecked,
-                              "authorized-to-delete-selected-resources":
-                                _vm.authorizedToDeleteSelectedResources,
-                              "authorized-to-force-delete-selected-resources":
-                                _vm.authorizedToForceDeleteSelectedResources,
-                              "authorized-to-delete-any-resources":
-                                _vm.authorizedToDeleteAnyResources,
-                              "authorized-to-force-delete-any-resources":
-                                _vm.authorizedToForceDeleteAnyResources,
-                              "authorized-to-restore-selected-resources":
-                                _vm.authorizedToRestoreSelectedResources,
-                              "authorized-to-restore-any-resources":
-                                _vm.authorizedToRestoreAnyResources
-                            },
-                            on: {
-                              deleteSelected: _vm.deleteSelectedResources,
-                              deleteAllMatching: _vm.deleteAllMatchingResources,
-                              forceDeleteSelected:
-                                _vm.forceDeleteSelectedResources,
-                              forceDeleteAllMatching:
-                                _vm.forceDeleteAllMatchingResources,
-                              restoreSelected: _vm.restoreSelectedResources,
-                              restoreAllMatching:
-                                _vm.restoreAllMatchingResources,
-                              close: function($event) {
-                                _vm.deleteModalOpen = false
-                              }
-                            }
-                          })
-                        : _vm._e()
-                    ],
-                    1
-                  )
-                ]
+                      })
+                    : _vm._e()
+                ],
+                1
               )
-            : _vm._e(),
+            ]
+          ),
           _vm._v(" "),
           !_vm.resources.length
             ? _c(
@@ -39059,7 +39092,9 @@ var render = function() {
                               _vm._s(
                                 _vm.__(
                                   "No :resource matched the given criteria.",
-                                  { resource: _vm.singularName.toLowerCase() }
+                                  {
+                                    resource: _vm.singularName.toLowerCase()
+                                  }
                                 )
                               ) +
                               "\n                "
@@ -39137,9 +39172,9 @@ var render = function() {
                   _vm.resourceCountLabel
                     ? _c("span", { staticClass: "text-sm text-80" }, [
                         _vm._v(
-                          "\n                    " +
+                          "\n                " +
                             _vm._s(_vm.resourceCountLabel) +
-                            "\n                "
+                            "\n            "
                         )
                       ])
                     : _vm._e()
@@ -40930,66 +40965,116 @@ var render = function() {
       _vm._v(" "),
       _c(
         "loading-card",
-        {
-          class: { "overflow-hidden border border-50": !_vm.shouldShowToolbar },
-          attrs: { loading: _vm.loading }
-        },
+        { attrs: { loading: _vm.loading } },
         [
-          _vm.shouldShowToolbar
-            ? _c(
-                "div",
-                { staticClass: "py-3 flex items-center border-b border-50" },
-                [
-                  _vm.shouldShowCheckBoxes
-                    ? _c(
-                        "div",
-                        { staticClass: "px-3" },
+          _c(
+            "div",
+            { staticClass: "py-3 flex items-center border-b border-50" },
+            [
+              _vm.shouldShowCheckBoxes
+                ? _c(
+                    "div",
+                    { staticClass: "px-3" },
+                    [
+                      _c(
+                        "dropdown",
+                        {
+                          staticClass: "h-9 flex items-center",
+                          attrs: {
+                            width: "250",
+                            "active-class": "",
+                            dusk: "select-all-dropdown"
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "default",
+                              fn: function(ref) {
+                                var toggle = ref.toggle
+                                return _c(
+                                  "dropdown-trigger",
+                                  { attrs: { "handle-click": toggle } },
+                                  [
+                                    _c("fake-checkbox", {
+                                      attrs: { checked: _vm.selectAllChecked }
+                                    })
+                                  ],
+                                  1
+                                )
+                              }
+                            }
+                          ])
+                        },
                         [
                           _c(
-                            "dropdown",
+                            "dropdown-menu",
                             {
-                              staticClass: "h-9 flex items-center",
                               attrs: {
-                                width: "250",
-                                "active-class": "",
-                                dusk: "select-all-dropdown"
+                                slot: "menu",
+                                direction: "ltr",
+                                width: "250"
                               },
-                              scopedSlots: _vm._u([
-                                {
-                                  key: "default",
-                                  fn: function(ref) {
-                                    var toggle = ref.toggle
-                                    return _c(
-                                      "dropdown-trigger",
-                                      { attrs: { "handle-click": toggle } },
-                                      [
-                                        _c("fake-checkbox", {
-                                          attrs: {
-                                            checked: _vm.selectAllChecked
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  }
-                                }
-                              ])
+                              slot: "menu"
                             },
                             [
-                              _c(
-                                "dropdown-menu",
-                                {
-                                  attrs: {
-                                    slot: "menu",
-                                    direction: "ltr",
-                                    width: "250"
-                                  },
-                                  slot: "menu"
-                                },
-                                [
-                                  _c("div", { staticClass: "p-4" }, [
-                                    _c("ul", { staticClass: "list-reset" }, [
+                              _c("div", { staticClass: "p-4" }, [
+                                _c("ul", { staticClass: "list-reset" }, [
+                                  _c(
+                                    "li",
+                                    { staticClass: "flex items-center" },
+                                    [
                                       _c(
+                                        "label",
+                                        {
+                                          staticClass: "flex items-center",
+                                          on: {
+                                            input: _vm.toggleSelectAll,
+                                            keydown: function($event) {
+                                              if (
+                                                !("button" in $event) &&
+                                                _vm._k(
+                                                  $event.keyCode,
+                                                  "space",
+                                                  32,
+                                                  $event.key,
+                                                  " "
+                                                ) &&
+                                                _vm._k(
+                                                  $event.keyCode,
+                                                  "enter",
+                                                  13,
+                                                  $event.key,
+                                                  "Enter"
+                                                )
+                                              ) {
+                                                return null
+                                              }
+                                              $event.preventDefault()
+                                              return _vm.toggleSelectAll($event)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("checkbox", {
+                                            attrs: {
+                                              checked: _vm.selectAllChecked
+                                            }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("span", { staticClass: "ml-2" }, [
+                                            _vm._v(
+                                              " " +
+                                                _vm._s(_vm.__("Select All")) +
+                                                " "
+                                            )
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm.allMatchingResourceCount > 0
+                                    ? _c(
                                         "li",
                                         { staticClass: "flex items-center" },
                                         [
@@ -40998,7 +41083,8 @@ var render = function() {
                                             {
                                               staticClass: "flex items-center",
                                               on: {
-                                                input: _vm.toggleSelectAll,
+                                                input:
+                                                  _vm.toggleSelectAllMatching,
                                                 keydown: function($event) {
                                                   if (
                                                     !("button" in $event) &&
@@ -41020,7 +41106,7 @@ var render = function() {
                                                     return null
                                                   }
                                                   $event.preventDefault()
-                                                  return _vm.toggleSelectAll(
+                                                  return _vm.toggleSelectAllMatching(
                                                     $event
                                                   )
                                                 }
@@ -41029,7 +41115,10 @@ var render = function() {
                                             [
                                               _c("checkbox", {
                                                 attrs: {
-                                                  checked: _vm.selectAllChecked
+                                                  dusk:
+                                                    "select-all-matching-button",
+                                                  checked:
+                                                    _vm.selectAllMatchingChecked
                                                 }
                                               }),
                                               _vm._v(" "),
@@ -41040,203 +41129,130 @@ var render = function() {
                                                   _vm._v(
                                                     "\n                                            " +
                                                       _vm._s(
-                                                        _vm.__("Select All")
+                                                        _vm.__(
+                                                          "Select All Matching"
+                                                        )
                                                       ) +
-                                                      "\n                                        "
-                                                  )
+                                                      "\n                                            "
+                                                  ),
+                                                  _c("span", [
+                                                    _vm._v(
+                                                      "(" +
+                                                        _vm._s(
+                                                          _vm.allMatchingResourceCount
+                                                        ) +
+                                                        ")"
+                                                    )
+                                                  ])
                                                 ]
                                               )
                                             ],
                                             1
                                           )
                                         ]
-                                      ),
-                                      _vm._v(" "),
-                                      _vm.allMatchingResourceCount > 0
-                                        ? _c(
-                                            "li",
-                                            {
-                                              staticClass: "flex items-center"
-                                            },
-                                            [
-                                              _c(
-                                                "label",
-                                                {
-                                                  staticClass:
-                                                    "flex items-center",
-                                                  on: {
-                                                    input:
-                                                      _vm.toggleSelectAllMatching,
-                                                    keydown: function($event) {
-                                                      if (
-                                                        !("button" in $event) &&
-                                                        _vm._k(
-                                                          $event.keyCode,
-                                                          "space",
-                                                          32,
-                                                          $event.key,
-                                                          " "
-                                                        ) &&
-                                                        _vm._k(
-                                                          $event.keyCode,
-                                                          "enter",
-                                                          13,
-                                                          $event.key,
-                                                          "Enter"
-                                                        )
-                                                      ) {
-                                                        return null
-                                                      }
-                                                      $event.preventDefault()
-                                                      return _vm.toggleSelectAllMatching(
-                                                        $event
-                                                      )
-                                                    }
-                                                  }
-                                                },
-                                                [
-                                                  _c("checkbox", {
-                                                    attrs: {
-                                                      dusk:
-                                                        "select-all-matching-button",
-                                                      checked:
-                                                        _vm.selectAllMatchingChecked
-                                                    }
-                                                  }),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "span",
-                                                    { staticClass: "ml-2" },
-                                                    [
-                                                      _vm._v(
-                                                        "\n                                            " +
-                                                          _vm._s(
-                                                            _vm.__(
-                                                              "Select All Matching"
-                                                            )
-                                                          ) +
-                                                          "\n                                            "
-                                                      ),
-                                                      _c("span", [
-                                                        _vm._v(
-                                                          "(" +
-                                                            _vm._s(
-                                                              _vm.allMatchingResourceCount
-                                                            ) +
-                                                            ")"
-                                                        )
-                                                      ])
-                                                    ]
-                                                  )
-                                                ],
-                                                1
-                                              )
-                                            ]
-                                          )
-                                        : _vm._e()
-                                    ])
-                                  ])
-                                ]
-                              )
-                            ],
-                            1
+                                      )
+                                    : _vm._e()
+                                ])
+                              ])
+                            ]
                           )
                         ],
                         1
                       )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "flex items-center ml-auto px-3" },
-                    [
-                      _vm.selectedResources.length > 0
-                        ? _c("action-selector", {
-                            attrs: {
-                              "resource-name": _vm.resourceName,
-                              actions: _vm.actions,
-                              "pivot-actions": _vm.pivotActions,
-                              "pivot-name": _vm.pivotName,
-                              "selected-resources":
-                                _vm.selectedResourcesForActionSelector,
-                              endpoint: _vm.lensActionEndpoint,
-                              "query-string": {
-                                currentSearch: _vm.currentSearch,
-                                encodedFilters: _vm.encodedFilters,
-                                currentTrashed: _vm.currentTrashed,
-                                viaResource: _vm.viaResource,
-                                viaResourceId: _vm.viaResourceId,
-                                viaRelationship: _vm.viaRelationship
-                              }
-                            },
-                            on: { actionExecuted: _vm.getResources }
-                          })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("filter-menu", {
-                        attrs: {
-                          resourceName: _vm.resourceName,
-                          "soft-deletes": _vm.softDeletes,
-                          "via-resource": _vm.viaResource,
-                          "via-has-one": _vm.viaHasOne,
-                          trashed: _vm.trashed,
-                          "per-page": _vm.perPage
-                        },
-                        on: {
-                          "clear-selected-filters": _vm.clearSelectedFilters,
-                          "filter-changed": _vm.filterChanged,
-                          "trashed-changed": _vm.trashedChanged,
-                          "per-page-changed": _vm.updatePerPageChanged
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.shouldShowDeleteMenu
-                        ? _c("delete-menu", {
-                            attrs: {
-                              dusk: "delete-menu",
-                              "soft-deletes": _vm.softDeletes,
-                              resources: _vm.resources,
-                              "selected-resources": _vm.selectedResources,
-                              "via-many-to-many": _vm.viaManyToMany,
-                              "all-matching-resource-count":
-                                _vm.allMatchingResourceCount,
-                              "all-matching-selected":
-                                _vm.selectAllMatchingChecked,
-                              "authorized-to-delete-selected-resources":
-                                _vm.authorizedToDeleteSelectedResources,
-                              "authorized-to-force-delete-selected-resources":
-                                _vm.authorizedToForceDeleteSelectedResources,
-                              "authorized-to-delete-any-resources":
-                                _vm.authorizedToDeleteAnyResources,
-                              "authorized-to-force-delete-any-resources":
-                                _vm.authorizedToForceDeleteAnyResources,
-                              "authorized-to-restore-selected-resources":
-                                _vm.authorizedToRestoreSelectedResources,
-                              "authorized-to-restore-any-resources":
-                                _vm.authorizedToRestoreAnyResources
-                            },
-                            on: {
-                              deleteSelected: _vm.deleteSelectedResources,
-                              deleteAllMatching: _vm.deleteAllMatchingResources,
-                              forceDeleteSelected:
-                                _vm.forceDeleteSelectedResources,
-                              forceDeleteAllMatching:
-                                _vm.forceDeleteAllMatchingResources,
-                              restoreSelected: _vm.restoreSelectedResources,
-                              restoreAllMatching:
-                                _vm.restoreAllMatchingResources,
-                              close: function($event) {
-                                _vm.deleteModalOpen = false
-                              }
-                            }
-                          })
-                        : _vm._e()
                     ],
                     1
                   )
-                ]
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex items-center ml-auto px-3" },
+                [
+                  _vm.selectedResources.length > 0
+                    ? _c("action-selector", {
+                        attrs: {
+                          "resource-name": _vm.resourceName,
+                          actions: _vm.actions,
+                          "pivot-actions": _vm.pivotActions,
+                          "pivot-name": _vm.pivotName,
+                          "selected-resources":
+                            _vm.selectedResourcesForActionSelector,
+                          endpoint: _vm.lensActionEndpoint,
+                          "query-string": {
+                            currentSearch: _vm.currentSearch,
+                            encodedFilters: _vm.encodedFilters,
+                            currentTrashed: _vm.currentTrashed,
+                            viaResource: _vm.viaResource,
+                            viaResourceId: _vm.viaResourceId,
+                            viaRelationship: _vm.viaRelationship
+                          }
+                        },
+                        on: { actionExecuted: _vm.getResources }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("filter-menu", {
+                    attrs: {
+                      resourceName: _vm.resourceName,
+                      "soft-deletes": _vm.softDeletes,
+                      "via-resource": _vm.viaResource,
+                      "via-has-one": _vm.viaHasOne,
+                      trashed: _vm.trashed,
+                      "per-page": _vm.perPage
+                    },
+                    on: {
+                      "clear-selected-filters": function($event) {
+                        _vm.clearSelectedFilters(_vm.lens)
+                      },
+                      "filter-changed": _vm.filterChanged,
+                      "trashed-changed": _vm.trashedChanged,
+                      "per-page-changed": _vm.updatePerPageChanged
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.shouldShowDeleteMenu
+                    ? _c("delete-menu", {
+                        attrs: {
+                          dusk: "delete-menu",
+                          "soft-deletes": _vm.softDeletes,
+                          resources: _vm.resources,
+                          "selected-resources": _vm.selectedResources,
+                          "via-many-to-many": _vm.viaManyToMany,
+                          "all-matching-resource-count":
+                            _vm.allMatchingResourceCount,
+                          "all-matching-selected": _vm.selectAllMatchingChecked,
+                          "authorized-to-delete-selected-resources":
+                            _vm.authorizedToDeleteSelectedResources,
+                          "authorized-to-force-delete-selected-resources":
+                            _vm.authorizedToForceDeleteSelectedResources,
+                          "authorized-to-delete-any-resources":
+                            _vm.authorizedToDeleteAnyResources,
+                          "authorized-to-force-delete-any-resources":
+                            _vm.authorizedToForceDeleteAnyResources,
+                          "authorized-to-restore-selected-resources":
+                            _vm.authorizedToRestoreSelectedResources,
+                          "authorized-to-restore-any-resources":
+                            _vm.authorizedToRestoreAnyResources
+                        },
+                        on: {
+                          deleteSelected: _vm.deleteSelectedResources,
+                          deleteAllMatching: _vm.deleteAllMatchingResources,
+                          forceDeleteSelected: _vm.forceDeleteSelectedResources,
+                          forceDeleteAllMatching:
+                            _vm.forceDeleteAllMatchingResources,
+                          restoreSelected: _vm.restoreSelectedResources,
+                          restoreAllMatching: _vm.restoreAllMatchingResources,
+                          close: function($event) {
+                            _vm.deleteModalOpen = false
+                          }
+                        }
+                      })
+                    : _vm._e()
+                ],
+                1
               )
-            : _vm._e(),
+            ]
+          ),
           _vm._v(" "),
           !_vm.resources.length
             ? _c(
@@ -56968,25 +56984,45 @@ var state = {
      * Fetch the current filters for the given resource name.
      */
     fetchFilters: function () {
-        var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(_ref, resourceName) {
+        var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(_ref, options) {
             var commit = _ref.commit;
 
-            var _ref3, data;
+            var resourceName, _options$lens, lens, _ref3, data;
 
             return _regenerator2.default.wrap(function _callee$(_context) {
                 while (1) {
                     switch (_context.prev = _context.next) {
                         case 0:
-                            _context.next = 2;
+                            resourceName = options.resourceName, _options$lens = options.lens, lens = _options$lens === undefined ? false : _options$lens;
+
+                            if (!lens) {
+                                _context.next = 7;
+                                break;
+                            }
+
+                            _context.next = 4;
+                            return Nova.request().get('/nova-api/' + resourceName + '/lens/' + lens + '/filters');
+
+                        case 4:
+                            _context.t0 = _context.sent;
+                            _context.next = 10;
+                            break;
+
+                        case 7:
+                            _context.next = 9;
                             return Nova.request().get('/nova-api/' + resourceName + '/filters');
 
-                        case 2:
-                            _ref3 = _context.sent;
+                        case 9:
+                            _context.t0 = _context.sent;
+
+                        case 10:
+                            _ref3 = _context.t0;
                             data = _ref3.data;
+
 
                             commit('storeFilters', data);
 
-                        case 5:
+                        case 13:
                         case 'end':
                             return _context.stop();
                     }
@@ -57003,30 +57039,57 @@ var state = {
 
 
     /**
-     * Fetch the current filters for the given lens resource name.
+     * Reset the default filter state to the original filter settings.
      */
-    fetchLensFilters: function () {
-        var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(_ref4, _ref5) {
-            var commit = _ref4.commit;
-            var resourceName = _ref5.resourceName,
-                lens = _ref5.lens;
+    resetFilterState: function () {
+        var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(_ref4, options) {
+            var commit = _ref4.commit,
+                state = _ref4.state,
+                getters = _ref4.getters;
 
-            var _ref7, data;
+            var resourceName, _options$lens2, lens, _ref6, data;
 
             return _regenerator2.default.wrap(function _callee2$(_context2) {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
                         case 0:
-                            _context2.next = 2;
+                            resourceName = options.resourceName, _options$lens2 = options.lens, lens = _options$lens2 === undefined ? false : _options$lens2;
+
+                            if (!lens) {
+                                _context2.next = 7;
+                                break;
+                            }
+
+                            _context2.next = 4;
                             return Nova.request().get('/nova-api/' + resourceName + '/lens/' + lens + '/filters');
 
-                        case 2:
-                            _ref7 = _context2.sent;
-                            data = _ref7.data;
+                        case 4:
+                            _context2.t0 = _context2.sent;
+                            _context2.next = 10;
+                            break;
 
-                            commit('storeFilters', data);
+                        case 7:
+                            _context2.next = 9;
+                            return Nova.request().get('/nova-api/' + resourceName + '/filters');
 
-                        case 5:
+                        case 9:
+                            _context2.t0 = _context2.sent;
+
+                        case 10:
+                            _ref6 = _context2.t0;
+                            data = _ref6.data;
+
+
+                            if (data) {
+                                _lodash2.default.each(data, function (filter) {
+                                    return commit('updateFilterState', {
+                                        filterClass: filter.class,
+                                        value: filter.currentValue
+                                    });
+                                });
+                            }
+
+                        case 13:
                         case 'end':
                             return _context2.stop();
                     }
@@ -57034,51 +57097,8 @@ var state = {
             }, _callee2, this);
         }));
 
-        function fetchLensFilters(_x3, _x4) {
-            return _ref6.apply(this, arguments);
-        }
-
-        return fetchLensFilters;
-    }(),
-
-
-    /**
-     * Reset the default filter state to the original filter settings.
-     */
-    resetFilterState: function () {
-        var _ref9 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(_ref8, resourceName) {
-            var commit = _ref8.commit,
-                state = _ref8.state,
-                getters = _ref8.getters;
-
-            var _ref10, data;
-
-            return _regenerator2.default.wrap(function _callee3$(_context3) {
-                while (1) {
-                    switch (_context3.prev = _context3.next) {
-                        case 0:
-                            _context3.next = 2;
-                            return Nova.request().get('/nova-api/' + resourceName + '/filters');
-
-                        case 2:
-                            _ref10 = _context3.sent;
-                            data = _ref10.data;
-
-
-                            _lodash2.default.each(data, function (filter) {
-                                return commit('updateFilterState', { filterClass: filter.class, value: filter.currentValue });
-                            });
-
-                        case 5:
-                        case 'end':
-                            return _context3.stop();
-                    }
-                }
-            }, _callee3, this);
-        }));
-
-        function resetFilterState(_x5, _x6) {
-            return _ref9.apply(this, arguments);
+        function resetFilterState(_x3, _x4) {
+            return _ref5.apply(this, arguments);
         }
 
         return resetFilterState;
@@ -57089,13 +57109,13 @@ var state = {
      * Initialize the current filter values from the decoded query string.
      */
     initializeCurrentFilterValuesFromQueryString: function () {
-        var _ref12 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(_ref11, encodedFilters) {
-            var commit = _ref11.commit,
-                getters = _ref11.getters;
+        var _ref8 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(_ref7, encodedFilters) {
+            var commit = _ref7.commit,
+                getters = _ref7.getters;
             var initialFilters;
-            return _regenerator2.default.wrap(function _callee4$(_context4) {
+            return _regenerator2.default.wrap(function _callee3$(_context3) {
                 while (1) {
-                    switch (_context4.prev = _context4.next) {
+                    switch (_context3.prev = _context3.next) {
                         case 0:
                             if (encodedFilters) {
                                 initialFilters = JSON.parse(atob(encodedFilters));
@@ -57108,14 +57128,14 @@ var state = {
 
                         case 1:
                         case 'end':
-                            return _context4.stop();
+                            return _context3.stop();
                     }
                 }
-            }, _callee4, this);
+            }, _callee3, this);
         }));
 
-        function initializeCurrentFilterValuesFromQueryString(_x7, _x8) {
-            return _ref12.apply(this, arguments);
+        function initializeCurrentFilterValuesFromQueryString(_x5, _x6) {
+            return _ref8.apply(this, arguments);
         }
 
         return initializeCurrentFilterValuesFromQueryString;
@@ -57126,9 +57146,9 @@ var state = {
  * Mutations
  */
 var mutations = {
-    updateFilterState: function updateFilterState(state, _ref13) {
-        var filterClass = _ref13.filterClass,
-            value = _ref13.value;
+    updateFilterState: function updateFilterState(state, _ref9) {
+        var filterClass = _ref9.filterClass,
+            value = _ref9.value;
 
         var filter = (0, _lodash2.default)(state.filters).find(function (f) {
             return f.class == filterClass;

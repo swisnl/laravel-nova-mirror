@@ -3134,21 +3134,34 @@ function _interopRequireDefault2(obj) { return obj && obj.__esModule ? obj : { d
            * Clear filters and reset the resource table
            */
           clearSelectedFilters: function () {
-            var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+            var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(lens) {
               var _updateQueryString;
 
               return _regenerator2.default.wrap(function _callee$(_context) {
                 while (1) {
                   switch (_context.prev = _context.next) {
                     case 0:
-                      _context.next = 2;
-                      return this.$store.dispatch('resetFilterState', this.resourceName);
+                      if (!lens) {
+                        _context.next = 5;
+                        break;
+                      }
 
-                    case 2:
+                      _context.next = 3;
+                      return this.$store.dispatch('resetFilterState', { resourceName: this.resourceName, lens: lens });
+
+                    case 3:
+                      _context.next = 7;
+                      break;
+
+                    case 5:
+                      _context.next = 7;
+                      return this.$store.dispatch('resetFilterState', { resourceName: this.resourceName });
+
+                    case 7:
 
                       this.updateQueryString((_updateQueryString = {}, (0, _defineProperty3.default)(_updateQueryString, this.pageParameter, 1), (0, _defineProperty3.default)(_updateQueryString, this.filterParameter, ''), _updateQueryString));
 
-                    case 3:
+                    case 8:
                     case 'end':
                       return _context.stop();
                   }
@@ -3156,7 +3169,7 @@ function _interopRequireDefault2(obj) { return obj && obj.__esModule ? obj : { d
               }, _callee, this);
             }));
 
-            function clearSelectedFilters() {
+            function clearSelectedFilters(_x) {
               return _ref.apply(this, arguments);
             }
 
@@ -3176,16 +3189,16 @@ function _interopRequireDefault2(obj) { return obj && obj.__esModule ? obj : { d
            * Set up filters for the current view
            */
           initializeFilters: function () {
-            var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
+            var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(lens) {
               return _regenerator2.default.wrap(function _callee2$(_context2) {
                 while (1) {
                   switch (_context2.prev = _context2.next) {
                     case 0:
                       _context2.next = 2;
-                      return this.$store.dispatch('fetchFilters', this.resourceName);
+                      return this.$store.dispatch('fetchFilters', { resourceName: this.resourceName, lens: lens });
 
                     case 2:
-                      this.initializeState();
+                      this.initializeState(lens);
 
                     case 3:
                     case 'end':
@@ -3195,7 +3208,7 @@ function _interopRequireDefault2(obj) { return obj && obj.__esModule ? obj : { d
               }, _callee2, this);
             }));
 
-            function initializeFilters() {
+            function initializeFilters(_x2) {
               return _ref2.apply(this, arguments);
             }
 
@@ -3203,21 +3216,31 @@ function _interopRequireDefault2(obj) { return obj && obj.__esModule ? obj : { d
           }(),
 
           /**
-           * Set up filters for the current lens view
+           * Initialize the filter state
            */
-          initializeLensFilters: function () {
+          initializeState: function () {
             var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(lens) {
               return _regenerator2.default.wrap(function _callee3$(_context3) {
                 while (1) {
                   switch (_context3.prev = _context3.next) {
                     case 0:
-                      _context3.next = 2;
-                      return this.$store.dispatch('fetchLensFilters', { resourceName: this.resourceName, lens: lens });
+                      if (!this.initialEncodedFilters) {
+                        _context3.next = 5;
+                        break;
+                      }
 
-                    case 2:
-                      this.initializeState();
+                      _context3.next = 3;
+                      return this.$store.dispatch('initializeCurrentFilterValuesFromQueryString', this.initialEncodedFilters);
 
                     case 3:
+                      _context3.next = 7;
+                      break;
+
+                    case 5:
+                      _context3.next = 7;
+                      return this.$store.dispatch('resetFilterState', { resourceName: this.resourceName, lens: lens });
+
+                    case 7:
                     case 'end':
                       return _context3.stop();
                   }
@@ -3225,48 +3248,8 @@ function _interopRequireDefault2(obj) { return obj && obj.__esModule ? obj : { d
               }, _callee3, this);
             }));
 
-            function initializeLensFilters(_x) {
+            function initializeState(_x3) {
               return _ref3.apply(this, arguments);
-            }
-
-            return initializeLensFilters;
-          }(),
-
-          /**
-           * Initialize the filter state
-           */
-          initializeState: function () {
-            var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4() {
-              return _regenerator2.default.wrap(function _callee4$(_context4) {
-                while (1) {
-                  switch (_context4.prev = _context4.next) {
-                    case 0:
-                      if (!this.initialEncodedFilters) {
-                        _context4.next = 5;
-                        break;
-                      }
-
-                      _context4.next = 3;
-                      return this.$store.dispatch('initializeCurrentFilterValuesFromQueryString', this.initialEncodedFilters);
-
-                    case 3:
-                      _context4.next = 7;
-                      break;
-
-                    case 5:
-                      _context4.next = 7;
-                      return this.$store.dispatch('resetFilterState', this.resourceName);
-
-                    case 7:
-                    case 'end':
-                      return _context4.stop();
-                  }
-                }
-              }, _callee4, this);
-            }));
-
-            function initializeState() {
-              return _ref4.apply(this, arguments);
             }
 
             return initializeState;

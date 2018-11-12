@@ -67,30 +67,34 @@ const actions = {
     /**
      * Fetch the current filters for the given resource name.
      */
-    async fetchFilters({ commit }, resourceName) {
-        const { data } = await Nova.request().get('/nova-api/' + resourceName + '/filters')
-        commit('storeFilters', data)
-    },
+    async fetchFilters({ commit }, options) {
+        let { resourceName, lens = false } = options
 
-    /**
-     * Fetch the current filters for the given lens resource name.
-     */
-    async fetchLensFilters({ commit }, { resourceName, lens }) {
-        const { data } = await Nova.request().get(
-            '/nova-api/' + resourceName + '/lens/' + lens + '/filters'
-        )
+        const { data } = lens
+            ? await Nova.request().get('/nova-api/' + resourceName + '/lens/' + lens + '/filters')
+            : await Nova.request().get('/nova-api/' + resourceName + '/filters')
+
         commit('storeFilters', data)
     },
 
     /**
      * Reset the default filter state to the original filter settings.
      */
-    async resetFilterState({ commit, state, getters }, resourceName) {
-        const { data } = await Nova.request().get('/nova-api/' + resourceName + '/filters')
+    async resetFilterState({ commit, state, getters }, options) {
+        let { resourceName, lens = false } = options
 
-        _.each(data, filter =>
-            commit('updateFilterState', { filterClass: filter.class, value: filter.currentValue })
-        )
+        const { data } = lens
+            ? await Nova.request().get('/nova-api/' + resourceName + '/lens/' + lens + '/filters')
+            : await Nova.request().get('/nova-api/' + resourceName + '/filters')
+
+        if (data) {
+            _.each(data, filter =>
+                commit('updateFilterState', {
+                    filterClass: filter.class,
+                    value: filter.currentValue,
+                })
+            )
+        }
     },
 
     /**
