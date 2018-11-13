@@ -86,6 +86,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
 
 exports.default = {
     mixins: [_laravelNova.InteractsWithResourceInformation],
@@ -3498,6 +3502,7 @@ exports.default = {
         }
     }
 }; //
+//
 //
 //
 //
@@ -9825,6 +9830,10 @@ exports.default = {
                                 return this.getResource();
 
                             case 2:
+                                _context2.next = 4;
+                                return this.getActions();
+
+                            case 4:
                             case 'end':
                                 return _context2.stop();
                         }
@@ -10097,6 +10106,10 @@ exports.default = {
         }
     }
 }; //
+//
+//
+//
+//
 //
 //
 //
@@ -35552,7 +35565,7 @@ var render = function() {
             "form-label",
             {
               class: { "mb-2": _vm.field.helpText && _vm.showHelpText },
-              attrs: { for: _vm.field.name }
+              attrs: { for: _vm.field.attribute }
             },
             [
               _vm._v(
@@ -35579,9 +35592,7 @@ var render = function() {
         _vm._v(" "),
         _vm.showHelpText
           ? _c("help-text", { staticClass: "help-text mt-2" }, [
-              _vm._v(
-                "\n            " + _vm._s(_vm.field.helpText) + "\n        "
-              )
+              _vm._v(" " + _vm._s(_vm.field.helpText) + " ")
             ])
           : _vm._e()
       ],
