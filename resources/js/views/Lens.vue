@@ -37,38 +37,30 @@
                             <div class="p-4">
                                 <ul class="list-reset">
                                     <li class="flex items-center">
-                                        <label
-                                            class="flex items-center"
-                                            @change.prevent="toggleSelectAll"
+                                        <checkbox-with-label
+                                            :checked="selectAllChecked"
+                                            @change="toggleSelectAll"
                                         >
-                                            <checkbox
-                                                :checked="selectAllChecked"
-                                                @input="$emit('change')"
-                                            />
-
-                                            <span class="ml-2"> {{ __('Select All') }} </span>
-                                        </label>
+                                            {{ __('Select All') }}
+                                        </checkbox-with-label>
                                     </li>
 
                                     <li
                                         class="flex items-center"
                                         v-if="allMatchingResourceCount > 0"
                                     >
-                                        <label
-                                            class="flex items-center"
-                                            @change.prevent="toggleSelectAllMatching"
+                                        <checkbox-with-label
+                                            dusk="select-all-matching-button"
+                                            :checked="selectAllMatchingChecked"
+                                            @change="toggleSelectAllMatching"
                                         >
-                                            <checkbox
-                                                dusk="select-all-matching-button"
-                                                :checked="selectAllMatchingChecked"
-                                                @input="$emit('change')"
-                                            />
-
-                                            <span class="ml-2">
-                                                {{ __('Select All Matching') }}
+                                            <template>
+                                                <span class="mr-1">{{
+                                                    __('Select All Matching')
+                                                }}</span>
                                                 <span>({{ allMatchingResourceCount }})</span>
-                                            </span>
-                                        </label>
+                                            </template>
+                                        </checkbox-with-label>
                                     </li>
                                 </ul>
                             </div>

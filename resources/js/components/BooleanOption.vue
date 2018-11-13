@@ -1,11 +1,13 @@
 <template>
-    <label class="flex items-center m-2">
-        <div class="flex-no-shrink">
-            <Checkbox :checked="isChecked" @input="updateCheckedState(option.value, $event)" />
-        </div>
-
-        <div class="ml-2">{{ option.name }}</div>
-    </label>
+    <div>
+        <checkbox-with-label
+            class="m-2"
+            :checked="isChecked"
+            @change="updateCheckedState(option.value, $event)"
+        >
+            {{ option.name }}
+        </checkbox-with-label>
+    </div>
 </template>
 
 <script>
@@ -20,9 +22,9 @@ export default {
     },
 
     methods: {
-        updateCheckedState(optionKey, value) {
+        updateCheckedState(optionKey, event) {
             let oldValue = this.filter.currentValue
-            let newValue = { ...oldValue, [optionKey]: value }
+            let newValue = { ...oldValue, [optionKey]: event.target.checked }
 
             this.$store.commit('updateFilterState', {
                 filterClass: this.filter.class,

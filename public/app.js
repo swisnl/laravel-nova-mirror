@@ -381,9 +381,9 @@ exports.default = {
     },
 
     methods: {
-        updateCheckedState: function updateCheckedState(optionKey, value) {
+        updateCheckedState: function updateCheckedState(optionKey, event) {
             var oldValue = this.filter.currentValue;
-            var newValue = (0, _extends4.default)({}, oldValue, (0, _defineProperty3.default)({}, optionKey, value));
+            var newValue = (0, _extends4.default)({}, oldValue, (0, _defineProperty3.default)({}, optionKey, event.target.checked));
 
             this.$store.commit('updateFilterState', {
                 filterClass: this.filter.class,
@@ -400,6 +400,8 @@ exports.default = {
         }
     }
 }; //
+//
+//
 //
 //
 //
@@ -702,6 +704,46 @@ exports.default = {
         },
         cards: function cards() {
             return link('customization/cards.html');
+        }
+    }
+};
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],[\"env\"]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-runtime\",\"transform-vue-jsx\",\"syntax-jsx\",\"transform-object-rest-spread\"],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/CheckboxWithLabel.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+    props: {
+        checked: Boolean,
+        disabled: {
+            type: Boolean,
+            default: false
         }
     }
 };
@@ -2847,16 +2889,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 exports.default = {
     mixins: [_laravelNova.TogglesTrashed, _laravelNova.PerformsSearches, _laravelNova.HandlesValidationErrors],
@@ -4360,6 +4392,10 @@ exports.default = {
         }
     }
 }; //
+//
+//
+//
+//
 //
 //
 //
@@ -9218,6 +9254,23 @@ exports.default = {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 
@@ -10506,17 +10559,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 exports.default = {
     mixins: [_laravelNova.Deletable, _laravelNova.Filterable, _laravelNova.HasCards, _laravelNova.Paginatable, _laravelNova.PerPageable, _laravelNova.InteractsWithResourceInformation, _laravelNova.InteractsWithQueryString],
@@ -10684,7 +10726,6 @@ exports.default = {
          * Toggle the selection of all resources
          */
         toggleSelectAll: function toggleSelectAll(event) {
-            console.log('hello', event);
             if (this.selectAllChecked) return this.clearResourceSelections();
             this.selectAllResources();
         },
@@ -11293,14 +11334,6 @@ var _laravelNova = __webpack_require__("../nova-js/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -30423,6 +30456,21 @@ exports.push([module.i, "\n.ico-button {\n    width: 35px;\n    height: 35px;\n}
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2b1228f0\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/components/CheckboxWithLabel.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\ninput[type='checkbox'] {\n    position: absolute;\n    left: 0;\n    opacity: 0;\n    outline: none;\n    z-index: -1;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-412102b4\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/components/DateTimePicker.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -37157,6 +37205,69 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2b1228f0\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/CheckboxWithLabel.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "label",
+    {
+      ref: "label",
+      staticClass: "flex items-center select-none",
+      on: {
+        keydown: function($event) {
+          if (
+            !("button" in $event) &&
+            _vm._k($event.keyCode, "enter", 13, $event.key, "Enter") &&
+            _vm._k($event.keyCode, "space", 32, $event.key, " ")
+          ) {
+            return null
+          }
+          $event.preventDefault()
+          _vm.$refs.label.click()
+        }
+      }
+    },
+    [
+      _c("fake-checkbox", {
+        staticClass: "mr-2",
+        attrs: { checked: _vm.checked }
+      }),
+      _vm._v(" "),
+      _c("input", {
+        attrs: {
+          type: "checkbox",
+          disabled: _vm.disabled,
+          tabindex: _vm.disabled ? false : 0,
+          "aria-checked": _vm.checked
+        },
+        on: {
+          change: function($event) {
+            _vm.$emit("change", $event)
+          }
+        }
+      }),
+      _vm._v(" "),
+      _vm._t("default")
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2b1228f0", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2b262e5f\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/Modals/RestoreResourceModal.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -38351,59 +38462,31 @@ var render = function() {
                             ),
                         _vm._v(" "),
                         _vm.softDeletes
-                          ? _c("div", [
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "flex items-center",
-                                  on: {
-                                    input: _vm.toggleWithTrashed,
-                                    keydown: function($event) {
-                                      if (
-                                        !("button" in $event) &&
-                                        _vm._k(
-                                          $event.keyCode,
-                                          "space",
-                                          32,
-                                          $event.key,
-                                          " "
-                                        ) &&
-                                        _vm._k(
-                                          $event.keyCode,
-                                          "enter",
-                                          13,
-                                          $event.key,
-                                          "Enter"
-                                        )
-                                      ) {
-                                        return null
-                                      }
-                                      $event.preventDefault()
-                                      return _vm.toggleWithTrashed($event)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("checkbox", {
+                          ? _c(
+                              "div",
+                              [
+                                _c(
+                                  "checkbox-with-label",
+                                  {
                                     attrs: {
                                       dusk:
                                         _vm.field.resourceName +
                                         "-with-trashed-checkbox",
                                       checked: _vm.withTrashed
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("span", { staticClass: "ml-2" }, [
+                                    },
+                                    on: { change: _vm.toggleWithTrashed }
+                                  },
+                                  [
                                     _vm._v(
-                                      "\n                                " +
+                                      "\n                            " +
                                         _vm._s(_vm.__("With Trashed")) +
-                                        "\n                            "
+                                        "\n                        "
                                     )
-                                  ])
-                                ],
-                                1
-                              )
-                            ])
+                                  ]
+                                )
+                              ],
+                              1
+                            )
                           : _vm._e()
                       ],
                       1
@@ -38757,46 +38840,23 @@ var render = function() {
                                       { staticClass: "flex items-center mb-4" },
                                       [
                                         _c(
-                                          "label",
+                                          "checkbox-with-label",
                                           {
-                                            staticClass: "flex items-center",
-                                            on: {
-                                              change: function($event) {
-                                                $event.preventDefault()
-                                                return _vm.toggleSelectAll(
-                                                  $event
-                                                )
-                                              }
-                                            }
+                                            attrs: {
+                                              checked: _vm.selectAllChecked
+                                            },
+                                            on: { change: _vm.toggleSelectAll }
                                           },
                                           [
-                                            _c(
-                                              "div",
-                                              { staticClass: "flex-no-shrink" },
-                                              [
-                                                _c("checkbox", {
-                                                  attrs: {
-                                                    checked:
-                                                      _vm.selectAllChecked
-                                                  },
-                                                  on: {
-                                                    input: function($event) {
-                                                      _vm.$emit("change")
-                                                    }
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c("div", { staticClass: "ml-2" }, [
-                                              _vm._v(
-                                                _vm._s(_vm.__("SPoopelect All"))
-                                              )
-                                            ])
+                                            _vm._v(
+                                              "\n                                            " +
+                                                _vm._s(_vm.__("Select All")) +
+                                                "\n                                        "
+                                            )
                                           ]
                                         )
-                                      ]
+                                      ],
+                                      1
                                     ),
                                     _vm._v(" "),
                                     _c(
@@ -38804,61 +38864,48 @@ var render = function() {
                                       { staticClass: "flex items-center" },
                                       [
                                         _c(
-                                          "label",
+                                          "checkbox-with-label",
                                           {
-                                            staticClass: "flex items-center",
+                                            attrs: {
+                                              checked:
+                                                _vm.selectAllMatchingChecked
+                                            },
                                             on: {
-                                              change: function($event) {
-                                                $event.preventDefault()
-                                                return _vm.toggleSelectAllMatching(
-                                                  $event
-                                                )
-                                              }
+                                              change:
+                                                _vm.toggleSelectAllMatching
                                             }
                                           },
                                           [
-                                            _c("checkbox", {
-                                              attrs: {
-                                                dusk:
-                                                  "select-all-matching-button",
-                                                checked:
-                                                  _vm.selectAllMatchingChecked
-                                              },
-                                              on: {
-                                                input: function($event) {
-                                                  _vm.$emit("change")
-                                                }
-                                              }
-                                            }),
-                                            _vm._v(" "),
-                                            _c(
-                                              "span",
-                                              { staticClass: "ml-2" },
-                                              [
-                                                _vm._v(
-                                                  "\n                                                " +
+                                            [
+                                              _c(
+                                                "span",
+                                                { staticClass: "mr-1" },
+                                                [
+                                                  _vm._v(
                                                     _vm._s(
                                                       _vm.__(
                                                         "Select All Matching"
                                                       )
-                                                    ) +
-                                                    "\n                                                "
-                                                ),
-                                                _c("span", [
-                                                  _vm._v(
-                                                    "(" +
-                                                      _vm._s(
-                                                        _vm.allMatchingResourceCount
-                                                      ) +
-                                                      ")"
+                                                    )
                                                   )
-                                                ])
-                                              ]
-                                            )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c("span", [
+                                                _vm._v(
+                                                  "(" +
+                                                    _vm._s(
+                                                      _vm.allMatchingResourceCount
+                                                    ) +
+                                                    ")"
+                                                )
+                                              ])
+                                            ]
                                           ],
-                                          1
+                                          2
                                         )
-                                      ]
+                                      ],
+                                      1
                                     )
                                   ])
                                 ])
@@ -39309,7 +39356,7 @@ var render = function() {
                         disabled: !_vm.field.nullable
                       }
                     },
-                    [_vm._v("\n                —\n            ")]
+                    [_vm._v(" — ")]
                   ),
                   _vm._v(" "),
                   _vm._l(_vm.availableResources, function(resource) {
@@ -39337,57 +39384,26 @@ var render = function() {
             : _vm._e(),
           _vm._v(" "),
           _vm.softDeletes && !_vm.isLocked
-            ? _c("div", [
-                _c(
-                  "label",
-                  {
-                    staticClass: "flex items-center",
-                    on: {
-                      input: _vm.toggleWithTrashed,
-                      keydown: function($event) {
-                        if (
-                          !("button" in $event) &&
-                          _vm._k(
-                            $event.keyCode,
-                            "space",
-                            32,
-                            $event.key,
-                            " "
-                          ) &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
-                        }
-                        $event.preventDefault()
-                        return _vm.toggleWithTrashed($event)
-                      }
-                    }
-                  },
-                  [
-                    _c("checkbox", {
-                      attrs: {
-                        dusk: _vm.field.resourceName + "-with-trashed-checkbox",
-                        checked: _vm.withTrashed
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "ml-2" }, [
+            ? _c(
+                "div",
+                [
+                  _c(
+                    "checkbox-with-label",
+                    {
+                      attrs: { checked: _vm.withTrashed },
+                      on: { change: _vm.toggleWithTrashed }
+                    },
+                    [
                       _vm._v(
-                        "\n                    " +
+                        "\n                " +
                           _vm._s(_vm.__("With Trashed")) +
-                          "\n                "
+                          "\n            "
                       )
-                    ])
-                  ],
-                  1
-                )
-              ])
+                    ]
+                  )
+                ],
+                1
+              )
             : _vm._e()
         ],
         1
@@ -40207,58 +40223,30 @@ var render = function() {
                 : _vm._e(),
               _vm._v(" "),
               _vm.softDeletes && !_vm.isLocked
-                ? _c("div", [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "flex items-center",
-                        on: {
-                          input: _vm.toggleWithTrashed,
-                          keydown: function($event) {
-                            if (
-                              !("button" in $event) &&
-                              _vm._k(
-                                $event.keyCode,
-                                "space",
-                                32,
-                                $event.key,
-                                " "
-                              ) &&
-                              _vm._k(
-                                $event.keyCode,
-                                "enter",
-                                13,
-                                $event.key,
-                                "Enter"
-                              )
-                            ) {
-                              return null
-                            }
-                            $event.preventDefault()
-                            return _vm.toggleWithTrashed($event)
-                          }
-                        }
-                      },
-                      [
-                        _c("checkbox", {
+                ? _c(
+                    "div",
+                    [
+                      _c(
+                        "checkbox-with-label",
+                        {
                           attrs: {
                             dusk:
                               _vm.field.attribute + "-with-trashed-checkbox",
                             checked: _vm.withTrashed
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "ml-2" }, [
+                          },
+                          on: { change: _vm.toggleWithTrashed }
+                        },
+                        [
                           _vm._v(
-                            "\n                        " +
+                            "\n                    " +
                               _vm._s(_vm.__("With Trashed")) +
-                              "\n                    "
+                              "\n                "
                           )
-                        ])
-                      ],
-                      1
-                    )
-                  ])
+                        ]
+                      )
+                    ],
+                    1
+                  )
                 : _vm._e()
             ],
             1
@@ -41023,39 +41011,23 @@ var render = function() {
                                     { staticClass: "flex items-center" },
                                     [
                                       _c(
-                                        "label",
+                                        "checkbox-with-label",
                                         {
-                                          staticClass: "flex items-center",
-                                          on: {
-                                            change: function($event) {
-                                              $event.preventDefault()
-                                              return _vm.toggleSelectAll($event)
-                                            }
-                                          }
+                                          attrs: {
+                                            checked: _vm.selectAllChecked
+                                          },
+                                          on: { change: _vm.toggleSelectAll }
                                         },
                                         [
-                                          _c("checkbox", {
-                                            attrs: {
-                                              checked: _vm.selectAllChecked
-                                            },
-                                            on: {
-                                              input: function($event) {
-                                                _vm.$emit("change")
-                                              }
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("span", { staticClass: "ml-2" }, [
-                                            _vm._v(
-                                              " " +
-                                                _vm._s(_vm.__("Select All")) +
-                                                " "
-                                            )
-                                          ])
-                                        ],
-                                        1
+                                          _vm._v(
+                                            "\n                                        " +
+                                              _vm._s(_vm.__("Select All")) +
+                                              "\n                                    "
+                                          )
+                                        ]
                                       )
-                                    ]
+                                    ],
+                                    1
                                   ),
                                   _vm._v(" "),
                                   _vm.allMatchingResourceCount > 0
@@ -41064,61 +41036,50 @@ var render = function() {
                                         { staticClass: "flex items-center" },
                                         [
                                           _c(
-                                            "label",
+                                            "checkbox-with-label",
                                             {
-                                              staticClass: "flex items-center",
+                                              attrs: {
+                                                dusk:
+                                                  "select-all-matching-button",
+                                                checked:
+                                                  _vm.selectAllMatchingChecked
+                                              },
                                               on: {
-                                                change: function($event) {
-                                                  $event.preventDefault()
-                                                  return _vm.toggleSelectAllMatching(
-                                                    $event
-                                                  )
-                                                }
+                                                change:
+                                                  _vm.toggleSelectAllMatching
                                               }
                                             },
                                             [
-                                              _c("checkbox", {
-                                                attrs: {
-                                                  dusk:
-                                                    "select-all-matching-button",
-                                                  checked:
-                                                    _vm.selectAllMatchingChecked
-                                                },
-                                                on: {
-                                                  input: function($event) {
-                                                    _vm.$emit("change")
-                                                  }
-                                                }
-                                              }),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                { staticClass: "ml-2" },
-                                                [
-                                                  _vm._v(
-                                                    "\n                                            " +
+                                              [
+                                                _c(
+                                                  "span",
+                                                  { staticClass: "mr-1" },
+                                                  [
+                                                    _vm._v(
                                                       _vm._s(
                                                         _vm.__(
                                                           "Select All Matching"
                                                         )
-                                                      ) +
-                                                      "\n                                            "
-                                                  ),
-                                                  _c("span", [
-                                                    _vm._v(
-                                                      "(" +
-                                                        _vm._s(
-                                                          _vm.allMatchingResourceCount
-                                                        ) +
-                                                        ")"
+                                                      )
                                                     )
-                                                  ])
-                                                ]
-                                              )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c("span", [
+                                                  _vm._v(
+                                                    "(" +
+                                                      _vm._s(
+                                                        _vm.allMatchingResourceCount
+                                                      ) +
+                                                      ")"
+                                                  )
+                                                ])
+                                              ]
                                             ],
-                                            1
+                                            2
                                           )
-                                        ]
+                                        ],
+                                        1
                                       )
                                     : _vm._e()
                                 ])
@@ -44102,25 +44063,25 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("label", { staticClass: "flex items-center m-2" }, [
-    _c(
-      "div",
-      { staticClass: "flex-no-shrink" },
-      [
-        _c("Checkbox", {
+  return _c(
+    "div",
+    [
+      _c(
+        "checkbox-with-label",
+        {
+          staticClass: "m-2",
           attrs: { checked: _vm.isChecked },
           on: {
-            input: function($event) {
+            change: function($event) {
               _vm.updateCheckedState(_vm.option.value, $event)
             }
           }
-        })
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "ml-2" }, [_vm._v(_vm._s(_vm.option.name))])
-  ])
+        },
+        [_vm._v("\n        " + _vm._s(_vm.option.name) + "\n    ")]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -45288,6 +45249,33 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-05d064cb\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./MarkdownField.vue", function() {
      var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-05d064cb\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./MarkdownField.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2b1228f0\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/components/CheckboxWithLabel.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2b1228f0\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/components/CheckboxWithLabel.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("26f9ed05", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2b1228f0\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CheckboxWithLabel.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2b1228f0\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CheckboxWithLabel.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -49985,6 +49973,10 @@ var _Checkbox = __webpack_require__("./resources/js/components/Index/Checkbox.vu
 
 var _Checkbox2 = _interopRequireDefault(_Checkbox);
 
+var _CheckboxWithLabel = __webpack_require__("./resources/js/components/CheckboxWithLabel.vue");
+
+var _CheckboxWithLabel2 = _interopRequireDefault(_CheckboxWithLabel);
+
 var _ConfirmActionModal = __webpack_require__("./resources/js/components/Modals/ConfirmActionModal.vue");
 
 var _ConfirmActionModal2 = _interopRequireDefault(_ConfirmActionModal);
@@ -50235,6 +50227,7 @@ _vue2.default.component('card', _Card2.default);
 _vue2.default.component('card-wrapper', _CardWrapper2.default);
 _vue2.default.component('cards', _Cards2.default);
 _vue2.default.component('checkbox', _Checkbox2.default);
+_vue2.default.component('checkbox-with-label', _CheckboxWithLabel2.default);
 _vue2.default.component('confirm-action-modal', _ConfirmActionModal2.default);
 _vue2.default.component('confirm-upload-removal-modal', _ConfirmUploadRemovalModal2.default);
 _vue2.default.component('create-resource-button', _CreateResourceButton2.default);
@@ -50577,6 +50570,58 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-613c37e8", Component.options)
   } else {
     hotAPI.reload("data-v-613c37e8", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/js/components/CheckboxWithLabel.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2b1228f0\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/components/CheckboxWithLabel.vue")
+}
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],[\"env\"]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-runtime\",\"transform-vue-jsx\",\"syntax-jsx\",\"transform-object-rest-spread\"],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/CheckboxWithLabel.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2b1228f0\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/CheckboxWithLabel.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/CheckboxWithLabel.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2b1228f0", Component.options)
+  } else {
+    hotAPI.reload("data-v-2b1228f0", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

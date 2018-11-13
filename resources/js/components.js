@@ -9,6 +9,7 @@ import Card from '@/components/Card'
 import Cards from '@/components/Cards'
 import CardWrapper from '@/components/CardWrapper'
 import Checkbox from '@/components/Index/Checkbox'
+import CheckboxWithLabel from '@/components/CheckboxWithLabel'
 import ConfirmActionModal from '@/components/Modals/ConfirmActionModal'
 import ConfirmUploadRemovalModal from '@/components/Modals/ConfirmUploadRemovalModal'
 import CreateResourceButton from '@/components/CreateResourceButton'
@@ -79,6 +80,7 @@ Vue.component('card', Card)
 Vue.component('card-wrapper', CardWrapper)
 Vue.component('cards', Cards)
 Vue.component('checkbox', Checkbox)
+Vue.component('checkbox-with-label', CheckboxWithLabel)
 Vue.component('confirm-action-modal', ConfirmActionModal)
 Vue.component('confirm-upload-removal-modal', ConfirmUploadRemovalModal)
 Vue.component('create-resource-button', CreateResourceButton)

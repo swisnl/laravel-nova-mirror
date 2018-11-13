@@ -8,10 +8,10 @@
                 @clear="clearSelection"
                 @selected="selectResource"
                 :error="hasError"
-                :value='selectedResource'
-                :data='availableResources'
-                trackBy='value'
-                searchBy='display'
+                :value="selectedResource"
+                :data="availableResources"
+                trackBy="value"
+                searchBy="display"
                 class="mb-3"
             >
                 <div slot="default" v-if="selectedResource" class="flex items-center">
@@ -22,7 +22,7 @@
                     {{ selectedResource.display }}
                 </div>
 
-                <div slot="option" slot-scope="{option, selected}" class="flex items-center">
+                <div slot="option" slot-scope="{ option, selected }" class="flex items-center">
                     <div v-if="option.avatar" class="mr-3">
                         <img :src="option.avatar" class="w-8 h-8 rounded-full block" />
                     </div>
@@ -40,13 +40,7 @@
                 @change="selectResourceFromSelectControl"
                 :disabled="isLocked"
             >
-                <option
-                    value=""
-                    selected
-                    :disabled="!field.nullable"
-                >
-                    &mdash;
-                </option>
+                <option value="" selected :disabled="!field.nullable"> &mdash; </option>
 
                 <option
                     v-for="resource in availableResources"
@@ -54,19 +48,15 @@
                     :value="resource.value"
                     :selected="selectedResourceId == resource.value"
                 >
-                    {{ resource.display}}
+                    {{ resource.display }}
                 </option>
             </select>
 
             <!-- Trashed State -->
             <div v-if="softDeletes && !isLocked">
-                <label class="flex items-center" @input="toggleWithTrashed" @keydown.prevent.space.enter="toggleWithTrashed">
-                    <checkbox :dusk="field.resourceName + '-with-trashed-checkbox'" :checked="withTrashed" />
-
-                    <span class="ml-2">
-                        {{__('With Trashed')}}
-                    </span>
-                </label>
+                <checkbox-with-label :checked="withTrashed" @change="toggleWithTrashed">
+                    {{ __('With Trashed') }}
+                </checkbox-with-label>
             </div>
         </template>
     </default-field>
