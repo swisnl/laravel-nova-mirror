@@ -214,10 +214,9 @@ export default {
                 let link = document.createElement('a')
                 link.href = response.download
                 link.download = response.name
+                document.body.appendChild(link)
                 link.click()
-
-                // window.open(response.download,'_blank');
-                // window.location = response.download
+                document.body.removeChild(link)
             } else if (response.redirect) {
                 window.location = response.redirect
             } else {
