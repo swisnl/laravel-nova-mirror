@@ -40,7 +40,7 @@
                 @change="selectResourceFromSelectControl"
                 :disabled="isLocked"
             >
-                <option value="" selected :disabled="!field.nullable"> &mdash; </option>
+                <option value="" selected :disabled="!field.nullable">&mdash;</option>
 
                 <option
                     v-for="resource in availableResources"
