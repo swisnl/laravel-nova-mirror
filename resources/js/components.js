@@ -1,4 +1,5 @@
 import Vue from 'vue'
+Vue.config.ignoredElements = ['trix-editor']
 
 import ActionSelector from '@/components/ActionSelector'
 import BasePartitionMetric from '@/components/Metrics/Base/PartitionMetric'
