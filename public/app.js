@@ -1633,7 +1633,9 @@ exports.default = {
             var link = document.createElement('a');
             link.href = '/nova-api/' + resourceName + '/' + resourceId + '/download/' + attribute;
             link.download = 'download';
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
         },
 
 
@@ -1709,6 +1711,11 @@ exports.default = {
         }
     }
 }; //
+//
+//
+//
+//
+//
 //
 //
 //
@@ -43109,9 +43116,7 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("span", { staticClass: "class mt-1" }, [
-                        _vm._v(
-                          "\n                    Download\n                "
-                        )
+                        _vm._v(" Download ")
                       ])
                     ],
                     1
