@@ -2932,6 +2932,10 @@ textarea.form-input:read-only,
   height: .95rem;
 }
 
+.h-dropdown-trigger {
+  height: 2.25rem;
+}
+
 .h-full {
   height: 100%;
 }

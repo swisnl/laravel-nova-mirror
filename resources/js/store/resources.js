@@ -5,6 +5,7 @@ import _ from 'lodash'
  */
 const state = {
     filters: [],
+    originalFilters: [],
 }
 
 /**
@@ -34,10 +35,37 @@ const getters = {
     currentEncodedFilters: (state, getters) => btoa(JSON.stringify(getters.currentFilters)),
 
     /**
+     * Determine whether any filters are applied
+     */
+    filtersAreApplied: (state, getters) => getters.activeFilterCount > 0,
+
+    /**
+     * Return the number of filters that are non-default
+     */
+    activeFilterCount: (state, getters) => {
+        return _.reduce(
+            state.filters,
+            (result, f) => {
+                const originalFilter = getters.getOriginalFilter(f.class)
+                const originalFilterCloneValue = JSON.stringify(originalFilter.currentValue)
+                const currentFilterCloneValue = JSON.stringify(f.currentValue)
+                return currentFilterCloneValue == originalFilterCloneValue ? result : result + 1
+            },
+            0
+        )
+    },
+
+    /**
      * Get a single filter from the list of filters.
      */
     getFilter: state => filterKey => {
         return _.find(state.filters, filter => {
+            return filter.class == filterKey
+        })
+    },
+
+    getOriginalFilter: state => filterKey => {
+        return _.find(state.originalFilters, filter => {
             return filter.class == filterKey
         })
     },
@@ -82,11 +110,9 @@ const actions = {
      */
     async resetFilterState({ commit, state, getters }, options) {
         let { resourceName, lens = false } = options
-
         const { data } = lens
             ? await Nova.request().get('/nova-api/' + resourceName + '/lens/' + lens + '/filters')
             : await Nova.request().get('/nova-api/' + resourceName + '/filters')
-
         if (data) {
             _.each(data, filter =>
                 commit('updateFilterState', {
@@ -125,6 +151,7 @@ const mutations = {
      */
     storeFilters(state, data) {
         state.filters = data
+        state.originalFilters = _.cloneDeep(data)
     },
 }
 

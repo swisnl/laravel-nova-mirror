@@ -247,10 +247,9 @@ exports.default = {
                 var link = document.createElement('a');
                 link.href = response.download;
                 link.download = response.name;
+                document.body.appendChild(link);
                 link.click();
-
-                // window.open(response.download,'_blank');
-                // window.location = response.download
+                document.body.removeChild(link);
             } else if (response.redirect) {
                 window.location = response.redirect;
             } else {
@@ -2352,10 +2351,28 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
 
 exports.default = {
     props: {
-        handleClick: Function
+        handleClick: Function,
+        active: {
+            type: Boolean,
+            default: false
+        },
+        showArrow: {
+            type: Boolean,
+            default: true
+        }
+    },
+
+    computed: {
+        activeIconColor: function activeIconColor() {
+            return this.active ? 'var(--white)' : 'var(--90)';
+        }
     }
 };
 
@@ -2520,6 +2537,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     props: (_props = {
@@ -2547,66 +2577,27 @@ exports.default = {
     },
 
     computed: {
+        /**
+         * Return the filters from state
+         */
         filters: function filters() {
             return this.$store.state.resources.filters;
-        }
-    }
-};
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],[\"env\"]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-runtime\",\"transform-vue-jsx\",\"syntax-jsx\",\"transform-object-rest-spread\"],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/FilterSelector.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
+        },
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-    props: ['filters', 'currentFilters'],
-
-    /**
-     * Mount the component.
-     */
-    mounted: function mounted() {
-        this.current = this.currentFilters;
-    },
-
-
-    methods: {
         /**
-         * Handle a filter selection change.
+         * Determine via state whether filters are applied
          */
-        filterChanged: function filterChanged(filter) {
-            var newCurrent = _.reject(this.currentFilters, function (f) {
-                return f.class == filter.class;
-            });
+        filtersAreApplied: function filtersAreApplied() {
+            return this.$store.getters.filtersAreApplied;
+        },
 
-            if (filter.currentValue !== '') {
-                newCurrent.push({
-                    class: filter.class,
-                    value: filter.currentValue
-                });
-            }
 
-            // Broadcast the new filter selections to the parent component
-            this.$emit('changed', newCurrent);
+        /**
+         * Return the number of active filters
+         */
+        activeFilterCount: function activeFilterCount() {
+            return this.$store.getters.activeFilterCount;
         }
     }
 };
@@ -4977,8 +4968,6 @@ exports.default = {
 //
 //
 //
-//
-//
 
 /***/ }),
 
@@ -5121,7 +5110,8 @@ exports.default = {
         defaultAttributes: function defaultAttributes() {
             return {
                 rows: this.field.rows,
-                class: this.errorClasses
+                class: this.errorClasses,
+                placeholder: this.field.name
             };
         },
         extraAttributes: function extraAttributes() {
@@ -35850,12 +35840,8 @@ var render = function() {
             }
           },
           [
-            _c("option", { attrs: { value: "", selected: "", disabled: "" } }, [
-              _vm._v(
-                "\n                " +
-                  _vm._s(_vm.__("Choose an option")) +
-                  "\n            "
-              )
+            _c("option", { attrs: { value: "", selected: "" } }, [
+              _vm._v(_vm._s(_vm.__("Choose an option")))
             ]),
             _vm._v(" "),
             _vm._l(_vm.field.options, function(option) {
@@ -39367,7 +39353,7 @@ var render = function() {
                         disabled: !_vm.field.nullable
                       }
                     },
-                    [_vm._v(" — ")]
+                    [_vm._v("—")]
                   ),
                   _vm._v(" "),
                   _vm._l(_vm.availableResources, function(resource) {
@@ -40593,7 +40579,6 @@ var render = function() {
     ? _c(
         "dropdown",
         {
-          staticClass: "bg-30 hover:bg-40 rounded",
           attrs: {
             dusk: "filter-selector",
             "class-whitelist": "flatpickr-calendar"
@@ -40605,12 +40590,35 @@ var render = function() {
                 var toggle = ref.toggle
                 return _c(
                   "dropdown-trigger",
-                  { staticClass: "px-3", attrs: { "handle-click": toggle } },
+                  {
+                    staticClass: "bg-30 px-3 border-2 border-30 rounded",
+                    class: {
+                      "bg-primary border-primary": _vm.filtersAreApplied
+                    },
+                    attrs: {
+                      "handle-click": toggle,
+                      active: _vm.filtersAreApplied
+                    }
+                  },
                   [
                     _c("icon", {
-                      staticClass: "text-80",
+                      class: _vm.filtersAreApplied ? "text-white" : "text-80",
                       attrs: { type: "filter" }
-                    })
+                    }),
+                    _vm._v(" "),
+                    _vm.filtersAreApplied
+                      ? _c(
+                          "span",
+                          { staticClass: "ml-2 font-bold text-white text-80" },
+                          [
+                            _vm._v(
+                              "\n            " +
+                                _vm._s(_vm.activeFilterCount) +
+                                "\n        "
+                            )
+                          ]
+                        )
+                      : _vm._e()
                   ],
                   1
                 )
@@ -40635,27 +40643,29 @@ var render = function() {
                 "scroll-wrap",
                 { attrs: { height: 350 } },
                 [
-                  _c("div", { staticClass: "bg-30 border-b border-60 " }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "py-2 w-full block text-xs uppercase tracking-wide text-center text-80 dim font-bold focus:outline-none",
-                        on: {
-                          click: function($event) {
-                            _vm.$emit("clear-selected-filters")
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                    " +
-                            _vm._s(_vm.__("× Reset Filters")) +
-                            "\n                "
+                  _vm.filtersAreApplied
+                    ? _c("div", { staticClass: "bg-30 border-b border-60" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "py-2 w-full block text-xs uppercase tracking-wide text-center text-80 dim font-bold focus:outline-none",
+                            on: {
+                              click: function($event) {
+                                _vm.$emit("clear-selected-filters")
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                    " +
+                                _vm._s(_vm.__("Reset Filters")) +
+                                "\n                "
+                            )
+                          ]
                         )
-                      ]
-                    )
-                  ]),
+                      ])
+                    : _vm._e(),
                   _vm._v(" "),
                   _vm._l(_vm.filters, function(filter) {
                     return _c(filter.component, {
@@ -42361,48 +42371,6 @@ if (false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-754a0322\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/FilterSelector.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    _vm._l(_vm.filters, function(filter) {
-      return _c(filter.component, {
-        key: filter.name,
-        tag: "component",
-        attrs: { filter: filter },
-        on: {
-          change: function($event) {
-            _vm.filterChanged(filter)
-          }
-        },
-        model: {
-          value: filter.currentValue,
-          callback: function($$v) {
-            _vm.$set(filter, "currentValue", $$v)
-          },
-          expression: "filter.currentValue"
-        }
-      })
-    })
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-754a0322", module.exports)
-  }
-}
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7562a9fb\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/Detail/MorphToManyField.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -43766,34 +43734,24 @@ var render = function() {
     "a",
     {
       staticClass:
-        "dropdown-trigger h-9 flex items-center cursor-pointer select-none",
+        "dropdown-trigger h-dropdown-trigger flex items-center cursor-pointer select-none",
       on: { click: _vm.handleClick }
     },
     [
       _vm._t("default"),
       _vm._v(" "),
-      _c(
-        "svg",
-        {
-          staticClass: "ml-2",
-          attrs: {
-            width: "10px",
-            height: "6px",
-            viewBox: "0 0 10 6",
-            version: "1.1",
-            xmlns: "http://www.w3.org/2000/svg",
-            "xmlns:xlink": "http://www.w3.org/1999/xlink"
-          }
-        },
-        [
-          _c(
-            "g",
+      _vm.showArrow
+        ? _c(
+            "svg",
             {
+              staticClass: "ml-2",
               attrs: {
-                stroke: "none",
-                "stroke-width": "1",
-                fill: "none",
-                "fill-rule": "evenodd"
+                width: "10px",
+                height: "6px",
+                viewBox: "0 0 10 6",
+                version: "1.1",
+                xmlns: "http://www.w3.org/2000/svg",
+                "xmlns:xlink": "http://www.w3.org/1999/xlink"
               }
             },
             [
@@ -43801,26 +43759,38 @@ var render = function() {
                 "g",
                 {
                   attrs: {
-                    id: "04-user",
-                    transform: "translate(-385.000000, -573.000000)",
-                    fill: "#35393C",
-                    "fill-rule": "nonzero"
+                    stroke: "none",
+                    "stroke-width": "1",
+                    fill: "none",
+                    "fill-rule": "evenodd"
                   }
                 },
                 [
-                  _c("path", {
-                    attrs: {
-                      d:
-                        "M393.292893,573.292893 C393.683418,572.902369 394.316582,572.902369 394.707107,573.292893 C395.097631,573.683418 395.097631,574.316582 394.707107,574.707107 L390.707107,578.707107 C390.316582,579.097631 389.683418,579.097631 389.292893,578.707107 L385.292893,574.707107 C384.902369,574.316582 384.902369,573.683418 385.292893,573.292893 C385.683418,572.902369 386.316582,572.902369 386.707107,573.292893 L390,576.585786 L393.292893,573.292893 Z",
-                      id: "Path-2-Copy"
-                    }
-                  })
+                  _c(
+                    "g",
+                    {
+                      attrs: {
+                        id: "04-user",
+                        transform: "translate(-385.000000, -573.000000)",
+                        fill: _vm.activeIconColor,
+                        "fill-rule": "nonzero"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          d:
+                            "M393.292893,573.292893 C393.683418,572.902369 394.316582,572.902369 394.707107,573.292893 C395.097631,573.683418 395.097631,574.316582 394.707107,574.707107 L390.707107,578.707107 C390.316582,579.097631 389.683418,579.097631 389.292893,578.707107 L385.292893,574.707107 C384.902369,574.316582 384.902369,573.683418 385.292893,573.292893 C385.683418,572.902369 386.316582,572.902369 386.707107,573.292893 L390,576.585786 L393.292893,573.292893 Z",
+                          id: "Path-2-Copy"
+                        }
+                      })
+                    ]
+                  )
                 ]
               )
             ]
           )
-        ]
-      )
+        : _vm._e()
     ],
     2
   )
@@ -50068,10 +50038,6 @@ var _Filter = __webpack_require__("./resources/js/components/Icons/Filter.vue");
 
 var _Filter2 = _interopRequireDefault(_Filter);
 
-var _FilterSelector = __webpack_require__("./resources/js/components/FilterSelector.vue");
-
-var _FilterSelector2 = _interopRequireDefault(_FilterSelector);
-
 var _FilterMenu = __webpack_require__("./resources/js/components/FilterMenu.vue");
 
 var _FilterMenu2 = _interopRequireDefault(_FilterMenu);
@@ -50261,7 +50227,6 @@ _vue2.default.component('error-403', _Error2.default);
 _vue2.default.component('error-404', _Error4.default);
 _vue2.default.component('excerpt', _Excerpt2.default);
 _vue2.default.component('fake-checkbox', _FakeCheckbox2.default);
-_vue2.default.component('filter-selector', _FilterSelector2.default);
 _vue2.default.component('filter-menu', _FilterMenu2.default);
 _vue2.default.component('form-label', _Label2.default);
 _vue2.default.component('global-search', _GlobalSearch2.default);
@@ -52281,54 +52246,6 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-5ba13222", Component.options)
   } else {
     hotAPI.reload("data-v-5ba13222", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/js/components/FilterSelector.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],[\"env\"]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-runtime\",\"transform-vue-jsx\",\"syntax-jsx\",\"transform-object-rest-spread\"],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/FilterSelector.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-754a0322\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/FilterSelector.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/FilterSelector.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-754a0322", Component.options)
-  } else {
-    hotAPI.reload("data-v-754a0322", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -56863,7 +56780,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * State
  */
 var state = {
-    filters: []
+    filters: [],
+    originalFilters: []
 
     /**
      * Getters
@@ -56896,11 +56814,38 @@ var state = {
     },
 
     /**
+     * Determine whether any filters are applied
+     */
+    filtersAreApplied: function filtersAreApplied(state, getters) {
+        return getters.activeFilterCount > 0;
+    },
+
+    /**
+     * Return the number of filters that are non-default
+     */
+    activeFilterCount: function activeFilterCount(state, getters) {
+        return _lodash2.default.reduce(state.filters, function (result, f) {
+            var originalFilter = getters.getOriginalFilter(f.class);
+            var originalFilterCloneValue = (0, _stringify2.default)(originalFilter.currentValue);
+            var currentFilterCloneValue = (0, _stringify2.default)(f.currentValue);
+            return currentFilterCloneValue == originalFilterCloneValue ? result : result + 1;
+        }, 0);
+    },
+
+    /**
      * Get a single filter from the list of filters.
      */
     getFilter: function getFilter(state) {
         return function (filterKey) {
             return _lodash2.default.find(state.filters, function (filter) {
+                return filter.class == filterKey;
+            });
+        };
+    },
+
+    getOriginalFilter: function getOriginalFilter(state) {
+        return function (filterKey) {
+            return _lodash2.default.find(state.originalFilters, function (filter) {
                 return filter.class == filterKey;
             });
         };
@@ -57032,7 +56977,6 @@ var state = {
                             _ref6 = _context2.t0;
                             data = _ref6.data;
 
-
                             if (data) {
                                 _lodash2.default.each(data, function (filter) {
                                     return commit('updateFilterState', {
@@ -57115,6 +57059,7 @@ var mutations = {
      */
     storeFilters: function storeFilters(state, data) {
         state.filters = data;
+        state.originalFilters = _lodash2.default.cloneDeep(data);
     }
 };
 
