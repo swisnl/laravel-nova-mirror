@@ -258,7 +258,10 @@ export default {
             type: String,
             default: '',
         },
-        lens: {},
+        lens: {
+            type: String,
+            required: true,
+        },
     },
 
     data: () => ({
@@ -304,6 +307,7 @@ export default {
         this.$watch(
             () => {
                 return (
+                    this.lens +
                     this.resourceName +
                     this.encodedFilters +
                     this.currentSearch +

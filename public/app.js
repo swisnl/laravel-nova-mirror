@@ -11586,7 +11586,10 @@ exports.default = {
             type: String,
             default: ''
         },
-        lens: {}
+        lens: {
+            type: String,
+            required: true
+        }
     },
 
     data: function data() {
@@ -11634,7 +11637,7 @@ exports.default = {
         this.initialLoading = false;
 
         this.$watch(function () {
-            return _this.resourceName + _this.encodedFilters + _this.currentSearch + _this.currentPage + _this.currentPerPage + _this.currentOrderBy + _this.currentOrderByDirection + _this.currentTrashed;
+            return _this.lens + _this.resourceName + _this.encodedFilters + _this.currentSearch + _this.currentPage + _this.currentPerPage + _this.currentOrderBy + _this.currentOrderByDirection + _this.currentTrashed;
         }, function () {
             _this.getResources();
 
