@@ -3126,6 +3126,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 
 exports.default = {
     mixins: [_laravelNova.HandlesValidationErrors, _laravelNova.FormField, _laravelNova.InteractsWithDates],
@@ -3158,6 +3159,7 @@ var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.j
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
 //
 //
 //
@@ -35513,6 +35515,7 @@ var render = function() {
           [
             _c("date-time-picker", {
               staticClass: "w-full form-control form-input form-input-bordered",
+              class: _vm.errorClasses,
               attrs: {
                 field: _vm.field,
                 value: _vm.localizedValue,
@@ -44922,6 +44925,7 @@ var render = function() {
         [
           _c("date-time-picker", {
             staticClass: "w-full form-control form-input form-input-bordered",
+            class: _vm.errorClasses,
             attrs: {
               field: _vm.field,
               name: _vm.field.name,

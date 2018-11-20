@@ -7,6 +7,7 @@
                     :field="field"
                     :value="localizedValue"
                     :twelve-hour-time="usesTwelveHourTime"
+                    :class="errorClasses"
                     @change="handleChange"
                 />
 
