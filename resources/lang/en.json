@@ -358,5 +358,7 @@
     "Action Status": "Status",
     "Action Happened At": "Happened At",
     "resource": "resource",
-    "resources": "resources"
+    "resources": "resources",
+    "The :resource was updated!": "The :resource was updated!",
+    "The resource was updated!": "The resource was updated!"
 }
