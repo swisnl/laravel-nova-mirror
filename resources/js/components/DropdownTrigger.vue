@@ -1,8 +1,12 @@
 <template>
-    <a @click="handleClick" class="dropdown-trigger h-9 flex items-center cursor-pointer select-none">
+    <a
+        @click="handleClick"
+        class="dropdown-trigger h-dropdown-trigger flex items-center cursor-pointer select-none"
+    >
         <slot />
 
         <svg
+            v-if="showArrow"
             class="ml-2"
             width="10px"
             height="6px"
@@ -15,7 +19,7 @@
                 <g
                     id="04-user"
                     transform="translate(-385.000000, -573.000000)"
-                    fill="#35393C"
+                    :fill="activeIconColor"
                     fill-rule="nonzero"
                 >
                     <path
@@ -32,6 +36,20 @@
 export default {
     props: {
         handleClick: Function,
+        active: {
+            type: Boolean,
+            default: false,
+        },
+        showArrow: {
+            type: Boolean,
+            default: true,
+        },
+    },
+
+    computed: {
+        activeIconColor() {
+            return this.active ? 'var(--white)' : 'var(--90)'
+        },
     },
 }
 </script>

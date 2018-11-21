@@ -133,6 +133,7 @@ export default {
     margin: auto;
     position: relative;
     z-index: 0;
+    width: 100%;
 }
 
 .CodeMirror-wrap {

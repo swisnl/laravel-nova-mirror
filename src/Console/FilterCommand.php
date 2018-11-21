@@ -3,6 +3,7 @@
 namespace Laravel\Nova\Console;
 
 use Illuminate\Console\GeneratorCommand;
+use Symfony\Component\Console\Input\InputOption;
 
 class FilterCommand extends GeneratorCommand
 {
@@ -34,7 +35,13 @@ class FilterCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        return __DIR__.'/stubs/filter.stub';
+        if ($this->option('boolean')) {
+            return __DIR__.'/stubs/boolean-filter.stub';
+        } elseif ($this->option('date')) {
+            return __DIR__.'/stubs/date-filter.stub';
+        } else {
+            return __DIR__.'/stubs/filter.stub';
+        }
     }
 
     /**
@@ -46,5 +53,18 @@ class FilterCommand extends GeneratorCommand
     protected function getDefaultNamespace($rootNamespace)
     {
         return $rootNamespace.'\Nova\Filters';
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return [
+            ['boolean', null, InputOption::VALUE_NONE, 'Indicates if the generated filter should be a boolean filter'],
+            ['date', null, InputOption::VALUE_NONE, 'Indicates if the generated filter should be a date filter'],
+        ];
     }
 }

@@ -2,7 +2,11 @@
     <panel-item :field="field">
         <div slot="value">
             <template v-if="shouldShowLoader">
-                <ImageLoader :src="imageUrl" class="max-w-xs" @missing="(value) => missing = value" />
+                <ImageLoader
+                    :src="imageUrl"
+                    class="max-w-xs"
+                    @missing="value => (missing = value)"
+                />
             </template>
 
             <template v-if="field.value && !imageUrl">
@@ -22,10 +26,7 @@
                 </transition>
             </portal>
 
-            <p
-                v-if="shouldShowToolbar"
-                class="flex items-center text-sm mt-3"
-            >
+            <p v-if="shouldShowToolbar" class="flex items-center text-sm mt-3">
                 <a
                     v-if="field.downloadable"
                     :dusk="field.attribute + '-download-link'"
@@ -34,10 +35,14 @@
                     tabindex="0"
                     class="cursor-pointer dim btn btn-link text-primary inline-flex items-center"
                 >
-                    <icon class="mr-2" type="download" view-box="0 0 24 24" width="16" height="16" />
-                    <span class="class mt-1">
-                        Download
-                    </span>
+                    <icon
+                        class="mr-2"
+                        type="download"
+                        view-box="0 0 24 24"
+                        width="16"
+                        height="16"
+                    />
+                    <span class="class mt-1"> Download </span>
                 </a>
             </p>
         </div>
@@ -65,7 +70,9 @@ export default {
             let link = document.createElement('a')
             link.href = `/nova-api/${resourceName}/${resourceId}/download/${attribute}`
             link.download = 'download'
+            document.body.appendChild(link)
             link.click()
+            document.body.removeChild(link)
         },
 
         /**

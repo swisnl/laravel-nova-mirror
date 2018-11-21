@@ -4,7 +4,8 @@
             <div class="flex items-center">
                 <date-time-picker
                     class="w-full form-control form-input form-input-bordered"
-                    :field="field"
+                    :dusk="field.attribute"
+                    :name="field.name"
                     :value="localizedValue"
                     :twelve-hour-time="usesTwelveHourTime"
                     @change="handleChange"
