@@ -6652,12 +6652,21 @@ exports.default = {
             startAngle: 270,
             showLabel: false
         });
+
+        this.chartist.on('draw', function (context) {
+            if (context.type === 'slice') {
+                context.element.attr({ style: 'fill: ' + context.meta.color + ' !important' });
+            }
+        });
     },
 
 
     methods: {
         renderChart: function renderChart() {
             this.chartist.update(this.formattedChartData);
+        },
+        getItemColor: function getItemColor(item, index) {
+            return typeof item.color === 'string' ? item.color : colorForIndex(index);
         }
     },
 
@@ -6666,11 +6675,13 @@ exports.default = {
             return { labels: this.formattedLabels, series: this.formattedData };
         },
         formattedItems: function formattedItems() {
+            var _this = this;
+
             return _(this.chartData).map(function (item, index) {
                 return {
                     label: item.label,
                     value: item.value,
-                    color: colorForIndex(index)
+                    color: _this.getItemColor(item, index)
                 };
             }).value();
         },
@@ -6680,8 +6691,13 @@ exports.default = {
             }).value();
         },
         formattedData: function formattedData() {
-            return _(this.chartData).map(function (item) {
-                return item.value;
+            var _this2 = this;
+
+            return _(this.chartData).map(function (item, index) {
+                return {
+                    value: item.value,
+                    meta: { color: _this2.getItemColor(item, index) }
+                };
             }).value();
         },
         formattedTotal: function formattedTotal() {

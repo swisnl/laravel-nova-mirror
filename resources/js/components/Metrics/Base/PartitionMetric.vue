@@ -66,11 +66,21 @@ export default {
             startAngle: 270,
             showLabel: false,
         })
+
+        this.chartist.on('draw', context => {
+            if (context.type === 'slice') {
+                context.element.attr({ style: `fill: ${context.meta.color} !important` })
+            }
+        })
     },
 
     methods: {
         renderChart() {
             this.chartist.update(this.formattedChartData)
+        },
+
+        getItemColor(item, index) {
+            return typeof item.color === 'string' ? item.color : colorForIndex(index)
         },
     },
 
@@ -85,7 +95,7 @@ export default {
                     return {
                         label: item.label,
                         value: item.value,
-                        color: colorForIndex(index),
+                        color: this.getItemColor(item, index),
                     }
                 })
                 .value()
@@ -99,7 +109,12 @@ export default {
 
         formattedData() {
             return _(this.chartData)
-                .map(item => item.value)
+                .map((item, index) => {
+                    return {
+                        value: item.value,
+                        meta: { color: this.getItemColor(item, index) },
+                    }
+                })
                 .value()
         },
 
