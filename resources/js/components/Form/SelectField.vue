@@ -7,9 +7,7 @@
                 class="w-full form-control form-select"
                 :class="errorClasses"
             >
-                <option value="" selected disabled>
-                    {{__('Choose an option')}}
-                </option>
+                <option value="" selected>{{ __('Choose an option') }}</option>
 
                 <option
                     v-for="option in field.options"

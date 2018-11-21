@@ -2,7 +2,6 @@
 
 namespace Laravel\Nova\Fields;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\Contracts\ListableField;
 
