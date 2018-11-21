@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import store from '@/store'
 import Toasted from 'vue-toasted'
 import router from '@/router'
 import axios from '@/util/axios'
@@ -52,6 +53,7 @@ export default class Nova {
         this.app = new Vue({
             el: '#nova',
             router,
+            store,
             components: { Loading },
             mounted: function() {
                 this.$loading = this.$refs.loading
