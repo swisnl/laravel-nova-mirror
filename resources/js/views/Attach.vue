@@ -98,11 +98,10 @@
                 <div class="bg-30 flex px-8 py-4">
                     <button
                         dusk="attach-and-attach-another-button"
-                        type="button"
-                        @click="attachAndAttachAnother"
+                        type="button" @click="attachAndAttachAnother"
                         class="ml-auto btn btn-default btn-primary mr-3"
                     >
-                        {{ __('Attach &amp; Attach Another') }}
+                        {{__('Attach & Attach Another')}}
                     </button>
 
                     <button dusk="attach-button" class="btn btn-default btn-primary">
