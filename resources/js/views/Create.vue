@@ -23,7 +23,7 @@
                 <!-- Create Button -->
                 <div class="bg-30 flex px-8 py-4">
                     <button dusk="create-and-add-another-button" type="button" @click="createAndAddAnother" class="ml-auto btn btn-default btn-primary mr-3">
-                        {{__('Create &amp; Add Another')}}
+                        {{__('Create & Add Another')}}
                     </button>
 
                     <button dusk="create-button" class="btn btn-default btn-primary">

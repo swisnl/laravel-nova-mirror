@@ -10,8 +10,13 @@
 
 <script>
 import { mixin as clickaway } from 'vue-clickaway'
+import composedPath from '@/polyfills/composedPath'
 
 export default {
+    props: {
+        classWhitelist: [Array, String],
+    },
+
     mixins: [clickaway],
 
     data: () => ({ visible: false }),
@@ -21,9 +26,24 @@ export default {
             this.visible = !this.visible
         },
 
-        close() {
+        close(event) {
+            let classArray = Array.isArray(this.classWhitelist)
+                ? this.classWhitelist
+                : [this.classWhitelist]
+
+            if (_.filter(classArray, className => pathIncludesClass(event, className)).length > 0) {
+                return
+            }
+
             this.visible = false
         },
     },
+}
+
+function pathIncludesClass(event, className) {
+    return composedPath(event)
+        .filter(el => el !== document && el !== window)
+        .flatMap(e => [...e.classList])
+        .includes(className)
 }
 </script>
