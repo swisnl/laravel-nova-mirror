@@ -1,12 +1,20 @@
+<template>
+    <input
+        :disabled="disabled"
+        :class="{'!cursor-not-allowed': disabled}"
+        :value="value"
+        ref="datePicker"
+        type="text"
+        :placeholder="placeholder"
+    />
+</template>
+
 <script>
 import flatpickr from 'flatpickr'
 import 'flatpickr/dist/themes/airbnb.css'
 
 export default {
     props: {
-        field: {
-            required: true,
-        },
         value: {
             required: false,
         },
@@ -35,7 +43,7 @@ export default {
         enableSeconds: {
             type: Boolean,
             default: true,
-        }
+        },
     },
 
     data: () => ({ flatpickr: null }),
@@ -46,8 +54,10 @@ export default {
                 enableTime: this.enableTime,
                 enableSeconds: this.enableSeconds,
                 onClose: this.onChange,
+                onChange: this.onChange,
                 dateFormat: this.dateFormat,
                 allowInput: true,
+                // static: true,
                 time_24hr: !this.twelveHourTime,
             })
         })
@@ -60,18 +70,6 @@ export default {
     },
 }
 </script>
-
-<template>
-  <input
-    :disabled="disabled"
-    :dusk="field.attribute"
-    :class="{'!cursor-not-allowed': disabled}"
-    :value="value"
-    :name="field.name"
-    ref="datePicker"
-    type="text"
-    :placeholder="placeholder">
-</template>
 
 <style scoped>
 .\!cursor-not-allowed {

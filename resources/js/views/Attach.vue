@@ -1,6 +1,6 @@
 <template>
     <loading-view :loading="loading">
-        <heading class="mb-3">{{__('Attach')}} {{ relatedResourceLabel }}</heading>
+        <heading class="mb-3">{{ __('Attach') }} {{ relatedResourceLabel }}</heading>
 
         <card class="overflow-hidden">
             <form v-if="field" @submit.prevent="attachResource" autocomplete="off">
@@ -13,21 +13,31 @@
                             @input="performSearch"
                             @clear="clearSelection"
                             @selected="selectResource"
-                            :value='selectedResource'
-                            :data='availableResources'
-                            trackBy='value'
-                            searchBy='display'
+                            :value="selectedResource"
+                            :data="availableResources"
+                            trackBy="value"
+                            searchBy="display"
                             class="mb-3"
                         >
                             <div slot="default" v-if="selectedResource" class="flex items-center">
                                 <div v-if="selectedResource.avatar" class="mr-3">
-                                    <img :src="selectedResource.avatar" class="w-8 h-8 rounded-full block" />
+                                    <img
+                                        :src="selectedResource.avatar"
+                                        class="w-8 h-8 rounded-full block"
+                                    />
                                 </div>
 
                                 {{ selectedResource.display }}
                             </div>
 
-                            <div slot="option" slot-scope="{option, selected}" class="flex items-center">
+                            <div
+                                slot="option"
+                                slot-scope="{
+                                    option,
+                                    selected,
+                                }"
+                                class="flex items-center"
+                            >
                                 <div v-if="option.avatar" class="mr-3">
                                     <img :src="option.avatar" class="w-8 h-8 rounded-full block" />
                                 </div>
@@ -44,7 +54,9 @@
                             :data-testid="`${field.resourceName}-select`"
                             @change="selectResourceFromSelectControl"
                         >
-                            <option value="" disabled selected>{{__('Choose')}} {{ relatedResourceLabel }}</option>
+                            <option value="" disabled selected
+                                >{{ __('Choose') }} {{ relatedResourceLabel }}</option
+                            >
 
                             <option
                                 v-for="resource in availableResources"
@@ -52,19 +64,19 @@
                                 :value="resource.value"
                                 :selected="selectedResourceId == resource.value"
                             >
-                                {{ resource.display}}
+                                {{ resource.display }}
                             </option>
                         </select>
 
                         <!-- Trashed State -->
                         <div v-if="softDeletes">
-                            <label class="flex items-center" @input="toggleWithTrashed" @keydown.prevent.space.enter="toggleWithTrashed">
-                                <checkbox :dusk="field.resourceName + '-with-trashed-checkbox'" :checked="withTrashed" />
-
-                                <span class="ml-2">
-                                    {{__('With Trashed')}}
-                                </span>
-                            </label>
+                            <checkbox-with-label
+                                :dusk="field.resourceName + '-with-trashed-checkbox'"
+                                :checked="withTrashed"
+                                @change="toggleWithTrashed"
+                            >
+                                {{ __('With Trashed') }}
+                            </checkbox-with-label>
                         </div>
                     </template>
                 </default-field>
@@ -84,12 +96,16 @@
 
                 <!-- Attach Button -->
                 <div class="bg-30 flex px-8 py-4">
-                    <button dusk="attach-and-attach-another-button" type="button" @click="attachAndAttachAnother" class="ml-auto btn btn-default btn-primary mr-3">
-                        {{__('Attach &amp; Attach Another')}}
+                    <button
+                        dusk="attach-and-attach-another-button"
+                        type="button" @click="attachAndAttachAnother"
+                        class="ml-auto btn btn-default btn-primary mr-3"
+                    >
+                        {{__('Attach & Attach Another')}}
                     </button>
 
                     <button dusk="attach-button" class="btn btn-default btn-primary">
-                        {{__('Attach')}} {{ relatedResourceLabel }}
+                        {{ __('Attach') }} {{ relatedResourceLabel }}
                     </button>
                 </div>
             </form>

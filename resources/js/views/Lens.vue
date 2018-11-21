@@ -5,8 +5,8 @@
                 :to="{
                     name: 'index',
                     params: {
-                        'resourceName': resourceName
-                    }
+                        resourceName: resourceName,
+                    },
                 }"
                 class="no-underline text-primary font-bold dim"
                 data-testid="lens-back"
@@ -19,12 +19,17 @@
             {{ resourceResponse.name }}
         </heading>
 
-        <loading-card :loading="loading" :class="{ 'overflow-hidden border border-50': !shouldShowToolbar }">
-            <div v-if="shouldShowToolbar" class="py-3 flex items-center border-b border-50">
+        <loading-card :loading="loading">
+            <div class="py-3 flex items-center border-b border-50">
                 <div class="px-3" v-if="shouldShowCheckBoxes">
                     <!-- Select All -->
-                    <dropdown width="250" active-class="" class="h-9 flex items-center" dusk="select-all-dropdown">
-                        <dropdown-trigger slot-scope="{toggle}" :handle-click="toggle">
+                    <dropdown
+                        width="250"
+                        active-class=""
+                        class="h-9 flex items-center"
+                        dusk="select-all-dropdown"
+                    >
+                        <dropdown-trigger slot-scope="{ toggle }" :handle-click="toggle">
                             <fake-checkbox :checked="selectAllChecked" />
                         </dropdown-trigger>
 
@@ -32,35 +37,30 @@
                             <div class="p-4">
                                 <ul class="list-reset">
                                     <li class="flex items-center">
-                                        <label
-                                            class="flex items-center"
-                                            @input="toggleSelectAll"
-                                            @keydown.prevent.space.enter="toggleSelectAll"
+                                        <checkbox-with-label
+                                            :checked="selectAllChecked"
+                                            @change="toggleSelectAll"
                                         >
-                                            <checkbox :checked="selectAllChecked" />
-
-                                            <span class="ml-2">
-                                                {{__('Select All')}}
-                                            </span>
-                                        </label>
+                                            {{ __('Select All') }}
+                                        </checkbox-with-label>
                                     </li>
 
-                                    <li class="flex items-center" v-if="allMatchingResourceCount > 0">
-                                        <label
-                                            class="flex items-center"
-                                            @input="toggleSelectAllMatching"
-                                            @keydown.prevent.space.enter="toggleSelectAllMatching"
+                                    <li
+                                        class="flex items-center"
+                                        v-if="allMatchingResourceCount > 0"
+                                    >
+                                        <checkbox-with-label
+                                            dusk="select-all-matching-button"
+                                            :checked="selectAllMatchingChecked"
+                                            @change="toggleSelectAllMatching"
                                         >
-                                            <checkbox
-                                                dusk="select-all-matching-button"
-                                                :checked="selectAllMatchingChecked"
-                                            />
-
-                                            <span class="ml-2">
-                                                {{__('Select All Matching')}}
+                                            <template>
+                                                <span class="mr-1">{{
+                                                    __('Select All Matching')
+                                                }}</span>
                                                 <span>({{ allMatchingResourceCount }})</span>
-                                            </span>
-                                        </label>
+                                            </template>
+                                        </checkbox-with-label>
                                     </li>
                                 </ul>
                             </div>
@@ -69,7 +69,6 @@
                 </div>
 
                 <div class="flex items-center ml-auto px-3">
-
                     <!-- Action Selector -->
                     <action-selector
                         v-if="selectedResources.length > 0"
@@ -85,22 +84,20 @@
                             currentTrashed,
                             viaResource,
                             viaResourceId,
-                            viaRelationship
+                            viaRelationship,
                         }"
                         @actionExecuted="getResources"
                     />
 
                     <filter-menu
-                        :filters="filters"
+                        :resourceName="resourceName"
                         :soft-deletes="softDeletes"
                         :via-resource="viaResource"
                         :via-has-one="viaHasOne"
-                        :current-filters="currentFilters"
                         :trashed="trashed"
                         :per-page="perPage"
-                        :show-trashed-option="false"
-                        @clear-selected-filters="clearSelectedFilters"
-                        @filter-changed="updateFilters"
+                        @clear-selected-filters="clearSelectedFilters(lens)"
+                        @filter-changed="filterChanged"
                         @trashed-changed="trashedChanged"
                         @per-page-changed="updatePerPageChanged"
                     />
@@ -108,22 +105,26 @@
                     <delete-menu
                         v-if="shouldShowDeleteMenu"
                         dusk="delete-menu"
-
                         :soft-deletes="softDeletes"
                         :resources="resources"
                         :selected-resources="selectedResources"
                         :via-many-to-many="viaManyToMany"
-
                         :all-matching-resource-count="allMatchingResourceCount"
                         :all-matching-selected="selectAllMatchingChecked"
-
-                        :authorized-to-delete-selected-resources="authorizedToDeleteSelectedResources"
-                        :authorized-to-force-delete-selected-resources="authorizedToForceDeleteSelectedResources"
+                        :authorized-to-delete-selected-resources="
+                            authorizedToDeleteSelectedResources
+                        "
+                        :authorized-to-force-delete-selected-resources="
+                            authorizedToForceDeleteSelectedResources
+                        "
                         :authorized-to-delete-any-resources="authorizedToDeleteAnyResources"
-                        :authorized-to-force-delete-any-resources="authorizedToForceDeleteAnyResources"
-                        :authorized-to-restore-selected-resources="authorizedToRestoreSelectedResources"
+                        :authorized-to-force-delete-any-resources="
+                            authorizedToForceDeleteAnyResources
+                        "
+                        :authorized-to-restore-selected-resources="
+                            authorizedToRestoreSelectedResources
+                        "
                         :authorized-to-restore-any-resources="authorizedToRestoreAnyResources"
-
                         @deleteSelected="deleteSelectedResources"
                         @deleteAllMatching="deleteAllMatchingResources"
                         @forceDeleteSelected="forceDeleteSelectedResources"
@@ -135,14 +136,36 @@
                 </div>
             </div>
 
-
-
             <div v-if="!resources.length" class="flex justify-center items-center px-6 py-8">
                 <div class="text-center">
-                    <svg class="mb-3" xmlns="http://www.w3.org/2000/svg" width="65" height="51" viewBox="0 0 65 51"><g id="Page-1" fill="none" fill-rule="evenodd"><g id="05-blank-state" fill="#A8B9C5" fill-rule="nonzero" transform="translate(-779 -695)"><path id="Combined-Shape" d="M835 735h2c.552285 0 1 .447715 1 1s-.447715 1-1 1h-2v2c0 .552285-.447715 1-1 1s-1-.447715-1-1v-2h-2c-.552285 0-1-.447715-1-1s.447715-1 1-1h2v-2c0-.552285.447715-1 1-1s1 .447715 1 1v2zm-5.364125-8H817v8h7.049375c.350333-3.528515 2.534789-6.517471 5.5865-8zm-5.5865 10H785c-3.313708 0-6-2.686292-6-6v-30c0-3.313708 2.686292-6 6-6h44c3.313708 0 6 2.686292 6 6v25.049375c5.053323.501725 9 4.765277 9 9.950625 0 5.522847-4.477153 10-10 10-5.185348 0-9.4489-3.946677-9.950625-9zM799 725h16v-8h-16v8zm0 2v8h16v-8h-16zm34-2v-8h-16v8h16zm-52 0h16v-8h-16v8zm0 2v4c0 2.209139 1.790861 4 4 4h12v-8h-16zm18-12h16v-8h-16v8zm34 0v-8h-16v8h16zm-52 0h16v-8h-16v8zm52-10v-4c0-2.209139-1.790861-4-4-4h-44c-2.209139 0-4 1.790861-4 4v4h52zm1 39c4.418278 0 8-3.581722 8-8s-3.581722-8-8-8-8 3.581722-8 8 3.581722 8 8 8z"/></g></g></svg>
+                    <svg
+                        class="mb-3"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="65"
+                        height="51"
+                        viewBox="0 0 65 51"
+                    >
+                        <g id="Page-1" fill="none" fill-rule="evenodd">
+                            <g
+                                id="05-blank-state"
+                                fill="#A8B9C5"
+                                fill-rule="nonzero"
+                                transform="translate(-779 -695)"
+                            >
+                                <path
+                                    id="Combined-Shape"
+                                    d="M835 735h2c.552285 0 1 .447715 1 1s-.447715 1-1 1h-2v2c0 .552285-.447715 1-1 1s-1-.447715-1-1v-2h-2c-.552285 0-1-.447715-1-1s.447715-1 1-1h2v-2c0-.552285.447715-1 1-1s1 .447715 1 1v2zm-5.364125-8H817v8h7.049375c.350333-3.528515 2.534789-6.517471 5.5865-8zm-5.5865 10H785c-3.313708 0-6-2.686292-6-6v-30c0-3.313708 2.686292-6 6-6h44c3.313708 0 6 2.686292 6 6v25.049375c5.053323.501725 9 4.765277 9 9.950625 0 5.522847-4.477153 10-10 10-5.185348 0-9.4489-3.946677-9.950625-9zM799 725h16v-8h-16v8zm0 2v8h16v-8h-16zm34-2v-8h-16v8h16zm-52 0h16v-8h-16v8zm0 2v4c0 2.209139 1.790861 4 4 4h12v-8h-16zm18-12h16v-8h-16v8zm34 0v-8h-16v8h16zm-52 0h16v-8h-16v8zm52-10v-4c0-2.209139-1.790861-4-4-4h-44c-2.209139 0-4 1.790861-4 4v4h52zm1 39c4.418278 0 8-3.581722 8-8s-3.581722-8-8-8-8 3.581722-8 8 3.581722 8 8 8z"
+                                />
+                            </g>
+                        </g>
+                    </svg>
 
                     <h3 class="text-base text-80 font-normal mb-6">
-                        {{__('No :resource matched the given criteria.', {resource: resourceInformation.label.toLowerCase()})}}
+                        {{
+                            __('No :resource matched the given criteria.', {
+                                resource: resourceInformation.label.toLowerCase(),
+                            })
+                        }}
                     </h3>
 
                     <create-resource-button
@@ -153,7 +176,7 @@
                         :via-resource-id="viaResourceId"
                         :via-relationship="viaRelationship"
                         :relationship-type="relationshipType"
-                        :authorized-to-create="authorizedToCreate && ! resourceIsFull"
+                        :authorized-to-create="authorizedToCreate && !resourceIsFull"
                         :authorized-to-relate="authorizedToRelate"
                     />
                 </div>
@@ -188,7 +211,8 @@
                 :resources="resources"
                 :resource-response="resourceResponse"
                 @previous="selectPreviousPage"
-                @next="selectNextPage">
+                @next="selectNextPage"
+            >
             </pagination-links>
         </loading-card>
     </loading-view>
@@ -234,7 +258,10 @@ export default {
             type: String,
             default: '',
         },
-        lens: {},
+        lens: {
+            type: String,
+            required: true,
+        },
     },
 
     data: () => ({
@@ -254,8 +281,6 @@ export default {
         pivotActions: null,
         actionValidationErrors: new Errors(),
 
-        filters: [],
-
         authorizedToRelate: false,
 
         orderBy: '',
@@ -272,16 +297,17 @@ export default {
         this.initializeTrashedFromQueryString()
         this.initializeOrderingFromQueryString()
 
+        this.initializeFilters(this.lens)
         this.getResources()
         // this.getAuthorizationToRelate()
         this.getActions()
-        this.getFilters()
 
         this.initialLoading = false
 
         this.$watch(
             () => {
                 return (
+                    this.lens +
                     this.resourceName +
                     this.encodedFilters +
                     this.currentSearch +
@@ -299,7 +325,6 @@ export default {
                 this.initializePerPageFromQueryString()
                 this.initializeTrashedFromQueryString()
                 this.initializeOrderingFromQueryString()
-                this.initializeFilterValuesFromQueryString()
             }
         )
     },
@@ -414,36 +439,6 @@ export default {
         },
 
         /**
-         * Get the filters available for the current resource.
-         */
-        getFilters() {
-            this.filters = []
-            this.currentFilters = []
-            Nova.request()
-                .get('/nova-api/' + this.resourceName + '/lens/' + this.lens + '/filters')
-                .then(response => {
-                    this.filters = response.data
-                    this.initializeFilterValuesFromQueryString()
-                })
-        },
-
-        /**
-         * Clear filters and reset the resource table
-         */
-        clearSelectedFilters() {
-            this.clearAllFilters()
-            this.filterChanged()
-        },
-
-        /**
-         * Update the currentFilters with newFilters
-         */
-        updateFilters(newFilters) {
-            this.currentFilters = newFilters
-            this.filterChanged()
-        },
-
-        /**
          * Clear the selected resouces and the "select all" states.
          */
         clearResourceSelections() {
@@ -460,8 +455,6 @@ export default {
                     params: this.resourceRequestQueryString,
                 })
                 .then(response => {
-                    console.log('count')
-                    console.log(response.data.count)
                     this.allMatchingResourceCount = response.data.count
                 })
         },
@@ -525,13 +518,6 @@ export default {
          */
         lensActionEndpoint() {
             return `/nova-api/${this.resourceName}/lens/${this.lens}/action`
-        },
-
-        /**
-         * Get the name of the filter query string variable.
-         */
-        filterParameter() {
-            return this.resourceName + '_filter'
         },
 
         /**
@@ -722,20 +708,6 @@ export default {
         },
 
         /**
-         * Determine if there any filters for this resource
-         */
-        hasFilters() {
-            return Boolean(this.filters.length > 0)
-        },
-
-        /**
-         * Determine whether to show the toolbar for this resource index
-         */
-        shouldShowToolbar() {
-            return Boolean(this.shouldShowCheckBoxes || this.hasFilters)
-        },
-
-        /**
          * Determine whether to show the selection checkboxes for resources
          */
         shouldShowCheckBoxes() {
@@ -821,6 +793,20 @@ export default {
                     this.authorizedToRestoreSelectedResources ||
                     this.authorizedToRestoreAnyResources
             )
+        },
+
+        /**
+         * Return the currently encoded filter string from the store
+         */
+        encodedFilters() {
+            return this.$store.getters.currentEncodedFilters
+        },
+
+        /**
+         * Return the initial encoded filters from the query string
+         */
+        initialEncodedFilters() {
+            return this.$route.query[this.filterParameter] || ''
         },
     },
 }
