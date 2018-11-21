@@ -42423,7 +42423,7 @@ var render = function() {
                                   attrs: {
                                     "data-testid": "open-delete-modal",
                                     dusk: "open-delete-modal-button",
-                                    title: "Delete"
+                                    title: _vm.__("Delete")
                                   },
                                   on: { click: _vm.openDeleteModal }
                                 },
@@ -42447,7 +42447,7 @@ var render = function() {
                                   attrs: {
                                     "data-testid": "open-restore-modal",
                                     dusk: "open-restore-modal-button",
-                                    title: "Restore"
+                                    title: _vm.__("Restore")
                                   },
                                   on: { click: _vm.openRestoreModal }
                                 },
@@ -42470,7 +42470,7 @@ var render = function() {
                                   attrs: {
                                     "data-testid": "open-force-delete-modal",
                                     dusk: "open-force-delete-modal-button",
-                                    title: "Force Delete"
+                                    title: _vm.__("Force Delete")
                                   },
                                   on: { click: _vm.openForceDeleteModal }
                                 },
@@ -42568,7 +42568,7 @@ var render = function() {
                                       name: "edit",
                                       params: { id: _vm.resource.id }
                                     },
-                                    title: "Edit"
+                                    title: _vm.__("Edit")
                                   }
                                 },
                                 [
