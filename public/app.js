@@ -1579,13 +1579,16 @@ exports.default = {
 
     computed: {
         hasValue: function hasValue() {
-            return Boolean(this.field.value || this.field.thumbnailUrl) && !Boolean(this.deleted) && !Boolean(this.missing);
+            return Boolean(this.field.value || this.imageUrl) && !Boolean(this.deleted) && !Boolean(this.missing);
         },
         shouldShowLoader: function shouldShowLoader() {
-            return !Boolean(this.deleted) && Boolean(this.field.thumbnailUrl);
+            return !Boolean(this.deleted) && Boolean(this.imageUrl);
         },
         shouldShowToolbar: function shouldShowToolbar() {
             return Boolean(this.field.downloadable || this.field.deletable) && this.hasValue;
+        },
+        imageUrl: function imageUrl() {
+            return this.field.previewUrl || this.field.thumbnailUrl;
         }
     }
 }; //
@@ -3456,7 +3459,7 @@ exports.default = {
          * Determine whether the field has a value
          */
         hasValue: function hasValue() {
-            return Boolean(this.field.value || this.field.thumbnailUrl) && !Boolean(this.deleted) && !Boolean(this.missing);
+            return Boolean(this.field.value || this.imageUrl) && !Boolean(this.deleted) && !Boolean(this.missing);
         },
 
 
@@ -3464,7 +3467,7 @@ exports.default = {
          * Determine whether the field should show the loader component
          */
         shouldShowLoader: function shouldShowLoader() {
-            return !Boolean(this.deleted) && Boolean(this.field.thumbnailUrl);
+            return !Boolean(this.deleted) && Boolean(this.imageUrl);
         },
 
 
@@ -3473,6 +3476,9 @@ exports.default = {
          */
         shouldShowRemoveButton: function shouldShowRemoveButton() {
             return Boolean(this.field.deletable);
+        },
+        imageUrl: function imageUrl() {
+            return this.field.previewUrl || this.field.thumbnailUrl;
         }
     }
 }; //
@@ -35253,7 +35259,7 @@ var render = function() {
                   ? [
                       _c("ImageLoader", {
                         staticClass: "max-w-xs",
-                        attrs: { src: _vm.field.thumbnailUrl },
+                        attrs: { src: _vm.imageUrl },
                         on: {
                           missing: function(value) {
                             return (_vm.missing = value)
@@ -35263,7 +35269,7 @@ var render = function() {
                     ]
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.field.value && !_vm.field.thumbnailUrl
+                _vm.field.value && !_vm.imageUrl
                   ? [
                       _c(
                         "card",
@@ -35294,7 +35300,7 @@ var render = function() {
                     ]
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.field.thumbnailUrl
+                _vm.imageUrl
                   ? _c(
                       "p",
                       { staticClass: "mt-3 flex items-center text-sm" },
@@ -42756,7 +42762,7 @@ var render = function() {
           ? [
               _c("ImageLoader", {
                 staticClass: "max-w-xs",
-                attrs: { src: _vm.field.thumbnailUrl },
+                attrs: { src: _vm.imageUrl },
                 on: {
                   missing: function(value) {
                     return (_vm.missing = value)
@@ -42766,11 +42772,11 @@ var render = function() {
             ]
           : _vm._e(),
         _vm._v(" "),
-        _vm.field.value && !_vm.field.thumbnailUrl
+        _vm.field.value && !_vm.imageUrl
           ? [_vm._v("\n            " + _vm._s(_vm.field.value) + "\n        ")]
           : _vm._e(),
         _vm._v(" "),
-        !_vm.field.value && !_vm.field.thumbnailUrl
+        !_vm.field.value && !_vm.imageUrl
           ? _c("span", [_vm._v("—")])
           : _vm._e(),
         _vm._v(" "),
