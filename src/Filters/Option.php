@@ -2,11 +2,6 @@
 
 namespace Laravel\Nova\Filters;
 
-use Laravel\Nova\Nova;
-use Illuminate\Http\Request;
-use Illuminate\Container\Container;
-use Laravel\Nova\ProxiesCanSeeToGate;
-
 class Option
 {
     /**

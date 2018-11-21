@@ -91,7 +91,8 @@ abstract class Filter implements JsonSerializable
      *
      * @return array
      */
-    public function default() {
+    public function default()
+    {
         return '';
     }
 

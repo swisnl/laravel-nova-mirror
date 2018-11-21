@@ -19,7 +19,8 @@ abstract class BooleanFilter extends Filter
      *
      * @return array
      */
-    public function default() {
+    public function default()
+    {
         $container = Container::getInstance();
 
         return collect($this->options($container->make(Request::class)))->values()->flatMap(function ($option) {
