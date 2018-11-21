@@ -10587,10 +10587,6 @@ exports.default = {
         getAllMatchingResourceCount: function getAllMatchingResourceCount() {
             var _this8 = this;
 
-            if (this.resourceName == 'action-events') {
-                return;
-            }
-
             Nova.request().get('/nova-api/' + this.resourceName + '/count', {
                 params: this.resourceRequestQueryString
             }).then(function (response) {
