@@ -36,9 +36,9 @@ class FilterCommand extends GeneratorCommand
     protected function getStub()
     {
         if ($this->option('boolean')) {
-
+            return __DIR__.'/stubs/boolean-filter.stub';
         } elseif ($this->option('date')) {
-
+            return __DIR__.'/stubs/date-filter.stub';
         } else {
             return __DIR__.'/stubs/filter.stub';
         }
