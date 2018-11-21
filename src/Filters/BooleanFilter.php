@@ -8,7 +8,7 @@ use Illuminate\Container\Container;
 abstract class BooleanFilter extends Filter
 {
     /**
-     * The field's component.
+     * The filter's component.
      *
      * @var string
      */

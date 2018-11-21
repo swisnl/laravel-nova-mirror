@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 abstract class DateFilter extends Filter
 {
     /**
-     * The field's component.
+     * The filter's component.
      *
      * @var string
      */
