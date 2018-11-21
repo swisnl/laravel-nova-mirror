@@ -286,6 +286,7 @@ export default {
     height: auto;
     font: 14px/1.5 Menlo, Consolas, Monaco, 'Andale Mono', monospace;
     box-sizing: border-box;
+    width: 100%;
 }
 
 .markdown-fullscreen .markdown-content {
