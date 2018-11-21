@@ -34942,7 +34942,7 @@ var render = function() {
               _vm._v(
                 _vm._s(
                   _vm.__(
-                    "We're lost in space. The page your were trying to view does not exist."
+                    "We're lost in space. The page you were trying to view does not exist."
                   )
                 )
               )
