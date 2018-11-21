@@ -50,9 +50,9 @@ class ActionEvent extends Model
             'name' => 'Update',
             'actionable_type' => $model->getMorphClass(),
             'actionable_id' => $model->getKey(),
-            'target_type' => get_class($model),
+            'target_type' => $model->getMorphClass(),
             'target_id' => $model->getKey(),
-            'model_type' => get_class($model),
+            'model_type' => $model->getMorphClass(),
             'model_id' => $model->getKey(),
             'fields' => '',
             'status' => 'finished',
@@ -76,9 +76,9 @@ class ActionEvent extends Model
             'name' => 'Update Attached',
             'actionable_type' => $parent->getMorphClass(),
             'actionable_id' => $parent->getKey(),
-            'target_type' => get_class(Nova::modelInstanceForKey($request->relatedResource)),
+            'target_type' => Nova::modelInstanceForKey($request->relatedResource)->getMorphClass(),
             'target_id' => $request->relatedResourceId,
-            'model_type' => get_class($pivot),
+            'model_type' => $pivot->getMorphClass(),
             'model_id' => $pivot->getKey(),
             'fields' => '',
             'status' => 'finished',
@@ -337,7 +337,7 @@ class ActionEvent extends Model
     public static function updateStatus($batchId, $model, $status, $e = null)
     {
         return static::where('batch_id', $batchId)
-                        ->where('model_type', get_class($model))
+                        ->where('model_type', $model->getMorphClass())
                         ->where('model_id', $model->getKey())
                         ->update(['status' => $status, 'exception' => (string) $e]);
     }

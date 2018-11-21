@@ -66,14 +66,14 @@
                                 currentTrashed,
                                 viaResource,
                                 viaResourceId,
-                                viaRelationship
+                                viaRelationship,
                             }"
                             @actionExecuted="actionExecuted"
                             class="ml-3"
                         />
 
                         <button
-                            v-if="resource.authorizedToDelete && ! resource.softDeleted"
+                            v-if="resource.authorizedToDelete && !resource.softDeleted"
                             data-testid="open-delete-modal"
                             dusk="open-delete-modal-button"
                             @click="openDeleteModal"
@@ -141,11 +141,15 @@
                             v-if="resource.authorizedToUpdate"
                             data-testid="edit-resource"
                             dusk="edit-resource-button"
-                            :to="{ name: 'edit', params: {id: resource.id} }"
+                            :to="{ name: 'edit', params: { id: resource.id } }"
                             class="btn btn-default btn-icon bg-primary"
                             :title="__('Edit')"
                         >
-                            <icon type="edit" class="text-white" style="margin-top: -2px; margin-left: 3px" />
+                            <icon
+                                type="edit"
+                                class="text-white"
+                                style="margin-top: -2px; margin-left: 3px"
+                            />
                         </router-link>
                     </div>
                 </div>
@@ -295,6 +299,7 @@ export default {
          */
         async actionExecuted() {
             await this.getResource()
+            await this.getActions()
         },
 
         /**

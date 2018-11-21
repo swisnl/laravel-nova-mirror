@@ -48,7 +48,7 @@
                 <!-- Attach Button -->
                 <div class="bg-30 flex px-8 py-4">
                     <button dusk="update-and-continue-editing-button" type="button" @click="updateAndContinueEditing" class="ml-auto btn btn-default btn-primary mr-3">
-                        {{__('Update &amp; Continue Editing')}}
+                        {{__('Update & Continue Editing')}}
                     </button>
 
                     <button dusk="update-button" class="btn btn-default btn-primary">

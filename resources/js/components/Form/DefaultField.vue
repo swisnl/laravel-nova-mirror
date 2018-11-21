@@ -2,21 +2,22 @@
     <field-wrapper>
         <div class="w-1/5 py-6 px-8">
             <slot>
-                <form-label :for="field.name" :class="{'mb-2': field.helpText && showHelpText }">
+                <form-label
+                    :for="field.attribute"
+                    :class="{ 'mb-2': field.helpText && showHelpText }"
+                >
                     {{ fieldLabel }}
                 </form-label>
             </slot>
         </div>
         <div class="py-6 px-8" :class="fieldClasses">
-            <slot name="field"/>
+            <slot name="field" />
 
             <help-text class="error-text mt-2 text-danger" v-if="hasError && showErrors">
                 {{ firstError }}
             </help-text>
 
-            <help-text class="help-text mt-2" v-if="showHelpText">
-                {{ field.helpText }}
-            </help-text>
+            <help-text class="help-text mt-2" v-if="showHelpText"> {{ field.helpText }} </help-text>
         </div>
     </field-wrapper>
 </template>

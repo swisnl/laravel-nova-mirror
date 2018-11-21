@@ -161,6 +161,7 @@ class NovaServiceProvider extends ServiceProvider
             Console\AssetCommand::class,
             Console\BaseResourceCommand::class,
             Console\CardCommand::class,
+            Console\CustomFilterCommand::class,
             Console\FilterCommand::class,
             Console\FieldCommand::class,
             Console\InstallCommand::class,
