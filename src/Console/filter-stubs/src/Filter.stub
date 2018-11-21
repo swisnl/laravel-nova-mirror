@@ -7,6 +7,11 @@ use Laravel\Nova\Filters\Filter;
 
 class {{ class }} extends Filter
 {
+    /**
+     * The filter's component.
+     *
+     * @var string
+     */
     protected $component = '{{ component }}';
 
     /**

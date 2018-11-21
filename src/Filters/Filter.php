@@ -21,7 +21,7 @@ abstract class Filter implements JsonSerializable
     public $name;
 
     /**
-     * The field's component.
+     * The filter's component.
      *
      * @var string
      */

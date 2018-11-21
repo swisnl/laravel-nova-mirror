@@ -7,7 +7,12 @@ use Laravel\Nova\Filters\Filter;
 
 class DummyClass extends Filter
 {
-    protected $component = '{{ component }}';
+    /**
+     * The filter's component.
+     *
+     * @var string
+     */
+    public $component = 'select-filter';
 
     /**
      * Apply the filter to the given query.
