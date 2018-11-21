@@ -30462,7 +30462,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.ico-button {\n    width: 35px;\n    height: 35px;\n}\n.ico-button:hover {\n    color: var(--primary);\n}\n.ico-button:active {\n    color: var(--brand-80);\n}\n.cm-fat-cursor .CodeMirror-cursor {\n    background: #000;\n}\n.cm-s-default .cm-header {\n    color: black;\n}\n.cm-s-default .cm-link {\n    color: var(--primary);\n}\n.CodeMirror-line {\n    color: var(--gray-60);\n}\n.cm-s-default .cm-variable-2 {\n    color: var(--gray-60);\n}\n.cm-s-default .cm-quote {\n    color: var(--gray-60);\n}\n.cm-s-default .cm-comment {\n    color: var(--gray-60);\n}\n.cm-s-default .cm-string {\n    color: var(--gray-40);\n}\n.cm-s-default .cm-url {\n    color: var(--gray-40);\n}\n.CodeMirror {\n    height: auto;\n    font: 14px/1.5 Menlo, Consolas, Monaco, 'Andale Mono', monospace;\n    box-sizing: border-box;\n}\n.markdown-fullscreen .markdown-content {\n    height: calc(100vh - 30px);\n}\n.markdown-fullscreen .CodeMirror {\n    height: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.ico-button {\n    width: 35px;\n    height: 35px;\n}\n.ico-button:hover {\n    color: var(--primary);\n}\n.ico-button:active {\n    color: var(--brand-80);\n}\n.cm-fat-cursor .CodeMirror-cursor {\n    background: #000;\n}\n.cm-s-default .cm-header {\n    color: black;\n}\n.cm-s-default .cm-link {\n    color: var(--primary);\n}\n.CodeMirror-line {\n    color: var(--gray-60);\n}\n.cm-s-default .cm-variable-2 {\n    color: var(--gray-60);\n}\n.cm-s-default .cm-quote {\n    color: var(--gray-60);\n}\n.cm-s-default .cm-comment {\n    color: var(--gray-60);\n}\n.cm-s-default .cm-string {\n    color: var(--gray-40);\n}\n.cm-s-default .cm-url {\n    color: var(--gray-40);\n}\n.CodeMirror {\n    height: auto;\n    font: 14px/1.5 Menlo, Consolas, Monaco, 'Andale Mono', monospace;\n    box-sizing: border-box;\n    width: 100%;\n}\n.markdown-fullscreen .markdown-content {\n    height: calc(100vh - 30px);\n}\n.markdown-fullscreen .CodeMirror {\n    height: 100%;\n}\n", ""]);
 
 // exports
 
@@ -31362,7 +31362,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.CodeMirror {\n    min-height: 50px;\n    font: 14px/1.5 Menlo, Consolas, Monaco, 'Andale Mono', monospace;\n    box-sizing: border-box;\n    height: auto;\n    margin: auto;\n    position: relative;\n    z-index: 0;\n}\n.CodeMirror-wrap {\n    padding: 0.5rem;\n}\n.CodeMirror-scroll {\n    height: auto;\n    overflow: visible;\n    box-sizing: border-box;\n}\n", ""]);
+exports.push([module.i, "\n.CodeMirror {\n    min-height: 50px;\n    font: 14px/1.5 Menlo, Consolas, Monaco, 'Andale Mono', monospace;\n    box-sizing: border-box;\n    height: auto;\n    margin: auto;\n    position: relative;\n    z-index: 0;\n    width: 100%;\n}\n.CodeMirror-wrap {\n    padding: 0.5rem;\n}\n.CodeMirror-scroll {\n    height: auto;\n    overflow: visible;\n    box-sizing: border-box;\n}\n", ""]);
 
 // exports
 
@@ -32232,7 +32232,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.CodeMirror {\n    min-height: 50px;\n    font: 14px/1.5 Menlo, Consolas, Monaco, 'Andale Mono', monospace;\n    box-sizing: border-box;\n    height: auto;\n    margin: auto;\n    position: relative;\n    z-index: 0;\n}\n.CodeMirror-wrap {\n    padding: 0.5rem;\n}\n.CodeMirror-scroll {\n    height: auto;\n    overflow: visible;\n    box-sizing: border-box;\n}\n", ""]);
+exports.push([module.i, "\n.CodeMirror {\n    min-height: 50px;\n    font: 14px/1.5 Menlo, Consolas, Monaco, 'Andale Mono', monospace;\n    box-sizing: border-box;\n    height: auto;\n    margin: auto;\n    position: relative;\n    z-index: 0;\n    width: 100%;\n}\n.CodeMirror-wrap {\n    padding: 0.5rem;\n}\n.CodeMirror-scroll {\n    height: auto;\n    overflow: visible;\n    box-sizing: border-box;\n}\n", ""]);
 
 // exports
 
