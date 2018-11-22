@@ -8,6 +8,7 @@
                     :name="field.name"
                     :value="localizedValue"
                     :twelve-hour-time="usesTwelveHourTime"
+                    :first-day-of-week="firstDayOfWeek"
                     @change="handleChange"
                 />
 
@@ -27,6 +28,12 @@ export default {
     components: { DateTimePicker },
 
     data: () => ({ localizedValue: '' }),
+
+    computed: {
+        firstDayOfWeek() {
+            return this.field.firstDayOfWeek || 0
+        },
+    },
 
     methods: {
         /*

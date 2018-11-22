@@ -34,6 +34,17 @@ class DateTime extends Field
     }
 
     /**
+     * Set the first day of the week.
+     *
+     * @param  int  $day
+     * @return $this
+     */
+    public function firstDayOfWeek($day)
+    {
+        return $this->withMeta(['firstDayOfWeek' => $day]);
+    }
+
+    /**
      * Set the date format (Moment.js) that should be used to display the date.
      *
      * @param  string  $format
