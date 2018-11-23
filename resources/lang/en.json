@@ -362,5 +362,8 @@
     "resources": "resources",
     "Choose date": "Choose date",
     "The :resource was updated!": "The :resource was updated!",
-    "The resource was updated!": "The resource was updated!"
+    "The resource was updated!": "The resource was updated!",
+    "Increase": "Increase",
+    "Constant": "Constant",
+    "Decrease": "Decrease"
 }
