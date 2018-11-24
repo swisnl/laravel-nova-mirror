@@ -362,5 +362,6 @@
     "resources": "resources",
     "Choose date": "Choose date",
     "The :resource was updated!": "The :resource was updated!",
-    "The resource was updated!": "The resource was updated!"
+    "The resource was updated!": "The resource was updated!",
+    "Reset Password Notification": "Reset Password Notification"
 }
