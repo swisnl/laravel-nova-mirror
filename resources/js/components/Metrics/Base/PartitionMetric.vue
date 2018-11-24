@@ -10,14 +10,14 @@
                 <li v-for="item in formattedItems" class="text-xs text-80 leading-normal">
                     <span class="inline-block rounded-full w-2 h-2 mr-2" :style="{
                         backgroundColor: item.color
-                    }"/>{{ item.label }} ({{item.value}} - {{ (item.value * 100 / formattedTotal).toFixed(2) }}%)
+                    }"/>{{ item.label }} ({{ item.value }} - {{ item.percentage }}%)
                 </li>
             </ul>
         </div>
 
         <div
             ref="chart"
-            class="z-40 vertical-center rounded-b-lg ct-chart"
+            :class="chartClasses"
             style="width: 90px; height: 90px; right: 20px; bottom: 30px; top: calc(50% + 15px);"
         />
     </loading-card>
@@ -75,6 +75,10 @@ export default {
     },
 
     computed: {
+        chartClasses() {
+            return ['z-40', 'vertical-center', 'rounded-b-lg', 'ct-chart', this.formattedTotal <= 0 ? 'invisible' : '']
+        },
+
         formattedChartData() {
             return { labels: this.formattedLabels, series: this.formattedData }
         },
@@ -86,6 +90,7 @@ export default {
                         label: item.label,
                         value: item.value,
                         color: colorForIndex(index),
+                        percentage: this.formattedTotal > 0 ? (item.value * 100 / this.formattedTotal).toFixed(2) : '0',
                     }
                 })
                 .value()

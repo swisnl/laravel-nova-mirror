@@ -31,7 +31,7 @@
 
                 <span v-if="increaseOrDecrease != 0">
                     <span v-if="growthPercentage !== 0">
-                        {{ growthPercentage }}% {{ increaseOrDecreaseLabel }}
+                        {{ growthPercentage }}% {{ __(increaseOrDecreaseLabel) }}
                     </span>
 
                     <span v-else>
