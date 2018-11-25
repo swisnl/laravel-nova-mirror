@@ -44,7 +44,7 @@
                 <!-- Soft Deletes -->
                 <div v-if="softDeletes && showTrashedOption">
                     <h3 slot="default" class="text-sm uppercase tracking-wide text-80 bg-30 p-3">
-                        {{ __('Trashed') }}:
+                        {{ __('Trashed') }}
                     </h3>
 
                     <div class="p-2">
