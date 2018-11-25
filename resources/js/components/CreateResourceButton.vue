@@ -5,7 +5,6 @@
             v-if="shouldShowAttachButton"
             dusk="attach-button"
             :class="classes"
-            tag="button"
             :to="{
                 name: 'attach',
                 params: {
@@ -27,7 +26,6 @@
         <!-- Create Related Models -->
         <router-link
             v-else-if="shouldShowCreateButton"
-            tag="button"
             dusk="create-button"
             :class="classes"
             :to="{
