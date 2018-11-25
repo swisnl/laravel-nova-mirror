@@ -27,7 +27,9 @@ trait DecodesFilters
             if ($matchingFilter) {
                 return ['filter' => $matchingFilter, 'value' => $filter['value']];
             }
-        })->filter()->map(function ($filter) {
+        })->reject(function ($filter) {
+            return empty($filter['value']);
+        })->map(function ($filter) {
             return new ApplyFilter($filter['filter'], $filter['value']);
         })->values();
     }
