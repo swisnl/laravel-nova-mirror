@@ -55,7 +55,7 @@ trait ResolvesFields
         return $this->resolveFields($request)->reject(function ($field) use ($request) {
             return ! $field->showOnDetail || ! $field->authorize($request);
         })->when(in_array(Actionable::class, class_uses_recursive(static::newModel())), function ($fields) {
-            return $fields->push(MorphMany::make('Actions', 'actions', ActionResource::class));
+            return $fields->push(MorphMany::make(__('Actions'), 'actions', ActionResource::class));
         })->each(function ($field) use ($request) {
             if ($field instanceof Resolvable && ! $field->pivot) {
                 $field->resolveForDisplay($this->resource);
