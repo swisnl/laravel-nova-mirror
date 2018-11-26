@@ -22,13 +22,24 @@
 
                 <!-- Create Button -->
                 <div class="bg-30 flex px-8 py-4">
-                    <button dusk="create-and-add-another-button" type="button" @click="createAndAddAnother" class="ml-auto btn btn-default btn-primary mr-3">
-                        {{__('Create & Add Another')}}
-                    </button>
+                    <progress-button
+                        class="ml-auto mr-3"
+                        dusk="create-and-add-another-button"
+                        @click.native="createAndAddAnother"
+                        :disabled="isWorking"
+                        :processing="submittedViaCreateAndAddAnother"
+                    >
+                        {{ __('Create & Add Another') }}
+                    </progress-button>
 
-                    <button dusk="create-button" class="btn btn-default btn-primary">
-                        {{__('Create')}} {{ singularName }}
-                    </button>
+                    <progress-button
+                        dusk="create-button"
+                        type="submit"
+                        :disabled="isWorking"
+                        :processing="submittedViaCreateResource"
+                    >
+                        {{ __('Create') }} {{ singularName }}
+                    </progress-button>
                 </div>
             </form>
         </card>
@@ -60,6 +71,8 @@ export default {
     data: () => ({
         relationResponse: null,
         loading: true,
+        submittedViaCreateAndAddAnother: false,
+        submittedViaCreateResource: false,
         fields: [],
         validationErrors: new Errors(),
     }),
@@ -96,8 +109,12 @@ export default {
          * Create a new resource instance using the provided data.
          */
         async createResource() {
+            this.submittedViaCreateResource = true
+
             try {
                 const response = await this.createRequest()
+
+                this.submittedViaCreateResource = false
 
                 this.$toasted.show(
                     this.__('The :resource was created!', {
@@ -114,6 +131,8 @@ export default {
                     },
                 })
             } catch (error) {
+                this.submittedViaCreateResource = false
+
                 if (error.response.status == 422) {
                     this.validationErrors = new Errors(error.response.data.errors)
                 }
@@ -124,8 +143,12 @@ export default {
          * Create a new resource and reset the form
          */
         async createAndAddAnother() {
+            this.submittedViaCreateAndAddAnother = true
+
             try {
                 const response = await this.createRequest()
+
+                this.submittedViaCreateAndAddAnother = false
 
                 this.$toasted.show(
                     this.__('The :resource was created!', {
@@ -139,6 +162,8 @@ export default {
 
                 this.validationErrors = new Errors()
             } catch (error) {
+                this.submittedViaCreateAndAddAnother = false
+
                 if (error.response.status == 422) {
                     this.validationErrors = new Errors(error.response.data.errors)
                 }
@@ -182,6 +207,13 @@ export default {
 
         isRelation() {
             return Boolean(this.viaResourceId && this.viaRelationship)
+        },
+
+        /**
+         * Determine if the form is processed
+         */
+        isWorking() {
+            return this.submittedViaCreateResource || this.submittedViaCreateAndAddAnother
         },
     },
 }

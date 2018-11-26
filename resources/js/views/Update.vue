@@ -21,13 +21,24 @@
 
                 <!-- Update Button -->
                 <div class="bg-30 flex px-8 py-4">
-                    <button type="button" dusk="update-and-continue-editing-button" @click="updateAndContinueEditing" class="ml-auto btn btn-default btn-primary mr-3">
-                        {{__('Update & Continue Editing')}}
-                    </button>
+                    <progress-button
+                        class="ml-auto mr-3"
+                        dusk="update-and-continue-editing-button"
+                        @click.native="updateAndContinueEditing"
+                        :disabled="isWorking"
+                        :processing="submittedViaUpdateAndContinueEditing"
+                    >
+                        {{ __('Update & Continue Editing') }}
+                    </progress-button>
 
-                    <button dusk="update-button" class="btn btn-default btn-primary">
-                        {{__('Update')}} {{ singularName }}
-                    </button>
+                    <progress-button
+                        dusk="update-button"
+                        type="submit"
+                        :disabled="isWorking"
+                        :processing="submittedViaUpdateResource"
+                    >
+                        {{ __('Update') }} {{ singularName }}
+                    </progress-button>
                 </div>
             </form>
         </card>
@@ -62,6 +73,8 @@ export default {
     data: () => ({
         relationResponse: null,
         loading: true,
+        submittedViaUpdateAndContinueEditing: false,
+        submittedViaUpdateResource: false,
         fields: [],
         validationErrors: new Errors(),
         lastRetrievedAt: null,
@@ -109,8 +122,12 @@ export default {
          * Update the resource using the provided data.
          */
         async updateResource() {
+            this.submittedViaUpdateResource = true
+
             try {
                 const response = await this.updateRequest()
+
+                this.submittedViaUpdateResource = false
 
                 this.$toasted.show(
                     this.__('The :resource was updated!', {
@@ -127,6 +144,8 @@ export default {
                     },
                 })
             } catch (error) {
+                this.submittedViaUpdateResource = false
+
                 if (error.response.status == 422) {
                     this.validationErrors = new Errors(error.response.data.errors)
                 }
@@ -146,8 +165,12 @@ export default {
          * Update the resource and reset the form
          */
         async updateAndContinueEditing() {
+            this.submittedViaUpdateAndContinueEditing = true
+
             try {
                 const response = await this.updateRequest()
+
+                this.submittedViaUpdateAndContinueEditing = false
 
                 this.$toasted.show(
                     this.__('The :resource was updated!', {
@@ -163,6 +186,8 @@ export default {
 
                 this.updateLastRetrievedAtTimestamp()
             } catch (error) {
+                this.submittedViaUpdateAndContinueEditing = false
+
                 if (error.response.status == 422) {
                     this.validationErrors = new Errors(error.response.data.errors)
                 }
@@ -221,6 +246,13 @@ export default {
 
         isRelation() {
             return Boolean(this.viaResourceId && this.viaRelationship)
+        },
+
+        /**
+         * Determine if the form is processed
+         */
+        isWorking() {
+            return this.submittedViaUpdateResource || this.submittedViaUpdateAndContinueEditing
         },
     },
 }

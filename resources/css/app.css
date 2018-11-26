@@ -246,12 +246,18 @@ textarea.form-input:read-only,
   @apply .h-9 .px-6 .leading-36 .rounded-lg .shadow .btn-text-shadow;
 }
 
-.btn-disabled {
+.btn-disabled,
+.btn[disabled] {
+  cursor: not-allowed;
   opacity: 0.5;
 }
 
-.btn-default:focus,
-.btn-default:active {
+.btn-disabled:focus {
+  outline: none;
+}
+
+.btn-default:not([disabled]):not(.btn-disabled):focus,
+.btn-default:not([disabled]):not(.btn-disabled):active {
   outline: none;
   box-shadow: 0 0 8px config('colors.primary');
 }
@@ -279,7 +285,7 @@ textarea.form-input:read-only,
   @apply .bg-primary .text-white;
 }
 
-.btn-primary:hover {
+.btn-primary:not([disabled]):not(.btn-disabled):hover {
   @apply .bg-primary-dark;
 }
 
