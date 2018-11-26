@@ -249,7 +249,7 @@ export default {
         },
 
         /**
-         * Determine if the form is processed
+         * Determine if the form is being processed
          */
         isWorking() {
             return this.submittedViaUpdateResource || this.submittedViaUpdateAndContinueEditing
