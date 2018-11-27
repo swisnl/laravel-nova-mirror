@@ -50,7 +50,7 @@
                         <custom-detail-toolbar
                             :resource="resource"
                             :resource-name="resourceName"
-                            :resource-id="resourceName"
+                            :resource-id="resourceId"
                         />
 
                         <!-- Actions -->
