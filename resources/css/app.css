@@ -344,6 +344,10 @@ textarea.form-input:read-only,
   right: 0rem;
 }
 
+.dropdown-right {
+  right: 20px;
+}
+
 .dropdown-alt .dropdown-trigger {
   @apply flex items-center h-9 px-3 bg-40 rounded;
 }
