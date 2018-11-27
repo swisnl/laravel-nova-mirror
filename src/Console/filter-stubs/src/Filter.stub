@@ -12,7 +12,7 @@ class {{ class }} extends Filter
      *
      * @var string
      */
-    protected $component = '{{ component }}';
+    public $component = '{{ component }}';
 
     /**
      * Apply the filter to the given query.

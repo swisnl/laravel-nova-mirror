@@ -10,6 +10,7 @@
                 :placeholder="placeholder"
                 :enable-time="false"
                 :enable-seconds="false"
+                :class="errorClasses"
                 @change="handleChange"
             />
         </template>

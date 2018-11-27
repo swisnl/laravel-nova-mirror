@@ -50,7 +50,7 @@
                         <custom-detail-toolbar
                             :resource="resource"
                             :resource-name="resourceName"
-                            :resource-id="resourceName"
+                            :resource-id="resourceId"
                         />
 
                         <!-- Actions -->
@@ -78,7 +78,7 @@
                             dusk="open-delete-modal-button"
                             @click="openDeleteModal"
                             class="btn btn-default btn-icon btn-white mr-3"
-                            title="Delete"
+                            :title="__('Delete')"
                         >
                             <icon type="delete" class="text-80" />
                         </button>
@@ -89,7 +89,7 @@
                             dusk="open-restore-modal-button"
                             @click="openRestoreModal"
                             class="btn btn-default btn-icon btn-white mr-3"
-                            title="Restore"
+                            :title="__('Restore')"
                         >
                             <icon type="restore" class="text-80" />
                         </button>
@@ -100,7 +100,7 @@
                             dusk="open-force-delete-modal-button"
                             @click="openForceDeleteModal"
                             class="btn btn-default btn-icon btn-white mr-3"
-                            title="Force Delete"
+                            :title="__('Force Delete')"
                         >
                             <icon type="force-delete" class="text-80" />
                         </button>
@@ -143,7 +143,7 @@
                             dusk="edit-resource-button"
                             :to="{ name: 'edit', params: { id: resource.id } }"
                             class="btn btn-default btn-icon bg-primary"
-                            title="Edit"
+                            :title="__('Edit')"
                         >
                             <icon
                                 type="edit"
