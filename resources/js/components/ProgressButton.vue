@@ -1,10 +1,14 @@
 <template>
-    <button class="btn btn-default btn-primary inline-flex items-center" type="button">
-        <span>
+    <button class="btn btn-default btn-primary inline-flex items-center relative" type="button">
+        <span :class="{'invisible': processing}">
             <slot />
         </span>
 
-        <span v-if="processing" class="ml-4">
+        <span
+            v-if="processing"
+            class="absolute"
+            style="top: 50%; left: 50%; transform: translate(-50%, -50%)"
+        >
             <loader class="text-white" width="32" />
         </span>
     </button>
