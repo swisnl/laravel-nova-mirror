@@ -28,7 +28,13 @@ trait DecodesFilters
                 return ['filter' => $matchingFilter, 'value' => $filter['value']];
             }
         })->reject(function ($filter) {
-            return empty($filter['value']);
+            if (is_array($filter['value'])) {
+                return count($filter['value']) < 1;
+            } elseif (is_string($filter['value'])) {
+                return trim($filter['value']) === '';
+            }
+
+            return is_null($filter['value']);
         })->map(function ($filter) {
             return new ApplyFilter($filter['filter'], $filter['value']);
         })->values();
