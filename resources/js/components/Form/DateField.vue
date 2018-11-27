@@ -11,6 +11,7 @@
                 :enable-time="false"
                 :enable-seconds="false"
                 :first-day-of-week="firstDayOfWeek"
+                :class="errorClasses"
                 @change="handleChange"
             />
         </template>

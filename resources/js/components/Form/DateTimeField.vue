@@ -9,6 +9,7 @@
                     :value="localizedValue"
                     :twelve-hour-time="usesTwelveHourTime"
                     :first-day-of-week="firstDayOfWeek"
+                    :class="errorClasses"
                     @change="handleChange"
                 />
 
