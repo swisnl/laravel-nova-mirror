@@ -54,6 +54,7 @@ import PaginationLinks from '@/components/PaginationLinks'
 import PanelItem from '@/components/PanelItem'
 import PartitionMetric from '@/components/Metrics/PartitionMetric'
 import Play from '@/components/Icons/Play'
+import ProgressButton from '@/components/ProgressButton'
 import Refresh from '@/components/Icons/Refresh'
 import ResourceTable from '@/components/ResourceTable'
 import ResourceTableRow from '@/components/Index/ResourceTableRow'
@@ -129,6 +130,7 @@ Vue.component('modal', Modal)
 Vue.component('pagination-links', PaginationLinks)
 Vue.component('panel-item', PanelItem)
 Vue.component('partition-metric', PartitionMetric)
+Vue.component('progress-button', ProgressButton)
 Vue.component('resource-index', Index)
 Vue.component('resource-table', ResourceTable)
 Vue.component('resource-table-row', ResourceTableRow)
