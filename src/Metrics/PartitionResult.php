@@ -15,6 +15,13 @@ class PartitionResult implements JsonSerializable
     public $value;
 
     /**
+     * The custom label colors.
+     *
+     * @var array
+     */
+    public $colors = [];
+
+    /**
      * Create a new partition result instance.
      *
      * @param  array  $value
@@ -41,6 +48,19 @@ class PartitionResult implements JsonSerializable
     }
 
     /**
+     * Set the custom label colors.
+     *
+     * @param  array  $colors
+     * @return $this
+     */
+    public function colors(array $colors)
+    {
+        $this->colors = $colors;
+
+        return $this;
+    }
+
+    /**
      * Prepare the metric result for JSON serialization.
      *
      * @return array
@@ -49,7 +69,13 @@ class PartitionResult implements JsonSerializable
     {
         return [
             'value' => collect($this->value ?? [])->map(function ($value, $label) {
-                return ['label' => $label, 'value' => $value];
+                return array_filter([
+                    'color' => $this->colors[$label] ?? null,
+                    'label' => $label,
+                    'value' => $value,
+                ], function ($value) {
+                    return ! is_null($value);
+                });
             })->values()->all(),
         ];
     }
