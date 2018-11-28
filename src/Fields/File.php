@@ -232,7 +232,7 @@ class File extends Field implements DeletableContract
      * Set the file's storage path.
      *
      * @param  string  $path
-     * @return string
+     * @return $this
      */
     public function path($path)
     {
