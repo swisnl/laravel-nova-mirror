@@ -86,7 +86,7 @@ export default {
 
     computed: {
         chartClasses() {
-            return ['z-40', 'vertical-center', 'rounded-b-lg', 'ct-chart', this.formattedTotal <= 0 ? 'invisible' : '']
+            return ['vertical-center', 'rounded-b-lg', 'ct-chart', this.formattedTotal <= 0 ? 'invisible' : '']
         },
 
         formattedChartData() {
