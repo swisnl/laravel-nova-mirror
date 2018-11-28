@@ -26,7 +26,7 @@
 
         <div
             ref="chart"
-            class="z-40 absolute pin rounded-b-lg ct-chart"
+            class="absolute pin rounded-b-lg ct-chart"
             style="top: 60%"
         />
     </loading-card>
