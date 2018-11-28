@@ -38,7 +38,9 @@ class TrendCommand extends GeneratorCommand
     {
         $stub = parent::buildClass($name);
 
-        return str_replace('uri-key', Str::snake($this->argument('name'), '-'), $stub);
+        $key = preg_replace('/[^a-zA-Z0-9]+/', '', $this->argument('name'));
+
+        return str_replace('uri-key', Str::snake($key, '-'), $stub);
     }
 
     /**
