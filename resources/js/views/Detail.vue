@@ -290,7 +290,9 @@ export default {
             return Nova.request()
                 .get('/nova-api/' + this.resourceName + '/actions')
                 .then(response => {
-                    this.actions = response.data.actions
+                    this.actions = _.filter(response.data.actions, action => {
+                        return !action.onlyOnIndex
+                    })
                 })
         },
 
