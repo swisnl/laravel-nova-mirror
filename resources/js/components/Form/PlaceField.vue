@@ -78,6 +78,9 @@ export default {
                         this.field.country + '-value',
                         e.suggestion.countryCode.toUpperCase()
                     )
+
+                    Nova.$emit(this.field.latitude + '-value', e.suggestion.latlng.lat)
+                    Nova.$emit(this.field.longitude + '-value', e.suggestion.latlng.lng)
                 })
             })
 
@@ -90,6 +93,8 @@ export default {
                     Nova.$emit(this.field.state + '-value', '')
                     Nova.$emit(this.field.postalCode + '-value', '')
                     Nova.$emit(this.field.country + '-value', '')
+                    Nova.$emit(this.field.latitude + '-value', '')
+                    Nova.$emit(this.field.longitude + '-value', '')
                 })
             })
         },

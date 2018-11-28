@@ -27,7 +27,9 @@ class Place extends Text
              ->city('city')
              ->state('state')
              ->postalCode('postal_code')
-             ->country('country');
+             ->country('country')
+             ->latitude('latitude')
+             ->longitude('longitude');
     }
 
     /**
@@ -117,6 +119,28 @@ class Place extends Text
      * @return $this
      */
     public function country($field)
+    {
+        return $this->withMeta([__FUNCTION__ => $field]);
+    }
+
+    /**
+     * Specify the field that contains the latitude.
+     *
+     * @param  string  $field
+     * @return $this
+     */
+    public function latitude($field)
+    {
+        return $this->withMeta([__FUNCTION__ => $field]);
+    }
+
+    /**
+     * Specify the field that contains the longitude.
+     *
+     * @param  string  $field
+     * @return $this
+     */
+    public function longitude($field)
     {
         return $this->withMeta([__FUNCTION__ => $field]);
     }
