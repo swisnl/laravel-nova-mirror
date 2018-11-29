@@ -998,12 +998,11 @@ export default {
          * Return the resource count label
          */
         resourceCountLabel() {
+            let label = this.resources.length > 1 ? this.__('resources') : this.__('resource')
+
             return (
                 this.resources.length &&
-                `${this.resources.length}/${this.allMatchingResourceCount} ${SingularOrPlural(
-                    this.allMatchingResourceCount,
-                    this.__('resource')
-                )}`
+                `${this.resources.length}/${this.allMatchingResourceCount} ${label}`
             )
         },
 
