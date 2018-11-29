@@ -82,6 +82,12 @@ import 'codemirror/mode/xml/xml'
 import 'codemirror/mode/vue/vue'
 import 'codemirror/mode/dockerfile/dockerfile'
 import 'codemirror/keymap/vim'
+import 'codemirror/mode/twig/twig'
+import 'codemirror/mode/htmlmixed/htmlmixed'
+
+CodeMirror.defineMode("htmltwig", function(config, parserConfig) {
+    return CodeMirror.overlayMode(CodeMirror.getMode(config, parserConfig.backdrop || "text/html"), CodeMirror.getMode(config, "twig"));
+});
 
 export default {
     props: ['resource', 'resourceName', 'resourceId', 'field'],

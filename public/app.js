@@ -1414,6 +1414,10 @@ __webpack_require__("./node_modules/codemirror/mode/dockerfile/dockerfile.js");
 
 __webpack_require__("./node_modules/codemirror/keymap/vim.js");
 
+__webpack_require__("./node_modules/codemirror/mode/twig/twig.js");
+
+__webpack_require__("./node_modules/codemirror/mode/htmlmixed/htmlmixed.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //
@@ -1484,6 +1488,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 
+_codemirror2.default.defineMode("htmltwig", function (config, parserConfig) {
+    return _codemirror2.default.overlayMode(_codemirror2.default.getMode(config, parserConfig.backdrop || "text/html"), _codemirror2.default.getMode(config, "twig"));
+});
+
+// Modes
 exports.default = {
     props: ['resource', 'resourceName', 'resourceId', 'field'],
 
@@ -1508,8 +1517,6 @@ exports.default = {
         this.codemirror.getDoc().setValue(this.field.value);
     }
 };
-
-// Modes
 
 /***/ }),
 
@@ -1699,13 +1706,16 @@ exports.default = {
 
     computed: {
         hasValue: function hasValue() {
-            return Boolean(this.field.value || this.field.thumbnailUrl) && !Boolean(this.deleted) && !Boolean(this.missing);
+            return Boolean(this.field.value || this.imageUrl) && !Boolean(this.deleted) && !Boolean(this.missing);
         },
         shouldShowLoader: function shouldShowLoader() {
-            return !Boolean(this.deleted) && Boolean(this.field.thumbnailUrl);
+            return !Boolean(this.deleted) && Boolean(this.imageUrl);
         },
         shouldShowToolbar: function shouldShowToolbar() {
             return Boolean(this.field.downloadable || this.field.deletable) && this.hasValue;
+        },
+        imageUrl: function imageUrl() {
+            return this.field.previewUrl || this.field.thumbnailUrl;
         }
     }
 }; //
@@ -3223,11 +3233,84 @@ __webpack_require__("./node_modules/codemirror/mode/sql/sql.js");
 
 __webpack_require__("./node_modules/codemirror/mode/twig/twig.js");
 
+__webpack_require__("./node_modules/codemirror/mode/htmlmixed/htmlmixed.js");
+
 var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Modes
+_codemirror2.default.defineMode("htmltwig", function (config, parserConfig) {
+    return _codemirror2.default.overlayMode(_codemirror2.default.getMode(config, parserConfig.backdrop || "text/html"), _codemirror2.default.getMode(config, "twig"));
+}); //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 exports.default = {
     mixins: [_laravelNova.HandlesValidationErrors, _laravelNova.FormField],
 
@@ -3264,74 +3347,7 @@ exports.default = {
             return this.codemirror.getDoc();
         }
     }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+};
 
 /***/ }),
 
@@ -3705,7 +3721,7 @@ exports.default = {
          * Determine whether the field has a value
          */
         hasValue: function hasValue() {
-            return Boolean(this.field.value || this.field.thumbnailUrl) && !Boolean(this.deleted) && !Boolean(this.missing);
+            return Boolean(this.field.value || this.imageUrl) && !Boolean(this.deleted) && !Boolean(this.missing);
         },
 
 
@@ -3713,7 +3729,7 @@ exports.default = {
          * Determine whether the field should show the loader component
          */
         shouldShowLoader: function shouldShowLoader() {
-            return !Boolean(this.deleted) && Boolean(this.field.thumbnailUrl);
+            return !Boolean(this.deleted) && Boolean(this.imageUrl);
         },
 
 
@@ -3722,6 +3738,9 @@ exports.default = {
          */
         shouldShowRemoveButton: function shouldShowRemoveButton() {
             return Boolean(this.field.deletable);
+        },
+        imageUrl: function imageUrl() {
+            return this.field.previewUrl || this.field.thumbnailUrl;
         }
     }
 }; //
@@ -36006,7 +36025,7 @@ var render = function() {
                   ? [
                       _c("ImageLoader", {
                         staticClass: "max-w-xs",
-                        attrs: { src: _vm.field.thumbnailUrl },
+                        attrs: { src: _vm.imageUrl },
                         on: {
                           missing: function(value) {
                             return (_vm.missing = value)
@@ -36016,7 +36035,7 @@ var render = function() {
                     ]
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.field.value && !_vm.field.thumbnailUrl
+                _vm.field.value && !_vm.imageUrl
                   ? [
                       _c(
                         "card",
@@ -36047,7 +36066,7 @@ var render = function() {
                     ]
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.field.thumbnailUrl
+                _vm.imageUrl
                   ? _c(
                       "p",
                       { staticClass: "mt-3 flex items-center text-sm" },
@@ -43397,7 +43416,7 @@ var render = function() {
           ? [
               _c("ImageLoader", {
                 staticClass: "max-w-xs",
-                attrs: { src: _vm.field.thumbnailUrl },
+                attrs: { src: _vm.imageUrl },
                 on: {
                   missing: function(value) {
                     return (_vm.missing = value)
@@ -43407,11 +43426,11 @@ var render = function() {
             ]
           : _vm._e(),
         _vm._v(" "),
-        _vm.field.value && !_vm.field.thumbnailUrl
+        _vm.field.value && !_vm.imageUrl
           ? [_vm._v("\n            " + _vm._s(_vm.field.value) + "\n        ")]
           : _vm._e(),
         _vm._v(" "),
-        !_vm.field.value && !_vm.field.thumbnailUrl
+        !_vm.field.value && !_vm.imageUrl
           ? _c("span", [_vm._v("—")])
           : _vm._e(),
         _vm._v(" "),
