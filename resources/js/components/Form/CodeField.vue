@@ -103,6 +103,7 @@ export default {
                 lineWrapping: true,
                 lineNumbers: true,
                 theme: 'dracula',
+                viewportMargin: Infinity,
             },
             ...this.field.options,
         }
