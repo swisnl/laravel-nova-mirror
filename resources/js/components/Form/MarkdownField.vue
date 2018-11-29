@@ -116,6 +116,7 @@ export default {
             indentWithTabs: true,
             lineWrapping: true,
             mode: 'markdown',
+            viewportMargin: Infinity,
             extraKeys: {
                 Enter: 'newlineAndIndentContinueMarkdownList',
                 ..._.map(this.tools, tool => {
