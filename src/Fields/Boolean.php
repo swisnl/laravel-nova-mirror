@@ -43,7 +43,9 @@ class Boolean extends Field
      */
     protected function resolveAttribute($resource, $attribute)
     {
-        return data_get($resource, $attribute) == $this->trueValue ? true : false;
+        $value = parent::resolveAttribute($resource, $attribute);
+
+        return $value == $this->trueValue ? true : false;
     }
 
     /**
