@@ -610,10 +610,6 @@ export default {
          * Get the count of all of the matching resources.
          */
         getAllMatchingResourceCount() {
-            if (this.resourceName == 'action-events') {
-                return
-            }
-
             Nova.request()
                 .get('/nova-api/' + this.resourceName + '/count', {
                     params: this.resourceRequestQueryString,
