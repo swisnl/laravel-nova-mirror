@@ -31,7 +31,7 @@ class Gravatar extends Avatar
     protected function resolveAttribute($resource, $attribute)
     {
         $callback = function () use ($resource, $attribute) {
-            return 'https://www.gravatar.com/avatar/'.md5(strtolower($resource->{$attribute})).'?s=300';
+            return 'https://www.gravatar.com/avatar/'.md5(strtolower(parent::resolveAttribute($resource, $attribute))).'?s=300';
         };
 
         $this->preview($callback)->thumbnail($callback);
