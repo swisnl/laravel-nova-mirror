@@ -52,7 +52,7 @@ class ResourceRestoreTest extends IntegrationTest
         $user2->delete();
 
         $response = $this->withExceptionHandling()
-                        ->putJson('/nova-api/users/restore?search=1', [
+                        ->putJson('/nova-api/users/restore?search='.$user->email, [
                             'resources' => 'all',
                         ]);
 
