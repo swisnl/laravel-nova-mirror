@@ -38,7 +38,7 @@ class ActionEvent extends Model
     /**
      * Create a new action event instance for a resource update.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $user
+     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return \Illuminate\Database\Eloquent\Model
      */
@@ -46,7 +46,7 @@ class ActionEvent extends Model
     {
         return new static([
             'batch_id' => (string) Str::orderedUuid(),
-            'user_id' => $user->getKey(),
+            'user_id' => $user->getAuthIdentifier(),
             'name' => 'Update',
             'actionable_type' => $model->getMorphClass(),
             'actionable_id' => $model->getKey(),
@@ -72,7 +72,7 @@ class ActionEvent extends Model
     {
         return new static([
             'batch_id' => (string) Str::orderedUuid(),
-            'user_id' => $request->user()->getKey(),
+            'user_id' => $request->user()->getAuthIdentifier(),
             'name' => 'Update Attached',
             'actionable_type' => $parent->getMorphClass(),
             'actionable_id' => $parent->getKey(),
@@ -89,7 +89,7 @@ class ActionEvent extends Model
     /**
      * Create new action event instances for resource deletes.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $user
+     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @param  \Illuminate\Support\Collection  $models
      * @return \Illuminate\Support\Collection
      */
@@ -101,7 +101,7 @@ class ActionEvent extends Model
     /**
      * Create new action event instances for resource restorations.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $user
+     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @param  \Illuminate\Support\Collection  $models
      * @return \Illuminate\Support\Collection
      */
@@ -114,7 +114,7 @@ class ActionEvent extends Model
      * Create new action event instances for resource soft deletions.
      *
      * @param  string  $action
-     * @param  \Illuminate\Database\Eloquent\Model  $user
+     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @param  \Illuminate\Support\Collection  $models
      * @return \Illuminate\Support\Collection
      */
@@ -125,7 +125,7 @@ class ActionEvent extends Model
         return $models->map(function ($model) use ($action, $user, $batchId) {
             return new static([
                 'batch_id' => $batchId,
-                'user_id' => $user->getKey(),
+                'user_id' => $user->getAuthIdentifier(),
                 'name' => $action,
                 'actionable_type' => $model->getMorphClass(),
                 'actionable_id' => $model->getKey(),
@@ -145,7 +145,7 @@ class ActionEvent extends Model
     /**
      * Create new action event instances for resource detachments.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $user
+     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @param  \Illuminate\Database\Eloquent\Model  $parent
      * @param  \Illuminate\Support\Collection  $models
      * @param  string  $pivotClass
@@ -158,7 +158,7 @@ class ActionEvent extends Model
         return $models->map(function ($model) use ($user, $parent, $pivotClass, $batchId) {
             return new static([
                 'batch_id' => $batchId,
-                'user_id' => $user->getKey(),
+                'user_id' => $user->getAuthIdentifier(),
                 'name' => 'Detach',
                 'actionable_type' => $parent->getMorphClass(),
                 'actionable_id' => $parent->getKey(),
