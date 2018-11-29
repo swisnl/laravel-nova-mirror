@@ -84,6 +84,7 @@ import 'codemirror/mode/vue/vue'
 import 'codemirror/mode/dockerfile/dockerfile'
 import 'codemirror/keymap/vim'
 import 'codemirror/mode/sql/sql'
+import 'codemirror/mode/twig/twig'
 
 import { FormField, HandlesValidationErrors } from 'laravel-nova'
 
