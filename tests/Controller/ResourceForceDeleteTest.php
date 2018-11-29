@@ -43,7 +43,7 @@ class ResourceForceDeleteTest extends IntegrationTest
         $user2 = factory(User::class)->create();
 
         $response = $this->withExceptionHandling()
-                        ->deleteJson('/nova-api/users/force?search=1', [
+                        ->deleteJson('/nova-api/users/force?search='.$user->email, [
                             'resources' => 'all',
                         ]);
 
