@@ -290,7 +290,15 @@ export default {
             this.actions = []
 
             return Nova.request()
-                .get('/nova-api/' + this.resourceName + '/actions')
+                .get(
+                    '/nova-api/' + this.resourceName + '/actions',
+                    {
+                        params: {
+                            resourceId: this.resourceId,
+                            resourceName: this.resourceName
+                        }
+                    }
+                )
                 .then(response => {
                     this.actions = _.filter(response.data.actions, action => {
                         return !action.onlyOnIndex
