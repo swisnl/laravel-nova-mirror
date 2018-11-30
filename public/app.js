@@ -1509,7 +1509,8 @@ exports.default = {
             indentWithTabs: true,
             lineWrapping: true,
             lineNumbers: true,
-            theme: 'dracula'
+            theme: 'dracula',
+            viewportMargin: Infinity
         }, this.field.options, { readOnly: true });
 
         this.codemirror = _codemirror2.default.fromTextArea(this.$refs.theTextarea, config);
@@ -3329,7 +3330,8 @@ exports.default = {
             indentWithTabs: true,
             lineWrapping: true,
             lineNumbers: true,
-            theme: 'dracula'
+            theme: 'dracula',
+            viewportMargin: Infinity
         }, this.field.options);
 
         this.codemirror = _codemirror2.default.fromTextArea(this.$refs.theTextarea, config);
@@ -4001,6 +4003,7 @@ exports.default = {
             indentWithTabs: true,
             lineWrapping: true,
             mode: 'markdown',
+            viewportMargin: Infinity,
             extraKeys: (0, _extends3.default)({
                 Enter: 'newlineAndIndentContinueMarkdownList'
             }, _lodash2.default.map(this.tools, function (tool) {
@@ -39542,7 +39545,8 @@ var render = function() {
                       _vm._v(" "),
                       _c("create-resource-button", {
                         attrs: {
-                          classes: "btn btn-sm btn-outline",
+                          classes:
+                            "btn btn-sm btn-outline inline-flex items-center",
                           "singular-name": _vm.singularName,
                           "resource-name": _vm.resourceName,
                           "via-resource": _vm.viaResource,

@@ -222,7 +222,7 @@
                     </h3>
 
                     <create-resource-button
-                        classes="btn btn-sm btn-outline"
+                        classes="btn btn-sm btn-outline inline-flex items-center"
                         :singular-name="singularName"
                         :resource-name="resourceName"
                         :via-resource="viaResource"
