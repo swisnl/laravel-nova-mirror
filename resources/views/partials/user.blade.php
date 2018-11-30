@@ -1,8 +1,18 @@
+@php
+    $user = auth()->user();
+@endphp
+
 <dropdown-trigger class="h-9 flex items-center" slot-scope="{toggle}" :handle-click="toggle">
-    <img src="https://secure.gravatar.com/avatar/{{ md5(auth()->user()->email) }}?size=512" class="rounded-full w-8 h-8 mr-3"/>
+    @isset($user->email)
+        <img src="https://secure.gravatar.com/avatar/{{ md5($user->email) }}?size=512" class="rounded-full w-8 h-8 mr-3"/>
+    @endisset
 
     <span class="text-90">
-        {{ auth()->user()->name }}
+        @isset($user->name)
+            {{ $user->name }}
+        @else
+            {{ $user->getAuthIdentifier() }}
+        @endisset
     </span>
 </dropdown-trigger>
 
