@@ -75,6 +75,7 @@
 
 <script>
 import { Errors } from 'laravel-nova'
+import composedPath from '@/polyfills/composedPath'
 
 export default {
     props: {
@@ -120,8 +121,21 @@ export default {
          * Close the modal.
          */
         handleClose() {
+            let classArray = ['flatpickr-calendar']
+
+            if (_.filter(classArray, className => pathIncludesClass(event, className)).length > 0) {
+                return
+            }
+
             this.$emit('close')
         },
     },
+}
+
+function pathIncludesClass(event, className) {
+    return composedPath(event)
+        .filter(el => el !== document && el !== window)
+        .flatMap(e => [...e.classList])
+        .includes(className)
 }
 </script>

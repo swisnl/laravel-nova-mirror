@@ -7800,7 +7800,93 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _toConsumableArray2 = __webpack_require__("./node_modules/babel-runtime/helpers/toConsumableArray.js");
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
 var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
+
+var _composedPath = __webpack_require__("./resources/js/polyfills/composedPath.js");
+
+var _composedPath2 = _interopRequireDefault(_composedPath);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     props: {
@@ -7849,84 +7935,27 @@ exports.default = {
          * Close the modal.
          */
         handleClose: function handleClose() {
+            var classArray = ['flatpickr-calendar'];
+
+            if (_.filter(classArray, function (className) {
+                return pathIncludesClass(event, className);
+            }).length > 0) {
+                return;
+            }
+
             this.$emit('close');
         }
     }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+};
+
+
+function pathIncludesClass(event, className) {
+    return (0, _composedPath2.default)(event).filter(function (el) {
+        return el !== document && el !== window;
+    }).flatMap(function (e) {
+        return [].concat((0, _toConsumableArray3.default)(e.classList));
+    }).includes(className);
+}
 
 /***/ }),
 
