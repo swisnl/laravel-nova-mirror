@@ -294,8 +294,7 @@ export default {
                     '/nova-api/' + this.resourceName + '/actions',
                     {
                         params: {
-                            resourceId: this.resourceId,
-                            resourceName: this.resourceName
+                            resourceId: this.resourceId
                         }
                     }
                 )
