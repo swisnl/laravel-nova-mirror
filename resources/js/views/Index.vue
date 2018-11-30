@@ -355,6 +355,8 @@ export default {
      * Mount the component and retrieve its initial data.
      */
     async created() {
+        if (Nova.missingResource(this.resourceName)) return this.$router.push({ name: '404' })
+
         // Bind the keydown even listener when the router is visited if this
         // component is not a relation on a Detail page
         if (!this.viaResource && !this.viaResourceId) {

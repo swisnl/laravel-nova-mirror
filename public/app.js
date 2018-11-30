@@ -8992,6 +8992,11 @@ exports.default = {
         };
     },
 
+    created: function created() {
+        if (Nova.missingResource(this.resourceName)) return this.$router.push({ name: '404' });
+    },
+
+
     /**
      * Mount the component.
      */
@@ -9480,25 +9485,33 @@ exports.default = {
                 while (1) {
                     switch (_context.prev = _context.next) {
                         case 0:
-                            if (!this.isRelation) {
-                                _context.next = 6;
+                            if (!Nova.missingResource(this.resourceName)) {
+                                _context.next = 2;
                                 break;
                             }
 
-                            _context.next = 3;
+                            return _context.abrupt('return', this.$router.push({ name: '404' }));
+
+                        case 2:
+                            if (!this.isRelation) {
+                                _context.next = 8;
+                                break;
+                            }
+
+                            _context.next = 5;
                             return Nova.request('/nova-api/' + this.viaResource + '/field/' + this.viaRelationship);
 
-                        case 3:
+                        case 5:
                             _ref2 = _context.sent;
                             data = _ref2.data;
 
                             this.relationResponse = data;
 
-                        case 6:
+                        case 8:
 
                             this.getFields();
 
-                        case 7:
+                        case 9:
                         case 'end':
                             return _context.stop();
                     }
@@ -9868,6 +9881,8 @@ exports.default = {
      * Bind the keydown even listener when the component is created
      */
     created: function created() {
+        if (Nova.missingResource(this.resourceName)) return this.$router.push({ name: '404' });
+
         document.addEventListener('keydown', this.handleKeydown);
     },
 
@@ -10815,6 +10830,15 @@ exports.default = {
                 while (1) {
                     switch (_context.prev = _context.next) {
                         case 0:
+                            if (!Nova.missingResource(this.resourceName)) {
+                                _context.next = 2;
+                                break;
+                            }
+
+                            return _context.abrupt('return', this.$router.push({ name: '404' }));
+
+                        case 2:
+
                             // Bind the keydown even listener when the router is visited if this
                             // component is not a relation on a Detail page
                             if (!this.viaResource && !this.viaResourceId) {
@@ -10827,14 +10851,14 @@ exports.default = {
                             this.initializeOrderingFromQueryString();
 
                             this.initializeFilters();
-                            _context.next = 8;
+                            _context.next = 10;
                             return this.getResources();
 
-                        case 8:
-                            _context.next = 10;
+                        case 10:
+                            _context.next = 12;
                             return this.getAuthorizationToRelate();
 
-                        case 10:
+                        case 12:
 
                             this.getLenses();
                             this.getActions();
@@ -10863,7 +10887,7 @@ exports.default = {
                                 }, 15 * 1000);
                             }
 
-                        case 15:
+                        case 17:
                         case 'end':
                             return _context.stop();
                     }
@@ -11801,6 +11825,8 @@ exports.default = {
     created: function created() {
         var _this = this;
 
+        if (Nova.missingResource(this.resourceName)) return this.$router.push({ name: '404' });
+
         this.initializeSearchFromQueryString();
         this.initializePerPageFromQueryString();
         this.initializeTrashedFromQueryString();
@@ -12390,27 +12416,35 @@ exports.default = {
                 while (1) {
                     switch (_context.prev = _context.next) {
                         case 0:
-                            if (!this.isRelation) {
-                                _context.next = 6;
+                            if (!Nova.missingResource(this.resourceName)) {
+                                _context.next = 2;
                                 break;
                             }
 
-                            _context.next = 3;
+                            return _context.abrupt('return', this.$router.push({ name: '404' }));
+
+                        case 2:
+                            if (!this.isRelation) {
+                                _context.next = 8;
+                                break;
+                            }
+
+                            _context.next = 5;
                             return Nova.request('/nova-api/' + this.viaResource + '/field/' + this.viaRelationship);
 
-                        case 3:
+                        case 5:
                             _ref2 = _context.sent;
                             data = _ref2.data;
 
                             this.relationResponse = data;
 
-                        case 6:
+                        case 8:
 
                             this.getFields();
 
                             this.updateLastRetrievedAtTimestamp();
 
-                        case 8:
+                        case 10:
                         case 'end':
                             return _context.stop();
                     }
@@ -12808,6 +12842,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
 
 exports.default = {
     mixins: [_laravelNova.PerformsSearches, _laravelNova.TogglesTrashed],
@@ -12855,6 +12891,11 @@ exports.default = {
             lastRetrievedAt: null
         };
     },
+
+    created: function created() {
+        if (Nova.missingResource(this.resourceName)) return this.$router.push({ name: '404' });
+    },
+
 
     /**
      * Mount the component.
@@ -50248,7 +50289,6 @@ var Nova = function () {
             this.bootingCallbacks.forEach(function (callback) {
                 return callback(_vue2.default, _router2.default);
             });
-
             this.bootingCallbacks = [];
         }
 
@@ -50342,6 +50382,18 @@ var Nova = function () {
             var _bus4;
 
             (_bus4 = this.bus).$emit.apply(_bus4, arguments);
+        }
+
+        /**
+         * Determine if Nova is missing the requested resource with the given uri key
+         */
+
+    }, {
+        key: 'missingResource',
+        value: function missingResource(uriKey) {
+            return _.find(this.config.resources, function (r) {
+                return r.uriKey == uriKey;
+            }) == undefined;
         }
     }]);
     return Nova;

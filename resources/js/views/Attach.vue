@@ -164,6 +164,10 @@ export default {
         selectedResourceId: null,
     }),
 
+    created() {
+        if (Nova.missingResource(this.resourceName)) return this.$router.push({ name: '404' })
+    },
+
     /**
      * Mount the component.
      */

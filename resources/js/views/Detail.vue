@@ -197,6 +197,8 @@ export default {
      * Bind the keydown even listener when the component is created
      */
     created() {
+        if (Nova.missingResource(this.resourceName)) return this.$router.push({ name: '404' })
+
         document.addEventListener('keydown', this.handleKeydown)
     },
 

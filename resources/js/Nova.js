@@ -37,7 +37,6 @@ export default class Nova {
      */
     boot() {
         this.bootingCallbacks.forEach(callback => callback(Vue, router))
-
         this.bootingCallbacks = []
     }
 
@@ -103,5 +102,12 @@ export default class Nova {
      */
     $emit(...args) {
         this.bus.$emit(...args)
+    }
+
+    /**
+     * Determine if Nova is missing the requested resource with the given uri key
+     */
+    missingResource(uriKey) {
+        return _.find(this.config.resources, r => r.uriKey == uriKey) == undefined
     }
 }
