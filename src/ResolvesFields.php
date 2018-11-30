@@ -2,6 +2,7 @@
 
 namespace Laravel\Nova;
 
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\MorphTo;
 use Illuminate\Support\Collection;
@@ -104,7 +105,7 @@ trait ResolvesFields
         return $fields->reject(function ($field) {
             return $field instanceof ListableField ||
                    $field instanceof ResourceToolElement ||
-                   $field->attribute === $this->resource->getKeyName() ||
+                   ($field instanceof ID && $field->attribute === $this->resource->getKeyName()) ||
                    $field->attribute === 'ComputedField' ||
                    ! $field->showOnCreation;
         });
@@ -146,7 +147,7 @@ trait ResolvesFields
         return $fields->reject(function ($field) {
             return $field instanceof ListableField ||
                    $field instanceof ResourceToolElement ||
-                   $field->attribute === $this->resource->getKeyName() ||
+                   ($field instanceof ID && $field->attribute === $this->resource->getKeyName()) ||
                    $field->attribute === 'ComputedField' ||
                    ! $field->showOnUpdate;
         });
