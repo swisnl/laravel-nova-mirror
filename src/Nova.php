@@ -136,7 +136,7 @@ class Nova
     /**
      * Register the Nova routes.
      *
-     * @return PendingRouteRegistration
+     * @return \Laravel\Nova\PendingRouteRegistration
      */
     public static function routes()
     {
