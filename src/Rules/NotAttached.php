@@ -2,7 +2,6 @@
 
 namespace Laravel\Nova\Rules;
 
-use Laravel\Nova\Nova;
 use Illuminate\Contracts\Validation\Rule;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
