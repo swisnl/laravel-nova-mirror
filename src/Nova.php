@@ -136,7 +136,7 @@ class Nova
     /**
      * Register the Nova routes.
      *
-     * @return void
+     * @return PendingRouteRegistration
      */
     public static function routes()
     {
