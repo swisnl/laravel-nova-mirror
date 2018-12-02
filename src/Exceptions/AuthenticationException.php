@@ -31,8 +31,8 @@ class AuthenticationException extends BaseAuthenticationException
             return route('nova.login');
         } elseif (Route::getRoutes()->hasNamedRoute('login')) {
             return route('login');
-        } else {
-            return '/login';
         }
+
+        return '/login';
     }
 }

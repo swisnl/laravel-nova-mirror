@@ -688,9 +688,9 @@ class Nova
     {
         if (is_object($value)) {
             return static::humanize(class_basename(get_class($value)));
-        } else {
-            return Str::title(Str::snake($value, ' '));
         }
+
+        return Str::title(Str::snake($value, ' '));
     }
 
     /**
