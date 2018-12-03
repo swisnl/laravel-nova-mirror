@@ -43,14 +43,4 @@ class DateTime extends Field
     {
         return $this->withMeta(['format' => $format]);
     }
-
-    /**
-     * Indicate that the date field is nullable.
-     *
-     * @return $this
-     */
-    public function nullable()
-    {
-        return $this->withMeta(['nullable' => true]);
-    }
 }

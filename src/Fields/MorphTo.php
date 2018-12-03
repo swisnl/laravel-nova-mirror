@@ -71,13 +71,6 @@ class MorphTo extends Field
     public $display;
 
     /**
-     * Indicates if the field is nullable.
-     *
-     * @var bool
-     */
-    public $nullable = false;
-
-    /**
      * Indicates if this relationship is searchable.
      *
      * @var bool
@@ -451,18 +444,6 @@ class MorphTo extends Field
         return $this;
     }
 
-    /**
-     * Indicate that the field should be nullable.
-     *
-     * @param  bool  $nullable
-     * @return $this
-     */
-    public function nullable($nullable = true)
-    {
-        $this->nullable = $nullable;
-
-        return $this;
-    }
 
     /**
      * Get additional meta information to merge with the field payload.
@@ -480,7 +461,6 @@ class MorphTo extends Field
             'morphToTypes' => $this->morphToTypes,
             'morphToType' => $this->morphToType,
             'morphToId' => $this->morphToId,
-            'nullable' => $this->nullable,
             'searchable' => $this->searchable,
         ], $this->meta);
     }
