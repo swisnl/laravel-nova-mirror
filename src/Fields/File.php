@@ -112,9 +112,9 @@ class File extends Field implements DeletableContract
         $this->prepareStorageCallback($storageCallback);
 
         $this->thumbnail(function () {
-            return null;
+            //
         })->preview(function () {
-            return null;
+            //
         })->download(function ($request, $model) {
             $name = $this->originalNameColumn ? $model->{$this->originalNameColumn} : null;
 
