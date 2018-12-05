@@ -137,11 +137,9 @@ class File extends Field implements DeletableContract
     protected function prepareStorageCallback($storageCallback)
     {
         $this->storageCallback = $storageCallback ?? function ($request, $model) {
-            if ($request->{$this->attribute}) {
-                return $this->mergeExtraStorageColumns($request, [
-                    $this->attribute => $this->storeFile($request),
-                ]);
-            }
+            return $this->mergeExtraStorageColumns($request, [
+                $this->attribute => $this->storeFile($request),
+            ]);
         };
     }
 
@@ -154,10 +152,10 @@ class File extends Field implements DeletableContract
     protected function storeFile($request)
     {
         if (! $this->storeAsCallback) {
-            return $request->{$this->attribute}->store($this->storagePath, $this->disk);
+            return $request->file($this->attribute)->store($this->storagePath, $this->disk);
         }
 
-        return $request->{$this->attribute}->storeAs(
+        return $request->file($this->attribute)->storeAs(
             $this->storagePath, call_user_func($this->storeAsCallback, $request), $this->disk
         );
     }
@@ -171,12 +169,14 @@ class File extends Field implements DeletableContract
      */
     protected function mergeExtraStorageColumns($request, array $attributes)
     {
+        $file = $request->file($this->attribute);
+
         if ($this->originalNameColumn) {
-            $attributes[$this->originalNameColumn] = $request->{$this->attribute}->getClientOriginalName();
+            $attributes[$this->originalNameColumn] = $file->getClientOriginalName();
         }
 
         if ($this->sizeColumn) {
-            $attributes[$this->sizeColumn] = $request->{$this->attribute}->getSize();
+            $attributes[$this->sizeColumn] = $file->getSize();
         }
 
         return $attributes;
@@ -364,7 +364,7 @@ class File extends Field implements DeletableContract
      */
     protected function fillAttribute(NovaRequest $request, $requestAttribute, $model, $attribute)
     {
-        if (empty($request->{$requestAttribute})) {
+        if (! $request->isValidFile($requestAttribute)) {
             return;
         }
 
