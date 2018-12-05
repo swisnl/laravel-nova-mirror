@@ -95,6 +95,20 @@ class File extends Field implements DeletableContract
     public $showOnIndex = false;
 
     /**
+     * Indicates what need to prune old file on update.
+     *
+     * @var bool
+     */
+    public $prunable = false;
+
+    /**
+     * The callback that should be executed to prune the old file.
+     *
+     * @var callable
+     */
+    public $pruneCallback;
+
+    /**
      * Create a new field.
      *
      * @param  string  $name
@@ -340,6 +354,32 @@ class File extends Field implements DeletableContract
     }
 
     /**
+     * Specify what need to prune old file on update.
+     *
+     * @param bool $prunable
+     * @return $this
+     */
+    public function prunable($prunable = true)
+    {
+        $this->prunable = $prunable;
+
+        return $this;
+    }
+
+    /**
+     * Specify the callback that should be executed to prune the old file.
+     *
+     * @param callable $prune
+     * @return $this
+     */
+    public function prune(callable $prune)
+    {
+        $this->prunable()->pruneCallback = $prune;
+
+        return $this;
+    }
+
+    /**
      * Hydrate the given attribute on the model based on the incoming request.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
@@ -360,13 +400,15 @@ class File extends Field implements DeletableContract
      * @param  string  $requestAttribute
      * @param  object  $model
      * @param  string  $attribute
-     * @return void
+     * @return mixed
      */
     protected function fillAttribute(NovaRequest $request, $requestAttribute, $model, $attribute)
     {
         if (empty($request->{$requestAttribute})) {
             return;
         }
+
+        $toPrune = $model->{$attribute};
 
         $result = call_user_func($this->storageCallback, $request, $model);
 
@@ -380,6 +422,17 @@ class File extends Field implements DeletableContract
 
         foreach ($result as $key => $value) {
             $model->{$key} = $value;
+        }
+
+        if ($this->prunable && ! empty($toPrune)) {
+            return function () use ($toPrune) {
+                if($this->pruneCallback) {
+                    return call_user_func($this->pruneCallback, $toPrune, $this->disk);
+                }
+
+                $disk = Storage::disk($this->disk);
+                $disk->exists($toPrune) && $disk->delete($toPrune);
+            };
         }
     }
 
