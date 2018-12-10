@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\TrashedStatus;
 use Laravel\Nova\Rules\Relatable;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Http\Requests\ResourceIndexRequest;
 
 class BelongsTo extends Field
 {
@@ -131,7 +132,7 @@ class BelongsTo extends Field
      */
     public function isNotRedundant(Request $request)
     {
-        return (! $request->isMethod('GET') || ! $request->viaResource) ||
+        return (! $request instanceof ResourceIndexRequest || ! $request->viaResource) ||
                ($this->resourceName !== $request->viaResource);
     }
 
