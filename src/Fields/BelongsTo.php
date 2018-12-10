@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\TrashedStatus;
 use Laravel\Nova\Rules\Relatable;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 
 class BelongsTo extends Field
 {
@@ -90,6 +91,12 @@ class BelongsTo extends Field
     public $singularLabel;
 
     /**
+     * The reverse relation for the related resource.
+     * @var string
+     */
+    public $reverseRelation;
+
+    /**
      * Create a new field.
      *
      * @param  string  $name
@@ -132,7 +139,44 @@ class BelongsTo extends Field
     public function isNotRedundant(Request $request)
     {
         return (! $request->isMethod('GET') || ! $request->viaResource) ||
-               ($this->resourceName !== $request->viaResource);
+            ($this->resourceName !== $request->viaResource)
+        || (empty($reverse = $this->getReverseRelation($request)) || $reverse !== $request->viaRelationship)
+        ;
+    }
+
+    /**
+     * Get reverse relation field name.
+     *
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @return string
+     */
+    public function getReverseRelation(NovaRequest $request)
+    {
+        if (is_null($this->reverseRelation)) {
+
+            $viaModel = forward_static_call(
+                [$resourceClass = $this->resourceClass, 'newModel']
+            );
+
+            $viaResource = new $resourceClass($viaModel);
+
+            $resource = $request->newResource();
+
+            $this->reverseRelation = $viaResource->availableFields($request)
+                    ->first(function ($field) use ($viaModel, $resource) {
+                        if (! isset($field->resourceName) || $field->resourceName !== $resource::uriKey()) {
+                            return false;
+                        }
+
+                        $relation = $viaModel->{$field->attribute}();
+
+                        $method = $relation instanceof HasOneOrMany ? 'getForeignKeyName' : 'getForeignKey';
+
+                        return $relation->{$method}() === $resource->model()->{$this->attribute}()->getForeignKey();
+                    })->attribute ?? '';
+        }
+
+        return $this->reverseRelation;
     }
 
     /**
@@ -313,6 +357,19 @@ class BelongsTo extends Field
     }
 
     /**
+     * Specify reverse relation for the related resource.
+     *
+     * @param string $reverseRelation
+     * @return $this
+     */
+    public function reverseRelation(string $reverseRelation)
+    {
+        $this->reverseRelation = $reverseRelation;
+
+        return $this;
+    }
+
+    /**
      * Set the displayable singular label of the resource.
      *
      * @return string
@@ -339,6 +396,7 @@ class BelongsTo extends Field
             'belongsToId' => $this->belongsToId,
             'nullable' => $this->nullable,
             'searchable' => $this->searchable,
+            'reverseRelation' => $this->getReverseRelation(\app(NovaRequest::class)),
         ], $this->meta);
     }
 }
