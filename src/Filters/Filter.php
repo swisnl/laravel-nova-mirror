@@ -84,6 +84,16 @@ abstract class Filter implements JsonSerializable
     }
 
     /**
+     * Get the component name for the filter.
+     *
+     * @return string
+     */
+    public function component()
+    {
+        return $this->component;
+    }
+
+    /**
      * Get the displayable name of the filter.
      *
      * @return string
@@ -148,7 +158,7 @@ abstract class Filter implements JsonSerializable
         return array_merge([
             'class' => $this->key(),
             'name' => $this->name(),
-            'component' => $this->component,
+            'component' => $this->component(),
             'options' => collect($this->options($container->make(Request::class)))->map(function ($value, $key) {
                 return ['name' => $key, 'value' => $value];
             })->values()->all(),
