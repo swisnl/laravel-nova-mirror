@@ -26,12 +26,14 @@ class FilterControllerTest extends IntegrationTest
     public function test_unauthorized_filters_are_not_included()
     {
         $_SERVER['nova.idFilter.canSee'] = false;
+        $_SERVER['nova.customKeyFilter.canSee'] = false;
         $_SERVER['nova.columnFilter.canSee'] = false;
 
         $response = $this->withExceptionHandling()
                         ->get('/nova-api/users/filters');
 
         unset($_SERVER['nova.idFilter.canSee']);
+        unset($_SERVER['nova.customKeyFilter.canSee']);
         unset($_SERVER['nova.columnFilter.canSee']);
 
         $response->assertStatus(200);
