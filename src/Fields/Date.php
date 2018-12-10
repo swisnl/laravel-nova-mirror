@@ -41,7 +41,7 @@ class Date extends Field
      */
     public function firstDayOfWeek($day)
     {
-        return $this->withMeta(['firstDayOfWeek' => $day]);
+        return $this->withMeta([__FUNCTION__ => $day]);
     }
 
     /**
@@ -52,7 +52,7 @@ class Date extends Field
      */
     public function format($format)
     {
-        return $this->withMeta(['format' => $format]);
+        return $this->withMeta([__FUNCTION__ => $format]);
     }
 
     /**
@@ -62,6 +62,6 @@ class Date extends Field
      */
     public function nullable()
     {
-        return $this->withMeta(['nullable' => true]);
+        return $this->withMeta([__FUNCTION__ => true]);
     }
 }

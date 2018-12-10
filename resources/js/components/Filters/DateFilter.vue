@@ -58,9 +58,7 @@ export default {
         },
 
         firstDayOfWeek() {
-            const option = _.find(this.filter.options, option => option.name === 'firstDayOfWeek')
-
-            return option !== undefined ? option.value : 0
+            return this.filter.firstDayOfWeek || 0
         },
     },
 }

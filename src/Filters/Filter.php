@@ -28,6 +28,13 @@ abstract class Filter implements JsonSerializable
     public $component = 'select-filter';
 
     /**
+     * The meta data for the filter.
+     *
+     * @var array
+     */
+    public $meta = [];
+
+    /**
      * The callback used to authorize viewing the filter.
      *
      * @var \Closure|null
@@ -97,6 +104,29 @@ abstract class Filter implements JsonSerializable
     }
 
     /**
+     * Get additional meta information to merge with the filter payload.
+     *
+     * @return array
+     */
+    public function meta()
+    {
+        return $this->meta;
+    }
+
+    /**
+     * Set additional meta information for the filter.
+     *
+     * @param  array  $meta
+     * @return $this
+     */
+    public function withMeta(array $meta)
+    {
+        $this->meta = array_merge($this->meta, $meta);
+
+        return $this;
+    }
+
+    /**
      * Prepare the filter for JSON serialization.
      *
      * @return array
@@ -105,7 +135,7 @@ abstract class Filter implements JsonSerializable
     {
         $container = Container::getInstance();
 
-        return [
+        return array_merge([
             'class' => get_class($this),
             'name' => $this->name(),
             'component' => $this->component,
@@ -113,6 +143,6 @@ abstract class Filter implements JsonSerializable
                 return ['name' => $key, 'value' => $value];
             })->values()->all(),
             'currentValue' => $this->default() ?? '',
-        ];
+        ], $this->meta());
     }
 }
