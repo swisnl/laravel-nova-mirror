@@ -292,6 +292,8 @@ export default {
      * Mount the component and retrieve its initial data.
      */
     created() {
+        if (Nova.missingResource(this.resourceName)) return this.$router.push({ name: '404' })
+
         this.initializeSearchFromQueryString()
         this.initializePerPageFromQueryString()
         this.initializeTrashedFromQueryString()

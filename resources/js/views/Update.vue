@@ -1,6 +1,6 @@
 <template>
     <div v-if="!loading">
-        <heading class="mb-3">{{__('Edit')}} {{ singularName }}</heading>
+        <heading class="mb-3">{{ __('Edit') }} {{ singularName }}</heading>
 
         <card class="overflow-hidden">
             <form v-if="fields" @submit.prevent="updateResource" autocomplete="off">
@@ -81,6 +81,8 @@ export default {
     }),
 
     async created() {
+        if (Nova.missingResource(this.resourceName)) return this.$router.push({ name: '404' })
+
         // If this update is via a relation index, then let's grab the field
         // and use the label for that as the one we use for the title and buttons
         if (this.isRelation) {
@@ -140,7 +142,7 @@ export default {
                     name: 'detail',
                     params: {
                         resourceName: this.resourceName,
-                        resourceId: this.resourceId,
+                        resourceId: response.data.id,
                     },
                 })
             } catch (error) {

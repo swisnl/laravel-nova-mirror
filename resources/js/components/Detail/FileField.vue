@@ -3,17 +3,17 @@
         <div slot="value">
             <template v-if="shouldShowLoader">
                 <ImageLoader
-                    :src="field.thumbnailUrl"
+                    :src="imageUrl"
                     class="max-w-xs"
                     @missing="value => (missing = value)"
                 />
             </template>
 
-            <template v-if="field.value && !field.thumbnailUrl">
+            <template v-if="field.value && !imageUrl">
                 {{ field.value }}
             </template>
 
-            <span v-if="!field.value && !field.thumbnailUrl">&mdash;</span>
+            <span v-if="!field.value && !imageUrl">&mdash;</span>
             <span v-if="deleted">&mdash;</span>
 
             <portal to="modals">
@@ -111,18 +111,22 @@ export default {
     computed: {
         hasValue() {
             return (
-                Boolean(this.field.value || this.field.thumbnailUrl) &&
+                Boolean(this.field.value || this.imageUrl) &&
                 !Boolean(this.deleted) &&
                 !Boolean(this.missing)
             )
         },
 
         shouldShowLoader() {
-            return !Boolean(this.deleted) && Boolean(this.field.thumbnailUrl)
+            return !Boolean(this.deleted) && Boolean(this.imageUrl)
         },
 
         shouldShowToolbar() {
             return Boolean(this.field.downloadable || this.field.deletable) && this.hasValue
+        },
+
+        imageUrl() {
+            return this.field.previewUrl || this.field.thumbnailUrl
         },
     },
 }

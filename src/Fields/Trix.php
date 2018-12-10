@@ -171,7 +171,7 @@ class Trix extends Field implements DeletableContract
         parent::fillAttribute($request, $requestAttribute, $model, $attribute);
 
         if ($request->{$this->attribute.'DraftId'} && $this->withFiles) {
-            return function () use ($request, $requestAttribute, $model, $attribute) {
+            return function () use ($request, $model, $attribute) {
                 PendingAttachment::persistDraft(
                     $request->{$this->attribute.'DraftId'},
                     $this,

@@ -186,6 +186,10 @@ class UserResource extends Resource
                 return $_SERVER['nova.idFilter.canSee'] ?? true;
             }),
 
+            (new CustomKeyFilter)->canSee(function ($request) {
+                return $_SERVER['nova.customKeyFilter.canSee'] ?? true;
+            }),
+
             (new ColumnFilter('id'))->canSee(function ($request) {
                 return $_SERVER['nova.columnFilter.canSee'] ?? true;
             }),

@@ -34,6 +34,13 @@ class Action implements JsonSerializable
      *
      * @var bool
      */
+    public $onlyOnIndex = false;
+
+    /**
+     * Indicates if this action is only available on the resource detail view.
+     *
+     * @var bool
+     */
     public $onlyOnDetail = false;
 
     /**
@@ -225,6 +232,20 @@ class Action implements JsonSerializable
     }
 
     /**
+     * Indicate that this action is only available on the resource index view.
+     *
+     * @param  bool  $value
+     * @return $this
+     */
+    public function onlyOnIndex($value = true)
+    {
+        $this->onlyOnIndex = $value;
+        $this->onlyOnDetail = !$value;
+
+        return $this;
+    }
+
+    /**
      * Indicate that this action is only available on the resource detail view.
      *
      * @param  bool  $value
@@ -233,6 +254,7 @@ class Action implements JsonSerializable
     public function onlyOnDetail($value = true)
     {
         $this->onlyOnDetail = $value;
+        $this->onlyOnIndex = !$value;
 
         return $this;
     }
@@ -312,6 +334,7 @@ class Action implements JsonSerializable
             })->all(),
             'availableForEntireResource' => $this->availableForEntireResource,
             'onlyOnDetail' => $this->onlyOnDetail,
+            'onlyOnIndex' => $this->onlyOnIndex,
         ];
     }
 }

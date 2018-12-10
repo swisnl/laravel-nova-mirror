@@ -34,4 +34,18 @@ class ID extends Field
     {
         return tap(static::make('ID', $model->getKeyName()))->resolve($model);
     }
+
+    /**
+     * Resolve a BIGINT ID field as a string for compatibility with JavaScript.
+     *
+     * @return $this
+     */
+    public function asBigInt()
+    {
+        $this->resolveCallback = function ($id) {
+            return (string) $id;
+        };
+
+        return $this;
+    }
 }

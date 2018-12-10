@@ -22,6 +22,7 @@ class TrendDateExpressionFactory
             case 'sqlite':
                 return new SqliteTrendDateExpression($query, $column, $unit, $timezone);
             case 'mysql':
+            case 'mariadb':
                 return new MySqlTrendDateExpression($query, $column, $unit, $timezone);
             case 'pgsql':
                 return new PostgresTrendDateExpression($query, $column, $unit, $timezone);

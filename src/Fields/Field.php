@@ -7,6 +7,7 @@ use JsonSerializable;
 use Illuminate\Support\Str;
 use Laravel\Nova\Contracts\Resolvable;
 use Illuminate\Support\Traits\Macroable;
+use Illuminate\Contracts\Validation\Rule;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 abstract class Field extends FieldElement implements JsonSerializable, Resolvable
@@ -331,7 +332,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
      */
     public function rules($rules)
     {
-        $this->rules = is_string($rules) ? func_get_args() : $rules;
+        $this->rules = ($rules instanceof Rule || is_string($rules)) ? func_get_args() : $rules;
 
         return $this;
     }
@@ -374,7 +375,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
      */
     public function creationRules($rules)
     {
-        $this->creationRules = is_string($rules) ? func_get_args() : $rules;
+        $this->creationRules = ($rules instanceof Rule || is_string($rules)) ? func_get_args() : $rules;
 
         return $this;
     }
@@ -404,7 +405,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
      */
     public function updateRules($rules)
     {
-        $this->updateRules = is_string($rules) ? func_get_args() : $rules;
+        $this->updateRules = ($rules instanceof Rule || is_string($rules)) ? func_get_args() : $rules;
 
         return $this;
     }

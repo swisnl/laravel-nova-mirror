@@ -222,7 +222,7 @@
                     </h3>
 
                     <create-resource-button
-                        classes="btn btn-sm btn-outline"
+                        classes="btn btn-sm btn-outline inline-flex items-center"
                         :singular-name="singularName"
                         :resource-name="resourceName"
                         :via-resource="viaResource"
@@ -355,6 +355,8 @@ export default {
      * Mount the component and retrieve its initial data.
      */
     async created() {
+        if (Nova.missingResource(this.resourceName)) return this.$router.push({ name: '404' })
+
         // Bind the keydown even listener when the router is visited if this
         // component is not a relation on a Detail page
         if (!this.viaResource && !this.viaResourceId) {
@@ -610,10 +612,6 @@ export default {
          * Get the count of all of the matching resources.
          */
         getAllMatchingResourceCount() {
-            if (this.resourceName == 'action-events') {
-                return
-            }
-
             Nova.request()
                 .get('/nova-api/' + this.resourceName + '/count', {
                     params: this.resourceRequestQueryString,
@@ -1002,12 +1000,11 @@ export default {
          * Return the resource count label
          */
         resourceCountLabel() {
+            let label = this.resources.length > 1 ? this.__('resources') : this.__('resource')
+
             return (
                 this.resources.length &&
-                `${this.resources.length}/${this.allMatchingResourceCount} ${SingularOrPlural(
-                    this.allMatchingResourceCount,
-                    this.__('resource')
-                )}`
+                `${this.resources.length}/${this.allMatchingResourceCount} ${label}`
             )
         },
 

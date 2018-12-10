@@ -31,12 +31,12 @@ class ResourceCountTest extends IntegrationTest
 
     public function test_can_count_a_resource_via_search()
     {
-        factory(User::class)->create();
-        factory(User::class)->create();
-        factory(User::class)->create();
+        $user = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
+        $user3 = factory(User::class)->create();
 
         $response = $this->withExceptionHandling()
-                        ->getJson('/nova-api/users/count?search=1');
+                        ->getJson('/nova-api/users/count?search='.$user->email);
 
         $response->assertStatus(200);
         $this->assertEquals(1, $response->original['count']);

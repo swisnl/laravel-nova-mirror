@@ -1,11 +1,11 @@
 <template>
     <loading-view :loading="loading">
-        <heading class="mb-3">{{__('New')}} {{ singularName }}</heading>
+        <heading class="mb-3">{{ __('New') }} {{ singularName }}</heading>
 
         <card class="overflow-hidden">
             <form v-if="fields" @submit.prevent="createResource" autocomplete="off">
                 <!-- Validation Errors -->
-                <validation-errors :errors="validationErrors"/>
+                <validation-errors :errors="validationErrors" />
 
                 <!-- Fields -->
                 <div v-for="field in fields">
@@ -78,6 +78,8 @@ export default {
     }),
 
     async created() {
+        if (Nova.missingResource(this.resourceName)) return this.$router.push({ name: '404' })
+
         // If this create is via a relation index, then let's grab the field
         // and use the label for that as the one we use for the title and buttons
         if (this.isRelation) {
@@ -98,7 +100,14 @@ export default {
             this.fields = []
 
             const { data: fields } = await Nova.request().get(
-                `/nova-api/${this.resourceName}/creation-fields`
+                `/nova-api/${this.resourceName}/creation-fields`,
+                {
+                    params: {
+                        viaResource: this.viaResource,
+                        viaResourceId: this.viaResourceId,
+                        viaRelationship: this.viaRelationship
+                    }
+                }
             )
 
             this.fields = fields

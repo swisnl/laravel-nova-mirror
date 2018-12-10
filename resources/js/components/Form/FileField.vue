@@ -3,10 +3,10 @@
         <template slot="field">
             <div v-if="hasValue" class="mb-6">
                 <template v-if="shouldShowLoader">
-                    <ImageLoader :src="field.thumbnailUrl" class="max-w-xs" @missing="(value) => missing = value" />
+                    <ImageLoader :src="imageUrl" class="max-w-xs" @missing="(value) => missing = value" />
                 </template>
 
-                <template v-if="field.value && !field.thumbnailUrl">
+                <template v-if="field.value && !imageUrl">
                     <card class="flex item-center relative border border-lg border-50 overflow-hidden p-4">
                         {{ field.value }}
 
@@ -20,7 +20,7 @@
                 </template>
 
                 <p
-                    v-if="field.thumbnailUrl"
+                    v-if="imageUrl"
                     class="mt-3 flex items-center text-sm"
                 >
                     <DeleteButton
@@ -198,7 +198,7 @@ export default {
          */
         hasValue() {
             return (
-                Boolean(this.field.value || this.field.thumbnailUrl) &&
+                Boolean(this.field.value || this.imageUrl) &&
                 !Boolean(this.deleted) &&
                 !Boolean(this.missing)
             )
@@ -208,7 +208,7 @@ export default {
          * Determine whether the field should show the loader component
          */
         shouldShowLoader() {
-            return !Boolean(this.deleted) && Boolean(this.field.thumbnailUrl)
+            return !Boolean(this.deleted) && Boolean(this.imageUrl)
         },
 
         /**
@@ -216,6 +216,10 @@ export default {
          */
         shouldShowRemoveButton() {
             return Boolean(this.field.deletable)
+        },
+
+        imageUrl() {
+            return this.field.previewUrl || this.field.thumbnailUrl
         },
     },
 }

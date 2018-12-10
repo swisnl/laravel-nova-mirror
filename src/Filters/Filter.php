@@ -94,6 +94,16 @@ abstract class Filter implements JsonSerializable
     }
 
     /**
+     * Get the key for the filter.
+     *
+     * @return string
+     */
+    public function key()
+    {
+        return get_class($this);
+    }
+
+    /**
      * Set the default options for the filter.
      *
      * @return array
@@ -136,7 +146,7 @@ abstract class Filter implements JsonSerializable
         $container = Container::getInstance();
 
         return array_merge([
-            'class' => get_class($this),
+            'class' => $this->key(),
             'name' => $this->name(),
             'component' => $this->component,
             'options' => collect($this->options($container->make(Request::class)))->map(function ($value, $key) {

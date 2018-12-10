@@ -1,13 +1,13 @@
 <template>
     <loading-view :loading="loading">
-        <heading class="mb-3">{{__('Update')}} {{ relatedResourceLabel }}</heading>
+        <heading class="mb-3">{{ __('Update') }} {{ relatedResourceLabel }}</heading>
 
         <card class="overflow-hidden">
             <form v-if="field" @submit.prevent="updateAttachedResource" autocomplete="off">
                 <!-- Related Resource -->
                 <default-field :field="field" :errors="validationErrors">
                     <template slot="field">
-                       <select
+                        <select
                             class="form-control form-select mb-3 w-full"
                             dusk="attachable-select"
                             :class="{ 'border-danger': validationErrors.has(field.attribute) }"
@@ -15,7 +15,9 @@
                             @change="selectResourceFromSelectControl"
                             disabled
                         >
-                            <option value="" disabled selected>{{__('Choose')}} {{ field.name }}</option>
+                            <option value="" disabled selected
+                                >{{ __('Choose') }} {{ field.name }}</option
+                            >
 
                             <option
                                 v-for="resource in availableResources"
@@ -23,7 +25,7 @@
                                 :value="resource.value"
                                 :selected="selectedResourceId == resource.value"
                             >
-                                {{ resource.display}}
+                                {{ resource.display }}
                             </option>
                         </select>
                     </template>
@@ -119,6 +121,10 @@ export default {
         selectedResourceId: null,
         lastRetrievedAt: null,
     }),
+
+    created() {
+        if (Nova.missingResource(this.resourceName)) return this.$router.push({ name: '404' })
+    },
 
     /**
      * Mount the component.
@@ -415,7 +421,9 @@ export default {
          * Determine if the form is being processed
          */
         isWorking() {
-            return this.submittedViaUpdateAttachedResource || this.submittedViaUpdateAndContinueEditing
+            return (
+                this.submittedViaUpdateAttachedResource || this.submittedViaUpdateAndContinueEditing
+            )
         },
     },
 }

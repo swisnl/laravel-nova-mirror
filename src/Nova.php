@@ -110,7 +110,7 @@ class Nova
      */
     public static function version()
     {
-        return '1.1.9';
+        return '1.2.0';
     }
 
     /**
@@ -136,7 +136,7 @@ class Nova
     /**
      * Register the Nova routes.
      *
-     * @return void
+     * @return \Laravel\Nova\PendingRouteRegistration
      */
     public static function routes()
     {
@@ -456,15 +456,13 @@ class Nova
      * Resolve the user's preferred timezone.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return string
+     * @return string|null
      */
     public static function resolveUserTimezone(Request $request)
     {
         if (static::$userTimezoneCallback) {
             return call_user_func(static::$userTimezoneCallback, $request);
         }
-
-        return null;
     }
 
     /**
@@ -690,9 +688,9 @@ class Nova
     {
         if (is_object($value)) {
             return static::humanize(class_basename(get_class($value)));
-        } else {
-            return Str::title(Str::snake($value, ' '));
         }
+
+        return Str::title(Str::snake($value, ' '));
     }
 
     /**
