@@ -87,7 +87,7 @@ abstract class Filter implements JsonSerializable
     }
 
     /**
-     * Get the key of the filter.
+     * Get the key for the filter.
      *
      * @return string
      */
