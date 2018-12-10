@@ -92,6 +92,7 @@ class BelongsTo extends Field
 
     /**
      * The reverse relation for the related resource.
+     *
      * @var string
      */
     public $reverseRelation;
@@ -139,9 +140,8 @@ class BelongsTo extends Field
     public function isNotRedundant(Request $request)
     {
         return (! $request->isMethod('GET') || ! $request->viaResource) ||
-            ($this->resourceName !== $request->viaResource)
-        || (empty($reverse = $this->getReverseRelation($request)) || $reverse !== $request->viaRelationship)
-        ;
+               ($this->resourceName !== $request->viaResource) ||
+               (empty($reverse = $this->getReverseRelation($request)) || $reverse !== $request->viaRelationship);
     }
 
     /**
