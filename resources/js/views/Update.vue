@@ -142,7 +142,7 @@ export default {
                     name: 'detail',
                     params: {
                         resourceName: this.resourceName,
-                        resourceId: this.resourceId,
+                        resourceId: response.data.id,
                     },
                 })
             } catch (error) {

@@ -36,7 +36,7 @@ class ID extends Field
     }
 
     /**
-     * Resolve a BIGINT ID field as a string for compatibility with JavaScript
+     * Resolve a BIGINT ID field as a string for compatibility with JavaScript.
      *
      * @return $this
      */

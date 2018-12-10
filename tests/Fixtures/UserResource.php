@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\ResourceToolElement;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Tests\Fixtures\CreateDateFilter;
 
 class UserResource extends Resource
 {
@@ -186,8 +187,16 @@ class UserResource extends Resource
                 return $_SERVER['nova.idFilter.canSee'] ?? true;
             }),
 
+            (new CustomKeyFilter)->canSee(function ($request) {
+                return $_SERVER['nova.customKeyFilter.canSee'] ?? true;
+            }),
+
             (new ColumnFilter('id'))->canSee(function ($request) {
                 return $_SERVER['nova.columnFilter.canSee'] ?? true;
+            }),
+
+            (new CreateDateFilter)->firstDayOfWeek(4)->canSee(function ($request) {
+                return $_SERVER['nova.dateFilter.canSee'] ?? true;
             }),
         ];
     }

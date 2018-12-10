@@ -1,11 +1,11 @@
 <?php
 
-namespace DummyNamespace;
+namespace Laravel\Nova\Tests\Fixtures;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Filters\BooleanFilter;
+use Laravel\Nova\Filters\DateFilter;
 
-class DummyClass extends BooleanFilter
+class CreateDateFilter extends DateFilter
 {
     /**
      * Apply the filter to the given query.
@@ -17,7 +17,7 @@ class DummyClass extends BooleanFilter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query;
+        return $query->where('created_at', $value);
     }
 
     /**
