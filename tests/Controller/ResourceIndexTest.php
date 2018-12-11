@@ -369,4 +369,31 @@ class ResourceIndexTest extends IntegrationTest
 
         $response->assertStatus(200);
     }
+
+    public function test_eager_belongs_to()
+    {
+        $user = factory(User::class)->create();
+        $user->posts()->saveMany(factory(Post::class, 3)->create());
+
+        \DB::enableQueryLog();
+        $count = count(\DB::getQueryLog());
+
+        $response = $this->withExceptionHandling()
+            ->getJson('/nova-api/posts');
+
+        $response->assertStatus(200);
+        $this->assertEquals(count(\DB::getQueryLog()) - $count, 1 + 3);
+
+        $count = count(\DB::getQueryLog());
+        $_SERVER['nova.post.useEagerUser'] = true;
+        $response = $this->withExceptionHandling()
+            ->getJson('/nova-api/posts');
+        unset($_SERVER['nova.post.useEagerUser']);
+
+
+        $response->assertStatus(200);
+        $this->assertEquals(count(\DB::getQueryLog()) - $count, 1 + 1);
+
+        \DB::disableQueryLog();
+    }
 }

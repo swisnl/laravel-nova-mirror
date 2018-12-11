@@ -51,6 +51,15 @@ class PostResource extends Resource
         ];
     }
 
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (isset($_SERVER['nova.post.useEagerUser'])) {
+            return $query->with('user');
+        }
+
+        return $query;
+    }
+
     /**
      * Build a "relatable" query for the given resource.
      *
