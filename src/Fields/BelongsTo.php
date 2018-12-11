@@ -149,6 +149,7 @@ class BelongsTo extends Field
             $value = $resource->getRelation($this->attribute);
         } else {
             $value = $resource->{$this->attribute}()->withoutGlobalScopes()->first();
+            $resource->setRelation($this->attribute, $value);
         }
 
         if ($value) {
