@@ -15,4 +15,11 @@ class File extends Model
      * @var array
      */
     protected $guarded = [];
+
+    public function setFilesAttribute($value)
+    {
+        if(!is_string($value) || strpos($value,'avatars') !== 0){
+            throw new \RuntimeException('Invalid argument');
+        }
+    }
 }
