@@ -10,6 +10,7 @@
                 :placeholder="placeholder"
                 :enable-time="false"
                 :enable-seconds="false"
+                :first-day-of-week="firstDayOfWeek"
                 :class="errorClasses"
                 @change="handleChange"
             />
@@ -26,6 +27,10 @@ export default {
     components: { DateTimePicker },
 
     computed: {
+        firstDayOfWeek() {
+            return this.field.firstDayOfWeek || 0
+        },
+
         placeholder() {
             return moment().format('YYYY-MM-DD')
         },

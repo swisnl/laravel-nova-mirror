@@ -21,7 +21,7 @@ trait DecodesFilters
 
         return collect($filters)->map(function ($filter) use ($availableFilters) {
             $matchingFilter = $availableFilters->first(function ($availableFilter) use ($filter) {
-                return $filter['class'] === get_class($availableFilter);
+                return $filter['class'] === $availableFilter->key();
             });
 
             if ($matchingFilter) {
