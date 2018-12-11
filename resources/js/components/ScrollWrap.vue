@@ -1,6 +1,6 @@
 <template>
     <div
-        class="scroll-wrap overflow-x-hidden overflow-y-scroll"
+        class="scroll-wrap overflow-x-hidden overflow-y-auto"
         :style="style"
     >
         <slot/>

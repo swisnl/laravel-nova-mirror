@@ -80,10 +80,10 @@ class PendingRouteRegistration
             });
 
         Event::listen(NovaServiceProviderRegistered::class, function () {
-            Route::domain(config('nova.domain', null))
-                ->middleware(config('nova.middleware', []))
+            Route::middleware(config('nova.middleware', []))
+                ->domain(config('nova.domain', null))
                 ->group(function () {
-                    Route::view(Nova::path(), 'nova::router')->name('nova.index');
+                    Route::get(Nova::path(), 'Laravel\Nova\Http\Controllers\RouterController@show')->name('nova.index');
                 });
 
             Route::middleware(config('nova.middleware', []))
