@@ -44,6 +44,10 @@ export default {
             type: Boolean,
             default: true,
         },
+        firstDayOfWeek: {
+            type: Number,
+            default: 0,
+        },
     },
 
     data: () => ({ flatpickr: null }),
@@ -59,6 +63,7 @@ export default {
                 allowInput: true,
                 // static: true,
                 time_24hr: !this.twelveHourTime,
+                locale: { firstDayOfWeek: this.firstDayOfWeek },
             })
         })
     },

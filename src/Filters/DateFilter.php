@@ -14,6 +14,17 @@ abstract class DateFilter extends Filter
     public $component = 'date-filter';
 
     /**
+     * Set the first day of the week.
+     *
+     * @param  int  $day
+     * @return $this
+     */
+    public function firstDayOfWeek($day)
+    {
+        return $this->withMeta([__FUNCTION__ => $day]);
+    }
+
+    /**
      * Get the filter's available options.
      *
      * @param  \Illuminate\Http\Request  $request
