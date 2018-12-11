@@ -1,12 +1,22 @@
 <?php
 
-namespace DummyNamespace;
+namespace Laravel\Nova\Tests\Fixtures;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Filters\BooleanFilter;
+use Laravel\Nova\Filters\Filter;
 
-class DummyClass extends BooleanFilter
+class CustomKeyFilter extends Filter
 {
+    /**
+     * Get the key for the filter.
+     *
+     * @return string
+     */
+    public function key()
+    {
+        return 'custom_key';
+    }
+
     /**
      * Apply the filter to the given query.
      *
@@ -17,7 +27,7 @@ class DummyClass extends BooleanFilter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query;
+        return $query->whereKey($value);
     }
 
     /**

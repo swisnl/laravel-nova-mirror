@@ -21,7 +21,7 @@ class ActionRequest extends NovaRequest
     {
         return once(function () {
             return $this->availableActions()->first(function ($action) {
-                return $action->uriKey() == $this->action;
+                return $action->uriKey() == $this->query('action');
             }) ?: abort($this->actionExists() ? 403 : 404);
         });
     }
@@ -50,7 +50,7 @@ class ActionRequest extends NovaRequest
                     : $this->newResource()->resolveActions($this);
 
         return $actions->contains(function ($action) {
-            return $action->uriKey() == $this->action;
+            return $action->uriKey() == $this->query('action');
         });
     }
 

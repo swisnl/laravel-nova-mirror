@@ -37,9 +37,9 @@ class ActionCommand extends GeneratorCommand
     {
         if ($this->option('destructive')) {
             return __DIR__.'/stubs/destructive-action.stub';
-        } else {
-            return __DIR__.'/stubs/action.stub';
         }
+
+        return __DIR__.'/stubs/action.stub';
     }
 
     /**

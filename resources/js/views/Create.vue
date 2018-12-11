@@ -100,7 +100,14 @@ export default {
             this.fields = []
 
             const { data: fields } = await Nova.request().get(
-                `/nova-api/${this.resourceName}/creation-fields`
+                `/nova-api/${this.resourceName}/creation-fields`,
+                {
+                    params: {
+                        viaResource: this.viaResource,
+                        viaResourceId: this.viaResourceId,
+                        viaRelationship: this.viaRelationship
+                    }
+                }
             )
 
             this.fields = fields

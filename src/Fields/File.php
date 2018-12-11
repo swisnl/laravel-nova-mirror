@@ -112,9 +112,9 @@ class File extends Field implements DeletableContract
         $this->prepareStorageCallback($storageCallback);
 
         $this->thumbnail(function () {
-            return null;
+            //
         })->preview(function () {
-            return null;
+            //
         })->download(function ($request, $model) {
             $name = $this->originalNameColumn ? $model->{$this->originalNameColumn} : null;
 
@@ -274,7 +274,17 @@ class File extends Field implements DeletableContract
      */
     public function resolveThumbnailUrl()
     {
-        return call_user_func($this->thumbnailUrlCallback);
+        return call_user_func($this->thumbnailUrlCallback, $this->value, $this->disk);
+    }
+
+    /**
+     * Resolve the preview URL for the field.
+     *
+     * @return string|null
+     */
+    public function resolvePreviewUrl()
+    {
+        return call_user_func($this->previewUrlCallback, $this->value, $this->disk);
     }
 
     /**
@@ -396,7 +406,7 @@ class File extends Field implements DeletableContract
     {
         return array_merge([
             'thumbnailUrl' => $this->resolveThumbnailUrl(),
-            'previewUrl' => call_user_func($this->previewUrlCallback),
+            'previewUrl' => $this->resolvePreviewUrl(),
             'downloadable' => isset($this->downloadResponseCallback) && ! empty($this->value),
             'deletable' => isset($this->deleteCallback) && $this->deletable,
         ], $this->meta);
