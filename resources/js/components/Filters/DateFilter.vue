@@ -12,6 +12,7 @@
                 :placeholder="placeholder"
                 :enable-time="false"
                 :enable-seconds="false"
+                :first-day-of-week="firstDayOfWeek"
                 @input.prevent=""
                 @change="handleChange"
             />
@@ -54,6 +55,10 @@ export default {
 
         options() {
             return this.$store.getters.getOptionsForFilter(this.filterKey)
+        },
+
+        firstDayOfWeek() {
+            return this.filter.firstDayOfWeek || 0
         },
     },
 }

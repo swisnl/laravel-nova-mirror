@@ -130,7 +130,7 @@ abstract class Lens implements ArrayAccess, JsonSerializable, UrlRoutable
     public function serializeForIndex(NovaRequest $request)
     {
         return $this->serializeWithId($this->resolveFields($request)
-                ->reject(function ($field) use ($request) {
+                ->reject(function ($field) {
                     return $field instanceof ListableField || ! $field->showOnIndex;
                 }));
     }

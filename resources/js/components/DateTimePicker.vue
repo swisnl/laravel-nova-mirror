@@ -21,7 +21,7 @@ export default {
         placeholder: {
             type: String,
             default: () => {
-                return moment().format('YYYY-MM-DD kk:mm:ss')
+                return moment().format('YYYY-MM-DD HH:mm:ss')
             },
         },
         disabled: {
@@ -44,6 +44,10 @@ export default {
             type: Boolean,
             default: true,
         },
+        firstDayOfWeek: {
+            type: Number,
+            default: 0,
+        },
     },
 
     data: () => ({ flatpickr: null }),
@@ -59,6 +63,7 @@ export default {
                 allowInput: true,
                 // static: true,
                 time_24hr: !this.twelveHourTime,
+                locale: { firstDayOfWeek: this.firstDayOfWeek },
             })
         })
     },

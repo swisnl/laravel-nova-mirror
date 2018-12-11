@@ -112,9 +112,9 @@ class File extends Field implements DeletableContract
         $this->prepareStorageCallback($storageCallback);
 
         $this->thumbnail(function () {
-            return null;
+            //
         })->preview(function () {
-            return null;
+            //
         })->download(function ($request, $model) {
             $name = $this->originalNameColumn ? $model->{$this->originalNameColumn} : null;
 
@@ -137,11 +137,9 @@ class File extends Field implements DeletableContract
     protected function prepareStorageCallback($storageCallback)
     {
         $this->storageCallback = $storageCallback ?? function ($request, $model) {
-            if ($request->{$this->attribute}) {
-                return $this->mergeExtraStorageColumns($request, [
-                    $this->attribute => $this->storeFile($request),
-                ]);
-            }
+            return $this->mergeExtraStorageColumns($request, [
+                $this->attribute => $this->storeFile($request),
+            ]);
         };
     }
 
@@ -154,10 +152,10 @@ class File extends Field implements DeletableContract
     protected function storeFile($request)
     {
         if (! $this->storeAsCallback) {
-            return $request->{$this->attribute}->store($this->storagePath, $this->disk);
+            return $request->file($this->attribute)->store($this->storagePath, $this->disk);
         }
 
-        return $request->{$this->attribute}->storeAs(
+        return $request->file($this->attribute)->storeAs(
             $this->storagePath, call_user_func($this->storeAsCallback, $request), $this->disk
         );
     }
@@ -171,12 +169,14 @@ class File extends Field implements DeletableContract
      */
     protected function mergeExtraStorageColumns($request, array $attributes)
     {
+        $file = $request->file($this->attribute);
+
         if ($this->originalNameColumn) {
-            $attributes[$this->originalNameColumn] = $request->{$this->attribute}->getClientOriginalName();
+            $attributes[$this->originalNameColumn] = $file->getClientOriginalName();
         }
 
         if ($this->sizeColumn) {
-            $attributes[$this->sizeColumn] = $request->{$this->attribute}->getSize();
+            $attributes[$this->sizeColumn] = $file->getSize();
         }
 
         return $attributes;
@@ -274,7 +274,17 @@ class File extends Field implements DeletableContract
      */
     public function resolveThumbnailUrl()
     {
-        return call_user_func($this->thumbnailUrlCallback);
+        return call_user_func($this->thumbnailUrlCallback, $this->value, $this->disk);
+    }
+
+    /**
+     * Resolve the preview URL for the field.
+     *
+     * @return string|null
+     */
+    public function resolvePreviewUrl()
+    {
+        return call_user_func($this->previewUrlCallback, $this->value, $this->disk);
     }
 
     /**
@@ -350,11 +360,11 @@ class File extends Field implements DeletableContract
      * @param  string  $requestAttribute
      * @param  object  $model
      * @param  string  $attribute
-     * @return void
+     * @return mixed
      */
     protected function fillAttribute(NovaRequest $request, $requestAttribute, $model, $attribute)
     {
-        if (empty($request->{$requestAttribute})) {
+        if (is_null($file = $request->file($requestAttribute)) || ! $file->isValid()) {
             return;
         }
 
@@ -370,6 +380,12 @@ class File extends Field implements DeletableContract
 
         foreach ($result as $key => $value) {
             $model->{$key} = $value;
+        }
+
+        if ($this->isPrunable()) {
+            return function () use ($model, $request) {
+                call_user_func($this->deleteCallback, $request, $model);
+            };
         }
     }
 
@@ -396,7 +412,7 @@ class File extends Field implements DeletableContract
     {
         return array_merge([
             'thumbnailUrl' => $this->resolveThumbnailUrl(),
-            'previewUrl' => call_user_func($this->previewUrlCallback),
+            'previewUrl' => $this->resolvePreviewUrl(),
             'downloadable' => isset($this->downloadResponseCallback) && ! empty($this->value),
             'deletable' => isset($this->deleteCallback) && $this->deletable,
         ], $this->meta);

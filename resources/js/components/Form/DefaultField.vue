@@ -3,7 +3,7 @@
         <div class="w-1/5 py-6 px-8">
             <slot>
                 <form-label
-                    :for="field.attribute"
+                    :label-for="field.attribute"
                     :class="{ 'mb-2': field.helpText && showHelpText }"
                 >
                     {{ fieldLabel }}

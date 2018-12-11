@@ -11,6 +11,7 @@ use Laravel\Nova\TrashedStatus;
 use Laravel\Nova\Rules\Relatable;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Laravel\Nova\Http\Requests\ResourceIndexRequest;
 
 class MorphTo extends Field
 {
@@ -129,7 +130,7 @@ class MorphTo extends Field
      */
     public function isNotRedundant(Request $request)
     {
-        return (! $request->isMethod('GET') || ! $request->viaResource) ||
+        return (! $request instanceof ResourceIndexRequest || ! $request->viaResource) ||
                ($this->resourceName !== $request->viaResource);
     }
 

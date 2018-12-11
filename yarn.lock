@@ -5049,7 +5049,6 @@ laravel-mix@^1.0:
 laravel-nova@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/laravel-nova/-/laravel-nova-1.0.5.tgz#d40f65c0aecfe57cb575210285966f68faadd241"
-  integrity sha512-Otq2To4rxR6jreQdXN4TZPlZ3wfhYJRQdCDzjaZuhDUl2tTIoghbN3r+q8cYMJ59fn/I7DI6UGxfOR/r8ezpfw==
   dependencies:
     babel-plugin-syntax-jsx "^6.18.0"
     form-backend-validation "^2.3.3"
@@ -5655,7 +5654,7 @@ moment-timezone@^0.5.21:
   dependencies:
     moment ">= 2.9.0"
 
-moment@2.x, "moment@>= 2.9.0", moment@^2.22.2:
+"moment@>= 2.9.0", moment@^2.22.2:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
 
@@ -6348,12 +6347,6 @@ pify@^2.0.0, pify@^2.3.0:
 pify@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/pify/-/pify-3.0.0.tgz#e5a4acd2c101fdf3d9a4d07f0dbc4db49dd28176"
-
-pikaday@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/pikaday/-/pikaday-1.7.0.tgz#78bf26e709f7c135b674762bbab79d75ac589ab6"
-  optionalDependencies:
-    moment "2.x"
 
 pinkie-promise@^2.0.0:
   version "2.0.1"
@@ -8190,7 +8183,6 @@ trim-right@^1.0.1:
 trix@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/trix/-/trix-1.0.0.tgz#e9cc98cf6030c908f8d54e317b5b072f927b0c6b"
-  integrity sha512-feli9QVXe6gzZOCUfpPGpNDURW9jMciIRVQ5gkDudOctcA1oMtI5K/qEbsL2rFCoGl1rSoeRt+HPhIFGyQscKg==
 
 "true-case-path@^1.0.2":
   version "1.0.2"

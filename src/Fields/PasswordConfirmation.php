@@ -39,6 +39,6 @@ class PasswordConfirmation extends Password
      */
     protected function fillAttribute(NovaRequest $request, $requestAttribute, $model, $attribute)
     {
-        return;
+        //
     }
 }
