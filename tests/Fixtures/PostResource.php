@@ -40,6 +40,11 @@ class PostResource extends Resource
         return [
             BelongsTo::make('User', 'user', UserResource::class)->nullable(),
             Text::make('Title', 'title')->rules('required', 'string', 'max:255'),
+            Text::make('Description', 'description')->rules( 'string', 'max:255')
+                ->nullable()
+                ->canSee(function() {
+                    return !empty($_SERVER['nova.post.nullableDescription']);
+                }),
             MorphMany::make('Comments', 'comments', CommentResource::class),
             MorphToMany::make('Tags', 'tags', TagResource::class)->display(function ($tag) {
                 return strtoupper($tag->name);
