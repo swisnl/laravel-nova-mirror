@@ -360,7 +360,7 @@ class File extends Field implements DeletableContract
      * @param  string  $requestAttribute
      * @param  object  $model
      * @param  string  $attribute
-     * @return void
+     * @return mixed
      */
     protected function fillAttribute(NovaRequest $request, $requestAttribute, $model, $attribute)
     {
@@ -380,6 +380,12 @@ class File extends Field implements DeletableContract
 
         foreach ($result as $key => $value) {
             $model->{$key} = $value;
+        }
+
+        if ($this->isPrunable()) {
+            return function () use ($model, $request) {
+                call_user_func($this->deleteCallback, $request, $model);
+            };
         }
     }
 
