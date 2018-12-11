@@ -2,6 +2,7 @@
 
 namespace Laravel\Nova\Tests\Fixtures;
 
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Resource;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -39,6 +40,7 @@ class PostResource extends Resource
     {
         return [
             BelongsTo::make('User', 'user', UserResource::class)->nullable(),
+            BelongsToMany::make('Authors', 'authors', UserResource::class),
             Text::make('Title', 'title')->rules('required', 'string', 'max:255'),
             MorphMany::make('Comments', 'comments', CommentResource::class),
             MorphToMany::make('Tags', 'tags', TagResource::class)->display(function ($tag) {
