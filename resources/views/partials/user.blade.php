@@ -7,7 +7,7 @@
     @endisset
 
     <span class="text-90">
-        {{ $user->getAuthIdentifierName() ?? $user->name ?? $user->email ?? __('Nova User') }}
+        {{ $user->name ?? $user->email ?? __('Nova User') }}
     </span>
 </dropdown-trigger>
 
