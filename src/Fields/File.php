@@ -364,7 +364,7 @@ class File extends Field implements DeletableContract
      */
     protected function fillAttribute(NovaRequest $request, $requestAttribute, $model, $attribute)
     {
-        if (! $request->isValidFile($requestAttribute)) {
+        if (is_null($file = $request->file($requestAttribute)) || ! $file->isValid()) {
             return;
         }
 
