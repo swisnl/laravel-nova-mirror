@@ -43,7 +43,7 @@ export default {
 function pathIncludesClass(event, className) {
     return composedPath(event)
         .filter(el => el !== document && el !== window)
-        .flatMap(e => [...e.classList])
+        .reduce((acc, e) => acc.concat([...e.classList]), [])
         .includes(className)
 }
 </script>
