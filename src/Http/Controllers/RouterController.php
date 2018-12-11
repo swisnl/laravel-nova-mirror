@@ -2,6 +2,7 @@
 
 namespace Laravel\Nova\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class RouterController extends Controller
@@ -11,8 +12,10 @@ class RouterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Request $request)
     {
-        return view('nova::router');
+        return view('nova::router', [
+            'user' => $request->user(),
+        ]);
     }
 }
