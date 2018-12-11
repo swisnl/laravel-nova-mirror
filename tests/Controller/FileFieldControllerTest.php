@@ -296,4 +296,23 @@ class FileFieldControllerTest extends IntegrationTest
 
         unset($_SERVER['__nova.fileDeleted']);
     }
+
+    public function test_property_name_collision()
+    {
+        Storage::fake();
+
+        $_SERVER['nova.fileResource.imageField'] = function ($request) {
+            return Image::make('Files', 'files', 'public')
+                ->path('avatars');
+        };
+
+        $response = $this->withExceptionHandling()
+            ->postJson('/nova-api/files', [
+                'files' => UploadedFile::fake()->image('avatar.png'),
+            ]);
+
+        unset($_SERVER['nova.fileResource.imageField']);
+
+        $response->assertStatus(201);
+    }
 }
