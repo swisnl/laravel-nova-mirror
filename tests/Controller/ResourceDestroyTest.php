@@ -5,6 +5,7 @@ namespace Laravel\Nova\Tests\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Actions\ActionEvent;
+use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\Role;
 use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\IntegrationTest;
@@ -153,5 +154,22 @@ class ResourceDestroyTest extends IntegrationTest
         $this->assertNull($user->deleted_at);
 
         $this->assertCount(0, ActionEvent::all());
+    }
+
+    public function test_can_destroy_all_matching()
+    {
+        factory(Post::class)->times(500)->create();
+
+        $response = $this->withExceptionHandling()
+            ->deleteJson('/nova-api/posts', [
+                'resources' => 'all',
+            ]);
+
+        $response->assertStatus(200);
+
+        $this->assertCount(0, Post::all());
+
+        $this->assertCount(500, ActionEvent::all());
+        $this->assertEquals('Delete', ActionEvent::first()->name);
     }
 }

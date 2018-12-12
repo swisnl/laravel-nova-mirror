@@ -39,8 +39,7 @@ class LensResourceForceDeleteTest extends IntegrationTest
 
     public function test_can_force_delete_all_matching_resources()
     {
-        $user = factory(User::class)->create();
-        $user2 = factory(User::class)->create();
+        factory(User::class)->times(500)->create();
 
         $response = $this->withExceptionHandling()
                         ->deleteJson('/nova-api/users/lens/user-lens/force', [
@@ -51,7 +50,7 @@ class LensResourceForceDeleteTest extends IntegrationTest
 
         $this->assertCount(0, User::all());
 
-        $this->assertCount(2, ActionEvent::all());
+        $this->assertCount(500, ActionEvent::all());
         $this->assertEquals('Delete', ActionEvent::first()->name);
     }
 
