@@ -158,7 +158,7 @@ class ResourceDestroyTest extends IntegrationTest
 
     public function test_can_destroy_all_matching()
     {
-        factory(Post::class)->times(500)->create();
+        factory(Post::class)->times(250)->create();
 
         $response = $this->withExceptionHandling()
             ->deleteJson('/nova-api/posts', [
@@ -167,9 +167,9 @@ class ResourceDestroyTest extends IntegrationTest
 
         $response->assertStatus(200);
 
-        $this->assertCount(0, Post::all());
+        $this->assertEquals(0, Post::count());
 
-        $this->assertCount(500, ActionEvent::all());
+        $this->assertEquals(250, ActionEvent::count());
         $this->assertEquals('Delete', ActionEvent::first()->name);
     }
 }
