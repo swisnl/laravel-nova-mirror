@@ -146,33 +146,21 @@ export default {
          * Delete the selected resources.
          */
         deleteSelectedResources() {
-            if (this.allMatchingSelected) {
-                this.$emit('deleteAllMatching')
-            }
-
-            this.$emit('deleteSelected')
+            this.$emit(this.allMatchingSelected ? 'deleteAllMatching' : 'deleteSelected')
         },
 
         /**
          * Force delete the selected resources.
          */
         forceDeleteSelectedResources() {
-            if (this.allMatchingSelected) {
-                this.$emit('forceDeleteAllMatching')
-            }
-
-            this.$emit('forceDeleteSelected')
+            this.$emit(this.allMatchingSelected ? 'forceDeleteAllMatching' : 'forceDeleteSelected')
         },
 
         /**
          * Restore the selected resources.
          */
         restoreSelectedResources() {
-            if (this.allMatchingSelected) {
-                this.$emit('restoreAllMatching')
-            }
-
-            this.$emit('restoreSelected')
+            this.$emit(this.allMatchingSelected ? 'restoreAllMatching' : 'restoreSelected')
         },
 
         /**
