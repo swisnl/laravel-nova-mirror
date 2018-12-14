@@ -47,7 +47,7 @@ class ActionEvent extends Model
     {
         return new static([
             'batch_id' => (string) Str::orderedUuid(),
-            'user_id' => $user->getKey(),
+            'user_id' => $user->getAuthIdentifier(),
             'name' => 'Update',
             'actionable_type' => $model->getMorphClass(),
             'actionable_id' => $model->getKey(),
@@ -73,7 +73,7 @@ class ActionEvent extends Model
     {
         return new static([
             'batch_id' => (string) Str::orderedUuid(),
-            'user_id' => $request->user()->getKey(),
+            'user_id' => $request->user()->getAuthIdentifier(),
             'name' => 'Update Attached',
             'actionable_type' => $parent->getMorphClass(),
             'actionable_id' => $parent->getKey(),
@@ -126,7 +126,7 @@ class ActionEvent extends Model
         return $models->map(function ($model) use ($action, $user, $batchId) {
             return new static([
                 'batch_id' => $batchId,
-                'user_id' => $user->getKey(),
+                'user_id' => $user->getAuthIdentifier(),
                 'name' => $action,
                 'actionable_type' => $model->getMorphClass(),
                 'actionable_id' => $model->getKey(),
@@ -159,7 +159,7 @@ class ActionEvent extends Model
         return $models->map(function ($model) use ($user, $parent, $pivotClass, $batchId) {
             return new static([
                 'batch_id' => $batchId,
-                'user_id' => $user->getKey(),
+                'user_id' => $user->getAuthIdentifier(),
                 'name' => 'Detach',
                 'actionable_type' => $parent->getMorphClass(),
                 'actionable_id' => $parent->getKey(),
@@ -229,7 +229,7 @@ class ActionEvent extends Model
 
         return [
             'batch_id' => $batchId,
-            'user_id' => $request->user()->getKey(),
+            'user_id' => $request->user()->getAuthIdentifier(),
             'name' => $action->name(),
             'actionable_type' => $request->actionableModel()->getMorphClass(),
             'target_type' => $request->model()->getMorphClass(),
