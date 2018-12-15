@@ -68,10 +68,12 @@ import TrendMetric from '@/components/Metrics/TrendMetric'
 import ValidationErrors from '@/components/ValidationErrors'
 import ValueMetric from '@/components/Metrics/ValueMetric'
 import View from '@/components/Icons/View'
-
+//Filters
 import SelectFilter from '@/components/Filters/SelectFilter'
 import BooleanFilter from '@/components/Filters/BooleanFilter'
 import DateFilter from '@/components/Filters/DateFilter'
+//Inputs
+import SelectControl from '@/components/Controls/SelectControl';
 
 Vue.component('action-selector', ActionSelector)
 Vue.component('base-partition-metric', BasePartitionMetric)
@@ -89,7 +91,6 @@ Vue.component('custom-detail-header', CustomDetailHeader)
 Vue.component('custom-detail-toolbar', CustomDetailToolbar)
 Vue.component('custom-index-header', CustomIndexHeader)
 Vue.component('custom-index-toolbar', CustomIndexToolbar)
-Vue.component('date-filter', DateFilter)
 Vue.component('delete-menu', DeleteMenu)
 Vue.component('delete-resource-modal', DeleteResourceModal)
 Vue.component('dropdown', Dropdown)
@@ -142,5 +143,8 @@ Vue.component('trend-metric', TrendMetric)
 Vue.component('validation-errors', ValidationErrors)
 Vue.component('value-metric', ValueMetric)
 
+Vue.component('date-filter', DateFilter)
 Vue.component('select-filter', SelectFilter)
 Vue.component('boolean-filter', BooleanFilter)
+
+Vue.component('select-control', SelectControl)
