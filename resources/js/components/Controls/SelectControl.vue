@@ -1,18 +1,23 @@
 <template>
-    <select v-on="$listeners" v-bind="$attrs">
+    <select v-bind="$attrs"
+            :value="value"
+            v-on="inputListeners"
+    >
         <slot/>
         <template v-for="(options, group) in groupedOptions">
             <optgroup :label="group" v-if="group">
                 <option
-                        v-for="option in groupedOptions"
-                        v-bind="extraAttrs(option)"
-                >{{ labelFor(option) }}</option>
+                        v-for="option in options"
+                        v-bind="attrsFor(option)"
+                >{{ labelFor(option) }}
+                </option>
             </optgroup>
             <template v-else>
                 <option
                         v-for="option in options"
-                        v-bind="extraAttrs(option)"
-                >{{ labelFor(option) }}</option>
+                        v-bind="attrsFor(option)"
+                >{{ labelFor(option) }}
+                </option>
             </template>
         </template>
     </select>
@@ -28,13 +33,23 @@
             label: {
                 default: 'label'
             },
-            value: {
-                default: 'value'
-            }
+            value: {}
         },
+
         computed: {
             groupedOptions() {
                 return _.groupBy(this.options, option => option.group || '')
+            },
+
+            inputListeners() {
+                return _.assign({},
+                    this.$listeners,
+                    {
+                        input(event) {
+                            this.$emit('input', event.target.value)
+                        }
+                    }
+                )
             }
         },
         methods: {
@@ -42,21 +57,14 @@
                 return this.label instanceof Function ? this.label(option) : option[this.label]
             },
 
-            valueFor(option) {
-                return this.value instanceof Function ? this.value(option) : option[this.value]
+            attrsFor(option) {
+                return _.assign(
+                    {},
+                    option.attrs || {},
+                    {value: option.value},
+                    this.selected !== void 0 ? {selected: this.selected == option.value} : {}
+                )
             },
-
-            extraAttrs(option) {
-                let attrs = option.extraAttrs || {};
-                const value = this.valueFor(option);
-                attrs.value = value;
-
-                if (this.selected !== void 0) {
-                    attrs['selected'] = this.selected == value;
-                }
-
-                return attrs
-            }
-        }
+        },
     }
 </script>
