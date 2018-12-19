@@ -3,6 +3,7 @@
 namespace Laravel\Nova\Tests\Feature;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Fields\Textarea;
@@ -31,10 +32,10 @@ class FieldTest extends IntegrationTest
             return strtoupper($value);
         });
 
-        $field->resolve((object) ['name' => 'Taylor'], 'name');
+        $field->resolve((object)['name' => 'Taylor'], 'name');
         $this->assertEquals('Taylor', $field->value);
 
-        $field->resolveForDisplay((object) ['name' => 'Taylor'], 'name');
+        $field->resolveForDisplay((object)['name' => 'Taylor'], 'name');
         $this->assertEquals('TAYLOR', $field->value);
     }
 
@@ -44,7 +45,7 @@ class FieldTest extends IntegrationTest
             return strtoupper($value);
         });
 
-        $field->resolve((object) ['name' => 'Taylor'], 'name');
+        $field->resolve((object)['name' => 'Taylor'], 'name');
 
         $this->assertEquals('TAYLOR', $field->value);
     }
@@ -55,10 +56,10 @@ class FieldTest extends IntegrationTest
             return 'Computed';
         });
 
-        $field->resolve((object) []);
+        $field->resolve((object)[]);
         $this->assertEquals('Computed', $field->value);
 
-        $field->resolveForDisplay((object) []);
+        $field->resolveForDisplay((object)[]);
         $this->assertEquals('Computed', $field->value);
     }
 
@@ -72,7 +73,8 @@ class FieldTest extends IntegrationTest
         $request = Request::create('/', 'GET');
 
         $request->setUserResolver(function () {
-            return new class {
+            return new class
+            {
                 public function can($ability, $arguments = [])
                 {
                     $_SERVER['__nova.ability'] = $ability;
@@ -149,5 +151,23 @@ class FieldTest extends IntegrationTest
         $this->assertContains([
             'extraAttributes' => ['placeholder' => 'This is a placeholder']
         ], $field->jsonSerialize());
+    }
+
+    public function test_select_fields_options_with_additional_parameters()
+    {
+        $expected = [
+            ["label" => "A", "value" => "a"],
+            ["label" => "B", "value" => "b"],
+            ["label" => "C", "value" => "c"],
+            ["label" => "D", "value" => "d", "group" => "E"]
+        ];
+        $field = Select::make('Name')->options([
+            'a' => 'A',
+            'b' => ['label' => 'B'],
+            ['value' => 'c', 'label' => 'C'],
+            ['value' => 'd', 'label' => 'D', 'group' => 'E']
+        ]);
+
+        $this->assertJsonStringEqualsJsonString(json_encode($expected), json_encode($field->jsonSerialize()['options']));
     }
 }

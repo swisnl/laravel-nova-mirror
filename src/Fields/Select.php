@@ -21,7 +21,7 @@ class Select extends Field
     {
         return $this->withMeta([
             'options' => collect($options ?? [])->map(function ($label, $value) {
-                return ['label' => $label, 'value' => $value];
+                return is_array($label) ? $label + ['value' => $value] : ['label' => $label, 'value' => $value];
             })->values()->all(),
         ]);
     }
