@@ -152,7 +152,6 @@ abstract class Lens implements ArrayAccess, JsonSerializable, UrlRoutable
         );
     }
 
-
     /**
      * Get the fields that are available for the given request.
      *
