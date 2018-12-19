@@ -11,7 +11,7 @@
                 :value="value"
                 @change="handleChange"
                 :options="filter.options"
-                :label="'name'"
+                label="name"
             >
                 <option value="" selected>&mdash;</option>
             </select-control>

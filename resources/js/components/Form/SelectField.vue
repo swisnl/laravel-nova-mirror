@@ -7,7 +7,6 @@
                 class="w-full form-control form-select"
                 :class="errorClasses"
                 :options="field.options"
-                :selected="value"
             >
                 <option value="" selected>{{ __('Choose an option') }}</option>
             </select-control>

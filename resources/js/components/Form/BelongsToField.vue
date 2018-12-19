@@ -41,7 +41,7 @@
                 :disabled="isLocked"
                 :options="availableResources"
                 :selected="selectedResourceId"
-                :label="'display'"
+                label="display"
             >
                 <option value="" selected :disabled="!field.nullable">&mdash;</option>
             </select-control>
