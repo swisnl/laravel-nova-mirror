@@ -3,7 +3,6 @@
 namespace Laravel\Nova\Lenses;
 
 use Closure;
-use Laravel\Nova\Contracts\Resolvable;
 use stdClass;
 use ArrayAccess;
 use JsonSerializable;
