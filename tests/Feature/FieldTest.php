@@ -3,9 +3,9 @@
 namespace Laravel\Nova\Tests\Feature;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Tests\IntegrationTest;
@@ -32,10 +32,10 @@ class FieldTest extends IntegrationTest
             return strtoupper($value);
         });
 
-        $field->resolve((object)['name' => 'Taylor'], 'name');
+        $field->resolve((object) ['name' => 'Taylor'], 'name');
         $this->assertEquals('Taylor', $field->value);
 
-        $field->resolveForDisplay((object)['name' => 'Taylor'], 'name');
+        $field->resolveForDisplay((object) ['name' => 'Taylor'], 'name');
         $this->assertEquals('TAYLOR', $field->value);
     }
 
@@ -45,7 +45,7 @@ class FieldTest extends IntegrationTest
             return strtoupper($value);
         });
 
-        $field->resolve((object)['name' => 'Taylor'], 'name');
+        $field->resolve((object) ['name' => 'Taylor'], 'name');
 
         $this->assertEquals('TAYLOR', $field->value);
     }
@@ -56,10 +56,10 @@ class FieldTest extends IntegrationTest
             return 'Computed';
         });
 
-        $field->resolve((object)[]);
+        $field->resolve((object) []);
         $this->assertEquals('Computed', $field->value);
 
-        $field->resolveForDisplay((object)[]);
+        $field->resolveForDisplay((object) []);
         $this->assertEquals('Computed', $field->value);
     }
 
@@ -73,8 +73,7 @@ class FieldTest extends IntegrationTest
         $request = Request::create('/', 'GET');
 
         $request->setUserResolver(function () {
-            return new class
-            {
+            return new class {
                 public function can($ability, $arguments = [])
                 {
                     $_SERVER['__nova.ability'] = $ability;
