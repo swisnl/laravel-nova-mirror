@@ -3,13 +3,15 @@
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/swisnl/laravel-nova-mirror.svg)](https://packagist.org/packages/swisnl/laravel-nova-mirror)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/swisnl/laravel-nova-mirror.svg)](https://packagist.org/packages/swisnl/laravel-nova-mirror)
 
+### :warning: Nova now officially supports [installing via Composer](https://nova.laravel.com/docs/1.0/installation.html#installing-nova-via-composer) :warning:
+
 > **This repository is not a public mirror. It can sync Nova downloads using your personal credentials to a private repository of your choice.**
 
 This application enables you to update a private mirror of Laravel Nova automatically. It downloads releases from the Nova site and updates a repository with the correct releases. 
 
 The application assumes the user which runs it has git access to the repository. The best way to do this using an ssh key. You need to enter the username and password to your account on nova.laravel.org to get this to work.
 
-This repository was created because Nova only supplies a download which you need to copy to your project. This feels way too old-school and makes updating a bit hard. Using this application you can include nova directly from the git repository which should make updating a lot easier.
+This repository was created because Nova (at the time of writing) only supplies a download which you need to copy to your project. This feels way too old-school and makes updating a bit hard. Using this application you can include nova directly from the git repository which should make updating a lot easier.
 
 Run this on a CI once a day, and you will have an up-to-date Nova available whenever you need it.   
 
