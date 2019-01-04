@@ -180,7 +180,9 @@ class MorphTo extends Field
             return;
         }
 
-        if ($morphResource = Nova::resourceForModel($resource->{$type})) {
+        $value = $resource->{$type};
+
+        if ($morphResource = Nova::resourceForModel(Relation::getMorphedModel($value) ?? $value)) {
             return $morphResource::uriKey();
         }
     }
