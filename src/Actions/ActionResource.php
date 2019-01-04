@@ -66,7 +66,7 @@ class ActionResource extends Resource
             Text::make(__('Action Name'), 'name'),
 
             Text::make(__('Action Initiated By'), function () {
-                return $this->user->name ?? $this->user->getKey;
+                return $this->user->name ?? $this->user->email ?? __('Nova User');
             }),
 
             MorphToActionTarget::make(__('Action Target'), 'target'),
