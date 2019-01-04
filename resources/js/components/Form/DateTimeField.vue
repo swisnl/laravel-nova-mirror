@@ -6,6 +6,7 @@
                     class="w-full form-control form-input form-input-bordered"
                     :dusk="field.attribute"
                     :name="field.name"
+                    :placeholder="placeholder"
                     :value="localizedValue"
                     :twelve-hour-time="usesTwelveHourTime"
                     :first-day-of-week="firstDayOfWeek"
@@ -33,6 +34,10 @@ export default {
     computed: {
         firstDayOfWeek() {
             return this.field.firstDayOfWeek || 0
+        },
+
+        placeholder() {
+            return this.field.placeholder || moment().format('YYYY-MM-DD HH:mm:ss')
         },
     },
 

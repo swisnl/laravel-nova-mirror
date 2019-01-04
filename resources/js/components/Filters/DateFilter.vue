@@ -49,7 +49,7 @@ export default {
 
     computed: {
         placeholder() {
-            return this.__('Choose date')
+            return this.filter.placeholder || this.__('Choose date')
         },
 
         value() {
