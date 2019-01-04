@@ -43,8 +43,8 @@ export default {
             }
         },
 
-        close() {
-            this.$emit('modal-close')
+        close(e) {
+            this.$emit('modal-close', e)
         },
     },
 }

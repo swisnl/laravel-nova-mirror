@@ -120,10 +120,10 @@ export default {
         /**
          * Close the modal.
          */
-        handleClose() {
+        handleClose(e) {
             let classArray = ['flatpickr-calendar']
 
-            if (_.filter(classArray, className => pathIncludesClass(event, className)).length > 0) {
+            if (_.filter(classArray, className => pathIncludesClass(e, className)).length > 0) {
                 return
             }
 
