@@ -34,6 +34,7 @@
                 <!-- Custom Filters -->
                 <component
                     v-for="filter in filters"
+                    :resource-name="resourceName"
                     :key="filter.name"
                     :filter-key="filter.class"
                     :is="filter.component"
@@ -121,21 +122,21 @@ export default {
          * Return the filters from state
          */
         filters() {
-            return this.$store.state.resources.filters
+            return this.$store.getters[`${this.resourceName}/filters`]
         },
 
         /**
          * Determine via state whether filters are applied
          */
         filtersAreApplied() {
-            return this.$store.getters.filtersAreApplied
+            return this.$store.getters[`${this.resourceName}/filtersAreApplied`]
         },
 
         /**
          * Return the number of active filters
          */
         activeFilterCount() {
-            return this.$store.getters.activeFilterCount
+            return this.$store.getters[`${this.resourceName}/activeFilterCount`]
         },
     },
 }

@@ -291,7 +291,7 @@ export default {
     /**
      * Mount the component and retrieve its initial data.
      */
-    created() {
+    async created() {
         if (Nova.missingResource(this.resourceName)) return this.$router.push({ name: '404' })
 
         this.initializeSearchFromQueryString()
@@ -299,7 +299,7 @@ export default {
         this.initializeTrashedFromQueryString()
         this.initializeOrderingFromQueryString()
 
-        this.initializeFilters(this.lens)
+        await this.initializeFilters(this.lens)
         this.getResources()
         // this.getAuthorizationToRelate()
         this.getActions()
@@ -801,7 +801,7 @@ export default {
          * Return the currently encoded filter string from the store
          */
         encodedFilters() {
-            return this.$store.getters.currentEncodedFilters
+            return this.$store.getters[`${this.resourceName}/currentEncodedFilters`]
         },
 
         /**

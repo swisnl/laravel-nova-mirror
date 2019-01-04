@@ -27,6 +27,10 @@ export default {
     components: { DateTimePicker },
 
     props: {
+        resourceName: {
+            type: String,
+            required: true,
+        },
         filterKey: {
             type: String,
             required: true,
@@ -35,7 +39,10 @@ export default {
 
     methods: {
         handleChange(value) {
-            this.$store.commit('updateFilterState', { filterClass: this.filterKey, value })
+            this.$store.commit(`${this.resourceName}/updateFilterState`, {
+                filterClass: this.filterKey,
+                value,
+            })
             this.$emit('change')
         },
     },
@@ -50,11 +57,11 @@ export default {
         },
 
         filter() {
-            return this.$store.getters.getFilter(this.filterKey)
+            return this.$store.getters[`${this.resourceName}/getFilter`](this.filterKey)
         },
 
         options() {
-            return this.$store.getters.getOptionsForFilter(this.filterKey)
+            return this.$store.getters[`${this.resourceName}/getOptionsForFilter`](this.filterKey)
         },
 
         firstDayOfWeek() {

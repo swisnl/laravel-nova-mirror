@@ -143,7 +143,7 @@
 
                     <!-- Filters -->
                     <filter-menu
-                        :resourceName="resourceName"
+                        :resource-name="resourceName"
                         :soft-deletes="softDeletes"
                         :via-resource="viaResource"
                         :via-has-one="viaHasOne"
@@ -368,7 +368,7 @@ export default {
         this.initializeTrashedFromQueryString()
         this.initializeOrderingFromQueryString()
 
-        this.initializeFilters()
+        await this.initializeFilters()
         await this.getResources()
         await this.getAuthorizationToRelate()
 
@@ -679,7 +679,7 @@ export default {
          * Determine if the resource has any filters
          */
         hasFilters() {
-            return this.$store.getters.hasFilters
+            return this.$store.getters[`${this.resourceName}/hasFilters`]
         },
 
         /**
@@ -1012,7 +1012,7 @@ export default {
          * Return the currently encoded filter string from the store
          */
         encodedFilters() {
-            return this.$store.getters.currentEncodedFilters
+            return this.$store.getters[`${this.resourceName}/currentEncodedFilters`]
         },
 
         /**
