@@ -9,6 +9,8 @@ use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\IntegrationTest;
 use Laravel\Nova\Tests\Fixtures\IdFilter;
 use Laravel\Nova\Tests\Fixtures\UserPolicy;
+use Laravel\Nova\Tests\Fixtures\RoleAssignment;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class ResourceDetachTest extends IntegrationTest
 {
@@ -128,5 +130,41 @@ class ResourceDetachTest extends IntegrationTest
         $response->assertStatus(200);
         $this->assertCount(3, User::first()->roles);
         $this->assertCount(0, ActionEvent::all());
+    }
+
+    public function test_action_event_should_honor_custom_polymorphic_type_for_resource_detachments()
+    {
+        Relation::morphMap([
+            'user' => User::class,
+            'role' => Role::class,
+            'role_user' => RoleAssignment::class,
+        ]);
+
+        $user = factory(User::class)->create();
+        $role = factory(Role::class)->create();
+        $role2 = factory(Role::class)->create();
+
+        $user->roles()->attach($role);
+        $user->roles()->attach($role2);
+
+        $response = $this->withExceptionHandling()
+                        ->deleteJson('/nova-api/roles/detach?viaResource=users&viaResourceId=1&viaRelationship=roles', [
+                            'resources' => [$role->id],
+                        ]);
+
+        $actionEvent = ActionEvent::first();
+
+        $this->assertEquals('Detach', $actionEvent->name);
+
+        $this->assertEquals('user', $actionEvent->actionable_type);
+        $this->assertEquals($user->id, $actionEvent->actionable_id);
+
+        $this->assertEquals('role', $actionEvent->target_type);
+        $this->assertEquals($role->id, $actionEvent->target_id);
+
+        $this->assertEquals('role_user', $actionEvent->model_type);
+        $this->assertNull($actionEvent->model_id);
+
+        Relation::morphMap([], false);
     }
 }
