@@ -1,29 +1,49 @@
 <template>
     <default-field :field="field" :errors="errors" :full-width-content="true">
         <template slot="field">
-            <div class="bg-white rounded-lg" :class="{
-                'markdown-fullscreen fixed pin z-50': isFullScreen,
-                'form-input form-input-bordered px-0': ! isFullScreen,
-                'form-control-focus': isFocused,
-                'border-danger': errors.has('body'),
-            }">
+            <div
+                class="bg-white rounded-lg"
+                :class="{
+                    'markdown-fullscreen fixed pin z-50': isFullScreen,
+                    'form-input form-input-bordered px-0': !isFullScreen,
+                    'form-control-focus': isFocused,
+                    'border-danger': errors.has('body'),
+                }"
+            >
                 <header class="flex items-center content-center justify-between border-b border-60">
                     <ul class="w-full flex items-center content-center list-reset">
-                        <button :class="{'text-primary font-bold' : this.mode == 'write'}" @click.prevent="write" class="ml-1 text-90 px-3 py-2">{{__('Write')}}</button>
-                        <button :class="{'text-primary font-bold' : this.mode == 'preview'}" @click.prevent="preview" class="text-90 px-3 py-2">{{__('Preview')}}</button>
+                        <button
+                            :class="{ 'text-primary font-bold': this.mode == 'write' }"
+                            @click.prevent="write"
+                            class="ml-1 text-90 px-3 py-2"
+                        >
+                            {{ __('Write') }}
+                        </button>
+                        <button
+                            :class="{ 'text-primary font-bold': this.mode == 'preview' }"
+                            @click.prevent="preview"
+                            class="text-90 px-3 py-2"
+                        >
+                            {{ __('Preview') }}
+                        </button>
                     </ul>
                     <ul class="flex items-center list-reset">
-                        <button :key="tool.action" @click.prevent="callAction(tool.action)" v-for="tool in tools" class="rounded-none ico-button inline-flex justify-center px-2 text-sm text-80 border-l border-60">
-                            <component :is="tool.icon" class="fill-80 w-editor-icon h-editor-icon" />
+                        <button
+                            :key="tool.action"
+                            @click.prevent="callAction(tool.action)"
+                            v-for="tool in tools"
+                            class="rounded-none ico-button inline-flex justify-center px-2 text-sm text-80 border-l border-60"
+                        >
+                            <component
+                                :is="tool.icon"
+                                class="fill-80 w-editor-icon h-editor-icon"
+                            />
                         </button>
                     </ul>
                 </header>
 
-                <div
-                    v-show="mode == 'write'"
-                    class="flex markdown-content relative p-4"
-                >
-                    <textarea ref="theTextarea"/>
+                <div v-show="mode == 'write'" class="flex markdown-content relative p-4">
+                    <textarea ref="theTextarea" />
                 </div>
 
                 <div
@@ -119,7 +139,7 @@ export default {
             viewportMargin: Infinity,
             extraKeys: {
                 Enter: 'newlineAndIndentContinueMarkdownList',
-                ..._.map(this.tools, tool => {
+                ..._.map(this.tools, (tool) => {
                     return tool.action
                 }),
             },
@@ -187,7 +207,7 @@ export default {
         insertBefore(insertion, cursorOffset) {
             if (this.doc.somethingSelected()) {
                 const selects = this.doc.listSelections()
-                selects.forEach(selection => {
+                selects.forEach((selection) => {
                     const pos = [selection.head.line, selection.anchor.line].sort()
 
                     for (let i = pos[0]; i <= pos[1]; i++) {

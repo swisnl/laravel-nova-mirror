@@ -5,8 +5,8 @@
             name: 'detail',
             params: {
                 resourceName: field.resourceName,
-                resourceId: field.morphToId
-            }
+                resourceId: field.morphToId,
+            },
         }"
         class="no-underline dim text-primary font-bold"
     >

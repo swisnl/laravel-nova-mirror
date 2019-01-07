@@ -28,7 +28,7 @@ export default {
 
         this.field.fill = this.fill
 
-        Nova.$on(this.field.attribute + '-value', value => {
+        Nova.$on(this.field.attribute + '-value', (value) => {
             this.value = value
         })
 
@@ -60,7 +60,7 @@ export default {
 
             const placesAutocomplete = places(config)
 
-            placesAutocomplete.on('change', e => {
+            placesAutocomplete.on('change', (e) => {
                 this.$nextTick(() => {
                     this.value = e.suggestion.name
 
@@ -107,7 +107,7 @@ export default {
                 return state
             }
 
-            return _.find(this.states, s => {
+            return _.find(this.states, (s) => {
                 return s.name == state
             }).abbr
         },

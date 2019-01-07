@@ -108,7 +108,7 @@ export default {
 
             const { data: fields } = await Nova.request()
                 .get(`/nova-api/${this.resourceName}/${this.resourceId}/update-fields`)
-                .catch(error => {
+                .catch((error) => {
                     if (error.response.status == 404) {
                         this.$router.push({ name: '404' })
                         return
@@ -228,8 +228,8 @@ export default {
          * Create the form data for creating the resource.
          */
         updateResourceFormData() {
-            return _.tap(new FormData(), formData => {
-                _(this.fields).each(field => {
+            return _.tap(new FormData(), (formData) => {
+                _(this.fields).each((field) => {
                     field.fill(formData)
                 })
 

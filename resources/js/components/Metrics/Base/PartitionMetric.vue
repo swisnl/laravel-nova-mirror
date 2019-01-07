@@ -2,15 +2,20 @@
     <loading-card :loading="loading" class="px-6 py-4">
         <h3 class="flex mb-3 text-base text-80 font-bold">
             {{ title }}
-            <span class="ml-auto font-semibold text-70 text-sm">({{ formattedTotal}} {{__('total')}})</span>
+            <span class="ml-auto font-semibold text-70 text-sm"
+                >({{ formattedTotal }} {{ __('total') }})</span
+            >
         </h3>
 
         <div class="overflow-hidden overflow-y-auto max-h-90px">
             <ul class="list-reset">
                 <li v-for="item in formattedItems" class="text-xs text-80 leading-normal">
-                    <span class="inline-block rounded-full w-2 h-2 mr-2" :style="{
-                        backgroundColor: item.color
-                    }"/>{{ item.label }} ({{ item.value }} - {{ item.percentage }}%)
+                    <span
+                        class="inline-block rounded-full w-2 h-2 mr-2"
+                        :style="{
+                            backgroundColor: item.color,
+                        }"
+                    />{{ item.label }} ({{ item.value }} - {{ item.percentage }}%)
                 </li>
             </ul>
         </div>
@@ -27,7 +32,7 @@
 import Chartist from 'chartist'
 import 'chartist/dist/chartist.min.css'
 
-const colorForIndex = index =>
+const colorForIndex = (index) =>
     [
         '#F5573B',
         '#F99037',
@@ -67,7 +72,7 @@ export default {
             showLabel: false,
         })
 
-        this.chartist.on('draw', context => {
+        this.chartist.on('draw', (context) => {
             if (context.type === 'slice') {
                 context.element.attr({ style: `fill: ${context.meta.color} !important` })
             }
@@ -86,7 +91,12 @@ export default {
 
     computed: {
         chartClasses() {
-            return ['vertical-center', 'rounded-b-lg', 'ct-chart', this.formattedTotal <= 0 ? 'invisible' : '']
+            return [
+                'vertical-center',
+                'rounded-b-lg',
+                'ct-chart',
+                this.formattedTotal <= 0 ? 'invisible' : '',
+            ]
         },
 
         formattedChartData() {
@@ -100,7 +110,10 @@ export default {
                         label: item.label,
                         value: item.value,
                         color: this.getItemColor(item, index),
-                        percentage: this.formattedTotal > 0 ? (item.value * 100 / this.formattedTotal).toFixed(2) : '0',
+                        percentage:
+                            this.formattedTotal > 0
+                                ? ((item.value * 100) / this.formattedTotal).toFixed(2)
+                                : '0',
                     }
                 })
                 .value()
@@ -108,7 +121,7 @@ export default {
 
         formattedLabels() {
             return _(this.chartData)
-                .map(item => item.label)
+                .map((item) => item.label)
                 .value()
         },
 
