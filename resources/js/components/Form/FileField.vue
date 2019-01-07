@@ -85,7 +85,6 @@ export default {
 
     data: () => ({
         file: null,
-        label: 'no file selected',
         fileName: '',
         removeModalOpen: false,
         missing: false,
@@ -175,7 +174,7 @@ export default {
          * The current label of the file field
          */
         currentLabel() {
-            return this.fileName || this.label
+            return this.fileName || this.__('no file selected')
         },
 
         /**
