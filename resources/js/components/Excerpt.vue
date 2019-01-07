@@ -24,9 +24,7 @@
             {{ showHideLabel }}
         </a>
     </div>
-    <div v-else>
-        &mdash;
-    </div>
+    <div v-else>&mdash;</div>
 </template>
 
 <script>

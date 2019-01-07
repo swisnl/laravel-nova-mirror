@@ -55,9 +55,9 @@
             <!-- Trashed State -->
             <div v-if="softDeletes && !isLocked">
                 <checkbox-with-label
-                        :dusk="`${field.resourceName}-with-trashed-checkbox`"
-                        :checked="withTrashed"
-                        @change="toggleWithTrashed"
+                    :dusk="`${field.resourceName}-with-trashed-checkbox`"
+                    :checked="withTrashed"
+                    @change="toggleWithTrashed"
                 >
                     {{ __('With Trashed') }}
                 </checkbox-with-label>

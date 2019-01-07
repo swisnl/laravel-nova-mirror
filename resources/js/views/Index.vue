@@ -123,9 +123,7 @@
                     <!-- Lenses -->
                     <dropdown class="bg-30 hover:bg-40 mr-3 rounded" v-if="lenses.length > 0">
                         <dropdown-trigger
-                            slot-scope="{
-                                toggle,
-                            }"
+                            slot-scope="{ toggle }"
                             :handle-click="toggle"
                             class="px-3"
                         >
