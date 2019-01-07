@@ -139,7 +139,7 @@ export default {
             viewportMargin: Infinity,
             extraKeys: {
                 Enter: 'newlineAndIndentContinueMarkdownList',
-                ..._.map(this.tools, (tool) => {
+                ..._.map(this.tools, tool => {
                     return tool.action
                 }),
             },
@@ -207,7 +207,7 @@ export default {
         insertBefore(insertion, cursorOffset) {
             if (this.doc.somethingSelected()) {
                 const selects = this.doc.listSelections()
-                selects.forEach((selection) => {
+                selects.forEach(selection => {
                     const pos = [selection.head.line, selection.anchor.line].sort()
 
                     for (let i = pos[0]; i <= pos[1]; i++) {

@@ -258,7 +258,7 @@ export default {
                     this.resource = resource
                     this.loading = false
                 })
-                .catch((error) => {
+                .catch(error => {
                     if (error.response.status >= 500) {
                         Nova.$emit('error', error.response.data.message)
                         return
@@ -295,8 +295,8 @@ export default {
                         resourceId: this.resourceId,
                     },
                 })
-                .then((response) => {
-                    this.actions = _.filter(response.data.actions, (action) => {
+                .then(response => {
+                    this.actions = _.filter(response.data.actions, action => {
                         return !action.onlyOnIndex
                     })
                 })
@@ -314,7 +314,7 @@ export default {
          * Create a new panel for the given field.
          */
         createPanelForField(field) {
-            return _.tap(_.find(this.panels, (panel) => panel.name == field.panel), (panel) => {
+            return _.tap(_.find(this.panels, panel => panel.name == field.panel), panel => {
                 panel.fields = [field]
             })
         },
@@ -442,7 +442,7 @@ export default {
 
                 var fields = _.toArray(JSON.parse(JSON.stringify(this.resource.fields)))
 
-                fields.forEach((field) => {
+                fields.forEach(field => {
                     if (field.listable) {
                         return (panels[field.name] = this.createPanelForRelationship(field))
                     } else if (panels[field.panel]) {

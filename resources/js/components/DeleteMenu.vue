@@ -202,7 +202,7 @@ export default {
          * Determine if any soft deleted resources are selected.
          */
         softDeletedResourcesSelected() {
-            return Boolean(_.find(this.selectedResources, (resource) => resource.softDeleted))
+            return Boolean(_.find(this.selectedResources, resource => resource.softDeleted))
         },
     },
 }

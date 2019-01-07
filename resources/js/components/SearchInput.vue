@@ -167,7 +167,7 @@ export default {
         },
     },
     mounted() {
-        document.addEventListener('keydown', (e) => {
+        document.addEventListener('keydown', e => {
             if (this.show && (e.keyCode == 9 || e.keyCode == 27)) {
                 setTimeout(() => this.close(), 50)
             }
@@ -255,7 +255,7 @@ export default {
         /**
          * Debounce function for the input handler
          */
-        debouncer: _.debounce((callback) => callback(), 500),
+        debouncer: _.debounce(callback => callback(), 500),
     },
 
     computed: {

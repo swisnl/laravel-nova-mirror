@@ -5,7 +5,7 @@
                 <ImageLoader
                     :src="imageUrl"
                     :maxWidth="maxWidth"
-                    @missing="(value) => (missing = value)"
+                    @missing="value => (missing = value)"
                 />
             </template>
 

@@ -96,7 +96,7 @@ export default {
         softDeletes: Boolean,
         trashed: {
             type: String,
-            validator: (value) => ['', 'with', 'only'].indexOf(value) != -1,
+            validator: value => ['', 'with', 'only'].indexOf(value) != -1,
         },
         perPage: [String, Number],
         showTrashedOption: {

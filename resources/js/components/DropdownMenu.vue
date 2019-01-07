@@ -15,7 +15,7 @@ export default {
         direction: {
             type: String,
             default: 'ltr',
-            validator: (value) => ['ltr', 'rtl'].indexOf(value) != -1,
+            validator: value => ['ltr', 'rtl'].indexOf(value) != -1,
         },
         width: {
             default: 120,

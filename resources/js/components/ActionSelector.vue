@@ -147,8 +147,8 @@ export default {
          * Initialize all of the action fields to empty strings.
          */
         initializeActionFields() {
-            _(this.allActions).each((action) => {
-                _(action.fields).each((field) => {
+            _(this.allActions).each(action => {
+                _(action.fields).each(field => {
                     field.fill = () => ''
                 })
             })
@@ -171,12 +171,12 @@ export default {
                 params: this.actionRequestQueryString,
                 data: this.actionFormData(),
             })
-                .then((response) => {
+                .then(response => {
                     this.confirmActionModalOpened = false
                     this.handleActionResponse(response.data)
                     this.working = false
                 })
-                .catch((error) => {
+                .catch(error => {
                     this.working = false
 
                     if (error.response.status == 422) {
@@ -189,10 +189,10 @@ export default {
          * Gather the action FormData for the given action.
          */
         actionFormData() {
-            return _.tap(new FormData(), (formData) => {
+            return _.tap(new FormData(), formData => {
                 formData.append('resources', this.selectedResources)
 
-                _.each(this.selectedAction.fields, (field) => {
+                _.each(this.selectedAction.fields, field => {
                     field.fill(formData)
                 })
             })
@@ -229,7 +229,7 @@ export default {
     computed: {
         selectedAction() {
             if (this.selectedActionKey) {
-                return _.find(this.allActions, (a) => a.uriKey == this.selectedActionKey)
+                return _.find(this.allActions, a => a.uriKey == this.selectedActionKey)
             }
         },
 
@@ -255,7 +255,7 @@ export default {
         selectedActionIsPivotAction() {
             return (
                 this.hasPivotActions &&
-                Boolean(_.find(this.pivotActions.actions, (a) => a === this.selectedAction))
+                Boolean(_.find(this.pivotActions.actions, a => a === this.selectedAction))
             )
         },
 
@@ -271,7 +271,7 @@ export default {
          */
         availableActions() {
             return _(this.actions)
-                .filter((action) => {
+                .filter(action => {
                     if (this.selectedResources != 'all') {
                         return true
                     }
@@ -293,7 +293,7 @@ export default {
          */
         availablePivotActions() {
             return _(this.pivotActions.actions)
-                .filter((action) => {
+                .filter(action => {
                     if (this.selectedResources != 'all') {
                         return true
                     }

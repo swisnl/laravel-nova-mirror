@@ -52,7 +52,7 @@ export default {
                 image.src = this.src
             })
         )
-            .then((image) => {
+            .then(image => {
                 image.className = 'block w-full'
                 image.draggable = false
 

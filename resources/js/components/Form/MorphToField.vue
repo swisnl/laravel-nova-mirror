@@ -200,7 +200,7 @@ export default {
         selectInitialResource() {
             this.selectedResource = _.find(
                 this.availableResources,
-                (r) => r.value == this.selectedResourceId
+                r => r.value == this.selectedResourceId
             )
         },
 
@@ -318,7 +318,7 @@ export default {
          */
         fieldTypeName() {
             if (this.resourceType) {
-                return _.find(this.field.morphToTypes, (type) => {
+                return _.find(this.field.morphToTypes, type => {
                     return type.value == this.resourceType
                 }).singularLabel
             }
