@@ -3,10 +3,10 @@ import _ from 'lodash'
 export default {
     namespaced: true,
 
-    state: {
+    state: () => ({
         filters: [],
         originalFilters: [],
-    },
+    }),
 
     getters: {
         /**
@@ -107,9 +107,7 @@ export default {
                   )
                 : await Nova.request().get('/nova-api/' + resourceName + '/filters')
 
-            console.log(`Storing filters for ${resourceName}`, data)
             commit('storeFilters', data)
-            // console.log(state.originalFilters)
         },
 
         /**
