@@ -4,7 +4,7 @@
             <template v-if="shouldShowLoader">
                 <ImageLoader
                     :src="imageUrl"
-                    class="max-w-xs"
+                    :maxWidth="maxWidth"
                     @missing="value => (missing = value)"
                 />
             </template>
@@ -127,6 +127,10 @@ export default {
 
         imageUrl() {
             return this.field.previewUrl || this.field.thumbnailUrl
+        },
+
+        maxWidth() {
+            return this.field.maxWidth || 320
         },
     },
 }
