@@ -7,9 +7,8 @@ use Illuminate\Http\Request;
 use Laravel\Nova\TrashedStatus;
 use Laravel\Nova\Rules\Relatable;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Laravel\Nova\Http\Requests\ResourceIndexRequest;
-
+use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 
 class BelongsTo extends Field
 {
@@ -143,7 +142,20 @@ class BelongsTo extends Field
     {
         return (! $request instanceof ResourceIndexRequest || ! $request->viaResource) ||
                ($this->resourceName !== $request->viaResource) ||
-               (empty($reverse = $this->getReverseRelation($request)) || $reverse !== $request->viaRelationship);
+               !$this->isReverseRelation($request);
+    }
+
+    /**
+     * Determine if the field is the reverse relation of a showed index view.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return bool
+     */
+    public function isReverseRelation(Request $request)
+    {
+        $reverse = $this->getReverseRelation($request);
+
+        return $reverse === $request->viaRelationship;
     }
 
     /**
@@ -364,7 +376,7 @@ class BelongsTo extends Field
      * @param string $reverseRelation
      * @return $this
      */
-    public function reverseRelation(string $reverseRelation)
+    public function reverseRelation($reverseRelation)
     {
         $this->reverseRelation = $reverseRelation;
 
@@ -398,7 +410,7 @@ class BelongsTo extends Field
             'belongsToId' => $this->belongsToId,
             'nullable' => $this->nullable,
             'searchable' => $this->searchable,
-            'reverseRelation' => $this->getReverseRelation(\app(NovaRequest::class)),
+            'reverseRelation' => $this->getReverseRelation(app(NovaRequest::class)),
         ], $this->meta);
     }
 }
