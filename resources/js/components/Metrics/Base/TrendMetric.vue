@@ -106,7 +106,7 @@ export default {
 
                 Chartist.plugins.tooltip({
                     anchorToPoint: true,
-                    transformTooltipTextFnc: (value) => {
+                    transformTooltipTextFnc: value => {
                         if (this.prefix) {
                             return `${this.prefix}${value}`
                         }

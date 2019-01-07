@@ -218,7 +218,7 @@ export default {
                 .then(({ data }) => {
                     this.fields = data
 
-                    _.each(this.fields, (field) => {
+                    _.each(this.fields, field => {
                         field.fill = () => ''
                     })
                 })
@@ -245,7 +245,7 @@ export default {
                         },
                     }
                 )
-                .then((response) => {
+                .then(response => {
                     this.availableResources = response.data.resources
                     this.withTrashed = response.data.withTrashed
                     this.softDeletes = response.data.softDeletes
@@ -258,7 +258,7 @@ export default {
         determineIfSoftDeletes() {
             Nova.request()
                 .get('/nova-api/' + this.relatedResourceName + '/soft-deletes')
-                .then((response) => {
+                .then(response => {
                     this.softDeletes = response.data.softDeletes
                 })
         },
@@ -333,7 +333,7 @@ export default {
         selectInitialResource() {
             this.selectedResource = _.find(
                 this.availableResources,
-                (r) => r.value == this.selectedResourceId
+                r => r.value == this.selectedResourceId
             )
         },
 
@@ -374,8 +374,8 @@ export default {
          * Get the form data for the resource attachment.
          */
         attachmentFormData() {
-            return _.tap(new FormData(), (formData) => {
-                _.each(this.fields, (field) => {
+            return _.tap(new FormData(), formData => {
+                _.each(this.fields, field => {
                     field.fill(formData)
                 })
 

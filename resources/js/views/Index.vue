@@ -534,7 +534,7 @@ export default {
                         '&relationshipType=' +
                         this.relationshipType
                 )
-                .then((response) => {
+                .then(response => {
                     this.authorizedToRelate = response.data.authorized
                 })
         },
@@ -551,7 +551,7 @@ export default {
 
             return Nova.request()
                 .get('/nova-api/' + this.resourceName + '/lenses')
-                .then((response) => {
+                .then(response => {
                     this.lenses = response.data
                 })
         },
@@ -574,8 +574,8 @@ export default {
                         '&viaRelationship=' +
                         this.viaRelationship
                 )
-                .then((response) => {
-                    this.actions = _.filter(response.data.actions, (action) => {
+                .then(response => {
+                    this.actions = _.filter(response.data.actions, action => {
                         return !action.onlyOnDetail
                     })
                     this.pivotActions = response.data.pivotActions
@@ -597,7 +597,7 @@ export default {
             })
         },
 
-        debouncer: _.debounce((callback) => callback(), 500),
+        debouncer: _.debounce(callback => callback(), 500),
 
         /**
          * Clear the selected resouces and the "select all" states.
@@ -615,7 +615,7 @@ export default {
                 .get('/nova-api/' + this.resourceName + '/count', {
                     params: this.resourceRequestQueryString,
                 })
-                .then((response) => {
+                .then(response => {
                     this.allMatchingResourceCount = response.data.count
                 })
         },
@@ -779,7 +779,7 @@ export default {
          * Get the IDs for the selected resources.
          */
         selectedResourceIds() {
-            return _.map(this.selectedResources, (resource) => resource.id.value)
+            return _.map(this.selectedResources, resource => resource.id.value)
         },
 
         /**
@@ -913,9 +913,7 @@ export default {
          * Determine if any selected resources may be deleted.
          */
         authorizedToDeleteSelectedResources() {
-            return Boolean(
-                _.find(this.selectedResources, (resource) => resource.authorizedToDelete)
-            )
+            return Boolean(_.find(this.selectedResources, resource => resource.authorizedToDelete))
         },
 
         /**
@@ -923,7 +921,7 @@ export default {
          */
         authorizedToForceDeleteSelectedResources() {
             return Boolean(
-                _.find(this.selectedResources, (resource) => resource.authorizedToForceDelete)
+                _.find(this.selectedResources, resource => resource.authorizedToForceDelete)
             )
         },
 
@@ -933,7 +931,7 @@ export default {
         authorizedToDeleteAnyResources() {
             return (
                 this.resources.length > 0 &&
-                Boolean(_.find(this.resources, (resource) => resource.authorizedToDelete))
+                Boolean(_.find(this.resources, resource => resource.authorizedToDelete))
             )
         },
 
@@ -943,7 +941,7 @@ export default {
         authorizedToForceDeleteAnyResources() {
             return (
                 this.resources.length > 0 &&
-                Boolean(_.find(this.resources, (resource) => resource.authorizedToForceDelete))
+                Boolean(_.find(this.resources, resource => resource.authorizedToForceDelete))
             )
         },
 
@@ -951,9 +949,7 @@ export default {
          * Determine if any selected resources may be restored.
          */
         authorizedToRestoreSelectedResources() {
-            return Boolean(
-                _.find(this.selectedResources, (resource) => resource.authorizedToRestore)
-            )
+            return Boolean(_.find(this.selectedResources, resource => resource.authorizedToRestore))
         },
 
         /**
@@ -962,7 +958,7 @@ export default {
         authorizedToRestoreAnyResources() {
             return (
                 this.resources.length > 0 &&
-                Boolean(_.find(this.resources, (resource) => resource.authorizedToRestore))
+                Boolean(_.find(this.resources, resource => resource.authorizedToRestore))
             )
         },
 

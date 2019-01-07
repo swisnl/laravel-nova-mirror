@@ -192,7 +192,7 @@ export default {
         /**
          * Debounce function for the search handler
          */
-        debouncer: _.debounce((callback) => callback(), 500),
+        debouncer: _.debounce(callback => callback(), 500),
 
         /**
          * Move the highlighted results
@@ -244,7 +244,7 @@ export default {
         goToCurrentlySelectedResource() {
             const resource = _.find(
                 this.indexedResults,
-                (res) => res.index == this.highlightedResultIndex
+                res => res.index == this.highlightedResultIndex
             )
 
             this.$router.push({
@@ -286,7 +286,7 @@ export default {
 
         formattedGroups() {
             return _.chain(this.indexedResults)
-                .map((item) => {
+                .map(item => {
                     return {
                         resourceName: item.resourceName,
                         resourceTitle: item.resourceTitle,
@@ -297,13 +297,13 @@ export default {
         },
 
         formattedResults() {
-            return _.map(this.formattedGroups, (group) => {
+            return _.map(this.formattedGroups, group => {
                 return {
                     resourceName: group.resourceName,
                     resourceTitle: group.resourceTitle,
                     items: _.filter(
                         this.indexedResults,
-                        (item) => item.resourceName == group.resourceName
+                        item => item.resourceName == group.resourceName
                     ),
                 }
             })

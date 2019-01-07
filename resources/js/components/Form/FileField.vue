@@ -6,7 +6,7 @@
                     <ImageLoader
                         :src="imageUrl"
                         :maxWidth="maxWidth"
-                        @missing="(value) => (missing = value)"
+                        @missing="value => (missing = value)"
                     />
                 </template>
 
@@ -90,7 +90,7 @@ export default {
     }),
 
     mounted() {
-        this.field.fill = (formData) => {
+        this.field.fill = formData => {
             if (this.file) {
                 formData.append(this.field.attribute, this.file, this.fileName)
             }

@@ -32,7 +32,7 @@
 import Chartist from 'chartist'
 import 'chartist/dist/chartist.min.css'
 
-const colorForIndex = (index) =>
+const colorForIndex = index =>
     [
         '#F5573B',
         '#F99037',
@@ -72,7 +72,7 @@ export default {
             showLabel: false,
         })
 
-        this.chartist.on('draw', (context) => {
+        this.chartist.on('draw', context => {
             if (context.type === 'slice') {
                 context.element.attr({ style: `fill: ${context.meta.color} !important` })
             }
@@ -121,7 +121,7 @@ export default {
 
         formattedLabels() {
             return _(this.chartData)
-                .map((item) => item.label)
+                .map(item => item.label)
                 .value()
         },
 

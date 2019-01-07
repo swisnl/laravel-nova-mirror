@@ -193,8 +193,8 @@ export default {
          * Create the form data for creating the resource.
          */
         createResourceFormData() {
-            return _.tap(new FormData(), (formData) => {
-                _.each(this.fields, (field) => {
+            return _.tap(new FormData(), formData => {
+                _.each(this.fields, field => {
                     field.fill(formData)
                 })
 

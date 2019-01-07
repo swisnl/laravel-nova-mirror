@@ -46,10 +46,10 @@ export default {
          */
         filteredCards() {
             if (this.onlyOnDetail) {
-                return _.filter(this.cards, (c) => c.onlyOnDetail == true)
+                return _.filter(this.cards, c => c.onlyOnDetail == true)
             }
 
-            return _.filter(this.cards, (c) => c.onlyOnDetail == false)
+            return _.filter(this.cards, c => c.onlyOnDetail == false)
         },
     },
 }
