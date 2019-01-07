@@ -123,6 +123,16 @@ class ActionResource extends Resource
     }
 
     /**
+     * Get the displayable singular label of the resource.
+     *
+     * @return string
+     */
+    public static function singularLabel()
+    {
+        return __('Action');
+    }
+
+    /**
      * Get the URI key for the resource.
      *
      * @return string
