@@ -371,19 +371,6 @@ class BelongsTo extends Field
     }
 
     /**
-     * Specify reverse relation for the related resource.
-     *
-     * @param string $reverseRelation
-     * @return $this
-     */
-    public function reverseRelation($reverseRelation)
-    {
-        $this->reverseRelation = $reverseRelation;
-
-        return $this;
-    }
-
-    /**
      * Set the displayable singular label of the resource.
      *
      * @return string
