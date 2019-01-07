@@ -2,9 +2,7 @@
     <div class="flex border-b border-40">
         <div class="w-1/4 py-4">
             <slot>
-                <h4 class="font-normal text-80">
-                    {{ label }}
-                </h4>
+                <h4 class="font-normal text-80">{{ label }}</h4>
             </slot>
         </div>
         <div class="w-3/4 py-4">

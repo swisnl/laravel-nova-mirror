@@ -13,7 +13,7 @@
                 @click.prevent="selectPreviousPage()"
                 dusk="previous"
             >
-                {{__('Previous')}}
+                {{ __('Previous') }}
             </button>
 
             <slot />
@@ -30,7 +30,7 @@
                 @click.prevent="selectNextPage()"
                 dusk="next"
             >
-                {{__('Next')}}
+                {{ __('Next') }}
             </button>
         </nav>
     </div>

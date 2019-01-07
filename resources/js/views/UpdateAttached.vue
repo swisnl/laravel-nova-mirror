@@ -185,7 +185,7 @@ export default {
                     }/${this.relatedResourceId}`,
                     { params: { viaRelationship: this.viaRelationship } }
                 )
-                .catch(error => {
+                .catch((error) => {
                     if (error.response.status == 404) {
                         this.$router.push({ name: '404' })
                         return
@@ -194,7 +194,7 @@ export default {
 
             this.fields = data
 
-            _.each(this.fields, field => {
+            _.each(this.fields, (field) => {
                 field.fill = () => ''
             })
         },
@@ -232,7 +232,7 @@ export default {
         determineIfSoftDeletes() {
             Nova.request()
                 .get('/nova-api/' + this.relatedResourceName + '/soft-deletes')
-                .then(response => {
+                .then((response) => {
                     this.softDeletes = response.data.softDeletes
                 })
         },
@@ -347,7 +347,7 @@ export default {
         selectInitialResource() {
             this.selectedResource = _.find(
                 this.availableResources,
-                r => r.value == this.selectedResourceId
+                (r) => r.value == this.selectedResourceId
             )
         },
 
@@ -383,8 +383,8 @@ export default {
          * Get the form data for the resource attachment update.
          */
         updateAttachmentFormData() {
-            return _.tap(new FormData(), formData => {
-                _.each(this.fields, field => {
+            return _.tap(new FormData(), (formData) => {
+                _.each(this.fields, (field) => {
                     field.fill(formData)
                 })
 

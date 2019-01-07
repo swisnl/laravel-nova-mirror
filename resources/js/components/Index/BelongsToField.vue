@@ -1,14 +1,16 @@
 <template>
     <span>
         <span v-if="field.value">
-            <router-link :to="{
-                name: 'detail',
-                params: {
-                    resourceName: field.resourceName,
-                    resourceId: field.belongsToId
-                }
-            }"
-            class="no-underline dim text-primary font-bold">
+            <router-link
+                :to="{
+                    name: 'detail',
+                    params: {
+                        resourceName: field.resourceName,
+                        resourceId: field.belongsToId,
+                    },
+                }"
+                class="no-underline dim text-primary font-bold"
+            >
                 {{ field.value }}
             </router-link>
         </span>

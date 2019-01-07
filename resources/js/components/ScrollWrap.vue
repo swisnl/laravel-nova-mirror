@@ -1,10 +1,5 @@
 <template>
-    <div
-        class="scroll-wrap overflow-x-hidden overflow-y-auto"
-        :style="style"
-    >
-        <slot/>
-    </div>
+    <div class="scroll-wrap overflow-x-hidden overflow-y-auto" :style="style"><slot /></div>
 </template>
 
 <script>

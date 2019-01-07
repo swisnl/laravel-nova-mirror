@@ -5,11 +5,12 @@
         class="card relative border border-lg border-50 overflow-hidden px-0 py-0"
         :class="cardClasses"
     >
-        <div v-if="loading" style="height: 100px"/>
+        <div v-if="loading" style="height: 100px" />
 
         <div class="missing p-8" v-if="missing">
             <p class="text-center leading-normal">
-                <a :href="src" class="text-primary dim" target="_blank">{{__('This image')}}</a> {{__('could not be found.')}}
+                <a :href="src" class="text-primary dim" target="_blank">{{ __('This image') }}</a>
+                {{ __('could not be found.') }}
             </p>
         </div>
     </loading-card>
@@ -35,7 +36,7 @@ export default {
     computed: {
         cardClasses() {
             return {
-                'max-w-xs': ! this.maxWidth || this.loading || this.missing,
+                'max-w-xs': !this.maxWidth || this.loading || this.missing,
             }
         },
     },
@@ -51,7 +52,7 @@ export default {
                 image.src = this.src
             })
         )
-            .then(image => {
+            .then((image) => {
                 image.className = 'block w-full'
                 image.draggable = false
 

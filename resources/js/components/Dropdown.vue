@@ -2,9 +2,7 @@
     <div v-on-clickaway="close" class="dropdown relative">
         <slot :toggle="toggle" />
 
-        <transition name="fade">
-            <slot v-if="visible" name="menu" />
-        </transition>
+        <transition name="fade"> <slot v-if="visible" name="menu" /> </transition>
     </div>
 </template>
 
@@ -31,7 +29,9 @@ export default {
                 ? this.classWhitelist
                 : [this.classWhitelist]
 
-            if (_.filter(classArray, className => pathIncludesClass(event, className)).length > 0) {
+            if (
+                _.filter(classArray, (className) => pathIncludesClass(event, className)).length > 0
+            ) {
                 return
             }
 
@@ -42,7 +42,7 @@ export default {
 
 function pathIncludesClass(event, className) {
     return composedPath(event)
-        .filter(el => el !== document && el !== window)
+        .filter((el) => el !== document && el !== window)
         .reduce((acc, e) => acc.concat([...e.classList]), [])
         .includes(className)
 }

@@ -55,9 +55,9 @@
             <!-- Trashed State -->
             <div v-if="softDeletes && !isLocked">
                 <checkbox-with-label
-                        :dusk="`${field.resourceName}-with-trashed-checkbox`"
-                        :checked="withTrashed"
-                        @change="toggleWithTrashed"
+                    :dusk="`${field.resourceName}-with-trashed-checkbox`"
+                    :checked="withTrashed"
+                    @change="toggleWithTrashed"
                 >
                     {{ __('With Trashed') }}
                 </checkbox-with-label>
@@ -184,7 +184,7 @@ export default {
          * Determine if the relatd resource is soft deleting.
          */
         determineIfSoftDeletes() {
-            return storage.determineIfSoftDeletes(this.field.resourceName).then(response => {
+            return storage.determineIfSoftDeletes(this.field.resourceName).then((response) => {
                 this.softDeletes = response.data.softDeletes
             })
         },
@@ -202,7 +202,7 @@ export default {
         selectInitialResource() {
             this.selectedResource = _.find(
                 this.availableResources,
-                r => r.value == this.selectedResourceId
+                (r) => r.value == this.selectedResourceId
             )
         },
 
