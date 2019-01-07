@@ -3,7 +3,11 @@
         <template slot="field">
             <div v-if="hasValue" class="mb-6">
                 <template v-if="shouldShowLoader">
-                    <ImageLoader :src="imageUrl" class="max-w-xs" @missing="(value) => missing = value" />
+                    <ImageLoader
+                        :src="imageUrl"
+                        :maxWidth="maxWidth"
+                        @missing="(value) => missing = value"
+                    />
                 </template>
 
                 <template v-if="field.value && !imageUrl">
@@ -220,6 +224,10 @@ export default {
 
         imageUrl() {
             return this.field.previewUrl || this.field.thumbnailUrl
+        },
+
+        maxWidth() {
+            return this.field.maxWidth || 320
         },
     },
 }
