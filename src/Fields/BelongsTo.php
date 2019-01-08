@@ -151,7 +151,7 @@ class BelongsTo extends Field
      */
     public function isReverseRelation(Request $request)
     {
-        if (!$request->viaResource || $this->resourceName !== $request->viaResource) {
+        if (! $request->viaResource || $this->resourceName !== $request->viaResource) {
             return false;
         }
 
@@ -169,7 +169,6 @@ class BelongsTo extends Field
     public function getReverseRelation(NovaRequest $request)
     {
         if (is_null($this->reverseRelation)) {
-
             $viaModel = forward_static_call(
                 [$resourceClass = $this->resourceClass, 'newModel']
             );

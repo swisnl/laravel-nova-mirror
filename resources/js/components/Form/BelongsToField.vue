@@ -231,9 +231,11 @@ export default {
          * Determine if we are creating a new resource via a parent relation
          */
         creatingViaRelatedResource() {
-            return this.viaResource == this.field.resourceName &&
+            return (
+                this.viaResource == this.field.resourceName &&
                 this.viaRelationship === this.field.reverseRelation &&
                 this.viaResourceId
+            )
         },
 
         /**
@@ -265,8 +267,10 @@ export default {
         },
 
         isLocked() {
-            return this.viaResource == this.field.resourceName &&
+            return (
+                this.viaResource == this.field.resourceName &&
                 this.viaRelationship === this.field.reverseRelation
+            )
         },
     },
 }
