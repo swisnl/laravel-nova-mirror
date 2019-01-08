@@ -47,6 +47,7 @@ export default class Nova {
     registerStoreModules() {
         this.config.resources.forEach(resource => {
             store.registerModule(resource.uriKey, resources)
+            store.commit(`${resource.uriKey}/setSoftDeletes`,resource.softDeletes)
         })
     }
 

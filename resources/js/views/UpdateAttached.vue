@@ -230,11 +230,7 @@ export default {
          * Determine if the related resource is soft deleting.
          */
         determineIfSoftDeletes() {
-            Nova.request()
-                .get('/nova-api/' + this.relatedResourceName + '/soft-deletes')
-                .then(response => {
-                    this.softDeletes = response.data.softDeletes
-                })
+            this.softDeletes = this.$store.getters[`${this.relatedResourceName}/softDeletes`]
         },
 
         /**

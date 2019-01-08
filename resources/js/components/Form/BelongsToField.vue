@@ -184,9 +184,7 @@ export default {
          * Determine if the relatd resource is soft deleting.
          */
         determineIfSoftDeletes() {
-            return storage.determineIfSoftDeletes(this.field.resourceName).then(response => {
-                this.softDeletes = response.data.softDeletes
-            })
+            this.softDeletes = this.$store.getters[`${this.resourceName}/softDeletes`]
         },
 
         /**
