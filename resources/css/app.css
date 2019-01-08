@@ -169,6 +169,7 @@ textarea.form-input:read-only,
 input.form-input:read-only,
 textarea.form-input:read-only,
 .form-input:disabled,
+.form-input.disabled,
 .form-select:disabled {
   @apply .bg-30;
   cursor: not-allowed;
