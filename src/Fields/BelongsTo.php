@@ -140,9 +140,7 @@ class BelongsTo extends Field
      */
     public function isNotRedundant(Request $request)
     {
-        return (! $request instanceof ResourceIndexRequest || ! $request->viaResource) ||
-               ($this->resourceName !== $request->viaResource) ||
-               !$this->isReverseRelation($request);
+        return ! $request instanceof ResourceIndexRequest || ! $this->isReverseRelation($request);
     }
 
     /**
@@ -153,6 +151,10 @@ class BelongsTo extends Field
      */
     public function isReverseRelation(Request $request)
     {
+        if (!$request->viaResource || $this->resourceName !== $request->viaResource) {
+            return false;
+        }
+
         $reverse = $this->getReverseRelation($request);
 
         return $reverse === $request->viaRelationship;
