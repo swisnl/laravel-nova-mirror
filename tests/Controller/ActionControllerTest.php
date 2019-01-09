@@ -6,6 +6,7 @@ use Laravel\Nova\Actions\Action;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Actions\ActionEvent;
+use Laravel\Nova\Tests\Fixtures\HandleResultAction;
 use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\IntegrationTest;
@@ -590,5 +591,18 @@ class ActionControllerTest extends IntegrationTest
         $this->assertEquals($user2->id, $actionEvent2->model_id);
 
         Relation::morphMap([], false);
+    }
+
+    public function test_actions_handle_result()
+    {
+        factory(User::class)->times(201)->create();
+
+        $response = $this->withExceptionHandling()
+            ->post('/nova-api/users/action?action='.(new HandleResultAction())->uriKey(), [
+                'resources' => 'all',
+            ]);
+
+        $response->assertStatus(200);
+        $this->assertEquals(['message' => 'Processed 201 records'], $response->original);
     }
 }
