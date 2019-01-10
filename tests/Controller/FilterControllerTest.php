@@ -67,31 +67,30 @@ class FilterControllerTest extends IntegrationTest
         $filter = new AdditionalOptionsFilter();
         $json = json_encode($filter);
         $expected = json_encode([
-                "class" => AdditionalOptionsFilter::class,
-                "name" => $filter->name(),
-                "component" => $filter->component(),
-                "options" => [
-                    [
-                        "name" => "label 1",
-                        "value" => "value 1"
-                    ],
-                    [
-                        "name" => "label 2",
-                        "value" => "value 2"
-                    ],
-                    [
-                        "value" => "value 3",
-                        "name" => "label 3"
-                    ],
-                    [
-                        "value" => "value 4",
-                        "name" => "label 4",
-                        "group" => "group 1"
-                    ]
+            "class" => AdditionalOptionsFilter::class,
+            "name" => $filter->name(),
+            "component" => $filter->component(),
+            "options" => [
+                [
+                    "name" => "label 1",
+                    "value" => "value 1",
                 ],
-                "currentValue" => ""
-            ]
-        );
+                [
+                    "name" => "label 2",
+                    "value" => "value 2",
+                ],
+                [
+                    "value" => "value 3",
+                    "name" => "label 3",
+                ],
+                [
+                    "value" => "value 4",
+                    "name" => "label 4",
+                    "group" => "group 1",
+                ]
+            ],
+            "currentValue" => "",
+        ]);
 
         $this->assertJsonStringEqualsJsonString($expected, $json);
     }

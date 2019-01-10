@@ -68,12 +68,12 @@ import TrendMetric from '@/components/Metrics/TrendMetric'
 import ValidationErrors from '@/components/ValidationErrors'
 import ValueMetric from '@/components/Metrics/ValueMetric'
 import View from '@/components/Icons/View'
-//Filters
+
 import SelectFilter from '@/components/Filters/SelectFilter'
 import BooleanFilter from '@/components/Filters/BooleanFilter'
 import DateFilter from '@/components/Filters/DateFilter'
-//Inputs
-import SelectControl from '@/components/Controls/SelectControl';
+
+import SelectControl from '@/components/Controls/SelectControl'
 
 Vue.component('action-selector', ActionSelector)
 Vue.component('base-partition-metric', BasePartitionMetric)
