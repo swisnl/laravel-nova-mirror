@@ -90,7 +90,7 @@ trait PerformsQueries
             static::newModel()->search($search), $withTrashed
         ), function ($scoutBuilder) use ($request) {
             static::scoutQuery($request, $scoutBuilder);
-        })->take(200)->keys();
+        })->take(200)->get()->map->getKey();
 
         return static::applySoftDeleteConstraint(
             $query->whereIn(static::newModel()->getQualifiedKeyName(), $keys->all()), $withTrashed

@@ -4,12 +4,12 @@
             <trix
                 name="trixman"
                 :value="field.value"
-                placeholder=""
                 @change="handleChange"
                 @file-add="handleFileAdd"
                 @file-remove="handleFileRemove"
                 :class="{ 'border-danger': hasError }"
                 :with-files="field.withFiles"
+                v-bind="extraAttributes"
             />
         </template>
     </default-field>
@@ -100,6 +100,23 @@ export default {
                     )
                     .then(response => console.log(response))
                     .catch(error => {})
+            }
+        },
+    },
+
+    computed: {
+        defaultAttributes() {
+            return {
+                placeholder: this.field.placeholder || this.field.name,
+            }
+        },
+
+        extraAttributes() {
+            const attrs = this.field.extraAttributes
+
+            return {
+                ...this.defaultAttributes,
+                ...attrs,
             }
         },
     },

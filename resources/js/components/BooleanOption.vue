@@ -17,6 +17,10 @@ export default {
     components: { Checkbox },
 
     props: {
+        resourceName: {
+            type: String,
+            required: true,
+        },
         filter: Object,
         option: Object,
     },
@@ -26,7 +30,7 @@ export default {
             let oldValue = this.filter.currentValue
             let newValue = { ...oldValue, [optionKey]: event.target.checked }
 
-            this.$store.commit('updateFilterState', {
+            this.$store.commit(`${this.resourceName}/updateFilterState`, {
                 filterClass: this.filter.class,
                 value: newValue,
             })
@@ -38,7 +42,10 @@ export default {
     computed: {
         isChecked() {
             return (
-                this.$store.getters.filterOptionValue(this.filter.class, this.option.value) == true
+                this.$store.getters[`${this.resourceName}/filterOptionValue`](
+                    this.filter.class,
+                    this.option.value
+                ) == true
             )
         },
     },

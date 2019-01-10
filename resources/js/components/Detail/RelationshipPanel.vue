@@ -9,7 +9,8 @@
                 :resource-id="resourceId"
                 :resource="resource"
                 :field="field"
-                @actionExecuted="actionExecuted" />
+                @actionExecuted="actionExecuted"
+            />
         </div>
     </div>
 </template>

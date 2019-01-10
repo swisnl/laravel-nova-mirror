@@ -52,3 +52,9 @@ export default {
     },
 }
 </script>
+
+<style>
+trix-editor:empty:not(:focus)::before {
+    color: var(--70);
+}
+</style>

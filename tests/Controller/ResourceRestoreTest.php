@@ -8,6 +8,7 @@ use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\IntegrationTest;
 use Laravel\Nova\Tests\Fixtures\IdFilter;
 use Laravel\Nova\Tests\Fixtures\UserPolicy;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class ResourceRestoreTest extends IntegrationTest
 {
@@ -127,5 +128,33 @@ class ResourceRestoreTest extends IntegrationTest
         $this->assertNotNull(User::withTrashed()->find($user2->id)->deleted_at);
 
         $this->assertCount(0, ActionEvent::all());
+    }
+
+    public function test_action_event_should_honor_custom_polymorphic_type_when_restoring_resource()
+    {
+        Relation::morphMap(['user' => User::class]);
+
+        $user = factory(User::class)->create();
+        $user->delete();
+
+        $response = $this->withExceptionHandling()
+                        ->putJson('/nova-api/users/restore', [
+                            'resources' => [$user->id],
+                        ]);
+
+        $actionEvent = ActionEvent::first();
+
+        $this->assertEquals('Restore', $actionEvent->name);
+
+        $this->assertEquals('user', $actionEvent->actionable_type);
+        $this->assertEquals($user->id, $actionEvent->actionable_id);
+
+        $this->assertEquals('user', $actionEvent->target_type);
+        $this->assertEquals($user->id, $actionEvent->target_id);
+
+        $this->assertEquals('user', $actionEvent->model_type);
+        $this->assertEquals($user->id, $actionEvent->model_id);
+
+        Relation::morphMap([], false);
     }
 }

@@ -17,11 +17,7 @@
             <span v-if="suffix" class="ml-2 text-sm font-bold text-80">{{ formattedSuffix }}</span>
         </p>
 
-        <div
-            ref="chart"
-            class="absolute pin rounded-b-lg ct-chart"
-            style="top: 60%"
-        />
+        <div ref="chart" class="absolute pin rounded-b-lg ct-chart" style="top: 60%" />
     </loading-card>
 </template>
 
@@ -54,6 +50,10 @@ export default {
         suffix: '',
         ranges: { type: Array, default: () => [] },
         selectedRangeKey: [String, Number],
+        format: {
+            type: String,
+            default: '(0.00a)',
+        },
     },
 
     data: () => ({ chartist: null }),
@@ -136,7 +136,7 @@ export default {
                 const numeralValue = numeral(this.value)
 
                 return numeralValue.value() > 1000
-                    ? this.prefix + numeralValue.format('(0.00a)')
+                    ? this.prefix + numeralValue.format(this.format)
                     : this.prefix + this.value
             }
 

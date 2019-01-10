@@ -143,8 +143,13 @@ abstract class Lens implements ArrayAccess, JsonSerializable, UrlRoutable
      */
     public function resolveFields(NovaRequest $request)
     {
-        return new FieldCollection($this->availableFields($request)->each->resolve($this->resource)
-                      ->filter->authorize($request)->values()->all());
+        return new FieldCollection(
+            $this->availableFields($request)
+                ->each->resolve($this->resource)
+                ->filter->authorize($request)
+                ->each->resolveForDisplay($this->resource)
+                ->values()->all()
+        );
     }
 
     /**

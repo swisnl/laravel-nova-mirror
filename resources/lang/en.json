@@ -221,6 +221,7 @@
     "Kenya": "Kenya",
     "Kiribati": "Kiribati",
     "Korea": "Korea",
+    "Kosovo": "Kosovo",
     "Kuwait": "Kuwait",
     "Kyrgyzstan": "Kyrgyzstan",
     "Lao People\\'s Democratic Republic": "Lao People\\'s Democratic Republic",
@@ -366,5 +367,6 @@
     "Constant": "Constant",
     "Decrease": "Decrease",
     "Reset Password Notification": "Reset Password Notification",
-    "Nova User": "Nova User"
+    "Nova User": "Nova User",
+    "no file selected": "no file selected"
 }

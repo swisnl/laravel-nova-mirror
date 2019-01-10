@@ -240,7 +240,7 @@ class Action implements JsonSerializable
     public function onlyOnIndex($value = true)
     {
         $this->onlyOnIndex = $value;
-        $this->onlyOnDetail = !$value;
+        $this->onlyOnDetail = ! $value;
 
         return $this;
     }
@@ -254,7 +254,7 @@ class Action implements JsonSerializable
     public function onlyOnDetail($value = true)
     {
         $this->onlyOnDetail = $value;
-        $this->onlyOnIndex = !$value;
+        $this->onlyOnIndex = ! $value;
 
         return $this;
     }
