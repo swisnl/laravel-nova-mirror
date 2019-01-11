@@ -12,12 +12,12 @@
                 @focus="open"
                 @keydown.down.prevent="open"
                 @keydown.up.prevent="open"
-                :class="{ focus: show, 'border-danger': error }"
+                :class="{ focus: show, 'border-danger': error, 'form-select': !disabled, disabled}"
                 class="flex items-center form-control form-input form-input-bordered pr-6"
                 :tabindex="show ? -1 : 0"
             >
                 <div
-                    v-if="shouldShowDropdownArrow"
+                    v-if="shouldShowDropdownArrow && !disabled"
                     class="search-input-trigger absolute pin select-box"
                 />
 
@@ -29,7 +29,7 @@
             <button
                 type="button"
                 @click.stop="clear"
-                v-if="value"
+                v-if="value && !disabled"
                 tabindex="-1"
                 class="absolute p-2 inline-block"
                 style="right: 4px; top: 6px;"
@@ -180,10 +180,10 @@ export default {
         },
 
         open() {
-            // if (!this.disabled) {
-            this.show = true
-            this.search = ''
-            // }
+            if (!this.disabled) {
+                this.show = true
+                this.search = ''
+            }
         },
 
         close() {
@@ -191,10 +191,10 @@ export default {
         },
 
         clear() {
-            // if (!this.disabled) {
-            this.selected = null
-            this.$emit('clear', null)
-            // }
+            if (!this.disabled) {
+                this.selected = null
+                this.$emit('clear', null)
+            }
         },
 
         move(offset) {
