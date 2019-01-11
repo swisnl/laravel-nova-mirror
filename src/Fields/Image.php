@@ -14,6 +14,13 @@ class Image extends File
     public $showOnIndex = true;
 
     /**
+     * The maximum width of the component.
+     *
+     * @var int
+     */
+    public $maxWidth = 320;
+
+    /**
      * Create a new field.
      *
      * @param  string  $name
@@ -31,5 +38,30 @@ class Image extends File
         })->preview(function () {
             return $this->value ? Storage::disk($this->disk)->url($this->value) : null;
         });
+    }
+
+    /**
+     * Set the maximum width of the component.
+     *
+     * @param  int  $maxWidth
+     * @return $this
+     */
+    public function maxWidth($maxWidth)
+    {
+        $this->maxWidth = $maxWidth;
+
+        return $this;
+    }
+
+    /**
+     * Prepare the field element for JSON serialization.
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return array_merge(parent::jsonSerialize(), [
+            'maxWidth' => $this->maxWidth,
+        ]);
     }
 }

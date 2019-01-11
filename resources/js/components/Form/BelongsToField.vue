@@ -54,7 +54,11 @@
 
             <!-- Trashed State -->
             <div v-if="softDeletes && !isLocked">
-                <checkbox-with-label :checked="withTrashed" @change="toggleWithTrashed">
+                <checkbox-with-label
+                    :dusk="`${field.resourceName}-with-trashed-checkbox`"
+                    :checked="withTrashed"
+                    @change="toggleWithTrashed"
+                >
                     {{ __('With Trashed') }}
                 </checkbox-with-label>
             </div>
@@ -227,7 +231,11 @@ export default {
          * Determine if we are creating a new resource via a parent relation
          */
         creatingViaRelatedResource() {
-            return this.viaResource == this.field.resourceName && this.viaResourceId
+            return (
+                this.viaResource == this.field.resourceName &&
+                this.viaRelationship === this.field.reverseRelation &&
+                this.viaResourceId
+            )
         },
 
         /**
@@ -259,7 +267,10 @@ export default {
         },
 
         isLocked() {
-            return this.viaResource == this.field.resourceName
+            return (
+                this.viaResource == this.field.resourceName &&
+                this.viaRelationship === this.field.reverseRelation
+            )
         },
     },
 }

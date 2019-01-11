@@ -13,7 +13,6 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\ResourceToolElement;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Tests\Fixtures\CreateDateFilter;
 
 class UserResource extends Resource
 {
@@ -140,6 +139,7 @@ class UserResource extends Resource
     {
         return [
             new UserLens,
+            new GroupingUserLens,
             new PaginatingUserLens,
         ];
     }

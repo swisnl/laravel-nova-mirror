@@ -42,6 +42,13 @@ class ValueResult implements JsonSerializable
     public $suffix;
 
     /**
+     * The metric value formatting.
+     *
+     * @var string
+     */
+    public $format;
+
+    /**
      * Create a new value result instance.
      *
      * @param  mixed  $value
@@ -116,6 +123,19 @@ class ValueResult implements JsonSerializable
     }
 
     /**
+     * Set the metric value formatting.
+     *
+     * @param  string  $format
+     * @return $this
+     */
+    public function format($format)
+    {
+        $this->format = $format;
+
+        return $this;
+    }
+
+    /**
      * Prepare the metric result for JSON serialization.
      *
      * @return array
@@ -128,6 +148,7 @@ class ValueResult implements JsonSerializable
             'previousLabel' => $this->previousLabel,
             'prefix' => $this->prefix,
             'suffix' => $this->suffix,
+            'format' => $this->format,
         ];
     }
 }

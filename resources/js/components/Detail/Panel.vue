@@ -6,7 +6,7 @@
 
         <card class="mb-6 py-3 px-6">
             <component
-                :class="{'remove-bottom-border': index == panel.fields.length - 1}"
+                :class="{ 'remove-bottom-border': index == panel.fields.length - 1 }"
                 :key="index"
                 v-for="(field, index) in panel.fields"
                 :is="resolveComponentName(field)"

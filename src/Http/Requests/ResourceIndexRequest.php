@@ -4,5 +4,15 @@ namespace Laravel\Nova\Http\Requests;
 
 class ResourceIndexRequest extends NovaRequest
 {
-    use QueriesResources;
+    use CountsResources, QueriesResources;
+
+    /**
+     * Get the count of the resources.
+     *
+     * @return int
+     */
+    public function toCount()
+    {
+        return $this->buildCountQuery($this->toQuery())->count();
+    }
 }

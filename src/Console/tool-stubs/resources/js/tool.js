@@ -1,4 +1,4 @@
-Nova.booting((Vue, router) => {
+Nova.booting((Vue, router, store) => {
     router.addRoutes([
         {
             name: '{{ component }}',

@@ -5,6 +5,7 @@
         :previous="previous"
         :value="value"
         :ranges="card.ranges"
+        :format="format"
         :prefix="prefix"
         :suffix="suffix"
         :selected-range-key="selectedRangeKey"
@@ -40,6 +41,7 @@ export default {
 
     data: () => ({
         loading: true,
+        format: '(0.00a)',
         value: 0,
         previous: 0,
         prefix: '',
@@ -69,12 +71,13 @@ export default {
             Minimum(Nova.request().get(this.metricEndpoint, this.rangePayload)).then(
                 ({
                     data: {
-                        value: { value, previous, prefix, suffix },
+                        value: { value, previous, prefix, suffix, format },
                     },
                 }) => {
                     this.value = value
-                    this.prefix = prefix || ''
-                    this.suffix = suffix || ''
+                    this.format = format || this.format
+                    this.prefix = prefix || this.prefix
+                    this.suffix = suffix || this.suffix
                     this.previous = previous
                     this.loading = false
                 }
