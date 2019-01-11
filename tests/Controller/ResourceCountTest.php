@@ -70,8 +70,8 @@ class ResourceCountTest extends IntegrationTest
         factory(User::class, 3)
            ->create()
            ->each(function ($user) use ($roles) {
-                $user->roles()->sync($roles);
-            });
+               $user->roles()->sync($roles);
+           });
 
         $response = $this->withExceptionHandling()
                         ->getJson('/nova-api/grouped-users/count');
