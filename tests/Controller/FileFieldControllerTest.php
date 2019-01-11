@@ -41,7 +41,7 @@ class FileFieldControllerTest extends IntegrationTest
 
     public function test_update_prunable_file()
     {
-        $_SERVER['nova.fileResource.imageField'] = function() {
+        $_SERVER['nova.fileResource.imageField'] = function () {
             return Image::make('Avatar', 'avatar')->prunable();
         };
 
@@ -58,7 +58,7 @@ class FileFieldControllerTest extends IntegrationTest
         Storage::disk('public')->assertExists($file->avatar);
 
         $this->withExceptionHandling()
-            ->postJson('/nova-api/files/' . $file->id, [
+            ->postJson('/nova-api/files/'.$file->id, [
                 '_method'=>'PUT',
                 'avatar' => UploadedFile::fake()->image('avatar2.png'),
             ]);

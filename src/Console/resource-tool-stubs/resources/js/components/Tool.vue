@@ -1,15 +1,13 @@
 <template>
-    <div>
-        {{ title }}
-    </div>
+    <div>{{ title }}</div>
 </template>
 
 <script>
-    export default {
-        props: ['resourceName', 'resourceId', 'field'],
+export default {
+    props: ['resourceName', 'resourceId', 'field'],
 
-        mounted() {
-            //
-        }
-    }
+    mounted() {
+        //
+    },
+}
 </script>

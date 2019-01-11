@@ -32,10 +32,7 @@
 
                             <div
                                 slot="option"
-                                slot-scope="{
-                                    option,
-                                    selected,
-                                }"
+                                slot-scope="{ option, selected }"
                                 class="flex items-center"
                             >
                                 <div v-if="option.avatar" class="mr-3">

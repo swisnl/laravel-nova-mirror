@@ -2,7 +2,6 @@
 
 namespace Laravel\Nova\Tools;
 
-use Illuminate\Support\Collection;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
 use Illuminate\Http\Request;
