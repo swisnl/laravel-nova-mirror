@@ -114,7 +114,6 @@ export default {
         submittedViaUpdateAndContinueEditing: false,
         submittedViaUpdateAttachedResource: false,
         field: null,
-        softDeletes: false,
         fields: [],
         validationErrors: new Errors(),
         selectedResource: null,
@@ -163,11 +162,6 @@ export default {
                 .get('/nova-api/' + this.resourceName + '/field/' + this.viaRelationship)
                 .then(({ data }) => {
                     this.field = data
-
-                    if (this.field.searchable) {
-                        this.determineIfSoftDeletes()
-                    }
-
                     this.loading = false
                 })
         },
@@ -220,17 +214,9 @@ export default {
 
                 this.availableResources = response.data.resources
                 this.withTrashed = response.data.withTrashed
-                this.softDeletes = response.data.softDeletes
             } catch (error) {
                 console.log(error)
             }
-        },
-
-        /**
-         * Determine if the related resource is soft deleting.
-         */
-        determineIfSoftDeletes() {
-            this.softDeletes = this.$store.getters[`${this.relatedResourceName}/softDeletes`]
         },
 
         /**
@@ -404,6 +390,13 @@ export default {
             if (this.field) {
                 return this.field.singularLabel
             }
+        },
+
+        /**
+         * Determine if the related resource is soft deleting.
+         */
+        softDeletes() {
+            return this.$store.getters[`${this.relatedResourceName}/softDeletes`]
         },
 
         /**

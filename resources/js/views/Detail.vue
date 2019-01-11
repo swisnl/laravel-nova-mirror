@@ -343,7 +343,7 @@ export default {
                     { type: 'success' }
                 )
 
-                if (!this.resource.softDeletes) {
+                if (!this.softDeletes) {
                     this.$router.push({
                         name: 'index',
                         params: { resourceName: this.resourceName },
@@ -485,6 +485,13 @@ export default {
 
         selectedResources() {
             return [this.resourceId]
+        },
+
+        /**
+         * Determine if the relatd resource is soft deleting.
+         */
+        softDeletes() {
+            return this.$store.getters[`${this.resourceName}/softDeletes`]
         },
 
         /**
