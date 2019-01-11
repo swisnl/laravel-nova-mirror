@@ -8,7 +8,7 @@ use Laravel\Nova\Exceptions\LensCountException;
 
 class LensCountRequest extends NovaRequest
 {
-    use InteractsWithLenses;
+    use CountsResources, InteractsWithLenses;
 
     /**
      * Get the count of the lens resources.
@@ -18,7 +18,7 @@ class LensCountRequest extends NovaRequest
     public function toCount()
     {
         try {
-            return $this->toQuery()->count();
+            return $this->buildCountQuery($this->toQuery())->count();
         } catch (Exception $e) {
             report($e);
         }
