@@ -35,6 +35,13 @@ class TrendResult implements JsonSerializable
     public $suffix;
 
     /**
+     * The metric value formatting.
+     *
+     * @var string
+     */
+    public $format;
+
+    /**
      * Create a new trend result instance.
      *
      * @param  string|null  $value
@@ -134,6 +141,19 @@ class TrendResult implements JsonSerializable
     }
 
     /**
+     * Set the metric value formatting.
+     *
+     * @param  string  $format
+     * @return $this
+     */
+    public function format($format)
+    {
+        $this->format = $format;
+
+        return $this;
+    }
+
+    /**
      * Prepare the metric result for JSON serialization.
      *
      * @return array
@@ -145,6 +165,7 @@ class TrendResult implements JsonSerializable
             'trend' => $this->trend,
             'prefix' => $this->prefix,
             'suffix' => $this->suffix,
+            'format' => $this->format,
         ];
     }
 }

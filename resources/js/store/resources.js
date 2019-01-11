@@ -3,10 +3,10 @@ import _ from 'lodash'
 export default {
     namespaced: true,
 
-    state: {
+    state: () => ({
         filters: [],
         originalFilters: [],
-    },
+    }),
 
     getters: {
         /**

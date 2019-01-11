@@ -32,8 +32,7 @@ class ResourceDetachController extends Controller
 
                 DB::table('action_events')->insert(
                     ActionEvent::forResourceDetach(
-                        $request->user(), $parent, collect([$model]),
-                        $parent->{$request->viaRelationship}()->getPivotClass()
+                        $request->user(), $parent, collect([$model]), $pivot->getMorphClass()
                     )->map->getAttributes()->all()
                 );
             }

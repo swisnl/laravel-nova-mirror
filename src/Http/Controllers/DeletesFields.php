@@ -39,7 +39,7 @@ trait DeletesFields
                     ->whereInstanceOf(Deletable::class)
                     ->filter->isPrunable()
                     ->each(function ($field) use ($request, $model) {
-                        DeleteField::forRequest($request, $field, $model)->save();
+                        DeleteField::forRequest($request, $field, $model);
                     });
     }
 }

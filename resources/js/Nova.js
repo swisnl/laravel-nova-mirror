@@ -46,7 +46,7 @@ export default class Nova {
      */
     registerStoreModules() {
         this.config.resources.forEach(resource => {
-            store.registerModule(resource.uriKey, _.cloneDeep(resources))
+            store.registerModule(resource.uriKey, resources)
         })
     }
 
@@ -70,6 +70,17 @@ export default class Nova {
 
                 _this.$on('error', message => {
                     this.$toasted.show(message, { type: 'error' })
+                })
+
+                _this.$on('token-expired', () => {
+                    this.$toasted.show(this.__('Sorry, your session has expired.'), {
+                        action: {
+                            onClick: () => location.reload(),
+                            text: this.__('Reload'),
+                        },
+                        duration: null,
+                        type: 'error',
+                    })
                 })
             },
         })

@@ -81,6 +81,7 @@
                                         </li>
                                         <li class="flex items-center">
                                             <checkbox-with-label
+                                                dusk="select-all-matching-button"
                                                 :checked="selectAllMatchingChecked"
                                                 @change="toggleSelectAllMatching"
                                             >

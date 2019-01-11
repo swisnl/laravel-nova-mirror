@@ -133,6 +133,7 @@ class Country extends Select
             'KE' => __('Kenya'),
             'KI' => __('Kiribati'),
             'KR' => __('Korea'),
+            'XK' => __('Kosovo'),
             'KW' => __('Kuwait'),
             'KG' => __('Kyrgyzstan'),
             'LA' => __('Lao People\'s Democratic Republic'),

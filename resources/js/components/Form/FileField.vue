@@ -5,7 +5,7 @@
                 <template v-if="shouldShowLoader">
                     <ImageLoader
                         :src="imageUrl"
-                        class="max-w-xs"
+                        :maxWidth="maxWidth"
                         @missing="value => (missing = value)"
                     />
                 </template>
@@ -82,7 +82,6 @@ export default {
 
     data: () => ({
         file: null,
-        label: 'no file selected',
         fileName: '',
         removeModalOpen: false,
         missing: false,
@@ -172,7 +171,7 @@ export default {
          * The current label of the file field
          */
         currentLabel() {
-            return this.fileName || this.label
+            return this.fileName || this.__('no file selected')
         },
 
         /**
@@ -217,6 +216,10 @@ export default {
 
         imageUrl() {
             return this.field.previewUrl || this.field.thumbnailUrl
+        },
+
+        maxWidth() {
+            return this.field.maxWidth || 320
         },
     },
 }

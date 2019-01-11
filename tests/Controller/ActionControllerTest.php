@@ -23,6 +23,7 @@ use Laravel\Nova\Tests\Fixtures\UnrunnableAction;
 use Laravel\Nova\Tests\Fixtures\DestructiveAction;
 use Laravel\Nova\Tests\Fixtures\UnauthorizedAction;
 use Laravel\Nova\Tests\Fixtures\UpdateStatusAction;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Laravel\Nova\Tests\Fixtures\RequiredFieldAction;
 use Laravel\Nova\Tests\Fixtures\QueuedResourceAction;
 use Laravel\Nova\Tests\Fixtures\QueuedUpdateStatusAction;
@@ -544,5 +545,50 @@ class ActionControllerTest extends IntegrationTest
                         ->post('/nova-api/users/action?action='.(new EmptyAction)->uriKey(), [
                             'resources' => 'all',
                         ]);
+    }
+
+    public function test_action_event_should_honor_custom_polymorphic_type_when_updating_status()
+    {
+        Relation::morphMap(['user' => User::class]);
+
+        $user = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
+
+        $response = $this->withExceptionHandling()
+                        ->post('/nova-api/users/action?action='.(new UpdateStatusAction)->uriKey(), [
+                            'resources' => implode(',', [$user->id, $user2->id]),
+                        ]);
+
+        $actionEvent = ActionEvent::where('model_id', $user->id)->first();
+
+        $this->assertEquals('Update Status Action', $actionEvent->name);
+
+        $this->assertEquals('failed', $actionEvent->status);
+
+        $this->assertEquals('user', $actionEvent->actionable_type);
+        $this->assertEquals($user->id, $actionEvent->actionable_id);
+
+        $this->assertEquals('user', $actionEvent->target_type);
+        $this->assertEquals($user->id, $actionEvent->target_id);
+
+        $this->assertEquals('user', $actionEvent->model_type);
+        $this->assertEquals($user->id, $actionEvent->model_id);
+
+        $actionEvent2 = ActionEvent::where('model_id', $user2->id)->first();
+
+        $this->assertEquals('Update Status Action', $actionEvent2->name);
+
+        $this->assertEquals('finished', $actionEvent2->status);
+
+        $this->assertEquals('user', $actionEvent2->actionable_type);
+        $this->assertEquals($user2->id, $actionEvent2->actionable_id);
+
+        $this->assertEquals('user', $actionEvent2->target_type);
+        $this->assertEquals($user2->id, $actionEvent2->target_id);
+
+        $this->assertEquals('user', $actionEvent2->model_type);
+        $this->assertEquals($user2->id, $actionEvent2->model_id);
+
+        Relation::morphMap([], false);
     }
 }
