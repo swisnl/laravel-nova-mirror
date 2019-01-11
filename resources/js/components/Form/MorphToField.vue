@@ -35,6 +35,7 @@
                 <search-input
                     v-if="isSearchable && !isLocked"
                     :data-testid="`${field.attribute}-search-input`"
+                    :disabled="!resourceType || isLocked"
                     @input="performSearch"
                     @clear="clearSelection"
                     @selected="selectResource"

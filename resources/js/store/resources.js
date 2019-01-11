@@ -116,23 +116,13 @@ export default {
         /**
          * Reset the default filter state to the original filter settings.
          */
-        async resetFilterState({ commit, state, getters }, options) {
-            let { resourceName, lens = false } = options
-
-            let { data } = lens
-                ? await Nova.request().get(
-                      '/nova-api/' + resourceName + '/lens/' + lens + '/filters'
-                  )
-                : await Nova.request().get('/nova-api/' + resourceName + '/filters')
-
-            if (data) {
-                _.each(data, filter =>
-                    commit('updateFilterState', {
-                        filterClass: filter.class,
-                        value: filter.currentValue,
-                    })
-                )
-            }
+        async resetFilterState({ commit, getters }) {
+            _.each(getters.originalFilters, filter => {
+                commit('updateFilterState', {
+                    filterClass: filter.class,
+                    value: filter.currentValue,
+                })
+            })
         },
 
         /**
