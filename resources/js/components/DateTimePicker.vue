@@ -1,7 +1,7 @@
 <template>
     <input
         :disabled="disabled"
-        :class="{'!cursor-not-allowed': disabled}"
+        :class="{ '!cursor-not-allowed': disabled }"
         :value="value"
         ref="datePicker"
         type="text"

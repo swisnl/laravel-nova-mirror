@@ -2,9 +2,7 @@
     <div v-on-clickaway="close" class="dropdown relative">
         <slot :toggle="toggle" />
 
-        <transition name="fade">
-            <slot v-if="visible" name="menu" />
-        </transition>
+        <transition name="fade"> <slot v-if="visible" name="menu" /> </transition>
     </div>
 </template>
 

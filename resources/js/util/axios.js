@@ -28,6 +28,11 @@ instance.interceptors.response.use(
             router.push({ name: '403' })
         }
 
+        // Handle Token Timeouts
+        if (status === 419) {
+            Nova.$emit('token-expired')
+        }
+
         return Promise.reject(error)
     }
 )

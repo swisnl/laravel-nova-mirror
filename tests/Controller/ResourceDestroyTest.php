@@ -11,6 +11,7 @@ use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\IntegrationTest;
 use Laravel\Nova\Tests\Fixtures\IdFilter;
 use Laravel\Nova\Tests\Fixtures\UserPolicy;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class ResourceDestroyTest extends IntegrationTest
 {
@@ -171,5 +172,34 @@ class ResourceDestroyTest extends IntegrationTest
 
         $this->assertEquals(250, ActionEvent::count());
         $this->assertEquals('Delete', ActionEvent::first()->name);
+    }
+
+    public function test_action_event_should_honor_custom_polymorphic_type_for_soft_deletions()
+    {
+        Relation::morphMap(['role' => Role::class]);
+
+        $role = factory(Role::class)->create();
+        $user = factory(User::class)->create();
+        $role->users()->attach($user);
+
+        $response = $this->withExceptionHandling()
+                        ->deleteJson('/nova-api/roles', [
+                            'resources' => [$role->id],
+                        ]);
+
+        $actionEvent = ActionEvent::first();
+
+        $this->assertEquals('Delete', $actionEvent->name);
+
+        $this->assertEquals('role', $actionEvent->actionable_type);
+        $this->assertEquals($role->id, $actionEvent->actionable_id);
+
+        $this->assertEquals('role', $actionEvent->target_type);
+        $this->assertEquals($role->id, $actionEvent->target_id);
+
+        $this->assertEquals('role', $actionEvent->model_type);
+        $this->assertEquals($role->id, $actionEvent->model_id);
+
+        Relation::morphMap([], false);
     }
 }

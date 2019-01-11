@@ -23,7 +23,7 @@ class CreationControllerTest extends IntegrationTest
         $response->assertJsonCount(2);
 
         $response = $this->withExceptionHandling()
-            ->getJson("/nova-api/comments/creation-fields");
+            ->getJson('/nova-api/comments/creation-fields');
 
         $response->assertJsonCount(3);
     }
