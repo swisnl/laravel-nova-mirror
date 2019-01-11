@@ -3,6 +3,7 @@
 namespace Laravel\Nova\Tests\Controller;
 
 use Laravel\Nova\Nova;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\Role;
@@ -375,16 +376,16 @@ class ResourceIndexTest extends IntegrationTest
         $user = factory(User::class)->create();
         $user->posts()->saveMany(factory(Post::class, 3)->create());
 
-        \DB::enableQueryLog();
-        $count = count(\DB::getQueryLog());
+        DB::enableQueryLog();
+        $count = count(DB::getQueryLog());
 
         $response = $this->withExceptionHandling()
             ->getJson('/nova-api/posts');
 
         $response->assertStatus(200);
-        $this->assertEquals(count(\DB::getQueryLog()) - $count, 1 + 3);
+        $this->assertEquals(count(DB::getQueryLog()) - $count, 1 + 3);
 
-        $count = count(\DB::getQueryLog());
+        $count = count(DB::getQueryLog());
         $_SERVER['nova.post.useEagerUser'] = true;
         $response = $this->withExceptionHandling()
             ->getJson('/nova-api/posts');
@@ -392,8 +393,8 @@ class ResourceIndexTest extends IntegrationTest
 
 
         $response->assertStatus(200);
-        $this->assertEquals(count(\DB::getQueryLog()) - $count, 1 + 1);
+        $this->assertEquals(count(DB::getQueryLog()) - $count, 1 + 1);
 
-        \DB::disableQueryLog();
+        DB::disableQueryLog();
     }
 }
