@@ -107,9 +107,7 @@ export default {
                   )
                 : await Nova.request().get('/nova-api/' + resourceName + '/filters')
 
-            console.log(`Storing filters for ${resourceName}`, data)
             commit('storeFilters', data)
-            // console.log(state.originalFilters)
         },
 
         /**
@@ -121,7 +119,7 @@ export default {
                     filterClass: filter.class,
                     value: filter.currentValue,
                 })
-            });
+            })
         },
 
         /**
