@@ -4,6 +4,7 @@
         tabindex="-1"
         role="dialog"
         @modal-close="handleClose"
+        class-whitelist="flatpickr-calendar"
     >
         <form
             autocomplete="off"
@@ -74,9 +75,6 @@
 </template>
 
 <script>
-import { Errors } from 'laravel-nova'
-import composedPath from '@/polyfills/composedPath'
-
 export default {
     props: {
         working: Boolean,
@@ -113,29 +111,16 @@ export default {
         /**
          * Execute the selected action.
          */
-        handleConfirm(e) {
+        handleConfirm() {
             this.$emit('confirm')
         },
 
         /**
          * Close the modal.
          */
-        handleClose(e) {
-            let classArray = ['flatpickr-calendar']
-
-            if (_.filter(classArray, className => pathIncludesClass(e, className)).length > 0) {
-                return
-            }
-
+        handleClose() {
             this.$emit('close')
         },
     },
-}
-
-function pathIncludesClass(event, className) {
-    return composedPath(event)
-        .filter(el => el !== document && el !== window)
-        .reduce((acc, e) => acc.concat([...e.classList]), [])
-        .includes(className)
 }
 </script>
