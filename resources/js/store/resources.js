@@ -6,7 +6,7 @@ export default {
     state: () => ({
         filters: [],
         originalFilters: [],
-        softDeletes: false
+        softDeletes: false,
     }),
 
     getters: {
