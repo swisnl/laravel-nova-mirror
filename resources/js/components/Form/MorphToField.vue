@@ -304,7 +304,7 @@ export default {
          * Determine if the field is locked
          */
         isLocked() {
-            return Boolean(this.viaResource)
+            return Boolean(this.viaResource && this.field.reverse)
         },
 
         /**
