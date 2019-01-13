@@ -7,6 +7,7 @@ use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\IntegrationTest;
 use Laravel\Nova\Tests\Fixtures\Address;
+use Laravel\Nova\Tests\Fixtures\CustomKey;
 use Laravel\Nova\Tests\Fixtures\UserPolicy;
 
 class ResourceCreationTest extends IntegrationTest
@@ -32,6 +33,19 @@ class ResourceCreationTest extends IntegrationTest
         $user = User::first();
         $this->assertEquals('Taylor Otwell', $user->name);
         $this->assertEquals('taylor@laravel.com', $user->email);
+    }
+
+    public function test_can_return_custom_pk()
+    {
+        $response = $this->withExceptionHandling()
+            ->postJson('/nova-api/custom-keys', [
+            ]);
+
+        $response->assertStatus(201);
+
+        $model = CustomKey::first();
+
+        $this->assertEquals($model->pk, $response->getData()->id);
     }
 
     public function test_can_create_resources_with_null_relation()

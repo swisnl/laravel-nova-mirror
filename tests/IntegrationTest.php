@@ -18,6 +18,7 @@ use Laravel\Nova\Tests\Fixtures\PanelResource;
 use Laravel\Nova\Tests\Fixtures\AddressResource;
 use Laravel\Nova\Tests\Fixtures\BooleanResource;
 use Laravel\Nova\Tests\Fixtures\CommentResource;
+use Laravel\Nova\Tests\Fixtures\CustomKeyResource;
 use Laravel\Nova\Tests\Fixtures\GroupedUserResource;
 use Laravel\Nova\Tests\Fixtures\ForbiddenUserResource;
 use Laravel\Nova\Tests\Fixtures\SoftDeletingFileResource;
@@ -64,6 +65,7 @@ abstract class IntegrationTest extends TestCase
             UserResource::class,
             ForbiddenUserResource::class,
             GroupedUserResource::class,
+            CustomKeyResource::class,
         ]);
 
         Nova::auth(function () {
