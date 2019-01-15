@@ -200,7 +200,9 @@ class ActionEvent extends Model
             );
         });
 
-        static::insert($models->all());
+        $models->chunk(50)->each(function($models) {
+            static::insert($models->all());
+        });
 
         static::prune($models);
     }
