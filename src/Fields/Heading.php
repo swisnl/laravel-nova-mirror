@@ -2,8 +2,6 @@
 
 namespace Laravel\Nova\Fields;
 
-use Laravel\Nova\Http\Requests\NovaRequest;
-
 class Heading extends Field
 {
     /**
