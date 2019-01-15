@@ -2,9 +2,9 @@
 
 namespace Laravel\Nova\Tests\Fixtures;
 
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Resource;
+use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
 
 class CustomKeyResource extends Resource
 {
