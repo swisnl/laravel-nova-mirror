@@ -26,7 +26,6 @@ export default {
     computed: {
         classes: () => [
             'bg-20',
-            'markdown',
             'remove-last-margin-bottom',
             'leading-normal',
             'w-full',

@@ -5,6 +5,13 @@ namespace Laravel\Nova\Fields;
 class Heading extends Field
 {
     /**
+     * The field's component.
+     *
+     * @var string
+     */
+    public $component = 'heading-field';
+
+    /**
      * Create a new field.
      *
      * @param  string  $name
@@ -12,24 +19,13 @@ class Heading extends Field
      * @param  mixed|null  $resolveCallback
      * @return void
      */
-    public function __construct($name = null, $attribute = null, $resolveCallback = null)
+    public function __construct($name, $attribute = null, $resolveCallback = null)
     {
         parent::__construct(null, $attribute, $resolveCallback);
 
+        $this->withMeta(['value' => $name]);
         $this->hideFromIndex();
-        $this->hideFromDetail();
         $this->withMeta(['asHtml' => false]);
-    }
-
-    /**
-     * Display the content of the field as raw HTML using Vue.
-     *
-     * @param  string $content
-     * @return $this
-     */
-    public function content($content)
-    {
-        return $this->withMeta(['value' => $content]);
     }
 
     /**
@@ -41,11 +37,4 @@ class Heading extends Field
     {
         return $this->withMeta(['asHtml' => true]);
     }
-
-    /**
-     * The field's component.
-     *
-     * @var string
-     */
-    public $component = 'info-field';
 }

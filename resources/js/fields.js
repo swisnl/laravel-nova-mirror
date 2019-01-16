@@ -8,9 +8,9 @@ Vue.component('panel', require('./components/Detail/Panel.vue'))
 Vue.component('relationship-panel', require('./components/Detail/RelationshipPanel.vue'))
 
 // Info Field...
-// Vue.component('index-info-field', require('./components/Index/InfoField.vue'))
-// Vue.component('detail-info-field', require('./components/Detail/InfoField.vue'))
-Vue.component('form-info-field', require('./components/Form/InfoField.vue'))
+Vue.component('index-heading-field', require('./components/Index/HeadingField.vue'))
+Vue.component('detail-heading-field', require('./components/Detail/HeadingField.vue'))
+Vue.component('form-heading-field', require('./components/Form/HeadingField.vue'))
 
 // Text Field...
 Vue.component('index-text-field', require('./components/Index/TextField.vue'))
