@@ -48,7 +48,7 @@ class File extends Field implements DeletableContract
     /**
      * Determin if the file is able to be downloaded.
      *
-     * @var boolean
+     * @var bool
      */
     public $downloadsAreEnabled = true;
 
@@ -411,9 +411,9 @@ class File extends Field implements DeletableContract
     }
 
     /**
-     * Disable downloading the file
+     * Disable downloading the file.
      *
-     * @param boolean $disabled
+     * @param bool $disabled
      */
     public function disableDownload()
     {
