@@ -10,7 +10,7 @@
 export default {
     props: {
         resourceName: {
-            type: Object,
+            type: String,
             require: true,
         },
         field: {
