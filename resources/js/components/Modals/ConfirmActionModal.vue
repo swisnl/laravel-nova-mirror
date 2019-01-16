@@ -17,7 +17,9 @@
             }"
         >
             <div>
-                <heading :level="2" class="pt-8 px-8">{{ selectedAction.name }}</heading>
+                <heading :level="2" class="border-b border-40 py-8 px-8">{{
+                    selectedAction.name
+                }}</heading>
 
                 <p v-if="selectedAction.fields.length == 0" class="text-80 px-8 my-8">
                     {{ __('Are you sure you want to run this action?') }}

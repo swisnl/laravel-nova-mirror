@@ -7,6 +7,11 @@ Vue.component('field-wrapper', require('./components/Form/FieldWrapper.vue'))
 Vue.component('panel', require('./components/Detail/Panel.vue'))
 Vue.component('relationship-panel', require('./components/Detail/RelationshipPanel.vue'))
 
+// Info Field...
+Vue.component('index-heading-field', require('./components/Index/HeadingField.vue'))
+Vue.component('detail-heading-field', require('./components/Detail/HeadingField.vue'))
+Vue.component('form-heading-field', require('./components/Form/HeadingField.vue'))
+
 // Text Field...
 Vue.component('index-text-field', require('./components/Index/TextField.vue'))
 Vue.component('detail-text-field', require('./components/Detail/TextField.vue'))
