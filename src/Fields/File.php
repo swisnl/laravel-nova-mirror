@@ -46,6 +46,13 @@ class File extends Field implements DeletableContract
     public $downloadResponseCallback;
 
     /**
+     * Determin if the file is able to be downloaded.
+     *
+     * @var boolean
+     */
+    public $downloadsAreEnabled = true;
+
+    /**
      * The name of the disk the file uses by default.
      *
      * @var string
@@ -404,6 +411,18 @@ class File extends Field implements DeletableContract
     }
 
     /**
+     * Disable downloading the file
+     *
+     * @param boolean $disabled
+     */
+    public function disableDownload()
+    {
+        $this->downloadsAreEnabled = false;
+
+        return $this;
+    }
+
+    /**
      * Get additional meta information to merge with the element payload.
      *
      * @return array
@@ -413,7 +432,7 @@ class File extends Field implements DeletableContract
         return array_merge([
             'thumbnailUrl' => $this->resolveThumbnailUrl(),
             'previewUrl' => $this->resolvePreviewUrl(),
-            'downloadable' => isset($this->downloadResponseCallback) && ! empty($this->value),
+            'downloadable' => $this->downloadsAreEnabled && isset($this->downloadResponseCallback) && ! empty($this->value),
             'deletable' => isset($this->deleteCallback) && $this->deletable,
         ], $this->meta);
     }
