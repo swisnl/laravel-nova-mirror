@@ -8,7 +8,6 @@ use Laravel\Nova\Nova;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\ProxiesCanSeeToGate;
-use Laravel\Nova\Actions\RedirectAction;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Exceptions\MissingActionHandlerException;
 
@@ -33,7 +32,7 @@ class Action implements JsonSerializable
     /**
      * Determine where the action redirection should be without confirmation.
      *
-     * @var boolean
+     * @var bool
      */
     public $withoutConfirmation = false;
 
