@@ -8,6 +8,7 @@ use Laravel\Nova\Nova;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\ProxiesCanSeeToGate;
+use Laravel\Nova\Actions\RedirectAction;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Exceptions\MissingActionHandlerException;
 
@@ -28,6 +29,13 @@ class Action implements JsonSerializable
      * @var bool
      */
     public $availableForEntireResource = false;
+
+    /**
+     * Determine where the action redirection should be without confirmation.
+     *
+     * @var boolean
+     */
+    public $withoutConfirmation = false;
 
     /**
      * Indicates if this action is only available on the resource detail view.
@@ -319,6 +327,18 @@ class Action implements JsonSerializable
     }
 
     /**
+     * Set the action to execute instantly.
+     *
+     * @return string
+     */
+    public function withoutConfirmation()
+    {
+        $this->withoutConfirmation = true;
+
+        return $this;
+    }
+
+    /**
      * Prepare the action for JSON serialization.
      *
      * @return array
@@ -335,6 +355,7 @@ class Action implements JsonSerializable
             'availableForEntireResource' => $this->availableForEntireResource,
             'onlyOnDetail' => $this->onlyOnDetail,
             'onlyOnIndex' => $this->onlyOnIndex,
+            'withoutConfirmation' => $this->withoutConfirmation,
         ];
     }
 }

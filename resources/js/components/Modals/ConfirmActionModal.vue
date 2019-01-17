@@ -80,9 +80,10 @@
 export default {
     props: {
         working: Boolean,
-        resourceName: {},
-        selectedAction: {},
-        errors: { required: true },
+        resourceName: { type: String, required: true },
+        selectedAction: { type: Object, required: true },
+        selectedResources: { type: Array, required: true },
+        errors: { type: Object, required: true },
     },
 
     /**
