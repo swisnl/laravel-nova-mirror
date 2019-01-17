@@ -12,7 +12,12 @@
                 @focus="open"
                 @keydown.down.prevent="open"
                 @keydown.up.prevent="open"
-                :class="{ focus: show, 'border-danger': error, 'form-select': shouldShowDropdownArrow, disabled }"
+                :class="{
+                    focus: show,
+                    'border-danger': error,
+                    'form-select': shouldShowDropdownArrow,
+                    disabled,
+                }"
                 class="flex items-center form-control form-input form-input-bordered pr-6"
                 :tabindex="show ? -1 : 0"
             >
