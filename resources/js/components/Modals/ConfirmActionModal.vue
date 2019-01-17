@@ -26,9 +26,6 @@
                 </p>
 
                 <div v-else>
-                    <!-- Validation Errors -->
-                    <validation-errors :errors="errors" />
-
                     <!-- Action Fields -->
                     <div
                         class="action"

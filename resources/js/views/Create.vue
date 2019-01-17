@@ -1,48 +1,65 @@
 <template>
     <loading-view :loading="loading">
-        <heading class="mb-3">{{ __('New') }} {{ singularName }}</heading>
+        <heading class="mb-6">{{ __('New') }} {{ singularName }}</heading>
 
-        <card class="overflow-hidden">
-            <form v-if="fields" @submit.prevent="createResource" autocomplete="off">
-                <!-- Validation Errors -->
-                <validation-errors :errors="validationErrors" />
+        <form v-if="fields" @submit.prevent="createResource" autocomplete="off">
+            <div v-for="panel in panels" :key="panel" class="mb-6">
+                <heading class="mb-3" :level="2">{{ panel }}</heading>
 
-                <!-- Fields -->
-                <div v-for="field in fields">
-                    <component
-                        :is="'form-' + field.component"
-                        :errors="validationErrors"
-                        :resource-name="resourceName"
-                        :field="field"
-                        :via-resource="viaResource"
-                        :via-resource-id="viaResourceId"
-                        :via-relationship="viaRelationship"
-                    />
-                </div>
+                <card class="overflow-hidden">
+                    <div v-for="field in panelFields(panel)">
+                        <component
+                            :is="'form-' + field.component"
+                            :errors="validationErrors"
+                            :resource-name="resourceName"
+                            :field="field"
+                            :via-resource="viaResource"
+                            :via-resource-id="viaResourceId"
+                            :via-relationship="viaRelationship"
+                        />
+                    </div>
+                </card>
+            </div>
 
-                <!-- Create Button -->
-                <div class="bg-30 flex px-8 py-4">
-                    <progress-button
-                        class="ml-auto mr-3"
-                        dusk="create-and-add-another-button"
-                        @click.native="createAndAddAnother"
-                        :disabled="isWorking"
-                        :processing="submittedViaCreateAndAddAnother"
-                    >
-                        {{ __('Create & Add Another') }}
-                    </progress-button>
+            <div class="mb-6">
+                <heading class="mb-3" :level="2">{{ __('Other') }}</heading>
 
-                    <progress-button
-                        dusk="create-button"
-                        type="submit"
-                        :disabled="isWorking"
-                        :processing="submittedViaCreateResource"
-                    >
-                        {{ __('Create') }} {{ singularName }}
-                    </progress-button>
-                </div>
-            </form>
-        </card>
+                <card class="overflow-hidden">
+                    <div v-for="field in nonPanelFields(panel)">
+                        <component
+                            :is="'form-' + field.component"
+                            :errors="validationErrors"
+                            :resource-name="resourceName"
+                            :field="field"
+                            :via-resource="viaResource"
+                            :via-resource-id="viaResourceId"
+                            :via-relationship="viaRelationship"
+                        />
+                    </div>
+                </card>
+            </div>
+
+            <div class="rounded-lg bg-30 flex px-8 py-4">
+                <progress-button
+                    class="ml-auto mr-3"
+                    dusk="create-and-add-another-button"
+                    @click.native="createAndAddAnother"
+                    :disabled="isWorking"
+                    :processing="submittedViaCreateAndAddAnother"
+                >
+                    {{ __('Create & Add Another') }}
+                </progress-button>
+
+                <progress-button
+                    dusk="create-button"
+                    type="submit"
+                    :disabled="isWorking"
+                    :processing="submittedViaCreateResource"
+                >
+                    {{ __('Create') }} {{ singularName }}
+                </progress-button>
+            </div>
+        </form>
     </loading-view>
 </template>
 
@@ -203,9 +220,24 @@ export default {
                 formData.append('viaRelationship', this.viaRelationship)
             })
         },
+
+        panelFields(panel) {
+            return this.fields.filter(field => field.panel == panel)
+        },
+
+        nonPanelFields() {
+            return this.fields.filter(field => field.panel == null)
+        },
     },
 
     computed: {
+        panels() {
+            return this.fields
+                .map(field => field.panel)
+                .filter(panel => panel !== null)
+                .filter((panel, key, collection) => collection.indexOf(panel) === key)
+        },
+
         singularName() {
             if (this.relationResponse) {
                 return this.relationResponse.singularLabel

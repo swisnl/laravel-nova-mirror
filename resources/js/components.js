@@ -65,7 +65,6 @@ import Search from '@/components/Icons/Search'
 import SearchInput from '@/components/SearchInput'
 import SortableIcon from '@/components/Index/SortableIcon'
 import TrendMetric from '@/components/Metrics/TrendMetric'
-import ValidationErrors from '@/components/ValidationErrors'
 import ValueMetric from '@/components/Metrics/ValueMetric'
 import View from '@/components/Icons/View'
 
@@ -139,7 +138,6 @@ Vue.component('scroll-wrap', ScrollWrap)
 Vue.component('search-input', SearchInput)
 Vue.component('sortable-icon', SortableIcon)
 Vue.component('trend-metric', TrendMetric)
-Vue.component('validation-errors', ValidationErrors)
 Vue.component('value-metric', ValueMetric)
 
 Vue.component('select-filter', SelectFilter)

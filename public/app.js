@@ -90,6 +90,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 
 exports.default = {
     mixins: [_laravelNova.InteractsWithResourceInformation],
@@ -153,6 +154,18 @@ exports.default = {
     },
 
     methods: {
+        /**
+         * Determine whether the action should redirect or open a confirmation modal
+         */
+        determineActionStrategy: function determineActionStrategy() {
+            if (this.selectedAction.withoutConfirmation) {
+                this.executeAction();
+            }
+
+            this.openConfirmationModal();
+        },
+
+
         /**
          * Confirm with the user that they actually want to run the selected action.
          */
@@ -1717,14 +1730,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _regenerator = __webpack_require__("./node_modules/babel-runtime/regenerator/index.js");
-
-var _regenerator2 = _interopRequireDefault(_regenerator);
-
-var _asyncToGenerator2 = __webpack_require__("./node_modules/babel-runtime/helpers/asyncToGenerator.js");
-
-var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
-
 var _ImageLoader = __webpack_require__("./resources/js/components/ImageLoader.vue");
 
 var _ImageLoader2 = _interopRequireDefault(_ImageLoader);
@@ -1737,7 +1742,7 @@ exports.default = {
     components: { ImageLoader: _ImageLoader2.default },
 
     data: function data() {
-        return { removeModalOpen: false, missing: false, deleted: false };
+        return { missing: false };
     },
 
     methods: {
@@ -1756,78 +1761,18 @@ exports.default = {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-        },
-
-
-        /**
-         * Confirm removal of the linked file
-         */
-        confirmRemoval: function confirmRemoval() {
-            this.removeModalOpen = true;
-        },
-
-
-        /**
-         * Close the upload removal modal
-         */
-        closeRemoveModal: function closeRemoveModal() {
-            this.removeModalOpen = false;
-        },
-
-
-        /**
-         * Remove the linked file from storage
-         */
-        removeFile: function () {
-            var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
-                var resourceName, resourceId, attribute;
-                return _regenerator2.default.wrap(function _callee$(_context) {
-                    while (1) {
-                        switch (_context.prev = _context.next) {
-                            case 0:
-                                resourceName = this.resourceName, resourceId = this.resourceId;
-                                attribute = this.field.attribute;
-                                _context.prev = 2;
-                                _context.next = 5;
-                                return Nova.request().delete('/nova-api/' + resourceName + '/' + resourceId + '/field/' + attribute);
-
-                            case 5:
-                                this.closeRemoveModal();
-                                this.deleted = true;
-                                _context.next = 12;
-                                break;
-
-                            case 9:
-                                _context.prev = 9;
-                                _context.t0 = _context['catch'](2);
-
-                                this.closeRemoveModal();
-
-                            case 12:
-                            case 'end':
-                                return _context.stop();
-                        }
-                    }
-                }, _callee, this, [[2, 9]]);
-            }));
-
-            function removeFile() {
-                return _ref.apply(this, arguments);
-            }
-
-            return removeFile;
-        }()
+        }
     },
 
     computed: {
         hasValue: function hasValue() {
-            return Boolean(this.field.value || this.imageUrl) && !Boolean(this.deleted) && !Boolean(this.missing);
+            return Boolean(this.field.value || this.imageUrl) && !Boolean(this.missing);
         },
         shouldShowLoader: function shouldShowLoader() {
-            return !Boolean(this.deleted) && Boolean(this.imageUrl);
+            return Boolean(this.imageUrl);
         },
         shouldShowToolbar: function shouldShowToolbar() {
-            return Boolean(this.field.downloadable || this.field.deletable) && this.hasValue;
+            return Boolean(this.field.downloadable && this.hasValue);
         },
         imageUrl: function imageUrl() {
             return this.field.previewUrl || this.field.thumbnailUrl;
@@ -1837,17 +1782,6 @@ exports.default = {
         }
     }
 }; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -4024,7 +3958,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     props: {
         resourceName: {
-            type: Object,
+            type: String,
             require: true
         },
         field: {
@@ -8133,10 +8067,33 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _toConsumableArray2 = __webpack_require__("./node_modules/babel-runtime/helpers/toConsumableArray.js");
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
 var _vueClickaway = __webpack_require__("./node_modules/vue-clickaway/dist/vue-clickaway.common.js");
+
+var _composedPath = __webpack_require__("./resources/js/polyfills/composedPath.js");
+
+var _composedPath2 = _interopRequireDefault(_composedPath);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     mixins: [_vueClickaway.mixin],
+
+    props: {
+        classWhitelist: [Array, String]
+    },
 
     created: function created() {
         document.addEventListener('keydown', this.handleEscape);
@@ -8169,17 +8126,27 @@ exports.default = {
             }
         },
         close: function close(e) {
+            var classArray = Array.isArray(this.classWhitelist) ? this.classWhitelist : [this.classWhitelist];
+
+            if (_.filter(classArray, function (className) {
+                return pathIncludesClass(e, className);
+            }).length > 0) {
+                return;
+            }
+
             this.$emit('modal-close', e);
         }
     }
-}; //
-//
-//
-//
-//
-//
-//
-//
+};
+
+
+function pathIncludesClass(event, className) {
+    return (0, _composedPath2.default)(event).filter(function (el) {
+        return el !== document && el !== window;
+    }).reduce(function (acc, e) {
+        return acc.concat([].concat((0, _toConsumableArray3.default)(e.classList)));
+    }, []).includes(className);
+}
 
 /***/ }),
 
@@ -8192,21 +8159,6 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _toConsumableArray2 = __webpack_require__("./node_modules/babel-runtime/helpers/toConsumableArray.js");
-
-var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
-var _laravelNova = __webpack_require__("./node_modules/laravel-nova/dist/index.js");
-
-var _composedPath = __webpack_require__("./resources/js/polyfills/composedPath.js");
-
-var _composedPath2 = _interopRequireDefault(_composedPath);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//
-//
 //
 //
 //
@@ -8286,9 +8238,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
     props: {
         working: Boolean,
-        resourceName: {},
-        selectedAction: {},
-        errors: { required: true }
+        resourceName: { type: String, required: true },
+        selectedAction: { type: Object, required: true },
+        selectedResources: { type: Array, required: true },
+        errors: { type: Object, required: true }
     },
 
     /**
@@ -8321,7 +8274,7 @@ exports.default = {
         /**
          * Execute the selected action.
          */
-        handleConfirm: function handleConfirm(e) {
+        handleConfirm: function handleConfirm() {
             this.$emit('confirm');
         },
 
@@ -8329,28 +8282,11 @@ exports.default = {
         /**
          * Close the modal.
          */
-        handleClose: function handleClose(e) {
-            var classArray = ['flatpickr-calendar'];
-
-            if (_.filter(classArray, function (className) {
-                return pathIncludesClass(e, className);
-            }).length > 0) {
-                return;
-            }
-
+        handleClose: function handleClose() {
             this.$emit('close');
         }
     }
 };
-
-
-function pathIncludesClass(event, className) {
-    return (0, _composedPath2.default)(event).filter(function (el) {
-        return el !== document && el !== window;
-    }).reduce(function (acc, e) {
-        return acc.concat([].concat((0, _toConsumableArray3.default)(e.classList)));
-    }, []).includes(className);
-}
 
 /***/ }),
 
@@ -9340,40 +9276,6 @@ exports.default = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],[\"env\"]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-runtime\",\"transform-vue-jsx\",\"syntax-jsx\",\"transform-object-rest-spread\"],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/ValidationErrors.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-    props: ['errors']
-};
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],[\"env\"]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-runtime\",\"transform-vue-jsx\",\"syntax-jsx\",\"transform-object-rest-spread\"],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/views/Attach.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10162,10 +10064,29 @@ exports.default = {
                 formData.append('viaResourceId', _this.viaResourceId);
                 formData.append('viaRelationship', _this.viaRelationship);
             });
+        },
+        panelFields: function panelFields(panel) {
+            return this.fields.filter(function (field) {
+                return field.panel == panel;
+            });
+        },
+        nonPanelFields: function nonPanelFields() {
+            return this.fields.filter(function (field) {
+                return field.panel == null;
+            });
         }
     },
 
     computed: {
+        panels: function panels() {
+            return this.fields.map(function (field) {
+                return field.panel;
+            }).filter(function (panel) {
+                return panel !== null;
+            }).filter(function (panel, key, collection) {
+                return collection.indexOf(panel) === key;
+            });
+        },
         singularName: function singularName() {
             if (this.relationResponse) {
                 return this.relationResponse.singularLabel;
@@ -10186,6 +10107,23 @@ exports.default = {
         }
     }
 }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13152,6 +13090,11 @@ exports.default = {
     },
 
     computed: {
+        panels: function panels() {
+            return _.map();
+        },
+
+
         /**
          * Create the form data for creating the resource.
          */
@@ -13187,9 +13130,6 @@ exports.default = {
         }
     }
 }; //
-//
-//
-//
 //
 //
 //
@@ -34817,7 +34757,7 @@ var render = function() {
                 on: {
                   click: function($event) {
                     $event.preventDefault()
-                    return _vm.openConfirmationModal($event)
+                    return _vm.determineActionStrategy($event)
                   }
                 }
               },
@@ -34841,6 +34781,7 @@ var render = function() {
             ? _c("confirm-action-modal", {
                 attrs: {
                   working: _vm.working,
+                  "selected-resources": _vm.selectedResources,
                   "resource-name": _vm.resourceName,
                   "selected-action": _vm.selectedAction,
                   errors: _vm.errors
@@ -35105,104 +35046,152 @@ var render = function() {
     "loading-view",
     { attrs: { loading: _vm.loading } },
     [
-      _c("heading", { staticClass: "mb-3" }, [
+      _c("heading", { staticClass: "mb-6" }, [
         _vm._v(_vm._s(_vm.__("New")) + " " + _vm._s(_vm.singularName))
       ]),
       _vm._v(" "),
-      _c("card", { staticClass: "overflow-hidden" }, [
-        _vm.fields
-          ? _c(
-              "form",
-              {
-                attrs: { autocomplete: "off" },
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.createResource($event)
-                  }
+      _vm.fields
+        ? _c(
+            "form",
+            {
+              attrs: { autocomplete: "off" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.createResource($event)
                 }
-              },
-              [
-                _c("validation-errors", {
-                  attrs: { errors: _vm.validationErrors }
-                }),
-                _vm._v(" "),
-                _vm._l(_vm.fields, function(field) {
-                  return _c(
-                    "div",
-                    [
-                      _c("form-" + field.component, {
-                        tag: "component",
-                        attrs: {
-                          errors: _vm.validationErrors,
-                          "resource-name": _vm.resourceName,
-                          field: field,
-                          "via-resource": _vm.viaResource,
-                          "via-resource-id": _vm.viaResourceId,
-                          "via-relationship": _vm.viaRelationship
-                        }
-                      })
-                    ],
-                    1
-                  )
-                }),
-                _vm._v(" "),
-                _c(
+              }
+            },
+            [
+              _vm._l(_vm.panels, function(panel) {
+                return _c(
                   "div",
-                  { staticClass: "bg-30 flex px-8 py-4" },
+                  { key: panel, staticClass: "mb-6" },
                   [
                     _c(
-                      "progress-button",
-                      {
-                        staticClass: "ml-auto mr-3",
-                        attrs: {
-                          dusk: "create-and-add-another-button",
-                          disabled: _vm.isWorking,
-                          processing: _vm.submittedViaCreateAndAddAnother
-                        },
-                        nativeOn: {
-                          click: function($event) {
-                            return _vm.createAndAddAnother($event)
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                    " +
-                            _vm._s(_vm.__("Create & Add Another")) +
-                            "\n                "
-                        )
-                      ]
+                      "heading",
+                      { staticClass: "mb-3", attrs: { level: 2 } },
+                      [_vm._v(_vm._s(panel))]
                     ),
                     _vm._v(" "),
                     _c(
-                      "progress-button",
-                      {
-                        attrs: {
-                          dusk: "create-button",
-                          type: "submit",
-                          disabled: _vm.isWorking,
-                          processing: _vm.submittedViaCreateResource
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                    " +
-                            _vm._s(_vm.__("Create")) +
-                            " " +
-                            _vm._s(_vm.singularName) +
-                            "\n                "
+                      "card",
+                      { staticClass: "overflow-hidden" },
+                      _vm._l(_vm.panelFields(panel), function(field) {
+                        return _c(
+                          "div",
+                          [
+                            _c("form-" + field.component, {
+                              tag: "component",
+                              attrs: {
+                                errors: _vm.validationErrors,
+                                "resource-name": _vm.resourceName,
+                                field: field,
+                                "via-resource": _vm.viaResource,
+                                "via-resource-id": _vm.viaResourceId,
+                                "via-relationship": _vm.viaRelationship
+                              }
+                            })
+                          ],
+                          1
                         )
-                      ]
+                      })
                     )
                   ],
                   1
                 )
-              ],
-              2
-            )
-          : _vm._e()
-      ])
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "mb-6" },
+                [
+                  _c("heading", { staticClass: "mb-3", attrs: { level: 2 } }, [
+                    _vm._v(_vm._s(_vm.__("Other")))
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "card",
+                    { staticClass: "overflow-hidden" },
+                    _vm._l(_vm.nonPanelFields(_vm.panel), function(field) {
+                      return _c(
+                        "div",
+                        [
+                          _c("form-" + field.component, {
+                            tag: "component",
+                            attrs: {
+                              errors: _vm.validationErrors,
+                              "resource-name": _vm.resourceName,
+                              field: field,
+                              "via-resource": _vm.viaResource,
+                              "via-resource-id": _vm.viaResourceId,
+                              "via-relationship": _vm.viaRelationship
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    })
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "rounded-lg bg-30 flex px-8 py-4" },
+                [
+                  _c(
+                    "progress-button",
+                    {
+                      staticClass: "ml-auto mr-3",
+                      attrs: {
+                        dusk: "create-and-add-another-button",
+                        disabled: _vm.isWorking,
+                        processing: _vm.submittedViaCreateAndAddAnother
+                      },
+                      nativeOn: {
+                        click: function($event) {
+                          return _vm.createAndAddAnother($event)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.__("Create & Add Another")) +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "progress-button",
+                    {
+                      attrs: {
+                        dusk: "create-button",
+                        type: "submit",
+                        disabled: _vm.isWorking,
+                        processing: _vm.submittedViaCreateResource
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.__("Create")) +
+                          " " +
+                          _vm._s(_vm.singularName) +
+                          "\n            "
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ],
+            2
+          )
+        : _vm._e()
     ],
     1
   )
@@ -40590,7 +40579,8 @@ var render = function() {
       attrs: {
         "data-testid": "confirm-action-modal",
         tabindex: "-1",
-        role: "dialog"
+        role: "dialog",
+        "class-whitelist": "flatpickr-calendar"
       },
       on: { "modal-close": _vm.handleClose }
     },
@@ -40638,30 +40628,23 @@ var render = function() {
                   ])
                 : _c(
                     "div",
-                    [
-                      _c("validation-errors", {
-                        attrs: { errors: _vm.errors }
-                      }),
-                      _vm._v(" "),
-                      _vm._l(_vm.selectedAction.fields, function(field) {
-                        return _c(
-                          "div",
-                          { key: field.attribute, staticClass: "action" },
-                          [
-                            _c("form-" + field.component, {
-                              tag: "component",
-                              attrs: {
-                                errors: _vm.errors,
-                                "resource-name": _vm.resourceName,
-                                field: field
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      })
-                    ],
-                    2
+                    _vm._l(_vm.selectedAction.fields, function(field) {
+                      return _c(
+                        "div",
+                        { key: field.attribute, staticClass: "action" },
+                        [
+                          _c("form-" + field.component, {
+                            tag: "component",
+                            attrs: {
+                              errors: _vm.errors,
+                              "resource-name": _vm.resourceName,
+                              field: field
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    })
                   )
             ],
             1
@@ -43631,48 +43614,6 @@ if (false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-757df5af\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/ValidationErrors.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.errors.length > 0
-      ? _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-6 alert alert-danger" }, [
-            _c("strong", [_vm._v(_vm._s(_vm.__("Whoops!")))]),
-            _vm._v(
-              " " + _vm._s(_vm.__("Something went wrong.")) + "\n\n            "
-            ),
-            _c("br"),
-            _c("br"),
-            _vm._v(" "),
-            _c(
-              "ul",
-              { staticStyle: { "margin-bottom": "0" } },
-              _vm._l(_vm.errors, function(error) {
-                return _c("li", [_vm._v(_vm._s(error))])
-              })
-            )
-          ])
-        ])
-      : _vm._e()
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-757df5af", module.exports)
-  }
-}
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-75b73038\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/Detail/HasManyField.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -44259,31 +44200,6 @@ var render = function() {
         !_vm.field.value && !_vm.imageUrl
           ? _c("span", [_vm._v("—")])
           : _vm._e(),
-        _vm._v(" "),
-        _vm.deleted ? _c("span", [_vm._v("—")]) : _vm._e(),
-        _vm._v(" "),
-        _c(
-          "portal",
-          { attrs: { to: "modals" } },
-          [
-            _c(
-              "transition",
-              { attrs: { name: "fade" } },
-              [
-                _vm.removeModalOpen
-                  ? _c("confirm-upload-removal-modal", {
-                      on: {
-                        confirm: _vm.removeFile,
-                        close: _vm.closeRemoveModal
-                      }
-                    })
-                  : _vm._e()
-              ],
-              1
-            )
-          ],
-          1
-        ),
         _vm._v(" "),
         _vm.shouldShowToolbar
           ? _c("p", { staticClass: "flex items-center text-sm mt-3" }, [
@@ -45354,10 +45270,6 @@ var render = function() {
                     }
                   },
                   [
-                    _c("validation-errors", {
-                      attrs: { errors: _vm.validationErrors }
-                    }),
-                    _vm._v(" "),
                     _vm._l(_vm.fields, function(field) {
                       return _c(
                         "div",
@@ -51584,10 +51496,6 @@ var _TrendMetric3 = __webpack_require__("./resources/js/components/Metrics/Trend
 
 var _TrendMetric4 = _interopRequireDefault(_TrendMetric3);
 
-var _ValidationErrors = __webpack_require__("./resources/js/components/ValidationErrors.vue");
-
-var _ValidationErrors2 = _interopRequireDefault(_ValidationErrors);
-
 var _ValueMetric3 = __webpack_require__("./resources/js/components/Metrics/ValueMetric.vue");
 
 var _ValueMetric4 = _interopRequireDefault(_ValueMetric3);
@@ -51678,7 +51586,6 @@ _vue2.default.component('scroll-wrap', _ScrollWrap2.default);
 _vue2.default.component('search-input', _SearchInput2.default);
 _vue2.default.component('sortable-icon', _SortableIcon2.default);
 _vue2.default.component('trend-metric', _TrendMetric4.default);
-_vue2.default.component('validation-errors', _ValidationErrors2.default);
 _vue2.default.component('value-metric', _ValueMetric4.default);
 
 _vue2.default.component('select-filter', _SelectFilter2.default);
@@ -57628,54 +57535,6 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-03c3e6d0", Component.options)
   } else {
     hotAPI.reload("data-v-03c3e6d0", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/js/components/ValidationErrors.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}],[\"env\"]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-runtime\",\"transform-vue-jsx\",\"syntax-jsx\",\"transform-object-rest-spread\"],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/ValidationErrors.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-757df5af\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/ValidationErrors.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/ValidationErrors.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-757df5af", Component.options)
-  } else {
-    hotAPI.reload("data-v-757df5af", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

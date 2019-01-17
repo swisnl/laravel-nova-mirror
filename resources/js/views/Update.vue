@@ -4,9 +4,6 @@
 
         <card class="overflow-hidden">
             <form v-if="fields" @submit.prevent="updateResource" autocomplete="off">
-                <!-- Validation Errors -->
-                <validation-errors :errors="validationErrors" />
-
                 <!-- Fields -->
                 <div v-for="field in fields">
                     <component
@@ -224,6 +221,10 @@ export default {
     },
 
     computed: {
+        panels() {
+            return _.map()
+        },
+
         /**
          * Create the form data for creating the resource.
          */
