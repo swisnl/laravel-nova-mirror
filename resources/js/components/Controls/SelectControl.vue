@@ -46,7 +46,7 @@ export default {
             return _.assign({},
                 this.$listeners,
                 {
-                    input(event) {
+                    input: (event) => {
                         this.$emit('input', event.target.value)
                     }
                 }
