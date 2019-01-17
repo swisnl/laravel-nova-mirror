@@ -55,6 +55,10 @@ trait ResolvesReverseRelation
                             return false;
                         }
 
+                        if ($field instanceof BelongsToMany || $field instanceof MorphToMany) {
+                            return false;
+                        }
+
                         $relation = $viaModel->{$field->attribute}();
 
                         $method = $relation instanceof BelongsTo ? 'getForeignKey' : 'getForeignKeyName';
