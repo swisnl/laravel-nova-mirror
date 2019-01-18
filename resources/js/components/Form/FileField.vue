@@ -14,7 +14,7 @@
                     <card
                         class="flex item-center relative border border-lg border-50 overflow-hidden p-4"
                     >
-                        {{ field.value }}
+                        <span class="truncate mr-3"> {{ field.value }} </span>
 
                         <DeleteButton
                             :dusk="field.attribute + '-internal-delete-link'"

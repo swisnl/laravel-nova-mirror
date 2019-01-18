@@ -10,7 +10,7 @@
             </template>
 
             <template v-if="field.value && !imageUrl">
-                {{ field.value }}
+                <span class="break-words"> {{ field.value }} </span>
             </template>
 
             <span v-if="!field.value && !imageUrl">&mdash;</span>
