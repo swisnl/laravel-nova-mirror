@@ -169,6 +169,7 @@ textarea.form-input:read-only,
 input.form-input:read-only,
 textarea.form-input:read-only,
 .form-input:disabled,
+.form-input.disabled,
 .form-select:disabled {
   @apply .bg-30;
   cursor: not-allowed;
@@ -462,6 +463,10 @@ textarea.form-input:read-only,
 
 /* Markdown Field
 ---------------------------------------------------------------------------- */
+.remove-last-margin-bottom :last-child {
+  margin-bottom: 0;
+}
+
 .markdown h1,
 .markdown h2,
 .markdown h3,
@@ -469,13 +474,13 @@ textarea.form-input:read-only,
 .markdown h5,
 .markdown h6 {
   font-weight: 600;
-  color: #333;
+  color: var(--90);
   margin-bottom: 20px;
 }
 
 .markdown h1 {
   @apply text-2xl;
-  color: #666;
+  color: var(--80);
 }
 
 .markdown h2 {

@@ -62,7 +62,7 @@ class ResourceTool extends Panel
      */
     public function component()
     {
-        return $this->component ?? Str::snake(class_basename(get_class($this)), '-');
+        return $this->component ?? Str::kebab(class_basename(get_class($this)));
     }
 
     /**

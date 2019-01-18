@@ -139,6 +139,7 @@ class UserResource extends Resource
     {
         return [
             new UserLens,
+            new GroupingUserLens,
             new PaginatingUserLens,
         ];
     }
