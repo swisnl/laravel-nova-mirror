@@ -21,11 +21,8 @@
 </template>
 
 <script>
-import DateTimePicker from '../DateTimePicker'
 
 export default {
-    components: { DateTimePicker },
-
     props: {
         resourceName: {
             type: String,
