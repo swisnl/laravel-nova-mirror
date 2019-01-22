@@ -52,7 +52,6 @@ class CreationControllerTest extends IntegrationTest
     {
         $user = factory(User::class)->create();
 
-        /** @var \Illuminate\Foundation\Testing\TestResponse $response */
         $response = $this->withExceptionHandling()
             ->getJson("/nova-api/posts/creation-fields?viaResource=users&viaResourceId={$user->id}&viaRelationship=posts");
 
@@ -71,8 +70,6 @@ class CreationControllerTest extends IntegrationTest
         $response->assertStatus(200);
 
         $this->assertTrue($response->decodeResponseJson()[0]['reverse']);
-
-        //Author
         $this->assertFalse($response->decodeResponseJson()[1]['reverse']);
     }
 }
