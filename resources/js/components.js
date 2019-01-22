@@ -73,7 +73,7 @@ import SelectFilter from '@/components/Filters/SelectFilter'
 import BooleanFilter from '@/components/Filters/BooleanFilter'
 import DateFilter from '@/components/Filters/DateFilter'
 
-import DateTimePicker from './components/DateTimePicker'
+import DateTimePicker from '@/components/DateTimePicker'
 
 Vue.component('action-selector', ActionSelector)
 Vue.component('base-partition-metric', BasePartitionMetric)
