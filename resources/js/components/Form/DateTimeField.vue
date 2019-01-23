@@ -21,13 +21,10 @@
 </template>
 
 <script>
-import DateTimePicker from '../DateTimePicker'
 import { Errors, FormField, HandlesValidationErrors, InteractsWithDates } from 'laravel-nova'
 
 export default {
     mixins: [HandlesValidationErrors, FormField, InteractsWithDates],
-
-    components: { DateTimePicker },
 
     data: () => ({ localizedValue: '' }),
 
