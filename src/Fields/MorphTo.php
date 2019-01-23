@@ -250,7 +250,7 @@ class MorphTo extends Field
 
         $foreignKey = $model->{$this->attribute}()->getForeignKey();
 
-        if($model->isDirty([$morphType, $foreignKey])){
+        if ($model->isDirty([$morphType, $foreignKey])) {
             $model->unsetRelation($this->attribute);
         }
 
