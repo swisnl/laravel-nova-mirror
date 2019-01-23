@@ -241,10 +241,17 @@ class MorphTo extends Field
     {
         $instance = Nova::modelInstanceForKey($request->{$this->attribute.'_type'});
 
+        $morphType = $model->{$this->attribute}()->getMorphType();
         if ($instance) {
-            $model->{$model->{$this->attribute}()->getMorphType()} = $this->getMorphAliasForClass(
+            $model->{$morphType} = $this->getMorphAliasForClass(
                 get_class($instance)
             );
+        }
+
+        $foreignKey = $model->{$this->attribute}()->getForeignKey();
+
+        if($model->isDirty([$morphType, $foreignKey])){
+            $model->unsetRelation($this->attribute);
         }
 
         parent::fillInto($request, $model, $model->{$this->attribute}()->getForeignKey());
