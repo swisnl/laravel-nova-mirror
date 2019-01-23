@@ -41,7 +41,7 @@ export default {
 
     data: () => ({
         loading: true,
-        format: '(0.00a)',
+        format: '(0[.]00a)',
         value: 0,
         previous: 0,
         prefix: '',
