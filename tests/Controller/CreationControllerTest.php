@@ -48,7 +48,7 @@ class CreationControllerTest extends IntegrationTest
         $response->assertJsonCount(3);
     }
 
-    public function test_related_revers_belongs_to_fields()
+    public function test_related_reverse_belongs_to_fields()
     {
         $user = factory(User::class)->create();
 
@@ -60,7 +60,7 @@ class CreationControllerTest extends IntegrationTest
         $this->assertTrue($response->decodeResponseJson()[0]['reverse']);
     }
 
-    public function test_related_revers_morph_to_fields()
+    public function test_related_reverse_morph_to_fields()
     {
         $post = factory(Post::class)->create();
 
