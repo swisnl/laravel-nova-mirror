@@ -267,9 +267,7 @@ export default {
         },
 
         isLocked() {
-            return (
-                this.viaResource == this.field.resourceName && this.field.reverse
-            )
+            return this.viaResource == this.field.resourceName && this.field.reverse
         },
     },
 }
