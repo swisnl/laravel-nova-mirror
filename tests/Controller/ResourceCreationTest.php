@@ -3,12 +3,14 @@
 namespace Laravel\Nova\Tests\Controller;
 
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Actions\ActionEvent;
 use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\IntegrationTest;
 use Laravel\Nova\Tests\Fixtures\Address;
 use Laravel\Nova\Tests\Fixtures\CustomKey;
 use Laravel\Nova\Tests\Fixtures\UserPolicy;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class ResourceCreationTest extends IntegrationTest
 {
@@ -33,6 +35,12 @@ class ResourceCreationTest extends IntegrationTest
         $user = User::first();
         $this->assertEquals('Taylor Otwell', $user->name);
         $this->assertEquals('taylor@laravel.com', $user->email);
+
+        $actionEvent = ActionEvent::first();
+        $this->assertCount(1, ActionEvent::all());
+        $this->assertEquals('Create', $actionEvent->name);
+        $this->assertEquals($user->id, $actionEvent->target->id);
+        $this->assertTrue($user->is($actionEvent->target));
     }
 
     public function test_can_return_custom_pk()
@@ -284,5 +292,36 @@ class ResourceCreationTest extends IntegrationTest
                         ]);
 
         $response->assertStatus(200);
+    }
+
+    public function test_action_event_should_honor_custom_polymorphic_type_for_resource_creation()
+    {
+        Relation::morphMap(['user' => User::class]);
+
+        $this->withExceptionHandling()
+             ->postJson('/nova-api/users', [
+                'name' => 'Taylor Otwell',
+                'email' => 'taylor@laravel.com',
+                'password' => 'secret',
+             ]);
+
+        $user = User::first();
+        $actionEvent = ActionEvent::first();
+
+        $this->assertCount(1, ActionEvent::all());
+        $this->assertEquals('Create', $actionEvent->name);
+
+        $this->assertEquals('user', $actionEvent->actionable_type);
+        $this->assertEquals($user->id, $actionEvent->actionable_id);
+
+        $this->assertEquals('user', $actionEvent->target_type);
+        $this->assertEquals($user->id, $actionEvent->target_id);
+
+        $this->assertEquals('user', $actionEvent->model_type);
+        $this->assertEquals($user->id, $actionEvent->model_id);
+
+        $this->assertTrue($user->is($actionEvent->target));
+
+        Relation::morphMap([], false);
     }
 }
