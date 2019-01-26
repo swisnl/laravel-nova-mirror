@@ -46,7 +46,7 @@
                                     </li>
 
                                     <li
-                                        class="flex items-center"
+                                        class="flex items-center mt-4"
                                         v-if="allMatchingResourceCount > 0"
                                     >
                                         <checkbox-with-label
@@ -382,7 +382,7 @@ export default {
 
                     this.loading = false
 
-                    // this.getAllMatchingResourceCount()
+                    this.getAllMatchingResourceCount()
                 })
             })
         },
