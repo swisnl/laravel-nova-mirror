@@ -68,7 +68,7 @@ class UserLens extends Lens
     public function actions(Request $request)
     {
         return [
-            new NoopAction()
+            new NoopAction(),
         ];
     }
 }

@@ -34,8 +34,8 @@ class ActionRequest extends NovaRequest
     protected function resolveActions()
     {
         return $this->isPivotAction()
-            ? $this->newResource()->resolvePivotActions($this)
-            : $this->newResource()->resolveActions($this);
+                    ? $this->newResource()->resolvePivotActions($this)
+                    : $this->newResource()->resolveActions($this);
     }
 
     /**

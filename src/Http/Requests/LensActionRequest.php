@@ -31,7 +31,7 @@ class LensActionRequest extends ActionRequest
     protected function resolveActions()
     {
         return $this->isPivotAction()
-            ? $this->lens()->resolvePivotActions($this)
-            : $this->lens()->resolveActions($this);
+                    ? $this->lens()->resolvePivotActions($this)
+                    : $this->lens()->resolveActions($this);
     }
 }

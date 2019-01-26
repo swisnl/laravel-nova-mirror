@@ -55,7 +55,7 @@ class PaginatingUserLens extends Lens
     public function actions(Request $request)
     {
         return [
-            new NoopAction()
+            new NoopAction(),
         ];
     }
 }
