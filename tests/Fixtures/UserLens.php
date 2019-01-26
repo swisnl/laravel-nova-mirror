@@ -58,4 +58,17 @@ class UserLens extends Lens
     {
         return 'user-lens';
     }
+
+    /**
+     * Get the actions available on the entity.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function actions(Request $request)
+    {
+        return [
+            new NoopAction()
+        ];
+    }
 }
