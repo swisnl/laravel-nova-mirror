@@ -10,6 +10,7 @@ use Laravel\Nova\Nova;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\ResolvesActions;
 use Laravel\Nova\ResolvesFilters;
 use Illuminate\Support\Collection;
 use Laravel\Nova\ProxiesCanSeeToGate;
@@ -26,6 +27,7 @@ abstract class Lens implements ArrayAccess, JsonSerializable, UrlRoutable
     use ConditionallyLoadsAttributes,
         DelegatesToResource,
         ProxiesCanSeeToGate,
+        ResolvesActions,
         ResolvesFilters;
 
     /**

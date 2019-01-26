@@ -29,7 +29,7 @@ class ActionRequest extends NovaRequest
     /**
      * Get the possible actions for the request.
      *
-     * @return \Illuminate\Support\Collections
+     * @return \Illuminate\Support\Collection
      */
     protected function availableActions()
     {
@@ -45,11 +45,7 @@ class ActionRequest extends NovaRequest
      */
     protected function actionExists()
     {
-        $actions = $this->isPivotAction()
-                    ? $this->newResource()->resolvePivotActions($this)
-                    : $this->newResource()->resolveActions($this);
-
-        return $actions->contains(function ($action) {
+        return $this->availableActions()->contains(function ($action) {
             return $action->uriKey() == $this->query('action');
         });
     }

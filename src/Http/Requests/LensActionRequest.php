@@ -22,4 +22,16 @@ class LensActionRequest extends ActionRequest
             }
         });
     }
+
+    /**
+     * Get the possible actions for the request.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    protected function availableActions()
+    {
+        return $this->isPivotAction()
+            ? $this->lens()->availablePivotActions($this)
+            : $this->lens()->availableActions($this);
+    }
 }
