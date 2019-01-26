@@ -21,7 +21,7 @@ class LensActionControllerTest extends IntegrationTest
             ->get('/nova-api/users/lens/user-lens/actions');
 
         $response->assertStatus(200);
-        $this->assertCount(1,$response->original['actions']);
+        $this->assertCount(1, $response->original['actions']);
         $this->assertInstanceOf(NoopAction::class, $response->original['actions'][0]);
     }
 
