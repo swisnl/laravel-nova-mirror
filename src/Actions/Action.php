@@ -30,6 +30,13 @@ class Action implements JsonSerializable
     public $availableForEntireResource = false;
 
     /**
+     * Determine where the action redirection should be without confirmation.
+     *
+     * @var bool
+     */
+    public $withoutConfirmation = false;
+
+    /**
      * Indicates if this action is only available on the resource detail view.
      *
      * @var bool
@@ -319,6 +326,18 @@ class Action implements JsonSerializable
     }
 
     /**
+     * Set the action to execute instantly.
+     *
+     * @return string
+     */
+    public function withoutConfirmation()
+    {
+        $this->withoutConfirmation = true;
+
+        return $this;
+    }
+
+    /**
      * Prepare the action for JSON serialization.
      *
      * @return array
@@ -335,6 +354,7 @@ class Action implements JsonSerializable
             'availableForEntireResource' => $this->availableForEntireResource,
             'onlyOnDetail' => $this->onlyOnDetail,
             'onlyOnIndex' => $this->onlyOnIndex,
+            'withoutConfirmation' => $this->withoutConfirmation,
         ];
     }
 }

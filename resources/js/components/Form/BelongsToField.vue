@@ -233,7 +233,7 @@ export default {
         creatingViaRelatedResource() {
             return (
                 this.viaResource == this.field.resourceName &&
-                this.viaRelationship === this.field.reverseRelation &&
+                this.field.reverse &&
                 this.viaResourceId
             )
         },
@@ -267,10 +267,7 @@ export default {
         },
 
         isLocked() {
-            return (
-                this.viaResource == this.field.resourceName &&
-                this.viaRelationship === this.field.reverseRelation
-            )
+            return this.viaResource == this.field.resourceName && this.field.reverse
         },
     },
 }
