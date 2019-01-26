@@ -29,7 +29,9 @@ class DispatchAction
         }
 
         return Transaction::run(function ($batchId) use ($request, $action, $method, $models) {
-            ActionEvent::createForModels($request, $action, $batchId, $models);
+            if ($action->actionable) {
+                ActionEvent::createForModels($request, $action, $batchId, $models);
+            }
 
             return $action->withBatchId($batchId)->{$method}($request->resolveFields(), $models);
         }, function ($batchId) {
@@ -49,7 +51,9 @@ class DispatchAction
     protected static function queueForModels(ActionRequest $request, Action $action, $method, Collection $models)
     {
         return Transaction::run(function ($batchId) use ($request, $action, $method, $models) {
-            ActionEvent::createForModels($request, $action, $batchId, $models, 'waiting');
+            if ($action->actionable) {
+                ActionEvent::createForModels($request, $action, $batchId, $models, 'waiting');
+            }
 
             Queue::connection(static::connection($action))->pushOn(
                 static::queue($action),

@@ -23,6 +23,13 @@ class Action implements JsonSerializable
     public $name;
 
     /**
+     * Indicates if need to log action events for models.
+     *
+     * @var bool
+     */
+    public $actionable = true;
+
+    /**
      * Indicates if this action is available to run against the entire resource.
      *
      * @var bool
