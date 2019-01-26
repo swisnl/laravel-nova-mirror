@@ -24,14 +24,14 @@ class LensActionRequest extends ActionRequest
     }
 
     /**
-     * Get the possible actions for the request.
+     * Get the all actions for the request.
      *
      * @return \Illuminate\Support\Collection
      */
-    protected function availableActions()
+    protected function resolveActions()
     {
         return $this->isPivotAction()
-            ? $this->lens()->availablePivotActions($this)
-            : $this->lens()->availableActions($this);
+            ? $this->lens()->resolvePivotActions($this)
+            : $this->lens()->resolveActions($this);
     }
 }
