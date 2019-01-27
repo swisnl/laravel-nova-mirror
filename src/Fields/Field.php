@@ -148,12 +148,13 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
 
         if (! $this->displayCallback) {
             $this->resolve($resource, $attribute);
-        }
+        } elseif (is_callable($this->displayCallback)) {
 
-        $value = data_get($resource, str_replace('->', '.', $attribute), '___missing');
+            $value = data_get($resource, str_replace('->', '.', $attribute), $placeholder = new \stdClass());
 
-        if (is_callable($this->displayCallback) && $value !== '___missing') {
-            $this->value = call_user_func($this->displayCallback, $value);
+            if ($value !== $placeholder) {
+                $this->value = call_user_func($this->displayCallback, $value);
+            }
         }
     }
 
@@ -175,12 +176,13 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
 
         if (! $this->resolveCallback) {
             $this->value = $this->resolveAttribute($resource, $attribute);
-        }
+        } elseif (is_callable($this->resolveCallback)) {
 
-        $value = data_get($resource, str_replace('->', '.', $attribute), '___missing');
+            $value = data_get($resource, str_replace('->', '.', $attribute), $placeholder = new \stdClass());
 
-        if (is_callable($this->resolveCallback) && $value !== '___missing') {
-            $this->value = call_user_func($this->resolveCallback, $value, $resource);
+            if ($value !== $placeholder) {
+                $this->value = call_user_func($this->resolveCallback, $value, $resource);
+            }
         }
     }
 
