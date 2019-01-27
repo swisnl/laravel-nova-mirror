@@ -95,7 +95,7 @@ export default {
             return _.find(filter.currentValue, (value, key) => key == optionKey)
         },
 
-        softDeletes: state => state.softDeletes
+        softDeletes: state => state.softDeletes,
     },
     actions: {
         /**
@@ -166,6 +166,6 @@ export default {
          */
         setSoftDeletes(state, value) {
             state.softDeletes = value
-        }
+        },
     },
 }

@@ -253,7 +253,9 @@ export default {
          * Determine if the related resource is soft deleting.
          */
         softDeletes() {
-            return this.resourceType ? this.$store.getters[`${this.resourceType}/softDeletes`] : false
+            return this.resourceType
+                ? this.$store.getters[`${this.resourceType}/softDeletes`]
+                : false
         },
 
         /**
