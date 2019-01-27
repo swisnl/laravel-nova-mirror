@@ -204,7 +204,7 @@ class BelongsTo extends Field
      */
     public function resolve($resource, $attribute = null)
     {
-        if($resource instanceof Model && $resource->relationLoaded($this->attribute)) {
+        if ($resource instanceof Model && $resource->relationLoaded($this->attribute)) {
             $value = $resource->getRelation($this->attribute);
         } else {
             $value = $resource->{$this->attribute}()->withoutGlobalScopes()->first();

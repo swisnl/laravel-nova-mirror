@@ -391,7 +391,6 @@ class ResourceIndexTest extends IntegrationTest
             ->getJson('/nova-api/posts');
         unset($_SERVER['nova.post.useEagerUser']);
 
-
         $response->assertStatus(200);
         $this->assertEquals(count(DB::getQueryLog()) - $count, 1 + 1);
 
