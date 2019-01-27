@@ -82,7 +82,7 @@ export default {
         working: Boolean,
         resourceName: { type: String, required: true },
         selectedAction: { type: Object, required: true },
-        selectedResources: { type: Array, required: true },
+        selectedResources: { type: [Array, String], required: true },
         errors: { type: Object, required: true },
     },
 
