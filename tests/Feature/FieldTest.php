@@ -155,16 +155,16 @@ class FieldTest extends IntegrationTest
     public function test_select_fields_options_with_additional_parameters()
     {
         $expected = [
-            ["label" => "A", "value" => "a"],
-            ["label" => "B", "value" => "b"],
-            ["label" => "C", "value" => "c"],
-            ["label" => "D", "value" => "d", "group" => "E"]
+            ['label' => 'A', 'value' => 'a'],
+            ['label' => 'B', 'value' => 'b'],
+            ['label' => 'C', 'value' => 'c'],
+            ['label' => 'D', 'value' => 'd', 'group' => 'E'],
         ];
         $field = Select::make('Name')->options([
             'a' => 'A',
             'b' => ['label' => 'B'],
             ['value' => 'c', 'label' => 'C'],
-            ['value' => 'd', 'label' => 'D', 'group' => 'E']
+            ['value' => 'd', 'label' => 'D', 'group' => 'E'],
         ]);
 
         $this->assertJsonStringEqualsJsonString(json_encode($expected), json_encode($field->jsonSerialize()['options']));

@@ -7,7 +7,6 @@ use Laravel\Nova\Filters\Filter;
 
 class AdditionalOptionsFilter extends Filter
 {
-
     /**
      * Apply the filter to the given query.
      *
@@ -32,7 +31,7 @@ class AdditionalOptionsFilter extends Filter
             'label 1' => 'value 1',
             'value 2' => ['name' => 'label 2'],
             ['value' => 'value 3', 'name' => 'label 3'],
-            ['value' => 'value 4', 'name' => 'label 4', 'group' => 'group 1']
+            ['value' => 'value 4', 'name' => 'label 4', 'group' => 'group 1'],
         ];
     }
 }
