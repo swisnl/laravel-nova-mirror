@@ -59,7 +59,7 @@ export default {
         selectedRangeKey: [String, Number],
         format: {
             type: String,
-            default: '(0.00a)',
+            default: '(0[.]00a)',
         },
     },
 
@@ -100,10 +100,6 @@ export default {
                 offset: 0,
             },
             plugins: [
-                // Chartist.plugins.tooltip({
-                //     anchorToPoint: true,
-                // }),
-
                 Chartist.plugins.tooltip({
                     anchorToPoint: true,
                     transformTooltipTextFnc: value => {
@@ -113,6 +109,7 @@ export default {
 
                         if (this.suffix) {
                             const suffix = SingularOrPlural(value, this.suffix)
+
                             return `${value} ${suffix}`
                         }
 
@@ -140,11 +137,7 @@ export default {
 
         formattedValue() {
             if (!this.isNullValue) {
-                const numeralValue = numeral(this.value)
-
-                return numeralValue.value() > 1000
-                    ? this.prefix + numeralValue.format(this.format)
-                    : this.prefix + this.value
+                return this.prefix + numeral(this.value).format(this.format)
             }
 
             return ''

@@ -21,6 +21,7 @@ use Laravel\Nova\Tests\Fixtures\FailingAction;
 use Laravel\Nova\Tests\Fixtures\ExceptionAction;
 use Laravel\Nova\Tests\Fixtures\UnrunnableAction;
 use Laravel\Nova\Tests\Fixtures\DestructiveAction;
+use Laravel\Nova\Tests\Fixtures\HandleResultAction;
 use Laravel\Nova\Tests\Fixtures\UnauthorizedAction;
 use Laravel\Nova\Tests\Fixtures\UpdateStatusAction;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -593,18 +594,32 @@ class ActionControllerTest extends IntegrationTest
         Relation::morphMap([], false);
     }
 
+
     public function test_actions_can_ignore_action_event()
     {
         $user = factory(User::class)->create();
         $user2 = factory(User::class)->create();
 
         $response = $this->withExceptionHandling()
-            ->post('/nova-api/users/action?action='.(new NoopActionWithoutActionable())->uriKey(), [
+            ->post('/nova-api/users/action?action=' . (new NoopActionWithoutActionable())->uriKey(), [
                 'resources' => implode(',', [$user->id, $user2->id]),
             ]);
 
         $response->assertStatus(200);
 
         $this->assertCount(0, ActionEvent::all());
+    }
+
+    public function test_actions_handle_result()
+    {
+        factory(User::class)->times(201)->create();
+
+        $response = $this->withExceptionHandling()
+            ->post('/nova-api/users/action?action='.(new HandleResultAction())->uriKey(), [
+                'resources' => 'all',
+            ]);
+
+        $response->assertStatus(200);
+        $this->assertEquals(['message' => 'Processed 201 records'], $response->original);
     }
 }

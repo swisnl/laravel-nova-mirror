@@ -172,6 +172,7 @@ class UserResource extends Resource
             }),
             new UpdateStatusAction,
             new NoopActionWithoutActionable,
+            new HandleResultAction,
         ];
     }
 

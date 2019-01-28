@@ -4,6 +4,7 @@ namespace Laravel\Nova\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Laravel\Nova\Actions\ActionEvent;
 use Laravel\Nova\Http\Requests\CreateResourceRequest;
 
 class ResourceStoreController extends Controller
@@ -34,6 +35,8 @@ class ResourceStoreController extends Controller
             } else {
                 $model->save();
             }
+
+            ActionEvent::forResourceCreate($request->user(), $model)->save();
 
             collect($callbacks)->each->__invoke();
 
