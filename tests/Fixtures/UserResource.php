@@ -171,6 +171,7 @@ class UserResource extends Resource
                 return false;
             }),
             new UpdateStatusAction,
+            new HandleResultAction,
         ];
     }
 
