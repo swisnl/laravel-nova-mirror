@@ -34,6 +34,7 @@ class MorphableController extends Controller
                                     return $field->formatMorphableResource($request, $resource, $relatedResource);
                                 })->sortBy('display')->values(),
             'withTrashed' => $withTrashed,
+            'softDeletes' => $relatedResource::softDeletes(),
         ];
     }
 

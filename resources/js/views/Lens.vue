@@ -265,6 +265,7 @@ export default {
 
         resourceResponse: null,
         resources: [],
+        softDeletes: false,
         selectedResources: [],
         selectAllMatchingResources: false,
         allMatchingResourceCount: 0,
@@ -372,6 +373,7 @@ export default {
 
                     this.resourceResponse = data
                     this.resources = data.resources
+                    this.softDeletes = data.softDeletes
 
                     this.loading = false
 
@@ -788,13 +790,6 @@ export default {
                     this.authorizedToRestoreSelectedResources ||
                     this.authorizedToRestoreAnyResources
             )
-        },
-
-        /**
-         * Determine if the relatd resource is soft deleting.
-         */
-        softDeletes() {
-            return this.$store.getters[`${this.resourceName}/softDeletes`]
         },
 
         /**
