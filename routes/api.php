@@ -36,6 +36,7 @@ Route::get('/{resource}/lens/{lens}/count', 'LensResourceCountController@show');
 Route::delete('/{resource}/lens/{lens}', 'LensResourceDestroyController@handle');
 Route::delete('/{resource}/lens/{lens}/force', 'LensResourceForceDeleteController@handle');
 Route::put('/{resource}/lens/{lens}/restore', 'LensResourceRestoreController@handle');
+Route::get('/{resource}/lens/{lens}/actions', 'LensActionController@index');
 Route::post('/{resource}/lens/{lens}/action', 'LensActionController@store');
 Route::get('/{resource}/lens/{lens}/filters', 'LensFilterController@index');
 

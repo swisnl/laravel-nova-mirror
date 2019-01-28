@@ -15,6 +15,16 @@ class LensActionControllerTest extends IntegrationTest
         $this->authenticate();
     }
 
+    public function test_can_retrieve_actions_for_a_lens()
+    {
+        $response = $this->withExceptionHandling()
+            ->get('/nova-api/users/lens/user-lens/actions');
+
+        $response->assertStatus(200);
+        $this->assertCount(1, $response->original['actions']);
+        $this->assertInstanceOf(NoopAction::class, $response->original['actions'][0]);
+    }
+
     public function test_lens_actions_can_be_applied()
     {
         $user = factory(User::class)->create();

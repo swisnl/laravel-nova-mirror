@@ -416,17 +416,13 @@ export default {
             this.actions = []
             this.pivotActions = null
             Nova.request()
-                .get(
-                    '/nova-api/' +
-                        this.resourceName +
-                        '/actions' +
-                        '?viaResource=' +
-                        this.viaResource +
-                        '&viaResourceId=' +
-                        this.viaResourceId +
-                        '&viaRelationship=' +
-                        this.viaRelationship
-                )
+                .get(`/nova-api/${this.resourceName}/lens/${this.lens}/actions`, {
+                    params: {
+                        viaResource: this.viaResource,
+                        viaResourceId: this.viaResourceId,
+                        viaRelationship: this.viaRelationship,
+                    },
+                })
                 .then(response => {
                     this.actions = _.filter(response.data.actions, action => {
                         return !action.onlyOnDetail

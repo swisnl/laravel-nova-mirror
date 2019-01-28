@@ -10,6 +10,7 @@ use Laravel\Nova\Nova;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\ResolvesActions;
 use Laravel\Nova\ResolvesFilters;
 use Illuminate\Support\Collection;
 use Laravel\Nova\ProxiesCanSeeToGate;
@@ -26,6 +27,7 @@ abstract class Lens implements ArrayAccess, JsonSerializable, UrlRoutable
     use ConditionallyLoadsAttributes,
         DelegatesToResource,
         ProxiesCanSeeToGate,
+        ResolvesActions,
         ResolvesFilters;
 
     /**
@@ -119,6 +121,17 @@ abstract class Lens implements ArrayAccess, JsonSerializable, UrlRoutable
     public function uriKey()
     {
         return Str::slug($this->name());
+    }
+
+    /**
+     * Get the actions available on the lens.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function actions(Request $request)
+    {
+        return $request->newResource()->actions($request);
     }
 
     /**
