@@ -126,7 +126,7 @@ class FileFieldControllerTest extends IntegrationTest
                         ->deleteJson('/nova-api/files/'.File::first()->id.'/field/avatar');
 
         $response->assertStatus(200);
-        $this->assertCount(1, File::first()->actions);
+        $this->assertCount(2, File::first()->actions);
     }
 
     public function test_pivot_file_field_can_be_deleted()
