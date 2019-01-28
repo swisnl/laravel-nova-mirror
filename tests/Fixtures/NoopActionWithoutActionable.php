@@ -9,7 +9,7 @@ use Laravel\Nova\Fields\ActionFields;
 
 class NoopActionWithoutActionable extends Action
 {
-    public $actionable = false;
+    public $withoutActionEvents = true;
 
     /**
      * Perform the action on the given models.
