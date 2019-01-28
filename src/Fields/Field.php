@@ -149,7 +149,6 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
         if (! $this->displayCallback) {
             $this->resolve($resource, $attribute);
         } elseif (is_callable($this->displayCallback)) {
-
             $value = data_get($resource, str_replace('->', '.', $attribute), $placeholder = new \stdClass());
 
             if ($value !== $placeholder) {
@@ -177,7 +176,6 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
         if (! $this->resolveCallback) {
             $this->value = $this->resolveAttribute($resource, $attribute);
         } elseif (is_callable($this->resolveCallback)) {
-
             $value = data_get($resource, str_replace('->', '.', $attribute), $placeholder = new \stdClass());
 
             if ($value !== $placeholder) {
