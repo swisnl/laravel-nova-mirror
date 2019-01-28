@@ -5,6 +5,7 @@ namespace Laravel\Nova\Tests\Feature;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Tests\IntegrationTest;
@@ -149,5 +150,23 @@ class FieldTest extends IntegrationTest
         $this->assertContains([
             'extraAttributes' => ['placeholder' => 'This is a placeholder'],
         ], $field->jsonSerialize());
+    }
+
+    public function test_select_fields_options_with_additional_parameters()
+    {
+        $expected = [
+            ['label' => 'A', 'value' => 'a'],
+            ['label' => 'B', 'value' => 'b'],
+            ['label' => 'C', 'value' => 'c'],
+            ['label' => 'D', 'value' => 'd', 'group' => 'E'],
+        ];
+        $field = Select::make('Name')->options([
+            'a' => 'A',
+            'b' => ['label' => 'B'],
+            ['value' => 'c', 'label' => 'C'],
+            ['value' => 'd', 'label' => 'D', 'group' => 'E'],
+        ]);
+
+        $this->assertJsonStringEqualsJsonString(json_encode($expected), json_encode($field->jsonSerialize()['options']));
     }
 }
