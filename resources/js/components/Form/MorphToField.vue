@@ -119,6 +119,7 @@ export default {
     data: () => ({
         resourceType: '',
         initializingWithExistingResource: false,
+        softDeletes: false,
         selectedResourceId: null,
         selectedResource: null,
         search: '',
@@ -144,6 +145,10 @@ export default {
             this.getAvailableResources().then(() => this.selectInitialResource())
         } else if (this.shouldSelectInitialResource && this.isSearchable) {
             this.getAvailableResources().then(() => this.selectInitialResource())
+        }
+
+        if (this.resourceType) {
+            this.determineIfSoftDeletes()
         }
 
         this.field.fill = this.fill
@@ -179,13 +184,14 @@ export default {
         getAvailableResources(search = '') {
             return storage
                 .fetchAvailableResources(this.resourceName, this.field.attribute, this.queryParams)
-                .then(({ data: { resources, withTrashed } }) => {
+                .then(({ data: { resources, softDeletes, withTrashed } }) => {
                     if (this.initializingWithExistingResource || !this.isSearchable) {
                         this.withTrashed = withTrashed
                     }
 
                     this.initializingWithExistingResource = false
                     this.availableResources = resources
+                    this.softDeletes = softDeletes
                 })
         },
 
@@ -200,6 +206,15 @@ export default {
         },
 
         /**
+         * Determine if the selected resource type is soft deleting.
+         */
+        determineIfSoftDeletes() {
+            return storage
+                .determineIfSoftDeletes(this.resourceType)
+                .then(({ data: { softDeletes } }) => (this.softDeletes = softDeletes))
+        },
+
+        /**
          * Handle the changing of the resource type.
          */
         async refreshResourcesForTypeChange(event) {
@@ -208,6 +223,12 @@ export default {
             this.selectedResource = ''
             this.selectedResourceId = ''
             this.withTrashed = false
+
+            // if (this.resourceType == '') {
+            this.softDeletes = false
+            // } else if (this.field.searchable) {
+            this.determineIfSoftDeletes()
+            // }
 
             if (!this.isSearchable && this.resourceType) {
                 this.getAvailableResources()
@@ -247,15 +268,6 @@ export default {
          */
         shouldSelectInitialResource() {
             return Boolean(this.editingExistingResource || this.creatingViaRelatedResource)
-        },
-
-        /**
-         * Determine if the related resource is soft deleting.
-         */
-        softDeletes() {
-            return this.resourceType
-                ? this.$store.getters[`${this.resourceType}/softDeletes`]
-                : false
         },
 
         /**

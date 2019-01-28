@@ -30,6 +30,7 @@ class AssociatableController extends Controller
                         ->map(function ($resource) use ($request, $field) {
                             return $field->formatAssociatableResource($request, $resource);
                         })->sortBy('display')->values(),
+            'softDeletes' => $associatedResource::softDeletes(),
             'withTrashed' => $withTrashed,
         ];
     }

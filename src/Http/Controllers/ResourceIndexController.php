@@ -24,6 +24,7 @@ class ResourceIndexController extends Controller
             'resources' => $paginator->getCollection()->mapInto($resource)->map->serializeForIndex($request),
             'prev_page_url' => $paginator->previousPageUrl(),
             'next_page_url' => $paginator->nextPageUrl(),
+            'softDeletes' => $resource::softDeletes(),
         ]);
     }
 

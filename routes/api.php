@@ -52,6 +52,9 @@ Route::get('/{resource}/cards', 'CardController@index');
 // Authorization Information...
 Route::get('/{resource}/relate-authorization', 'RelatableAuthorizationController@show');
 
+// Soft Delete Information...
+Route::get('/{resource}/soft-deletes', 'SoftDeleteStatusController@show');
+
 // Resource Management...
 Route::get('/{resource}', 'ResourceIndexController@handle');
 Route::get('/{resource}/count', 'ResourceCountController@show');

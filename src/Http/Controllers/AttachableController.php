@@ -40,6 +40,7 @@ class AttachableController extends Controller
                             return $field->formatAttachableResource($request, $resource);
                         })->sortBy('display')->values(),
             'withTrashed' => $withTrashed,
+            'softDeletes' => $associatedResource::softDeletes(),
         ];
     }
 

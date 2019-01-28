@@ -38,6 +38,7 @@ class LensController extends Controller
             'resources' => $request->toResources($paginator->getCollection()),
             'prev_page_url' => $paginator->previousPageUrl(),
             'next_page_url' => $paginator->nextPageUrl(),
+            'softDeletes' => $request->resourceSoftDeletes(),
         ]);
     }
 }
