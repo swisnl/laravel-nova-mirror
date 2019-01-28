@@ -594,14 +594,13 @@ class ActionControllerTest extends IntegrationTest
         Relation::morphMap([], false);
     }
 
-
     public function test_actions_can_ignore_action_event()
     {
         $user = factory(User::class)->create();
         $user2 = factory(User::class)->create();
 
         $response = $this->withExceptionHandling()
-            ->post('/nova-api/users/action?action=' . (new NoopActionWithoutActionable())->uriKey(), [
+            ->post('/nova-api/users/action?action='.(new NoopActionWithoutActionable())->uriKey(), [
                 'resources' => implode(',', [$user->id, $user2->id]),
             ]);
 
