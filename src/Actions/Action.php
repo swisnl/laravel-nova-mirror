@@ -24,6 +24,13 @@ class Action implements JsonSerializable
     public $name;
 
     /**
+
+     * The action's component.
+     *
+     * @var string
+     */
+    public $component = 'confirm-action-modal';
+
      * Indicates if need to skip log action events for models.
      *
      * @var bool
@@ -331,6 +338,16 @@ class Action implements JsonSerializable
     }
 
     /**
+     * Get the component name for the action.
+     *
+     * @return string
+     */
+    public function component()
+    {
+        return $this->component;
+    }
+
+    /**
      * Get the displayable name of the action.
      *
      * @return string
@@ -382,7 +399,7 @@ class Action implements JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'class' => get_class($this),
+            'component' => $this->component(),
             'destructive' => $this instanceof DestructiveAction,
             'name' => $this->name(),
             'uriKey' => $this->uriKey(),

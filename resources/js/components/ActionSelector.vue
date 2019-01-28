@@ -56,12 +56,13 @@
         <!-- Action Confirmation Modal -->
         <!-- <portal to="modals"> -->
         <transition name="fade">
-            <confirm-action-modal
+            <component
+                :is="selectedAction.component"
                 :working="working"
                 v-if="confirmActionModalOpened"
                 :selected-resources="selectedResources"
                 :resource-name="resourceName"
-                :selected-action="selectedAction"
+                :action="selectedAction"
                 :errors="errors"
                 @confirm="executeAction"
                 @close="confirmActionModalOpened = false"

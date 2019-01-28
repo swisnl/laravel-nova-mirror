@@ -12,16 +12,14 @@
             @submit.prevent.stop="handleConfirm"
             class="bg-white rounded-lg shadow-lg overflow-hidden"
             :class="{
-                'w-action-fields': selectedAction.fields.length > 0,
-                'w-action': selectedAction.fields.length == 0,
+                'w-action-fields': action.fields.length > 0,
+                'w-action': action.fields.length == 0,
             }"
         >
             <div>
-                <heading :level="2" class="border-b border-40 py-8 px-8">{{
-                    selectedAction.name
-                }}</heading>
+                <heading :level="2" class="border-b border-40 py-8 px-8">{{ action.name }}</heading>
 
-                <p v-if="selectedAction.fields.length == 0" class="text-80 px-8 my-8">
+                <p v-if="action.fields.length == 0" class="text-80 px-8 my-8">
                     {{ __('Are you sure you want to run this action?') }}
                 </p>
 
@@ -30,11 +28,7 @@
                     <validation-errors :errors="errors" />
 
                     <!-- Action Fields -->
-                    <div
-                        class="action"
-                        v-for="field in selectedAction.fields"
-                        :key="field.attribute"
-                    >
+                    <div class="action" v-for="field in action.fields" :key="field.attribute">
                         <component
                             :is="'form-' + field.component"
                             :errors="errors"
@@ -63,8 +57,8 @@
                         type="submit"
                         class="btn btn-default"
                         :class="{
-                            'btn-primary': !selectedAction.destructive,
-                            'btn-danger': selectedAction.destructive,
+                            'btn-primary': !action.destructive,
+                            'btn-danger': action.destructive,
                         }"
                     >
                         <loader v-if="working" width="30"></loader>
@@ -81,7 +75,7 @@ export default {
     props: {
         working: Boolean,
         resourceName: { type: String, required: true },
-        selectedAction: { type: Object, required: true },
+        action: { type: Object, required: true },
         selectedResources: { type: [Array, String], required: true },
         errors: { type: Object, required: true },
     },
