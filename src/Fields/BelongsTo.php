@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\TrashedStatus;
 use Laravel\Nova\Rules\Relatable;
+use Illuminate\Database\Eloquent\Model;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Http\Requests\ResourceIndexRequest;
 
@@ -145,7 +146,12 @@ class BelongsTo extends Field
      */
     public function resolve($resource, $attribute = null)
     {
-        $value = $resource->{$this->attribute}()->withoutGlobalScopes()->first();
+        if ($resource instanceof Model && $resource->relationLoaded($this->attribute)) {
+            $value = $resource->getRelation($this->attribute);
+        } else {
+            $value = $resource->{$this->attribute}()->withoutGlobalScopes()->first();
+            $resource->setRelation($this->attribute, $value);
+        }
 
         if ($value) {
             $this->belongsToId = $value->getKey();
