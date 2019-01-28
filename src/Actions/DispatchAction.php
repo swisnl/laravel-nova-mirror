@@ -36,7 +36,7 @@ class DispatchAction
         }
 
         return Transaction::run(function ($batchId) use ($fields, $request, $action, $method, $models) {
-            if ($action->actionable) {
+            if (! $action->withoutActionEvents) {
                 ActionEvent::createForModels($request, $action, $batchId, $models);
             }
 
@@ -58,7 +58,7 @@ class DispatchAction
     protected static function queueForModels(ActionRequest $request, Action $action, $method, Collection $models)
     {
         return Transaction::run(function ($batchId) use ($request, $action, $method, $models) {
-            if ($action->actionable) {
+            if (! $action->withoutActionEvents) {
                 ActionEvent::createForModels($request, $action, $batchId, $models, 'waiting');
             }
 
