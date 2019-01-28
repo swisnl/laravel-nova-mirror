@@ -15,6 +15,8 @@ use Laravel\Nova\Http\Requests\ResourceIndexRequest;
 
 class MorphTo extends Field
 {
+    use ResolvesReverseRelation;
+
     /**
      * The field's component.
      *
@@ -137,8 +139,7 @@ class MorphTo extends Field
      */
     public function isNotRedundant(Request $request)
     {
-        return (! $request instanceof ResourceIndexRequest || ! $request->viaResource) ||
-               ($this->resourceName !== $request->viaResource);
+        return ! $request instanceof ResourceIndexRequest || ! $this->isReverseRelation($request);
     }
 
     /**
@@ -240,10 +241,17 @@ class MorphTo extends Field
     {
         $instance = Nova::modelInstanceForKey($request->{$this->attribute.'_type'});
 
+        $morphType = $model->{$this->attribute}()->getMorphType();
         if ($instance) {
-            $model->{$model->{$this->attribute}()->getMorphType()} = $this->getMorphAliasForClass(
+            $model->{$morphType} = $this->getMorphAliasForClass(
                 get_class($instance)
             );
+        }
+
+        $foreignKey = $model->{$this->attribute}()->getForeignKey();
+
+        if ($model->isDirty([$morphType, $foreignKey])) {
+            $model->unsetRelation($this->attribute);
         }
 
         parent::fillInto($request, $model, $model->{$this->attribute}()->getForeignKey());
@@ -485,6 +493,7 @@ class MorphTo extends Field
             'morphToId' => $this->morphToId,
             'nullable' => $this->nullable,
             'searchable' => $this->searchable,
+            'reverse' => $this->isReverseRelation(app(NovaRequest::class)),
         ], $this->meta);
     }
 }

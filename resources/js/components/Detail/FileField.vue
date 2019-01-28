@@ -10,21 +10,10 @@
             </template>
 
             <template v-if="field.value && !imageUrl">
-                {{ field.value }}
+                <span class="break-words"> {{ field.value }} </span>
             </template>
 
             <span v-if="!field.value && !imageUrl">&mdash;</span>
-            <span v-if="deleted">&mdash;</span>
-
-            <portal to="modals">
-                <transition name="fade">
-                    <confirm-upload-removal-modal
-                        v-if="removeModalOpen"
-                        @confirm="removeFile"
-                        @close="closeRemoveModal"
-                    />
-                </transition>
-            </portal>
 
             <p v-if="shouldShowToolbar" class="flex items-center text-sm mt-3">
                 <a
@@ -57,7 +46,7 @@ export default {
 
     components: { ImageLoader },
 
-    data: () => ({ removeModalOpen: false, missing: false, deleted: false }),
+    data: () => ({ missing: false }),
 
     methods: {
         /**
@@ -74,55 +63,19 @@ export default {
             link.click()
             document.body.removeChild(link)
         },
-
-        /**
-         * Confirm removal of the linked file
-         */
-        confirmRemoval() {
-            this.removeModalOpen = true
-        },
-
-        /**
-         * Close the upload removal modal
-         */
-        closeRemoveModal() {
-            this.removeModalOpen = false
-        },
-
-        /**
-         * Remove the linked file from storage
-         */
-        async removeFile() {
-            const { resourceName, resourceId } = this
-            const attribute = this.field.attribute
-
-            try {
-                await Nova.request().delete(
-                    `/nova-api/${resourceName}/${resourceId}/field/${attribute}`
-                )
-                this.closeRemoveModal()
-                this.deleted = true
-            } catch (error) {
-                this.closeRemoveModal()
-            }
-        },
     },
 
     computed: {
         hasValue() {
-            return (
-                Boolean(this.field.value || this.imageUrl) &&
-                !Boolean(this.deleted) &&
-                !Boolean(this.missing)
-            )
+            return Boolean(this.field.value || this.imageUrl) && !Boolean(this.missing)
         },
 
         shouldShowLoader() {
-            return !Boolean(this.deleted) && Boolean(this.imageUrl)
+            return Boolean(this.imageUrl)
         },
 
         shouldShowToolbar() {
-            return Boolean(this.field.downloadable || this.field.deletable) && this.hasValue
+            return Boolean(this.field.downloadable && this.hasValue)
         },
 
         imageUrl() {

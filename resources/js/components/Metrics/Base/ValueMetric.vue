@@ -79,7 +79,7 @@ export default {
         ranges: { type: Array, default: () => [] },
         format: {
             type: String,
-            default: '(0.00a)',
+            default: '(0[.]00a)',
         },
     },
 
@@ -128,11 +128,7 @@ export default {
 
         formattedValue() {
             if (!this.isNullValue) {
-                const numeralValue = numeral(this.value)
-
-                return numeralValue.value() > 1000
-                    ? this.prefix + numeralValue.format(this.format)
-                    : this.prefix + this.value
+                return this.prefix + numeral(this.value).format(this.format)
             }
 
             return ''

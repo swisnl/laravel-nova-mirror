@@ -14,7 +14,7 @@ abstract class Filter implements JsonSerializable
     use ProxiesCanSeeToGate;
 
     /**
-     * The displayable name of the action.
+     * The displayable name of the filter.
      *
      * @var string
      */

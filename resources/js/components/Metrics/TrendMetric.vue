@@ -46,7 +46,7 @@ export default {
         loading: true,
         value: '',
         data: [],
-        format: '(0.00a)',
+        format: '(0[.]00a)',
         prefix: '',
         suffix: '',
         selectedRangeKey: null,

@@ -4,6 +4,7 @@ namespace Laravel\Nova\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Laravel\Nova\Actions\ActionEvent;
 use Laravel\Nova\Http\Requests\CreateResourceRequest;
 
 class ResourceStoreController extends Controller
@@ -12,7 +13,7 @@ class ResourceStoreController extends Controller
      * Create a new resource.
      *
      * @param  \Laravel\Nova\Http\Requests\CreateResourceRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function handle(CreateResourceRequest $request)
     {
@@ -22,7 +23,7 @@ class ResourceStoreController extends Controller
 
         $resource::validateForCreation($request);
 
-        return DB::transaction(function () use ($request, $resource) {
+        $model = DB::transaction(function () use ($request, $resource) {
             [$model, $callbacks] = $resource::fill(
                 $request, $resource::newModel()
             );
@@ -35,9 +36,16 @@ class ResourceStoreController extends Controller
                 $model->save();
             }
 
+            ActionEvent::forResourceCreate($request->user(), $model)->save();
+
             collect($callbacks)->each->__invoke();
 
             return $model;
         });
+
+        return response()->json([
+            'id' => $model->getKey(),
+            'resource' => $model->attributesToArray(),
+        ], 201);
     }
 }

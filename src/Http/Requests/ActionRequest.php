@@ -73,15 +73,15 @@ class ActionRequest extends NovaRequest
      */
     public function chunks($count, Closure $callback)
     {
-        $output = null;
+        $output = [];
 
         $this->toSelectedResourceQuery()->when(! $this->forAllMatchingResources(), function ($query) {
             $query->whereKey(explode(',', $this->resources));
         })->latest($this->model()->getKeyName())->chunk($count, function ($chunk) use ($callback, &$output) {
-            $output = $callback($this->mapChunk($chunk));
+            $output[] = $callback($this->mapChunk($chunk));
         });
 
-        return $this->forAllMatchingResources() ? null : $output;
+        return $output;
     }
 
     /**

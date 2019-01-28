@@ -4,6 +4,7 @@
         tabindex="-1"
         role="dialog"
         @modal-close="handleClose"
+        class-whitelist="flatpickr-calendar"
     >
         <form
             autocomplete="off"
@@ -16,7 +17,9 @@
             }"
         >
             <div>
-                <heading :level="2" class="pt-8 px-8">{{ selectedAction.name }}</heading>
+                <heading :level="2" class="border-b border-40 py-8 px-8">{{
+                    selectedAction.name
+                }}</heading>
 
                 <p v-if="selectedAction.fields.length == 0" class="text-80 px-8 my-8">
                     {{ __('Are you sure you want to run this action?') }}
@@ -74,15 +77,13 @@
 </template>
 
 <script>
-import { Errors } from 'laravel-nova'
-import composedPath from '@/polyfills/composedPath'
-
 export default {
     props: {
         working: Boolean,
-        resourceName: {},
-        selectedAction: {},
-        errors: { required: true },
+        resourceName: { type: String, required: true },
+        selectedAction: { type: Object, required: true },
+        selectedResources: { type: [Array, String], required: true },
+        errors: { type: Object, required: true },
     },
 
     /**
@@ -113,29 +114,16 @@ export default {
         /**
          * Execute the selected action.
          */
-        handleConfirm(e) {
+        handleConfirm() {
             this.$emit('confirm')
         },
 
         /**
          * Close the modal.
          */
-        handleClose(e) {
-            let classArray = ['flatpickr-calendar']
-
-            if (_.filter(classArray, className => pathIncludesClass(e, className)).length > 0) {
-                return
-            }
-
+        handleClose() {
             this.$emit('close')
         },
     },
-}
-
-function pathIncludesClass(event, className) {
-    return composedPath(event)
-        .filter(el => el !== document && el !== window)
-        .reduce((acc, e) => acc.concat([...e.classList]), [])
-        .includes(className)
 }
 </script>

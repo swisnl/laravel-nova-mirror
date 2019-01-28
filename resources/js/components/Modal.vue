@@ -8,9 +8,14 @@
 
 <script>
 import { mixin as clickaway } from 'vue-clickaway'
+import composedPath from '@/polyfills/composedPath'
 
 export default {
     mixins: [clickaway],
+
+    props: {
+        classWhitelist: [Array, String],
+    },
 
     created() {
         document.addEventListener('keydown', this.handleEscape)
@@ -42,8 +47,23 @@ export default {
         },
 
         close(e) {
+            let classArray = Array.isArray(this.classWhitelist)
+                ? this.classWhitelist
+                : [this.classWhitelist]
+
+            if (_.filter(classArray, className => pathIncludesClass(e, className)).length > 0) {
+                return
+            }
+
             this.$emit('modal-close', e)
         },
     },
+}
+
+function pathIncludesClass(event, className) {
+    return composedPath(event)
+        .filter(el => el !== document && el !== window)
+        .reduce((acc, e) => acc.concat([...e.classList]), [])
+        .includes(className)
 }
 </script>

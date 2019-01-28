@@ -37,6 +37,31 @@ class ActionEvent extends Model
     }
 
     /**
+     * Create a new action event instance for a resource creation.
+     *
+     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public static function forResourceCreate($user, $model)
+    {
+        return new static([
+            'batch_id' => (string) Str::orderedUuid(),
+            'user_id' => $user->getAuthIdentifier(),
+            'name' => 'Create',
+            'actionable_type' => $model->getMorphClass(),
+            'actionable_id' => $model->getKey(),
+            'target_type' => $model->getMorphClass(),
+            'target_id' => $model->getKey(),
+            'model_type' => $model->getMorphClass(),
+            'model_id' => $model->getKey(),
+            'fields' => '',
+            'status' => 'finished',
+            'exception' => '',
+        ]);
+    }
+
+    /**
      * Create a new action event instance for a resource update.
      *
      * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
@@ -200,7 +225,9 @@ class ActionEvent extends Model
             );
         });
 
-        static::insert($models->all());
+        $models->chunk(50)->each(function ($models) {
+            static::insert($models->all());
+        });
 
         static::prune($models);
     }

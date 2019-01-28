@@ -10,13 +10,10 @@
                 }"
                 class="no-underline text-primary font-bold dim"
                 data-testid="lens-back"
+                >&larr;</router-link
             >
-                &larr;
-            </router-link>
 
-            <span class="px-2 text-70">/</span>
-
-            {{ resourceResponse.name }}
+            <span class="px-2 text-70">/</span> {{ resourceResponse.name }}
         </heading>
 
         <loading-card :loading="loading">
@@ -25,7 +22,7 @@
                     <!-- Select All -->
                     <dropdown
                         width="250"
-                        active-class=""
+                        active-class
                         class="h-9 flex items-center"
                         dusk="select-all-dropdown"
                     >
@@ -36,13 +33,12 @@
                         <dropdown-menu slot="menu" direction="ltr" width="250">
                             <div class="p-4">
                                 <ul class="list-reset">
-                                    <li class="flex items-center">
+                                    <li class="flex items-center mb-4">
                                         <checkbox-with-label
                                             :checked="selectAllChecked"
                                             @change="toggleSelectAll"
+                                            >{{ __('Select All') }}</checkbox-with-label
                                         >
-                                            {{ __('Select All') }}
-                                        </checkbox-with-label>
                                     </li>
 
                                     <li
@@ -55,9 +51,9 @@
                                             @change="toggleSelectAllMatching"
                                         >
                                             <template>
-                                                <span class="mr-1">{{
-                                                    __('Select All Matching')
-                                                }}</span>
+                                                <span class="mr-1">
+                                                    {{ __('Select All Matching') }}
+                                                </span>
                                                 <span>({{ allMatchingResourceCount }})</span>
                                             </template>
                                         </checkbox-with-label>
@@ -155,7 +151,7 @@
                                 <path
                                     id="Combined-Shape"
                                     d="M835 735h2c.552285 0 1 .447715 1 1s-.447715 1-1 1h-2v2c0 .552285-.447715 1-1 1s-1-.447715-1-1v-2h-2c-.552285 0-1-.447715-1-1s.447715-1 1-1h2v-2c0-.552285.447715-1 1-1s1 .447715 1 1v2zm-5.364125-8H817v8h7.049375c.350333-3.528515 2.534789-6.517471 5.5865-8zm-5.5865 10H785c-3.313708 0-6-2.686292-6-6v-30c0-3.313708 2.686292-6 6-6h44c3.313708 0 6 2.686292 6 6v25.049375c5.053323.501725 9 4.765277 9 9.950625 0 5.522847-4.477153 10-10 10-5.185348 0-9.4489-3.946677-9.950625-9zM799 725h16v-8h-16v8zm0 2v8h16v-8h-16zm34-2v-8h-16v8h16zm-52 0h16v-8h-16v8zm0 2v4c0 2.209139 1.790861 4 4 4h12v-8h-16zm18-12h16v-8h-16v8zm34 0v-8h-16v8h16zm-52 0h16v-8h-16v8zm52-10v-4c0-2.209139-1.790861-4-4-4h-44c-2.209139 0-4 1.790861-4 4v4h52zm1 39c4.418278 0 8-3.581722 8-8s-3.581722-8-8-8-8 3.581722-8 8 3.581722 8 8 8z"
-                                />
+                                ></path>
                             </g>
                         </g>
                     </svg>
@@ -212,8 +208,7 @@
                 :resource-response="resourceResponse"
                 @previous="selectPreviousPage"
                 @next="selectNextPage"
-            >
-            </pagination-links>
+            ></pagination-links>
         </loading-card>
     </loading-view>
 </template>
@@ -382,7 +377,7 @@ export default {
 
                     this.loading = false
 
-                    // this.getAllMatchingResourceCount()
+                    this.getAllMatchingResourceCount()
                 })
             })
         },
