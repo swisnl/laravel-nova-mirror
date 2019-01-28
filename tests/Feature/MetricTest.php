@@ -37,6 +37,6 @@ class MetricTest extends IntegrationTest
         $post->published_at = Chronos::now()->subDay(1);
         $post->save();
 
-        $this->assertEquals([1,1], array_values((new PostCountTrend())->countByDays(NovaRequest::create('/?range=2'), new PostWithCustomCreatedAt)->trend));
+        $this->assertEquals([1, 1], array_values((new PostCountTrend())->countByDays(NovaRequest::create('/?range=2'), new PostWithCustomCreatedAt)->trend));
     }
 }
