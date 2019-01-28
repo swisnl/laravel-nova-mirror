@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Laravel\Nova\Tests\Fixtures\RequiredFieldAction;
 use Laravel\Nova\Tests\Fixtures\QueuedResourceAction;
 use Laravel\Nova\Tests\Fixtures\QueuedUpdateStatusAction;
+use Laravel\Nova\Tests\Fixtures\NoopActionWithoutActionable;
 
 class ActionControllerTest extends IntegrationTest
 {
@@ -591,6 +592,21 @@ class ActionControllerTest extends IntegrationTest
         $this->assertEquals($user2->id, $actionEvent2->model_id);
 
         Relation::morphMap([], false);
+    }
+
+    public function test_actions_can_ignore_action_event()
+    {
+        $user = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
+
+        $response = $this->withExceptionHandling()
+            ->post('/nova-api/users/action?action='.(new NoopActionWithoutActionable())->uriKey(), [
+                'resources' => implode(',', [$user->id, $user2->id]),
+            ]);
+
+        $response->assertStatus(200);
+
+        $this->assertCount(0, ActionEvent::all());
     }
 
     public function test_actions_handle_result()

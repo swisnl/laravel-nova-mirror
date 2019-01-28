@@ -24,6 +24,13 @@ class Action implements JsonSerializable
     public $name;
 
     /**
+     * Indicates if need to skip log action events for models.
+     *
+     * @var bool
+     */
+    public $withoutActionEvents = false;
+
+    /**
      * Indicates if this action is available to run against the entire resource.
      *
      * @var bool
@@ -351,6 +358,18 @@ class Action implements JsonSerializable
     public function withoutConfirmation()
     {
         $this->withoutConfirmation = true;
+
+        return $this;
+    }
+
+    /**
+     * Set the action to skip action events for models.
+     *
+     * @return $this
+     */
+    public function withoutActionEvents()
+    {
+        $this->withoutActionEvents = true;
 
         return $this;
     }
