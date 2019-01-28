@@ -42,10 +42,10 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  string|null  $column
      * @return \Laravel\Nova\Metrics\TrendResult
      */
-    public function countByMonths($request, $model, $column = 'created_at')
+    public function countByMonths($request, $model, $column = null)
     {
         return $this->count($request, $model, self::BY_MONTHS, $column);
     }
@@ -55,10 +55,10 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  string|null  $column
      * @return \Laravel\Nova\Metrics\TrendResult
      */
-    public function countByWeeks($request, $model, $column = 'created_at')
+    public function countByWeeks($request, $model, $column = null)
     {
         return $this->count($request, $model, self::BY_WEEKS, $column);
     }
@@ -68,10 +68,10 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  string|null  $column
      * @return \Laravel\Nova\Metrics\TrendResult
      */
-    public function countByDays($request, $model, $column = 'created_at')
+    public function countByDays($request, $model, $column = null)
     {
         return $this->count($request, $model, self::BY_DAYS, $column);
     }
@@ -81,10 +81,10 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  string|null  $column
      * @return \Laravel\Nova\Metrics\TrendResult
      */
-    public function countByHours($request, $model, $column = 'created_at')
+    public function countByHours($request, $model, $column = null)
     {
         return $this->count($request, $model, self::BY_HOURS, $column);
     }
@@ -94,10 +94,10 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  string|null  $column
      * @return \Laravel\Nova\Metrics\TrendResult
      */
-    public function countByMinutes($request, $model, $column = 'created_at')
+    public function countByMinutes($request, $model, $column = null)
     {
         return $this->count($request, $model, self::BY_MINUTES, $column);
     }
@@ -108,16 +108,16 @@ abstract class Trend extends RangedMetric
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
      * @param  string  $unit
-     * @param  string  $column
+     * @param  string|null  $column
      * @return \Laravel\Nova\Metrics\TrendResult
      */
-    public function count($request, $model, $unit, $column = 'created_at')
+    public function count($request, $model, $unit, $column = null)
     {
-        $keyName = $model instanceof Builder
-                        ? $model->getModel()->getQualifiedKeyName()
-                        : (new $model)->getQualifiedKeyName();
+        $resource = $model instanceof Builder ? $model->getModel() : new $model;
 
-        return $this->aggregate($request, $model, $unit, 'count', $keyName, $column);
+        $column = $column ?? $resource->getCreatedAtColumn();
+
+        return $this->aggregate($request, $model, $unit, 'count', $resource->getQualifiedKeyName(), $column);
     }
 
     /**
