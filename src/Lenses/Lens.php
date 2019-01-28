@@ -124,7 +124,7 @@ abstract class Lens implements ArrayAccess, JsonSerializable, UrlRoutable
     }
 
     /**
-     * Get the actions available on the entity.
+     * Get the actions available on the lens.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array
