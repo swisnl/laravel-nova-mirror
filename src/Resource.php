@@ -288,7 +288,6 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
             'authorizedToDelete' => $this->authorizedToDeleteForSerialization($request),
             'authorizedToRestore' => static::softDeletes() && $this->authorizedToRestore($request),
             'authorizedToForceDelete' => static::softDeletes() && $this->authorizedToForceDelete($request),
-            'softDeletes' => static::softDeletes(),
             'softDeleted' => $this->isSoftDeleted(),
         ]);
     }
@@ -306,7 +305,6 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
             'authorizedToDelete' => $this->authorizedToDelete($request),
             'authorizedToRestore' => static::softDeletes() && $this->authorizedToRestore($request),
             'authorizedToForceDelete' => static::softDeletes() && $this->authorizedToForceDelete($request),
-            'softDeletes' => static::softDeletes(),
             'softDeleted' => $this->isSoftDeleted(),
         ]);
     }

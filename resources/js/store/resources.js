@@ -6,6 +6,7 @@ export default {
     state: () => ({
         filters: [],
         originalFilters: [],
+        softDeletes: false,
     }),
 
     getters: {
@@ -93,6 +94,8 @@ export default {
 
             return _.find(filter.currentValue, (value, key) => key == optionKey)
         },
+
+        softDeletes: state => state.softDeletes,
     },
     actions: {
         /**
@@ -156,6 +159,13 @@ export default {
         clearFilters(state) {
             state.filters = []
             state.originalFilters = []
+        },
+
+        /**
+         * Set soft deletes value
+         */
+        setSoftDeletes(state, value) {
+            state.softDeletes = value
         },
     },
 }

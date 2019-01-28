@@ -171,6 +171,7 @@ class Nova
                 'singularLabel' => $resource::singularLabel(),
                 'authorizedToCreate' => $resource::authorizedToCreate($request),
                 'searchable' => $resource::searchable(),
+                'softDeletes'=> $resource::softDeletes(),
             ];
         })->values()->all();
     }

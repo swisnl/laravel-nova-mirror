@@ -87,7 +87,6 @@ export default {
         initializingWithExistingResource: false,
         selectedResource: null,
         selectedResourceId: null,
-        softDeletes: false,
         withTrashed: false,
         search: '',
     }),
@@ -137,8 +136,6 @@ export default {
                 this.getAvailableResources()
             }
 
-            this.determineIfSoftDeletes()
-
             this.field.fill = this.fill
         },
 
@@ -176,17 +173,7 @@ export default {
                     // Turn off initializing the existing resource after the first time
                     this.initializingWithExistingResource = false
                     this.availableResources = resources
-                    this.softDeletes = softDeletes
                 })
-        },
-
-        /**
-         * Determine if the relatd resource is soft deleting.
-         */
-        determineIfSoftDeletes() {
-            return storage.determineIfSoftDeletes(this.field.resourceName).then(response => {
-                this.softDeletes = response.data.softDeletes
-            })
         },
 
         /**
@@ -243,6 +230,13 @@ export default {
          */
         shouldSelectInitialResource() {
             return Boolean(this.editingExistingResource || this.creatingViaRelatedResource)
+        },
+
+        /**
+         * Determine if the related resource is soft deleting.
+         */
+        softDeletes() {
+            return this.$store.getters[`${this.field.resourceName}/softDeletes`]
         },
 
         /**
