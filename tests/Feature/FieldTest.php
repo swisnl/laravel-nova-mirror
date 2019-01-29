@@ -5,6 +5,7 @@ namespace Laravel\Nova\Tests\Feature;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Tests\IntegrationTest;
@@ -128,26 +129,44 @@ class FieldTest extends IntegrationTest
         $field = Text::make('Name');
 
         $this->assertContains([
-            "component" => "text-field",
-            "prefixComponent" => true,
-            "indexName" => "Name",
-            "name" => "Name",
-            "attribute" => "name",
-            "value" => null,
-            "panel" => null,
-            "sortable" => false,
-            "textAlign" => "left",
+            'component' => 'text-field',
+            'prefixComponent' => true,
+            'indexName' => 'Name',
+            'name' => 'Name',
+            'attribute' => 'name',
+            'value' => null,
+            'panel' => null,
+            'sortable' => false,
+            'textAlign' => 'left',
         ], $field->jsonSerialize());
     }
 
     public function test_text_fields_can_have_extra_meta_data()
     {
         $field = Text::make('Name')->withMeta(['extraAttributes' => [
-            'placeholder' => 'This is a placeholder'
+            'placeholder' => 'This is a placeholder',
         ]]);
 
         $this->assertContains([
-            'extraAttributes' => ['placeholder' => 'This is a placeholder']
+            'extraAttributes' => ['placeholder' => 'This is a placeholder'],
         ], $field->jsonSerialize());
+    }
+
+    public function test_select_fields_options_with_additional_parameters()
+    {
+        $expected = [
+            ['label' => 'A', 'value' => 'a'],
+            ['label' => 'B', 'value' => 'b'],
+            ['label' => 'C', 'value' => 'c'],
+            ['label' => 'D', 'value' => 'd', 'group' => 'E'],
+        ];
+        $field = Select::make('Name')->options([
+            'a' => 'A',
+            'b' => ['label' => 'B'],
+            ['value' => 'c', 'label' => 'C'],
+            ['value' => 'd', 'label' => 'D', 'group' => 'E'],
+        ]);
+
+        $this->assertJsonStringEqualsJsonString(json_encode($expected), json_encode($field->jsonSerialize()['options']));
     }
 }

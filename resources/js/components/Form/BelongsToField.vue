@@ -31,7 +31,7 @@
                 </div>
             </search-input>
 
-            <select
+            <select-control
                 v-if="!isSearchable || isLocked"
                 class="form-control form-select mb-3 w-full"
                 :class="{ 'border-danger': hasError }"
@@ -39,22 +39,20 @@
                 :dusk="field.attribute"
                 @change="selectResourceFromSelectControl"
                 :disabled="isLocked"
+                :options="availableResources"
+                :selected="selectedResourceId"
+                label="display"
             >
                 <option value="" selected :disabled="!field.nullable">&mdash;</option>
-
-                <option
-                    v-for="resource in availableResources"
-                    :key="resource.value"
-                    :value="resource.value"
-                    :selected="selectedResourceId == resource.value"
-                >
-                    {{ resource.display }}
-                </option>
-            </select>
+            </select-control>
 
             <!-- Trashed State -->
             <div v-if="softDeletes && !isLocked">
-                <checkbox-with-label :checked="withTrashed" @change="toggleWithTrashed">
+                <checkbox-with-label
+                    :dusk="`${field.resourceName}-with-trashed-checkbox`"
+                    :checked="withTrashed"
+                    @change="toggleWithTrashed"
+                >
                     {{ __('With Trashed') }}
                 </checkbox-with-label>
             </div>
@@ -227,7 +225,11 @@ export default {
          * Determine if we are creating a new resource via a parent relation
          */
         creatingViaRelatedResource() {
-            return this.viaResource == this.field.resourceName && this.viaResourceId
+            return (
+                this.viaResource == this.field.resourceName &&
+                this.field.reverse &&
+                this.viaResourceId
+            )
         },
 
         /**
@@ -259,7 +261,7 @@ export default {
         },
 
         isLocked() {
-            return this.viaResource == this.field.resourceName
+            return this.viaResource == this.field.resourceName && this.field.reverse
         },
     },
 }

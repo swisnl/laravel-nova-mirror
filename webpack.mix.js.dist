@@ -25,7 +25,6 @@ mix
         'marked',
         'moment',
         'numeral',
-        'pikaday',
         'places.js',
         'popper.js',
         'vue-async-computed',

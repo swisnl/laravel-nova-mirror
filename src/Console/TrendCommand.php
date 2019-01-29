@@ -40,7 +40,7 @@ class TrendCommand extends GeneratorCommand
 
         $key = preg_replace('/[^a-zA-Z0-9]+/', '', $this->argument('name'));
 
-        return str_replace('uri-key', Str::snake($key, '-'), $stub);
+        return str_replace('uri-key', Str::kebab($key), $stub);
     }
 
     /**

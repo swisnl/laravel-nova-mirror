@@ -1,9 +1,6 @@
 <template>
     <panel-item :field="field">
-        <p
-            slot="value"
-            class="text-90"
-        >
+        <p slot="value" class="text-90">
             &middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;
         </p>
     </panel-item>

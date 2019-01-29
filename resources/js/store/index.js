@@ -1,11 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import resources from './resources'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-    modules: {
-        resources,
-    },
-})
+export default new Vuex.Store()

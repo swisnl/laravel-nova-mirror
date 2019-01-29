@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class PostResource extends Resource
@@ -39,6 +40,7 @@ class PostResource extends Resource
     {
         return [
             BelongsTo::make('User', 'user', UserResource::class)->nullable(),
+            BelongsToMany::make('Authors', 'authors', UserResource::class),
             Text::make('Title', 'title')->rules('required', 'string', 'max:255'),
             Text::make('Description', 'description')->rules( 'string', 'max:255')
                 ->nullable()
@@ -54,6 +56,15 @@ class PostResource extends Resource
                 ];
             }),
         ];
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (isset($_SERVER['nova.post.useEagerUser'])) {
+            return $query->with('user');
+        }
+
+        return $query;
     }
 
     /**

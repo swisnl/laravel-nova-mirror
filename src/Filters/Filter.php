@@ -14,7 +14,7 @@ abstract class Filter implements JsonSerializable
     use ProxiesCanSeeToGate;
 
     /**
-     * The displayable name of the action.
+     * The displayable name of the filter.
      *
      * @var string
      */
@@ -160,7 +160,7 @@ abstract class Filter implements JsonSerializable
             'name' => $this->name(),
             'component' => $this->component(),
             'options' => collect($this->options($container->make(Request::class)))->map(function ($value, $key) {
-                return ['name' => $key, 'value' => $value];
+                return is_array($value) ? ($value + ['value' => $key]) : ['name' => $key, 'value' => $value];
             })->values()->all(),
             'currentValue' => $this->default() ?? '',
         ], $this->meta());

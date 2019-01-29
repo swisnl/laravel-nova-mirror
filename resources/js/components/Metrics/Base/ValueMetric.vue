@@ -3,20 +3,13 @@
         <div class="flex mb-4">
             <h3 class="mr-3 text-base text-80 font-bold">{{ title }}</h3>
 
-            <select
+            <select-control
                 v-if="ranges.length > 0"
                 @change="handleChange"
                 class="ml-auto min-w-24 h-6 text-xs no-appearance bg-40"
-            >
-                <option
-                    v-for="option in ranges"
-                    :key="option.value"
-                    :value="option.value"
-                    :selected="option.value == selectedRangeKey"
-                >
-                    {{ option.label }}
-                </option>
-            </select>
+                :options="ranges"
+                :selected="selectedRangeKey"
+            />
         </div>
 
         <p class="flex items-center text-4xl mb-4">
@@ -26,31 +19,43 @@
 
         <div class="flex items-center">
             <p class="text-80 font-bold">
-                <svg v-if="increaseOrDecreaseLabel == 'Decrease'" class="text-danger fill-current mr-2" width="20" height="12"><path d="M2 3a1 1 0 0 0-2 0v8a1 1 0 0 0 1 1h8a1 1 0 0 0 0-2H3.414L9 4.414l3.293 3.293a1 1 0 0 0 1.414 0l6-6A1 1 0 0 0 18.293.293L13 5.586 9.707 2.293a1 1 0 0 0-1.414 0L2 8.586V3z"/></svg>
-                <svg v-if="increaseOrDecreaseLabel == 'Increase'" class="rotate-180 text-success fill-current mr-2" width="20" height="12"><path d="M2 3a1 1 0 0 0-2 0v8a1 1 0 0 0 1 1h8a1 1 0 0 0 0-2H3.414L9 4.414l3.293 3.293a1 1 0 0 0 1.414 0l6-6A1 1 0 0 0 18.293.293L13 5.586 9.707 2.293a1 1 0 0 0-1.414 0L2 8.586V3z"/></svg>
+                <svg
+                    v-if="increaseOrDecreaseLabel == 'Decrease'"
+                    class="text-danger fill-current mr-2"
+                    width="20"
+                    height="12"
+                >
+                    <path
+                        d="M2 3a1 1 0 0 0-2 0v8a1 1 0 0 0 1 1h8a1 1 0 0 0 0-2H3.414L9 4.414l3.293 3.293a1 1 0 0 0 1.414 0l6-6A1 1 0 0 0 18.293.293L13 5.586 9.707 2.293a1 1 0 0 0-1.414 0L2 8.586V3z"
+                    />
+                </svg>
+                <svg
+                    v-if="increaseOrDecreaseLabel == 'Increase'"
+                    class="rotate-180 text-success fill-current mr-2"
+                    width="20"
+                    height="12"
+                >
+                    <path
+                        d="M2 3a1 1 0 0 0-2 0v8a1 1 0 0 0 1 1h8a1 1 0 0 0 0-2H3.414L9 4.414l3.293 3.293a1 1 0 0 0 1.414 0l6-6A1 1 0 0 0 18.293.293L13 5.586 9.707 2.293a1 1 0 0 0-1.414 0L2 8.586V3z"
+                    />
+                </svg>
 
                 <span v-if="increaseOrDecrease != 0">
                     <span v-if="growthPercentage !== 0">
                         {{ growthPercentage }}% {{ __(increaseOrDecreaseLabel) }}
                     </span>
 
-                    <span v-else>
-                        {{__('No Increase')}}
-                    </span>
+                    <span v-else> {{ __('No Increase') }} </span>
                 </span>
 
                 <span v-else>
-                    <span v-if="previous == '0' && value != '0'">
-                        {{__('No Prior Data')}}
-                    </span>
+                    <span v-if="previous == '0' && value != '0'"> {{ __('No Prior Data') }} </span>
 
                     <span v-if="value == '0' && previous != '0'">
-                        {{__('No Current Data')}}
+                        {{ __('No Current Data') }}
                     </span>
 
-                    <span v-if="value == '0' && previous == '0'">
-                        {{__('No Data')}}
-                    </span>
+                    <span v-if="value == '0' && previous == '0'"> {{ __('No Data') }} </span>
                 </span>
             </p>
         </div>
@@ -72,6 +77,10 @@ export default {
         suffix: '',
         selectedRangeKey: [String, Number],
         ranges: { type: Array, default: () => [] },
+        format: {
+            type: String,
+            default: '(0[.]00a)',
+        },
     },
 
     methods: {
@@ -119,11 +128,7 @@ export default {
 
         formattedValue() {
             if (!this.isNullValue) {
-                const numeralValue = numeral(this.value)
-
-                return numeralValue.value() > 1000
-                    ? this.prefix + numeralValue.format('(0.00a)')
-                    : this.prefix + this.value
+                return this.prefix + numeral(this.value).format(this.format)
             }
 
             return ''

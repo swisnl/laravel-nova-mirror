@@ -6,12 +6,14 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\TrashedStatus;
 use Laravel\Nova\Rules\Relatable;
+use Illuminate\Database\Eloquent\Model;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Http\Requests\ResourceIndexRequest;
 
 class BelongsTo extends Field
 {
     use FormatsRelatableDisplayValues;
+    use ResolvesReverseRelation;
 
     /**
      * The field's component.
@@ -125,8 +127,7 @@ class BelongsTo extends Field
      */
     public function isNotRedundant(Request $request)
     {
-        return (! $request instanceof ResourceIndexRequest || ! $request->viaResource) ||
-               ($this->resourceName !== $request->viaResource);
+        return ! $request instanceof ResourceIndexRequest || ! $this->isReverseRelation($request);
     }
 
     /**
@@ -138,7 +139,12 @@ class BelongsTo extends Field
      */
     public function resolve($resource, $attribute = null)
     {
-        $value = $resource->{$this->attribute}()->withoutGlobalScopes()->first();
+        if ($resource instanceof Model && $resource->relationLoaded($this->attribute)) {
+            $value = $resource->getRelation($this->attribute);
+        } else {
+            $value = $resource->{$this->attribute}()->withoutGlobalScopes()->first();
+            $resource->setRelation($this->attribute, $value);
+        }
 
         if ($value) {
             $this->belongsToId = $value->getKey();
@@ -176,7 +182,13 @@ class BelongsTo extends Field
      */
     public function fill(NovaRequest $request, $model)
     {
-        parent::fillInto($request, $model, $model->{$this->attribute}()->getForeignKey());
+        $foreignKey = $model->{$this->attribute}()->getForeignKey();
+
+        parent::fillInto($request, $model, $foreignKey);
+
+        if ($model->isDirty($foreignKey)) {
+            $model->unsetRelation($this->attribute);
+        }
 
         if ($this->filledCallback) {
             call_user_func($this->filledCallback, $request, $model);
@@ -319,6 +331,7 @@ class BelongsTo extends Field
             'belongsToRelationship' => $this->belongsToRelationship,
             'belongsToId' => $this->belongsToId,
             'searchable' => $this->searchable,
+            'reverse' => $this->isReverseRelation(app(NovaRequest::class)),
         ], $this->meta);
     }
 }

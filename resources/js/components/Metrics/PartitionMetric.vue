@@ -1,9 +1,5 @@
 <template>
-    <BasePartitionMetric
-        :title="card.name"
-        :chart-data="chartData"
-        :loading="loading"
-    />
+    <BasePartitionMetric :title="card.name" :chart-data="chartData" :loading="loading" />
 </template>
 
 <script>

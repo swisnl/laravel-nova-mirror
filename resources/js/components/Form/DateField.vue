@@ -19,12 +19,10 @@
 </template>
 
 <script>
-import DateTimePicker from '../DateTimePicker'
 import { Errors, FormField, HandlesValidationErrors, InteractsWithDates } from 'laravel-nova'
 
 export default {
     mixins: [HandlesValidationErrors, FormField, InteractsWithDates],
-    components: { DateTimePicker },
 
     computed: {
         firstDayOfWeek() {
@@ -32,7 +30,7 @@ export default {
         },
 
         placeholder() {
-            return moment().format('YYYY-MM-DD')
+            return this.field.placeholder || moment().format('YYYY-MM-DD')
         },
     },
 }

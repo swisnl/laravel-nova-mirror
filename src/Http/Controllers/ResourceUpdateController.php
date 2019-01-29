@@ -14,7 +14,7 @@ class ResourceUpdateController extends Controller
      * Create a new resource.
      *
      * @param  \Laravel\Nova\Http\Requests\UpdateResourceRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function handle(UpdateResourceRequest $request)
     {
@@ -24,11 +24,11 @@ class ResourceUpdateController extends Controller
 
         $resource::validateForUpdate($request);
 
-        return DB::transaction(function () use ($request, $resource) {
+        $model = DB::transaction(function () use ($request, $resource) {
             $model = $request->findModelQuery()->lockForUpdate()->firstOrFail();
 
             if ($this->modelHasBeenUpdatedSinceRetrieval($request, $model)) {
-                return response('', 409);
+                return response('', 409)->throwResponse();
             }
 
             [$model, $callbacks] = $resource::fillForUpdate($request, $model);
@@ -39,6 +39,11 @@ class ResourceUpdateController extends Controller
                 collect($callbacks)->each->__invoke();
             });
         });
+
+        return response()->json([
+            'id' => $model->getKey(),
+            'resource' => $model->attributesToArray(),
+        ]);
     }
 
     /**
@@ -46,7 +51,7 @@ class ResourceUpdateController extends Controller
      *
      * @param  \Laravel\Nova\Http\Requests\UpdateResourceRequest  $request
      * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return void
+     * @return bool
      */
     protected function modelHasBeenUpdatedSinceRetrieval(UpdateResourceRequest $request, $model)
     {

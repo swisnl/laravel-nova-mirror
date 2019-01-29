@@ -15,6 +15,6 @@ class ResourceCountController extends Controller
      */
     public function show(ResourceIndexRequest $request)
     {
-        return response()->json(['count' => $request->toQuery()->count()]);
+        return response()->json(['count' => $request->toCount()]);
     }
 }

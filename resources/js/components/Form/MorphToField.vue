@@ -35,6 +35,7 @@
                 <search-input
                     v-if="isSearchable && !isLocked"
                     :data-testid="`${field.attribute}-search-input`"
+                    :disabled="!resourceType || isLocked"
                     @input="performSearch"
                     @clear="clearSelection"
                     @selected="selectResource"
@@ -303,7 +304,7 @@ export default {
          * Determine if the field is locked
          */
         isLocked() {
-            return Boolean(this.viaResource)
+            return Boolean(this.viaResource && this.field.reverse)
         },
 
         /**

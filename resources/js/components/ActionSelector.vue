@@ -43,7 +43,7 @@
             <button
                 data-testid="action-confirm"
                 dusk="run-action-button"
-                @click.prevent="openConfirmationModal"
+                @click.prevent="determineActionStrategy"
                 :disabled="!selectedAction"
                 class="btn btn-default btn-primary flex items-center justify-center px-3"
                 :class="{ 'btn-disabled': !selectedAction }"
@@ -56,11 +56,13 @@
         <!-- Action Confirmation Modal -->
         <!-- <portal to="modals"> -->
         <transition name="fade">
-            <confirm-action-modal
+            <component
+                :is="selectedAction.component"
                 :working="working"
                 v-if="confirmActionModalOpened"
+                :selected-resources="selectedResources"
                 :resource-name="resourceName"
-                :selected-action="selectedAction"
+                :action="selectedAction"
                 :errors="errors"
                 @confirm="executeAction"
                 @close="confirmActionModalOpened = false"
@@ -129,6 +131,17 @@ export default {
     },
 
     methods: {
+        /**
+         * Determine whether the action should redirect or open a confirmation modal
+         */
+        determineActionStrategy() {
+            if (this.selectedAction.withoutConfirmation) {
+                this.executeAction()
+            }
+
+            this.openConfirmationModal()
+        },
+
         /**
          * Confirm with the user that they actually want to run the selected action.
          */

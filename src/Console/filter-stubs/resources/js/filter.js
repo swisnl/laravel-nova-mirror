@@ -1,3 +1,3 @@
-Nova.booting((Vue, router) => {
-    Vue.component('{{ component }}', require('./components/Filter'));
+Nova.booting((Vue, router, store) => {
+    Vue.component('{{ component }}', require('./components/Filter'))
 })

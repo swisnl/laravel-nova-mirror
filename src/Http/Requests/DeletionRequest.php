@@ -21,8 +21,8 @@ class DeletionRequest extends NovaRequest
         $this->toSelectedResourceQuery()->when(! $this->forAllMatchingResources(), function ($query) {
             $query->whereKey($this->resources);
         })->tap(function ($query) {
-            $query->orders = [];
-        })->latest($this->model()->getQualifiedKeyName())->chunk($count, function ($models) use ($callback, $authCallback) {
+            $query->getQuery()->orders = [];
+        })->chunkById($count, function ($models) use ($callback, $authCallback) {
             $models = $authCallback($models);
 
             if ($models->isNotEmpty()) {

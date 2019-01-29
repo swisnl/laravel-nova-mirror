@@ -15,6 +15,14 @@ class Post extends Model
     }
 
     /**
+     * Get the coauthors that the post belongs to.
+     */
+    public function authors()
+    {
+        return $this->belongsToMany(User::class, 'posts_authors');
+    }
+
+    /**
      * Get all of the posts comments.
      */
     public function comments()

@@ -6,6 +6,7 @@ import axios from '@/util/axios'
 import PortalVue from 'portal-vue'
 import Loading from '@/components/Loading'
 import AsyncComputed from 'vue-async-computed'
+import resources from '@/store/resources'
 
 Vue.use(PortalVue)
 Vue.use(AsyncComputed)
@@ -36,8 +37,17 @@ export default class Nova {
      * Execute all of the booting callbacks.
      */
     boot() {
-        this.bootingCallbacks.forEach(callback => callback(Vue, router))
+        this.bootingCallbacks.forEach(callback => callback(Vue, router, store))
         this.bootingCallbacks = []
+    }
+
+    /**
+     * Register the built-in Vuex modules for each resource
+     */
+    registerStoreModules() {
+        this.config.resources.forEach(resource => {
+            store.registerModule(resource.uriKey, resources)
+        })
     }
 
     /**
@@ -48,6 +58,7 @@ export default class Nova {
         let _this = this
 
         this.boot()
+        this.registerStoreModules()
 
         this.app = new Vue({
             el: '#nova',
@@ -59,6 +70,17 @@ export default class Nova {
 
                 _this.$on('error', message => {
                     this.$toasted.show(message, { type: 'error' })
+                })
+
+                _this.$on('token-expired', () => {
+                    this.$toasted.show(this.__('Sorry, your session has expired.'), {
+                        action: {
+                            onClick: () => location.reload(),
+                            text: this.__('Reload'),
+                        },
+                        duration: null,
+                        type: 'error',
+                    })
                 })
             },
         })

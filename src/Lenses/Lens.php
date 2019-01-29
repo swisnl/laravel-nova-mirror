@@ -10,6 +10,7 @@ use Laravel\Nova\Nova;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\ResolvesActions;
 use Laravel\Nova\ResolvesFilters;
 use Illuminate\Support\Collection;
 use Laravel\Nova\ProxiesCanSeeToGate;
@@ -26,6 +27,7 @@ abstract class Lens implements ArrayAccess, JsonSerializable, UrlRoutable
     use ConditionallyLoadsAttributes,
         DelegatesToResource,
         ProxiesCanSeeToGate,
+        ResolvesActions,
         ResolvesFilters;
 
     /**
@@ -122,6 +124,17 @@ abstract class Lens implements ArrayAccess, JsonSerializable, UrlRoutable
     }
 
     /**
+     * Get the actions available on the lens.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function actions(Request $request)
+    {
+        return $request->newResource()->actions($request);
+    }
+
+    /**
      * Prepare the resource for JSON serialization.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
@@ -143,8 +156,13 @@ abstract class Lens implements ArrayAccess, JsonSerializable, UrlRoutable
      */
     public function resolveFields(NovaRequest $request)
     {
-        return new FieldCollection($this->availableFields($request)->each->resolve($this->resource)
-                      ->filter->authorize($request)->values()->all());
+        return new FieldCollection(
+            $this->availableFields($request)
+                ->each->resolve($this->resource)
+                ->filter->authorize($request)
+                ->each->resolveForDisplay($this->resource)
+                ->values()->all()
+        );
     }
 
     /**

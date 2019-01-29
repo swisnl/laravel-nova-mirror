@@ -19,6 +19,7 @@ class CreatePostsTable extends Migration
             $table->string('title');
             $table->string('description')->nullable();
             $table->integer('word_count')->nullable();
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });
     }
