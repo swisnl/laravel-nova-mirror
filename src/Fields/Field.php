@@ -92,6 +92,13 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     public $nullable = false;
 
     /**
+     * Values which will be replaced to null.
+     *
+     * @var array
+     */
+    public $nullValues = [''];
+
+    /**
      * Indicates if the field was resolved as a pivot field.
      *
      * @var bool
@@ -315,7 +322,15 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     {
         if ($request->exists($requestAttribute)) {
             $value = $request[$requestAttribute];
-            $model->{$attribute} = $value === '' && $this->nullable ? null : $value;
+
+            $isNull = false;
+
+            if ($this->nullable) {
+                $isNull = is_callable($this->nullValues)
+                    ? $this->nullValues($value)
+                    : in_array($value, (array)$this->nullValues);
+            }
+            $model->{$attribute} = $isNull ? null : $value;
         }
     }
 
@@ -447,12 +462,30 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     /**
      * Indicate that the field should be nullable.
      *
-     * @param  bool  $nullable
+     * @param  bool $nullable
+     * @param  array|Closure $values
      * @return $this
      */
-    public function nullable($nullable = true)
+    public function nullable($nullable = true, $values = null)
     {
         $this->nullable = $nullable;
+
+        if($values !== null) {
+            $this->nullValues($values);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Specify nullable values.
+     *
+     * @param  array|Closure $values
+     * @return $this
+     */
+    public function nullValues($values)
+    {
+        $this->nullValues = $values;
 
         return $this;
     }
