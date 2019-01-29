@@ -24,13 +24,13 @@ class Action implements JsonSerializable
     public $name;
 
     /**
-
      * The action's component.
      *
      * @var string
      */
     public $component = 'confirm-action-modal';
 
+    /**
      * Indicates if need to skip log action events for models.
      *
      * @var bool
