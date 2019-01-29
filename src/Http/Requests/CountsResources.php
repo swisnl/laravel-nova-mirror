@@ -18,7 +18,7 @@ trait CountsResources
             $baseQuery->unions ? ['orders', 'limit', 'offset'] : ['columns', 'orders', 'limit', 'offset']
         )->cloneWithoutBindings(
             $baseQuery->unions ? ['order'] : ['select', 'order']
-        )->selectRaw('1');
+        )->selectRaw('1 as exists_temp');
 
         return $query->getConnection()
             ->query()
