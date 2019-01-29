@@ -8,6 +8,7 @@
             :resource-name="resourceName"
             :resource-id="resourceId"
             :key="`${card.component}.${card.name}`"
+            :lens="lens"
         />
     </div>
 </template>
@@ -37,6 +38,11 @@ export default {
         onlyOnDetail: {
             type: Boolean,
             default: false,
+        },
+
+        lens: {
+            lens: String,
+            default: '',
         },
     },
 

@@ -47,8 +47,12 @@ Route::get('/{resource}/metrics', 'MetricController@index');
 Route::get('/{resource}/metrics/{metric}', 'MetricController@show');
 Route::get('/{resource}/{resourceId}/metrics/{metric}', 'DetailMetricController@show');
 
+Route::get('/{resource}/lens/{lens}/metrics', 'LensMetricController@index');
+Route::get('/{resource}/lens/{lens}/metrics/{metric}', 'LensMetricController@show');
+
 Route::get('/cards', 'DashboardCardController@index');
 Route::get('/{resource}/cards', 'CardController@index');
+Route::get('/{resource}/lens/{lens}/cards', 'LensCardController@index');
 
 // Authorization Information...
 Route::get('/{resource}/relate-authorization', 'RelatableAuthorizationController@show');

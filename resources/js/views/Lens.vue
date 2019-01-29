@@ -1,5 +1,23 @@
 <template>
     <loading-view :loading="initialLoading" :dusk="lens + '-lens-component'">
+        <div v-if="shouldShowCards">
+            <cards
+                v-if="smallCards.length > 0"
+                :cards="smallCards"
+                class="mb-3"
+                :resource-name="resourceName"
+                :lens="lens"
+            />
+
+            <cards
+                v-if="largeCards.length > 0"
+                :cards="largeCards"
+                size="large"
+                :resource-name="resourceName"
+                :lens="lens"
+            />
+        </div>
+
         <heading v-if="resourceResponse" class="mb-3">
             <router-link
                 :to="{
@@ -217,6 +235,7 @@
 import { Errors, Minimum } from 'laravel-nova'
 
 import {
+    HasCards,
     Deletable,
     Filterable,
     Paginatable,
@@ -227,6 +246,7 @@ import {
 
 export default {
     mixins: [
+        HasCards,
         Deletable,
         Filterable,
         Paginatable,
@@ -698,6 +718,20 @@ export default {
          */
         hasResources() {
             return Boolean(this.resources.length > 0)
+        },
+
+        /**
+         * Determine if the resource should show any cards
+         */
+        shouldShowCards() {
+            return this.cards.length > 0
+        },
+
+        /**
+         * Get the endpoint for this resource's metrics.
+         */
+        cardsEndpoint() {
+            return `/nova-api/${this.resourceName}/lens/${this.lens}/cards`
         },
 
         /**

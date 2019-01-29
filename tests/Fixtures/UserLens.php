@@ -60,6 +60,17 @@ class UserLens extends Lens
     }
 
     /**
+     * Determine if the action should be available for the given request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public function authorizedToSee(Request $request)
+    {
+        return $_SERVER['nova.authorize.forbidden-user-lens'] ?? parent::authorizedToSee($request);
+    }
+
+    /**
      * Get the actions available on the entity.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -69,6 +80,24 @@ class UserLens extends Lens
     {
         return [
             new NoopAction(),
+        ];
+    }
+
+    /**
+     * Get the cards available for the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function cards(Request $request)
+    {
+        return [
+            (new TotalUsers)->canSee(function ($request) {
+                return $_SERVER['nova.totalUsers.canSee'] ?? true;
+            }),
+
+            new UserGrowth,
+            (new CustomerRevenue)->onlyOnDetail(),
         ];
     }
 }

@@ -7,6 +7,7 @@
             :resource="resource"
             :resourceName="resourceName"
             :resourceId="resourceId"
+            :lens="lens"
         />
     </div>
 </template>
@@ -36,6 +37,11 @@ export default {
 
         resourceId: {
             type: [Number, String],
+        },
+
+        lens: {
+            lens: String,
+            default: '',
         },
     },
 
