@@ -137,9 +137,9 @@ export default {
         determineActionStrategy() {
             if (this.selectedAction.withoutConfirmation) {
                 this.executeAction()
-            }
-
-            this.openConfirmationModal()
+            } else {
+                this.openConfirmationModal()
+            }    
         },
 
         /**
