@@ -32,7 +32,7 @@
                             :key="tool.action"
                             @click.prevent="callAction(tool.action)"
                             v-for="tool in tools"
-                            class="rounded-none ico-button inline-flex justify-center px-2 text-sm text-80 border-l border-60"
+                            class="rounded-none ico-button inline-flex items-center justify-center px-2 text-sm text-80 border-l border-60"
                         >
                             <component
                                 :is="tool.icon"
