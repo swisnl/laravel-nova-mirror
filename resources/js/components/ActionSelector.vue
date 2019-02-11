@@ -139,7 +139,7 @@ export default {
                 this.executeAction()
             } else {
                 this.openConfirmationModal()
-            }    
+            }
         },
 
         /**
