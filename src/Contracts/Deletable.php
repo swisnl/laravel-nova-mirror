@@ -34,4 +34,11 @@ interface Deletable
      * @return $this
      */
     public function prunable($prunable = true);
+
+    /**
+     * Arguments what will passed to the delete callback.
+     *
+     * @return array
+     */
+    public function deleteArguments();
 }

@@ -10,13 +10,13 @@ class DeleteField
      * Delete the given field.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @param  \Laravel\Nova\Fields\Field  $field
+     * @param  \Laravel\Nova\Fields\Field|\Laravel\Nova\Contracts\Deletable  $field
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return \Illuminate\Database\Eloquent\Model
      */
     public static function forRequest(NovaRequest $request, $field, $model)
     {
-        $result = call_user_func($field->deleteCallback, $request, $model);
+        $result = call_user_func($field->deleteCallback, $request, $model, ...$field->deleteArguments());
 
         if ($result === true) {
             return $model;

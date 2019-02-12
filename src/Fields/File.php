@@ -391,7 +391,7 @@ class File extends Field implements DeletableContract
 
         if ($this->isPrunable()) {
             return function () use ($model, $request) {
-                call_user_func($this->deleteCallback, $request, $model);
+                call_user_func($this->deleteCallback, $request, $model, ...$this->deleteArguments());
             };
         }
     }
@@ -435,5 +435,18 @@ class File extends Field implements DeletableContract
             'downloadable' => $this->downloadsAreEnabled && isset($this->downloadResponseCallback) && ! empty($this->value),
             'deletable' => isset($this->deleteCallback) && $this->deletable,
         ], $this->meta);
+    }
+
+    /**
+     * Arguments what will passed to the delete callback.
+     *
+     * @return array
+     */
+    public function deleteArguments()
+    {
+        return [
+            $this->value,
+            $this->disk,
+        ];
     }
 }

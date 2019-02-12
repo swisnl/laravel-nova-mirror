@@ -73,4 +73,14 @@ trait Deletable
 
         return $this;
     }
+
+    /**
+     * Arguments what will passed to the delete callback.
+     *
+     * @return array
+     */
+    public function deleteArguments()
+    {
+        return [];
+    }
 }
