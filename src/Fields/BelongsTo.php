@@ -2,6 +2,7 @@
 
 namespace Laravel\Nova\Fields;
 
+use Laravel\Nova\Nova;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\TrashedStatus;
@@ -86,6 +87,13 @@ class BelongsTo extends Field
     public $singularLabel;
 
     /**
+     * Indicates if the related resource can be viewed.
+     *
+     * @var bool
+     */
+    public $viewable = true;
+
+    /**
      * Create a new field.
      *
      * @param  string  $name
@@ -150,6 +158,9 @@ class BelongsTo extends Field
             $this->belongsToId = $value->getKey();
 
             $this->value = $this->formatDisplayValue($value);
+
+            $this->viewable = $this->viewable
+                && Nova::newResourceFromModel($value)->authorizedTo(request(), 'view');
         }
     }
 
@@ -318,6 +329,20 @@ class BelongsTo extends Field
     }
 
     /**
+     * Specify what the related resource can be viewed.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function viewable($value = true)
+    {
+        $this->viewable = $value;
+
+        return $this;
+    }
+
+    /**
      * Get additional meta information to merge with the field payload.
      *
      * @return array
@@ -331,6 +356,7 @@ class BelongsTo extends Field
             'belongsToRelationship' => $this->belongsToRelationship,
             'belongsToId' => $this->belongsToId,
             'searchable' => $this->searchable,
+            'viewable' => $this->viewable,
             'reverse' => $this->isReverseRelation(app(NovaRequest::class)),
         ], $this->meta);
     }

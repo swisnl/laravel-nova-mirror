@@ -1,6 +1,6 @@
 <template>
     <span>
-        <span v-if="field.value">
+        <span v-if="field.viewable && field.value">
             <router-link
                 :to="{
                     name: 'detail',
@@ -14,7 +14,7 @@
                 {{ field.value }}
             </router-link>
         </span>
-
+        <span v-else-if="field.value" class="font-bold">{{ field.value }}</span>
         <span v-else>&mdash;</span>
     </span>
 </template>

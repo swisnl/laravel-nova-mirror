@@ -2,7 +2,7 @@
     <panel-item :field="field">
         <template slot="value">
             <router-link
-                v-if="field.value"
+                v-if="field.viewable && field.value"
                 :to="{
                     name: 'detail',
                     params: {
@@ -14,6 +14,7 @@
             >
                 {{ field.value }}
             </router-link>
+            <p v-else-if="field.value" class="font-bold">{{ field.value }}</p>
             <p v-else>&mdash;</p>
         </template>
     </panel-item>

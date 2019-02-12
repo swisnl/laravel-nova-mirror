@@ -39,7 +39,8 @@ class PostResource extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('User', 'user', UserResource::class)->nullable(),
+            BelongsTo::make('User', 'user', UserResource::class)->nullable()
+                ->viewable($_SERVER['nova.user.viewable-field'] ?? true),
             BelongsToMany::make('Authors', 'authors', UserResource::class),
             Text::make('Title', 'title')->rules('required', 'string', 'max:255'),
             Text::make('Description', 'description')->rules( 'string', 'max:255')
