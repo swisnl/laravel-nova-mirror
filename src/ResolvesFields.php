@@ -2,6 +2,7 @@
 
 namespace Laravel\Nova;
 
+use Closure;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\MorphTo;
@@ -28,10 +29,10 @@ trait ResolvesFields
      */
     public function indexFields(NovaRequest $request)
     {
-        return $this->resolveFields($request)->reject(function ($field) use ($request) {
-            return $field instanceof ListableField ||
-                   ! $field->showOnIndex ||
-                   ! $field->authorize($request);
+        return $this->resolveFields($request, function (Collection $fields) {
+            return $fields->reject(function ($field) {
+                return $field instanceof ListableField || ! $field->showOnIndex;
+            });
         })->each(function ($field) use ($request) {
             if ($field instanceof Resolvable && ! $field->pivot) {
                 $field->resolveForDisplay($this->resource);
@@ -53,8 +54,8 @@ trait ResolvesFields
      */
     public function detailFields(NovaRequest $request)
     {
-        return $this->resolveFields($request)->reject(function ($field) use ($request) {
-            return ! $field->showOnDetail || ! $field->authorize($request);
+        return $this->resolveFields($request, function (Collection $fields) {
+            return $fields->filter->showOnDetail;
         })->when(in_array(Actionable::class, class_uses_recursive(static::newModel())), function ($fields) {
             return $fields->push(MorphMany::make(__('Actions'), 'actions', ActionResource::class));
         })->each(function ($field) use ($request) {
@@ -77,7 +78,9 @@ trait ResolvesFields
      */
     public function creationFields(NovaRequest $request)
     {
-        return $this->removeNonCreationFields($this->resolveFields($request));
+        return $this->removeComputedFields($this->resolveFields($request, function ($fields) {
+            return $this->removeNonCreationFields($fields);
+        }));
     }
 
     /**
@@ -106,8 +109,20 @@ trait ResolvesFields
             return $field instanceof ListableField ||
                    $field instanceof ResourceToolElement ||
                    ($field instanceof ID && $field->attribute === $this->resource->getKeyName()) ||
-                   $field->attribute === 'ComputedField' ||
                    ! $field->showOnCreation;
+        });
+    }
+
+    /**
+     * Remove computed fields from the given collection.
+     *
+     * @param \Illuminate\Support\Collection $fields
+     * @return \Illuminate\Support\Collection
+     */
+    protected function removeComputedFields(Collection $fields)
+    {
+        return $fields->reject(function ($field) {
+            return $field->attribute === 'ComputedField';
         });
     }
 
@@ -119,7 +134,9 @@ trait ResolvesFields
      */
     public function updateFields(NovaRequest $request)
     {
-        return $this->removeNonUpdateFields($this->resolveFields($request));
+        return $this->removeComputedFields($this->resolveFields($request, function ($fields) {
+            return $this->removeNonUpdateFields($fields);
+        }));
     }
 
     /**
@@ -148,7 +165,6 @@ trait ResolvesFields
             return $field instanceof ListableField ||
                    $field instanceof ResourceToolElement ||
                    ($field instanceof ID && $field->attribute === $this->resource->getKeyName()) ||
-                   $field->attribute === 'ComputedField' ||
                    ! $field->showOnUpdate;
         });
     }
@@ -156,14 +172,19 @@ trait ResolvesFields
     /**
      * Resolve the given fields to their values.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @param  \Closure|null $filter
      * @return \Illuminate\Support\Collection
      */
-    protected function resolveFields(NovaRequest $request)
+    protected function resolveFields(NovaRequest $request, Closure $filter = null)
     {
-        $fields = tap($this->availableFields($request), function ($fields) {
-            $fields->whereInstanceOf(Resolvable::class)->each->resolve($this->resource);
-        });
+        $fields = $this->availableFields($request);
+
+        if (! is_null($filter)) {
+            $fields = $filter($fields);
+        }
+
+        $fields->whereInstanceOf(Resolvable::class)->each->resolve($this->resource);
 
         $fields = $fields->filter->authorize($request)->values();
 
