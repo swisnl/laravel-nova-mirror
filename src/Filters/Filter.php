@@ -8,8 +8,9 @@ use Laravel\Nova\Nova;
 use Illuminate\Http\Request;
 use Illuminate\Container\Container;
 use Laravel\Nova\ProxiesCanSeeToGate;
+use Laravel\Nova\Contracts\Filter as FilterContract;
 
-abstract class Filter implements JsonSerializable
+abstract class Filter implements FilterContract, JsonSerializable
 {
     use ProxiesCanSeeToGate;
 
@@ -116,7 +117,7 @@ abstract class Filter implements JsonSerializable
     /**
      * Set the default options for the filter.
      *
-     * @return array
+     * @return array|mixed
      */
     public function default()
     {
