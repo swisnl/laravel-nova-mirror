@@ -329,7 +329,6 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
                 $isNull = is_callable($this->nullValues)
                     ? ($this->nullValues)($value)
                     : in_array($value, (array) $this->nullValues);
-
             }
             $model->{$attribute} = $isNull ? null : $value;
         }
