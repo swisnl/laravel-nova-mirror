@@ -58,13 +58,6 @@ class BelongsTo extends Field
     public $display;
 
     /**
-     * Indicates if the field is nullable.
-     *
-     * @var bool
-     */
-    public $nullable = false;
-
-    /**
      * Indicates if this relationship is searchable.
      *
      * @var bool
@@ -313,19 +306,6 @@ class BelongsTo extends Field
     }
 
     /**
-     * Indicate that the field should be nullable.
-     *
-     * @param  bool  $nullable
-     * @return $this
-     */
-    public function nullable($nullable = true)
-    {
-        $this->nullable = $nullable;
-
-        return $this;
-    }
-
-    /**
      * Set the displayable singular label of the resource.
      *
      * @return string
@@ -350,7 +330,6 @@ class BelongsTo extends Field
             'singularLabel' => $this->singularLabel ?? $this->name ?? forward_static_call([$this->resourceClass, 'singularLabel']),
             'belongsToRelationship' => $this->belongsToRelationship,
             'belongsToId' => $this->belongsToId,
-            'nullable' => $this->nullable,
             'searchable' => $this->searchable,
             'reverse' => $this->isReverseRelation(app(NovaRequest::class)),
         ], $this->meta);

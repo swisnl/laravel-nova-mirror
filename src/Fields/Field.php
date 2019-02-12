@@ -85,6 +85,20 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     public $sortable = false;
 
     /**
+     * Indicates if the field is nullable.
+     *
+     * @var bool
+     */
+    public $nullable = false;
+
+    /**
+     * Values which will be replaced to null.
+     *
+     * @var array
+     */
+    public $nullValues = [''];
+
+    /**
      * Indicates if the field was resolved as a pivot field.
      *
      * @var bool
@@ -307,7 +321,16 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute)
     {
         if ($request->exists($requestAttribute)) {
-            $model->{$attribute} = $request[$requestAttribute];
+            $value = $request[$requestAttribute];
+
+            $isNull = false;
+
+            if ($this->nullable) {
+                $isNull = is_callable($this->nullValues)
+                    ? $this->nullValues($value)
+                    : in_array($value, (array)$this->nullValues);
+            }
+            $model->{$attribute} = $isNull ? null : $value;
         }
     }
 
@@ -437,6 +460,37 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     }
 
     /**
+     * Indicate that the field should be nullable.
+     *
+     * @param  bool $nullable
+     * @param  array|Closure $values
+     * @return $this
+     */
+    public function nullable($nullable = true, $values = null)
+    {
+        $this->nullable = $nullable;
+
+        if($values !== null) {
+            $this->nullValues($values);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Specify nullable values.
+     *
+     * @param  array|Closure $values
+     * @return $this
+     */
+    public function nullValues($values)
+    {
+        $this->nullValues = $values;
+
+        return $this;
+    }
+
+    /**
      * Determine if the field is computed.
      *
      * @return bool
@@ -488,6 +542,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
             'value' => $this->value,
             'panel' => $this->panel,
             'sortable' => $this->sortable,
+            'nullable' => $this->nullable,
             'textAlign' => $this->textAlign,
         ], $this->meta());
     }

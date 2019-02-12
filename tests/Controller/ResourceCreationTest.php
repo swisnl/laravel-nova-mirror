@@ -61,6 +61,7 @@ class ResourceCreationTest extends IntegrationTest
         $response = $this->withExceptionHandling()
                         ->postJson('/nova-api/posts', [
                             'title' => 'Test Post',
+                            'user' => ''
                         ]);
 
         $response->assertStatus(201);
@@ -294,6 +295,23 @@ class ResourceCreationTest extends IntegrationTest
         $response->assertStatus(200);
     }
 
+    public function test_can_create_resources_with_null_relation_without_autonull()
+    {
+        $this->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class);
+
+        $response = $this->withExceptionHandling()
+            ->postJson('/nova-api/posts', [
+                'title' => 'Test Post',
+                'user' => ''
+            ]);
+
+        $response->assertStatus(201);
+
+        $post = Post::first();
+
+        $this->assertNull($post->user_id);
+    }
+
     public function test_action_event_should_honor_custom_polymorphic_type_for_resource_creation()
     {
         Relation::morphMap(['user' => User::class]);
@@ -323,5 +341,6 @@ class ResourceCreationTest extends IntegrationTest
         $this->assertTrue($user->is($actionEvent->target));
 
         Relation::morphMap([], false);
+
     }
 }
