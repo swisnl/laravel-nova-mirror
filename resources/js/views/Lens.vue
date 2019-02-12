@@ -289,6 +289,7 @@ export default {
         selectedResources: [],
         selectAllMatchingResources: false,
         allMatchingResourceCount: 0,
+        hasId: false,
 
         deleteModalOpen: false,
 
@@ -394,10 +395,16 @@ export default {
                     this.resourceResponse = data
                     this.resources = data.resources
                     this.softDeletes = data.softDeletes
+                    this.hasId = data.hasId
 
                     this.loading = false
 
                     this.getAllMatchingResourceCount()
+
+                    if (!this.hasId) {
+                        this.selectAllMatchingResources = true
+                        this.selectAllResources()
+                    }
                 })
             })
         },
@@ -739,7 +746,7 @@ export default {
          */
         shouldShowCheckBoxes() {
             return (
-                Boolean(this.hasResources && !this.viaHasOne) &&
+                Boolean(this.hasId && this.hasResources && !this.viaHasOne) &&
                 Boolean(
                     this.actionsAreAvailable ||
                         this.authorizedToDeleteAnyResources ||
@@ -812,13 +819,16 @@ export default {
          * Determinw whether the user is authorized to perform actions on the delete menu
          */
         canShowDeleteMenu() {
-            return Boolean(
-                this.authorizedToDeleteSelectedResources ||
-                    this.authorizedToForceDeleteSelectedResources ||
-                    this.authorizedToDeleteAnyResources ||
-                    this.authorizedToForceDeleteAnyResources ||
-                    this.authorizedToRestoreSelectedResources ||
-                    this.authorizedToRestoreAnyResources
+            return (
+                this.hasId &&
+                Boolean(
+                    this.authorizedToDeleteSelectedResources ||
+                        this.authorizedToForceDeleteSelectedResources ||
+                        this.authorizedToDeleteAnyResources ||
+                        this.authorizedToForceDeleteAnyResources ||
+                        this.authorizedToRestoreSelectedResources ||
+                        this.authorizedToRestoreAnyResources
+                )
             )
         },
 
