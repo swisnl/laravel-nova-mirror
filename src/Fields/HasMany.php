@@ -111,6 +111,7 @@ class HasMany extends Field implements ListableField
             'hasManyRelationship' => $this->hasManyRelationship,
             'listable' => true,
             'singularLabel' => $this->singularLabel ?? Str::singular($this->name),
+            'perPage'=> $this->resourceClass::$perPageViaRelationship,
         ], $this->meta);
     }
 }

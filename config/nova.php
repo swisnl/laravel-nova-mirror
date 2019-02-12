@@ -78,4 +78,16 @@ return [
         Authorize::class,
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Nova Pagination Type
+    |--------------------------------------------------------------------------
+    |
+    | This configuration option defines the pagination type. Available types
+    | are 'links' and 'simple'. Also you can specify your own pagination type.
+    |
+    */
+
+    'pagination' => 'simple',
+
 ];

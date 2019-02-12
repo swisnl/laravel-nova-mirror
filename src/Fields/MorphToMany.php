@@ -316,6 +316,7 @@ class MorphToMany extends Field implements DeletableContract, ListableField
             'searchable' => $this->searchable,
             'listable' => true,
             'singularLabel' => $this->singularLabel ?? Str::singular($this->name),
+            'perPage'=> $this->resourceClass::$perPageViaRelationship,
         ], $this->meta);
     }
 }

@@ -8,6 +8,7 @@
         :relationship-type="'morphToMany'"
         @actionExecuted="actionExecuted"
         :load-cards="false"
+        :initialPerPage="field.perPage || 5"
     />
 </template>
 

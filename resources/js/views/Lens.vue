@@ -70,9 +70,10 @@
                                         >
                                             <template>
                                                 <span class="mr-1">
-                                                    {{ __('Select All Matching') }}
+                                                    {{ __('Select All Matching') }} ({{
+                                                        allMatchingResourceCount
+                                                    }})
                                                 </span>
-                                                <span>({{ allMatchingResourceCount }})</span>
                                             </template>
                                         </checkbox-with-label>
                                     </li>
@@ -411,33 +412,6 @@ export default {
         },
 
         /**
-         * Get the relatable authorization status for the resource.
-         */
-        // getAuthorizationToRelate() {
-        //     if (!this.authorizedToCreate) {
-        //         return
-        //     }
-        //     if (!this.viaResource) {
-        //         return (this.authorizedToRelate = true)
-        //     }
-        //     Nova.request()
-        //         .get(
-        //             '/nova-api/' +
-        //                 this.resourceName +
-        //                 '/relate-authorization' +
-        //                 '?viaResource=' +
-        //                 this.viaResource +
-        //                 '&viaResourceId=' +
-        //                 this.viaResourceId +
-        //                 '&viaRelationship=' +
-        //                 this.viaRelationship
-        //         )
-        //         .then(response => {
-        //             this.authorizedToRelate = response.data.authorized
-        //         })
-        // },
-
-        /**
          * Get the actions available for the current resource.
          */
         getActions() {
@@ -530,6 +504,13 @@ export default {
         updatePerPageChanged(perPage) {
             this.perPage = perPage
             this.perPageChanged()
+        },
+
+        /**
+         * Select the next page.
+         */
+        selectPage(page) {
+            this.updateQueryString({ [this.pageParameter]: page })
         },
     },
 
@@ -845,6 +826,36 @@ export default {
          */
         initialEncodedFilters() {
             return this.$route.query[this.filterParameter] || ''
+        },
+
+        paginationComponent() {
+            return `pagination-${Nova.config['pagination'] || 'links'}`
+        },
+
+        hasNextPage() {
+            return Boolean(this.resourceResponse && this.resourceResponse.next_page_url)
+        },
+
+        hasPreviousPage() {
+            return Boolean(this.resourceResponse && this.resourceResponse.prev_page_url)
+        },
+
+        totalPages() {
+            return Math.ceil(this.allMatchingResourceCount / this.currentPerPage)
+        },
+
+        /**
+         * Return the resource count label
+         */
+        resourceCountLabel() {
+            const first = this.perPage * (this.currentPage - 1)
+
+            return (
+                this.resources.length &&
+                `${first + 1}-${first + this.resources.length} ${this.__('of')} ${
+                    this.allMatchingResourceCount
+                }`
+            )
         },
     },
 }

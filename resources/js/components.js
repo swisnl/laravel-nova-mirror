@@ -50,7 +50,8 @@ import Loader from '@/components/Icons/Loader'
 import LoadingCard from '@/components/LoadingCard'
 import LoadingView from '@/components/LoadingView'
 import Modal from '@/components/Modal'
-import PaginationLinks from '@/components/PaginationLinks'
+import PaginationLinks from '@/components/Pagination/PaginationLinks'
+import PaginationSimple from '@/components/Pagination/PaginationSimple'
 import PanelItem from '@/components/PanelItem'
 import PartitionMetric from '@/components/Metrics/PartitionMetric'
 import Play from '@/components/Icons/Play'
@@ -130,6 +131,7 @@ Vue.component('loading-card', LoadingCard)
 Vue.component('loading-view', LoadingView)
 Vue.component('modal', Modal)
 Vue.component('pagination-links', PaginationLinks)
+Vue.component('pagination-simple', PaginationSimple)
 Vue.component('panel-item', PanelItem)
 Vue.component('partition-metric', PartitionMetric)
 Vue.component('progress-button', ProgressButton)

@@ -145,6 +145,7 @@ class NovaServiceProvider extends ServiceProvider
                 'timezone' => config('app.timezone', 'UTC'),
                 'translations' => $this->getTranslations(),
                 'userTimezone' => Nova::resolveUserTimezone($event->request),
+                'pagination' => config('nova.pagination', 'links'),
             ]);
         });
     }

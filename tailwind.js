@@ -139,6 +139,7 @@ module.exports = {
         '4': '1rem',
         // '6': '1.5rem',
         '8': '2rem',
+        '9': '2.25rem',
         // '10': '2.5rem',
         '11': '2.75rem',
         '12': '3rem',
@@ -194,6 +195,7 @@ module.exports = {
     minWidth: {
         '0': '0',
         '8': '2rem',
+        '9': '2.25rem',
         '24': '6rem',
         site: '80rem',
         full: '100%',

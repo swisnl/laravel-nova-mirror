@@ -8,6 +8,7 @@
         :relationship-type="'belongsToMany'"
         @actionExecuted="actionExecuted"
         :load-cards="false"
+        :initialPerPage="field.perPage || 5"
     />
 </template>
 

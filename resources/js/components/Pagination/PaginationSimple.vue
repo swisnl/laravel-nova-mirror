@@ -1,6 +1,6 @@
 <template>
     <div class="bg-20 rounded-b">
-        <nav v-if="resources.length > 0" class="flex justify-between items-center">
+        <nav class="flex justify-between items-center">
             <!-- Previous Link -->
             <button
                 :disabled="!hasPreviousPages"
@@ -38,21 +38,45 @@
 
 <script>
 export default {
-    props: ['resourceName', 'resources', 'resourceResponse'],
+    props: {
+        page: {
+            type: Number,
+            required: true,
+        },
+        pages: {
+            type: Number,
+            default: 0,
+        },
+        next: {
+            type: Boolean,
+            default: false,
+        },
+        previous: {
+            type: Boolean,
+            default: false,
+        },
+    },
 
     methods: {
         /**
          * Select the previous page.
          */
         selectPreviousPage() {
-            this.$emit('previous')
+            this.selectPage(this.page - 1)
         },
 
         /**
          * Select the next page.
          */
         selectNextPage() {
-            this.$emit('next')
+            this.selectPage(this.page + 1)
+        },
+
+        /**
+         * Select the page.
+         */
+        selectPage(page) {
+            this.$emit('page', page)
         },
     },
 
@@ -61,14 +85,14 @@ export default {
          * Determine if prior pages are available.
          */
         hasPreviousPages: function() {
-            return Boolean(this.resourceResponse && this.resourceResponse.prev_page_url)
+            return this.previous
         },
 
         /**
          * Determine if more pages are available.
          */
         hasMorePages: function() {
-            return Boolean(this.resourceResponse && this.resourceResponse.next_page_url)
+            return this.next
         },
     },
 }
