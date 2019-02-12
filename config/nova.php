@@ -83,8 +83,9 @@ return [
     | Nova Pagination Type
     |--------------------------------------------------------------------------
     |
-    | This configuration option defines the pagination type. Available types
-    | are 'links' and 'simple'. Also you can specify your own pagination type.
+    | This option defines the pagination visual style used by Resources. You
+    | may choose between two types: "simple" and "links". Feel free to set
+    | this option to the visual style you like for your application.
     |
     */
 
