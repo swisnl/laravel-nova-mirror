@@ -31,6 +31,7 @@ export default {
             type: String,
             required: true,
         },
+        lens: String,
     },
 
     methods: {

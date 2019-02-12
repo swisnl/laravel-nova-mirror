@@ -110,6 +110,7 @@
                         :via-has-one="viaHasOne"
                         :trashed="trashed"
                         :per-page="perPage"
+                        :lens="lens"
                         @clear-selected-filters="clearSelectedFilters(lens)"
                         @filter-changed="filterChanged"
                         @trashed-changed="trashedChanged"

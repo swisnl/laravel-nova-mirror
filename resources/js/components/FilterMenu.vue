@@ -36,6 +36,7 @@
                     :key="filter.name"
                     :filter-key="filter.class"
                     :is="filter.component"
+                    :lens="lens"
                     @input="$emit('filter-changed')"
                     @change="$emit('filter-changed')"
                 />
@@ -90,6 +91,10 @@
 export default {
     props: {
         resourceName: String,
+        lens: {
+            type: String,
+            default: '',
+        },
         softDeletes: Boolean,
         viaResource: String,
         viaHasOne: Boolean,
