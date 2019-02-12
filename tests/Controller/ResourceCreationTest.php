@@ -61,7 +61,7 @@ class ResourceCreationTest extends IntegrationTest
         $response = $this->withExceptionHandling()
                         ->postJson('/nova-api/posts', [
                             'title' => 'Test Post',
-                            'user' => ''
+                            'user' => '',
                         ]);
 
         $response->assertStatus(201);
@@ -302,7 +302,7 @@ class ResourceCreationTest extends IntegrationTest
         $response = $this->withExceptionHandling()
             ->postJson('/nova-api/posts', [
                 'title' => 'Test Post',
-                'user' => ''
+                'user' => '',
             ]);
 
         $response->assertStatus(201);
@@ -341,6 +341,5 @@ class ResourceCreationTest extends IntegrationTest
         $this->assertTrue($user->is($actionEvent->target));
 
         Relation::morphMap([], false);
-
     }
 }

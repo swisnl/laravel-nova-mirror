@@ -455,7 +455,6 @@ class MorphTo extends Field
         return $this;
     }
 
-
     /**
      * Get additional meta information to merge with the field payload.
      *
