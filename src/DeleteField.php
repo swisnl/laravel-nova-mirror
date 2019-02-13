@@ -16,7 +16,13 @@ class DeleteField
      */
     public static function forRequest(NovaRequest $request, $field, $model)
     {
-        $result = call_user_func($field->deleteCallback, $request, $model, ...$field->deleteArguments());
+        $result = call_user_func(
+            $field->deleteCallback,
+            $request,
+            $model,
+            $field->getStorageDisk(),
+            $field->getStoragePath()
+        );
 
         if ($result === true) {
             return $model;

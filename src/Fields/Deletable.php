@@ -75,12 +75,22 @@ trait Deletable
     }
 
     /**
-     * Arguments what will passed to the delete callback.
+     * Get the disk that the field is stored on.
      *
-     * @return array
+     * @return string|null
      */
-    public function deleteArguments()
+    public function getStorageDisk()
     {
-        return [];
+        //
+    }
+
+    /**
+     * Get the path that the field is stored at on disk.
+     *
+     * @return string|null
+     */
+    public function getStoragePath()
+    {
+        //
     }
 }

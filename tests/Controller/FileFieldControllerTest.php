@@ -77,8 +77,8 @@ class FileFieldControllerTest extends IntegrationTest
         $_SERVER['nova.fileResource.imageField'] = function () {
             return Image::make('Avatar', 'avatar')
                 ->prunable()
-                ->delete(function ($request, $model, $value, $disk) {
-                    Storage::disk($disk)->delete($value);
+                ->delete(function ($request, $model, $disk, $path) {
+                    Storage::disk($disk)->delete($path);
                 });
         };
 
