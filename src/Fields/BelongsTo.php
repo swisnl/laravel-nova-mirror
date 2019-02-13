@@ -59,6 +59,13 @@ class BelongsTo extends Field
     public $display;
 
     /**
+     * Indicates if the related resource can be viewed.
+     *
+     * @var bool
+     */
+    public $viewable = true;
+
+    /**
      * Indicates if this relationship is searchable.
      *
      * @var bool
@@ -85,13 +92,6 @@ class BelongsTo extends Field
      * @var string
      */
     public $singularLabel;
-
-    /**
-     * Indicates if the related resource can be viewed.
-     *
-     * @var bool
-     */
-    public $viewable = true;
 
     /**
      * Create a new field.
@@ -291,6 +291,19 @@ class BelongsTo extends Field
     }
 
     /**
+     * Specify if the related resource can be viewed.
+     *
+     * @param  bool  $value
+     * @return $this
+     */
+    public function viewable($value = true)
+    {
+        $this->viewable = $value;
+
+        return $this;
+    }
+
+    /**
      * Specify a callback that should be run when the field is filled.
      *
      * @param  \Closure  $callback
@@ -324,20 +337,6 @@ class BelongsTo extends Field
     public function singularLabel($singularLabel)
     {
         $this->singularLabel = $singularLabel;
-
-        return $this;
-    }
-
-    /**
-     * Specify what the related resource can be viewed.
-     *
-     * @param bool $value
-     *
-     * @return $this
-     */
-    public function viewable($value = true)
-    {
-        $this->viewable = $value;
 
         return $this;
     }
