@@ -1,4 +1,5 @@
 <?php
+
 namespace Laravel\Nova;
 
 use Closure;
@@ -23,6 +24,7 @@ trait AuthorizedToSee
     {
         return $this->seeCallback ? call_user_func($this->seeCallback, $request) : true;
     }
+
     /**
      * Set the callback to be run to authorize viewing the filter.
      *
@@ -36,4 +38,3 @@ trait AuthorizedToSee
         return $this;
     }
 }
-
