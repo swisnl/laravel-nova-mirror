@@ -349,6 +349,11 @@ export default {
         )
     },
 
+    beforeRouteUpdate(to, from, next) {
+        next()
+        this.initializeState(this.lens)
+    },
+
     methods: {
         selectAllResources() {
             this.selectedResources = this.resources.slice(0)
