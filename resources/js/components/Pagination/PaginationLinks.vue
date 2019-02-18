@@ -65,7 +65,7 @@
                 <!-- Last Link -->
                 <button
                     :disabled="!hasMorePages"
-                    class="font-mono btn btn-link h-9 px-2 border-r border-50"
+                    class="font-mono btn btn-link h-9 min-w-9 px-2 border-r border-50"
                     :class="{
                         'text-primary dim': hasMorePages,
                         'text-80 opacity-50': !hasMorePages,
