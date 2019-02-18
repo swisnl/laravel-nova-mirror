@@ -28,7 +28,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 input[type='checkbox'] {
     position: absolute;
     left: 0;
