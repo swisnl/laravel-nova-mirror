@@ -59,7 +59,7 @@ trait ResolvesFields
         })->when(in_array(Actionable::class, class_uses_recursive(static::newModel())), function ($fields) {
             return $fields->push(MorphMany::make(__('Actions'), 'actions', ActionResource::class));
         })->each(function ($field) use ($request) {
-            if($field instanceof ListableField || ! $field instanceof Resolvable) {
+            if ($field instanceof ListableField || ! $field instanceof Resolvable) {
                 return;
             }
 
