@@ -260,6 +260,17 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     }
 
     /**
+     * Get meta information about this resource for client side comsumption.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public static function additionalInformation(Request $request)
+    {
+        return [];
+    }
+
+    /**
      * Filter and authorize the given values.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
