@@ -14,6 +14,10 @@ trait CountsResources
     {
         $baseQuery = $query->toBase();
 
+        if (empty($baseQuery->groups)) {
+            return $baseQuery;
+        }
+
         $subQuery = $baseQuery->cloneWithout(
             $baseQuery->unions ? ['orders', 'limit', 'offset'] : ['columns', 'orders', 'limit', 'offset']
         )->cloneWithoutBindings(
