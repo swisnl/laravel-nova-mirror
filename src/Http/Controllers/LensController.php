@@ -42,7 +42,7 @@ class LensController extends Controller
             'prev_page_url' => $paginator->previousPageUrl(),
             'next_page_url' => $paginator->nextPageUrl(),
             'softDeletes' => $request->resourceSoftDeletes(),
-            'hasId' => $lens->resolveFields($request)->whereInstanceOf(ID::class)->isNotEmpty(),
+            'hasId' => $lens->availableFields($request)->whereInstanceOf(ID::class)->isNotEmpty(),
         ]);
     }
 }

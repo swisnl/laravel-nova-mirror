@@ -144,7 +144,7 @@ abstract class Lens implements ArrayAccess, JsonSerializable, UrlRoutable
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return \Illuminate\Support\Collection
      */
-    protected function availableFields(NovaRequest $request)
+    public function availableFields(NovaRequest $request)
     {
         return collect(array_values($this->filter($this->fields($request))));
     }
