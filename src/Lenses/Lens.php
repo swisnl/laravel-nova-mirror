@@ -2,7 +2,6 @@
 
 namespace Laravel\Nova\Lenses;
 
-use Closure;
 use stdClass;
 use ArrayAccess;
 use JsonSerializable;
@@ -11,6 +10,7 @@ use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\ResolvesCards;
+use Laravel\Nova\AuthorizedToSee;
 use Laravel\Nova\ResolvesActions;
 use Laravel\Nova\ResolvesFilters;
 use Illuminate\Support\Collection;
@@ -25,7 +25,9 @@ use Illuminate\Http\Resources\ConditionallyLoadsAttributes;
 
 abstract class Lens implements ArrayAccess, JsonSerializable, UrlRoutable
 {
-    use ConditionallyLoadsAttributes,
+    use
+        AuthorizedToSee,
+        ConditionallyLoadsAttributes,
         DelegatesToResource,
         ProxiesCanSeeToGate,
         ResolvesActions,
@@ -45,13 +47,6 @@ abstract class Lens implements ArrayAccess, JsonSerializable, UrlRoutable
      * @var \Illuminate\Database\Eloquent\Model
      */
     public $resource;
-
-    /**
-     * The callback used to authorize viewing the action.
-     *
-     * @var \Closure|null
-     */
-    public $seeCallback;
 
     /**
      * Execute the query for the lens.
@@ -79,30 +74,6 @@ abstract class Lens implements ArrayAccess, JsonSerializable, UrlRoutable
     public function __construct($resource = null)
     {
         $this->resource = $resource ?: new stdClass;
-    }
-
-    /**
-     * Determine if the action should be available for the given request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return bool
-     */
-    public function authorizedToSee(Request $request)
-    {
-        return $this->seeCallback ? call_user_func($this->seeCallback, $request) : true;
-    }
-
-    /**
-     * Set the callback to be run to authorize viewing the action.
-     *
-     * @param  \Closure  $callback
-     * @return $this
-     */
-    public function canSee(Closure $callback)
-    {
-        $this->seeCallback = $callback;
-
-        return $this;
     }
 
     /**

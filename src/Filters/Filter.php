@@ -2,16 +2,17 @@
 
 namespace Laravel\Nova\Filters;
 
-use Closure;
 use JsonSerializable;
 use Laravel\Nova\Nova;
 use Illuminate\Http\Request;
+use Laravel\Nova\AuthorizedToSee;
 use Illuminate\Container\Container;
 use Laravel\Nova\ProxiesCanSeeToGate;
 use Laravel\Nova\Contracts\Filter as FilterContract;
 
 abstract class Filter implements FilterContract, JsonSerializable
 {
+    use AuthorizedToSee;
     use ProxiesCanSeeToGate;
 
     /**
@@ -36,13 +37,6 @@ abstract class Filter implements FilterContract, JsonSerializable
     public $meta = [];
 
     /**
-     * The callback used to authorize viewing the filter.
-     *
-     * @var \Closure|null
-     */
-    public $seeCallback;
-
-    /**
      * Apply the filter to the given query.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -59,30 +53,6 @@ abstract class Filter implements FilterContract, JsonSerializable
      * @return array
      */
     abstract public function options(Request $request);
-
-    /**
-     * Determine if the filter should be available for the given request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return bool
-     */
-    public function authorizedToSee(Request $request)
-    {
-        return $this->seeCallback ? call_user_func($this->seeCallback, $request) : true;
-    }
-
-    /**
-     * Set the callback to be run to authorize viewing the filter.
-     *
-     * @param  \Closure  $callback
-     * @return $this
-     */
-    public function canSee(Closure $callback)
-    {
-        $this->seeCallback = $callback;
-
-        return $this;
-    }
 
     /**
      * Get the component name for the filter.
