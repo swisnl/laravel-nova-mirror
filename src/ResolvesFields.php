@@ -59,13 +59,16 @@ trait ResolvesFields
         })->when(in_array(Actionable::class, class_uses_recursive(static::newModel())), function ($fields) {
             return $fields->push(MorphMany::make(__('Actions'), 'actions', ActionResource::class));
         })->each(function ($field) use ($request) {
-            if ($field instanceof Resolvable && ! $field->pivot) {
-                $field->resolveForDisplay($this->resource);
+            if($field instanceof ListableField || ! $field instanceof Resolvable) {
+                return;
             }
-            if ($field instanceof Resolvable && $field->pivot) {
+
+            if ($field->pivot) {
                 $accessor = $this->pivotAccessorFor($request, $request->viaResource);
 
                 $field->resolveForDisplay($this->{$accessor} ?? new Pivot);
+            } else {
+                $field->resolveForDisplay($this->resource);
             }
         });
     }
