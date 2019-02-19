@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 class ResourceDetachTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

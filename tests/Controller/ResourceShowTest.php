@@ -12,14 +12,14 @@ use Laravel\Nova\Tests\Fixtures\UserPolicy;
 
 class ResourceShowTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 
         $this->authenticate();
     }
 
-    public function tearDown()
+    public function tearDown() : void
     {
         parent::tearDown();
 

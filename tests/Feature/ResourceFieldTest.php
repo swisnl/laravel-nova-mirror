@@ -12,7 +12,7 @@ use Laravel\Nova\Tests\Fixtures\UserResource;
 
 class ResourceFieldTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
     }

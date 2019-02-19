@@ -14,7 +14,7 @@ use Laravel\Nova\Tests\Fixtures\CustomerRevenue;
 
 class MetricControllerTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

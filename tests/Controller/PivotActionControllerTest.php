@@ -22,14 +22,14 @@ use Laravel\Nova\Tests\Fixtures\NoopActionWithPivotHandle;
 
 class PivotActionControllerTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 
         $this->authenticate();
     }
 
-    public function tearDown()
+    public function tearDown() : void
     {
         unset($_SERVER['queuedAction.applied']);
         unset($_SERVER['queuedAction.appliedFields']);

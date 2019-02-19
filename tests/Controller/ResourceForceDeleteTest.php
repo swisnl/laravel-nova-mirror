@@ -11,7 +11,7 @@ use Laravel\Nova\Tests\Fixtures\UserPolicy;
 
 class ResourceForceDeleteTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

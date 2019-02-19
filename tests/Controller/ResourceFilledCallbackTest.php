@@ -8,7 +8,7 @@ use Laravel\Nova\Tests\Fixtures\Address;
 
 class ResourceFilledCallbackTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

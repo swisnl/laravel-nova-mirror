@@ -11,7 +11,7 @@ use Laravel\Nova\Tests\Fixtures\UserPolicy;
 
 class LensResourceDestroyTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

@@ -14,7 +14,7 @@ use Laravel\Nova\Tests\Fixtures\UserResource;
 
 class RelationsTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

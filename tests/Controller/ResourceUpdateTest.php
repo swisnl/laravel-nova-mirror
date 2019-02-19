@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 class ResourceUpdateTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

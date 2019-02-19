@@ -8,7 +8,7 @@ class SqliteTrendMetricControllerTest extends IntegrationTest
 {
     use TrendDateTests;
 
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

@@ -61,9 +61,7 @@ trait ResolvesReverseRelation
 
                         $relation = $viaModel->{$field->attribute}();
 
-                        $method = $relation instanceof BelongsTo ? 'getForeignKey' : 'getForeignKeyName';
-
-                        return $relation->{$method}() === $resource->model()->{$this->attribute}()->getForeignKey();
+                        return $relation->getForeignKeyName() === $resource->model()->{$this->attribute}()->getForeignKeyName();
                     })->attribute ?? '';
         }
 

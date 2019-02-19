@@ -241,13 +241,13 @@ class MorphTo extends Field
             );
         }
 
-        $foreignKey = $model->{$this->attribute}()->getForeignKey();
+        $foreignKey = $model->{$this->attribute}()->getForeignKeyName();
 
         if ($model->isDirty([$morphType, $foreignKey])) {
             $model->unsetRelation($this->attribute);
         }
 
-        parent::fillInto($request, $model, $model->{$this->attribute}()->getForeignKey());
+        parent::fillInto($request, $model, $model->{$this->attribute}()->getForeignKeyName());
     }
 
     /**

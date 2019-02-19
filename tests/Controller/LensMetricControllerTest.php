@@ -10,7 +10,7 @@ use Laravel\Nova\Tests\Fixtures\UserGrowth;
 
 class LensMetricControllerTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

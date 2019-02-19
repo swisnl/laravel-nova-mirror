@@ -12,7 +12,7 @@ use Laravel\Nova\Tests\Fixtures\UserPolicy;
 
 class FieldControllerTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

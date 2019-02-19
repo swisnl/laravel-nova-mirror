@@ -7,7 +7,7 @@ use Laravel\Nova\Metrics\PartitionResult;
 
 class PartitionTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
     }

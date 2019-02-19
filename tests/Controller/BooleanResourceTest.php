@@ -7,7 +7,7 @@ use Laravel\Nova\Tests\Fixtures\Boolean;
 
 class BooleanResourceTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

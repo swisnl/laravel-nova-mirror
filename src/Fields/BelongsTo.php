@@ -193,7 +193,7 @@ class BelongsTo extends Field
      */
     public function fill(NovaRequest $request, $model)
     {
-        $foreignKey = $model->{$this->attribute}()->getForeignKey();
+        $foreignKey = $model->{$this->attribute}()->getForeignKeyName();
 
         parent::fillInto($request, $model, $foreignKey);
 

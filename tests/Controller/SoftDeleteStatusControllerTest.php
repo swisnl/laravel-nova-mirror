@@ -6,7 +6,7 @@ use Laravel\Nova\Tests\IntegrationTest;
 
 class SoftDeleteStatusControllerTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

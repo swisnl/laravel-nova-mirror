@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 class ResourceAttachmentUpdateTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

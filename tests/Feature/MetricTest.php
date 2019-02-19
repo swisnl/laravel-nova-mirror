@@ -13,7 +13,7 @@ use Laravel\Nova\Tests\Fixtures\PostWithCustomCreatedAt;
 
 class MetricTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
     }

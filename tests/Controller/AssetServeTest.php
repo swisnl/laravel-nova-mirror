@@ -8,7 +8,7 @@ use Laravel\Nova\Tests\IntegrationTest;
 
 class AssetServeTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

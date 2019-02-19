@@ -16,7 +16,7 @@ use Laravel\Nova\Tests\Fixtures\CustomKeyFilter;
 
 class ResourceIndexTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

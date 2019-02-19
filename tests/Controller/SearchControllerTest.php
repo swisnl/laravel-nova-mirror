@@ -9,7 +9,7 @@ use Laravel\Nova\Tests\IntegrationTest;
 
 class SearchControllerTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

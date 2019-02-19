@@ -8,7 +8,7 @@ use Laravel\Nova\Tests\Fixtures\NoopAction;
 
 class LensActionControllerTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

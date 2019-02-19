@@ -13,7 +13,7 @@ use Laravel\Nova\Tests\Fixtures\ForbiddenUserResource;
 
 class ResourceAuthorizationTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
     }

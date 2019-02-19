@@ -10,7 +10,7 @@ use Laravel\Nova\Tests\Fixtures\CommentPolicy;
 
 class MorphableResourceCreationTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

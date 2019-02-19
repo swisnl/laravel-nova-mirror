@@ -10,7 +10,7 @@ use Laravel\Nova\Tests\IntegrationTest;
 
 class AuthenticationTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
     }
