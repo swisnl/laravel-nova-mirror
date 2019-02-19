@@ -4,7 +4,6 @@ namespace Laravel\Nova\Fields;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 trait ResolvesReverseRelation
 {
