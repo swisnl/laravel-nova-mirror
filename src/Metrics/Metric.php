@@ -31,10 +31,12 @@ abstract class Metric extends Card
                     : $this->calculate($request);
         };
 
-        if ($this->cacheFor()) {
+        if ($cacheFor = $this->cacheFor()) {
+            $cacheFor = is_numeric($cacheFor) ? $cacheFor * 60 : $cacheFor;
+
             return Cache::remember(
                 $this->getCacheKey($request),
-                $this->cacheFor(),
+                $cacheFor,
                 $resolver
             );
         }
