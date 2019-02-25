@@ -4,8 +4,8 @@ namespace Laravel\Nova;
 
 use Closure;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\MorphTo;
+use Laravel\Nova\Contracts\Cover;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Actions\Actionable;
@@ -255,7 +255,7 @@ trait ResolvesFields
         $fields = $this->resolveFields($request);
 
         $field = $fields->first(function ($field) {
-            return $field instanceof Avatar;
+            return $field instanceof Cover;
         });
 
         if ($field) {

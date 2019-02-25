@@ -2,7 +2,9 @@
 
 namespace Laravel\Nova\Fields;
 
-class Avatar extends Image
+use Laravel\Nova\Contracts\Cover;
+
+class Avatar extends Image implements Cover
 {
     //
 }

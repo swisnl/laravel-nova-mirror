@@ -42,4 +42,22 @@ class SearchControllerTest extends IntegrationTest
         $this->assertEquals('http://localhost/nova/resources/users/'.$user->id, $original[2]['url']);
         $this->assertNull($original[2]['avatar']);
     }
+
+    public function test_can_retrieve_search_results_with_custom_cover()
+    {
+        $user = factory(User::class)->create();
+
+        $_SESSION['nova.user.cover'] = true;
+
+        $response = $this->withExceptionHandling()
+            ->getJson('/nova-api/search?search=1');
+
+        unset($_SESSION['nova.user.cover']);
+
+        $response->assertStatus(200);
+
+        $original = $response->original;
+
+        $this->assertEquals('https://github.com/taylorotwell.png?size=40', $original[1]['avatar']);
+    }
 }

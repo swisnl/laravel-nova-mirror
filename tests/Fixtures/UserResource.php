@@ -125,6 +125,10 @@ class UserResource extends Resource
                 return Text::make('Test', 'test');
             }),
 
+            $this->when($_SESSION['nova.user.cover'] ?? false, function () {
+                return GitHubAvatar::make('Avatar', 'email');
+            }),
+
             new ResourceToolElement('component-name'),
         ];
     }
