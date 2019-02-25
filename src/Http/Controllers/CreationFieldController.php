@@ -4,9 +4,12 @@ namespace Laravel\Nova\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Resource;
 
 class CreationFieldController extends Controller
 {
+    use ResolvePanels;
+
     /**
      * List the creation fields for the given resource.
      *
@@ -15,12 +18,20 @@ class CreationFieldController extends Controller
      */
     public function index(NovaRequest $request)
     {
-        $resource = $request->resource();
+        $resourceClass = $request->resource();
 
-        $resource::authorizeToCreate($request);
+        $resourceClass::authorizeToCreate($request);
 
-        return response()->json(
-            $request->newResource()->creationFields($request)->values()->all()
-        );
+        $resource = $request->newResource();
+
+        return response()->json($this->assignFieldsToPanels($request, [
+            'panels' => $this->addDefaultPanel($request, $resource->availablePanels($request)),
+            'fields' => $resource->creationFields($request)->values()->all(),
+        ]));
+    }
+
+    protected function defaultNameFor(Resource $resource)
+    {
+        return __('New').' '.$resource->singularLabel();
     }
 }

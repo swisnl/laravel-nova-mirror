@@ -242,19 +242,13 @@ trait ResolvesFields
     /**
      * Get the panels that are available for the given request.
      *
-     * @param  \Laravel\Nova\Http\Requests\ResourceDetailRequest  $request
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return \Illuminate\Support\Collection
      */
-    public function availablePanels(ResourceDetailRequest $request)
+    public function availablePanels(NovaRequest $request)
     {
-        $panels = collect(array_values($this->fields($request)))
+        return collect(array_values($this->fields($request)))
                 ->whereInstanceOf(Panel::class)->values();
-
-        $default = Panel::defaultNameFor($request->newResource());
-
-        return $panels->when($panels->where('name', $default)->isEmpty(), function ($panels) use ($default) {
-            return $panels->push((new Panel($default))->withToolbar());
-        })->all();
     }
 
     /**

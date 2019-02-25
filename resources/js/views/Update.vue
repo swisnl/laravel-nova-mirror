@@ -2,19 +2,32 @@
     <div v-if="!loading">
         <heading class="mb-3">{{ __('Edit') }} {{ singularName }}</heading>
 
-        <card class="overflow-hidden">
             <form v-if="fields" @submit.prevent="updateResource" autocomplete="off">
                 <!-- Fields -->
-                <div v-for="field in fields">
-                    <component
-                        @file-deleted="updateLastRetrievedAtTimestamp"
-                        :is="'form-' + field.component"
-                        :errors="validationErrors"
-                        :resource-id="resourceId"
-                        :resource-name="resourceName"
-                        :field="field"
-                    />
-                </div>
+                <component
+                        v-for="panel in availablePanels"
+                        :key="panel.name"
+                        :is="panel.component"
+                        :panel="panel"
+                        class="mb-6"
+                >
+                    <heading class="mb-3" :level="2">{{ panel.name }}</heading>
+                    <template slot="panel" slot-scope="{ fields }">
+                        <component
+                                v-for="field in fields"
+                                :key="field.attribute"
+                                :is="'form-' + field.component"
+                                :errors="validationErrors"
+                                :resource-id="resourceId"
+                                :resource-name="resourceName"
+                                :field="field"
+                                :via-resource="viaResource"
+                                :via-resource-id="viaResourceId"
+                                :via-relationship="viaRelationship"
+                                @file-deleted="updateLastRetrievedAtTimestamp"
+                        />
+                    </template>
+                </component>
 
                 <!-- Update Button -->
                 <div class="bg-30 flex px-8 py-4">
@@ -38,15 +51,15 @@
                     </progress-button>
                 </div>
             </form>
-        </card>
     </div>
 </template>
 
 <script>
 import { Errors, InteractsWithResourceInformation } from 'laravel-nova'
+import InteractWithPanels from '@/util/InteractWithPanels'
 
 export default {
-    mixins: [InteractsWithResourceInformation],
+    mixins: [InteractsWithResourceInformation, InteractWithPanels],
 
     props: {
         resourceName: {
@@ -103,7 +116,7 @@ export default {
 
             this.fields = []
 
-            const { data: fields } = await Nova.request()
+            const { data: {fields, panels} } = await Nova.request()
                 .get(`/nova-api/${this.resourceName}/${this.resourceId}/update-fields`)
                 .catch(error => {
                     if (error.response.status == 404) {
@@ -113,6 +126,7 @@ export default {
                 })
 
             this.fields = fields
+            this.panels = panels
 
             this.loading = false
         },
@@ -221,10 +235,6 @@ export default {
     },
 
     computed: {
-        panels() {
-            return _.map()
-        },
-
         /**
          * Create the form data for creating the resource.
          */

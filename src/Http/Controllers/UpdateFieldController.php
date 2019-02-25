@@ -4,9 +4,12 @@ namespace Laravel\Nova\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Resource;
 
 class UpdateFieldController extends Controller
 {
+    use ResolvePanels;
+
     /**
      * List the update fields for the given resource.
      *
@@ -19,11 +22,14 @@ class UpdateFieldController extends Controller
 
         $resource->authorizeToUpdate($request);
 
-        return response()->json(
-            $resource
-                ->updateFields($request)
-                ->values()
-                ->all()
-        );
+        return response()->json($this->assignFieldsToPanels($request, [
+            'panels' => $this->addDefaultPanel($request, $resource->availablePanels($request)),
+            'fields' => $resource->creationFields($request)->values()->all(),
+        ]));
+    }
+
+    protected function defaultNameFor(Resource $resource)
+    {
+        return __('Edit').' '.$resource->singularLabel();
     }
 }

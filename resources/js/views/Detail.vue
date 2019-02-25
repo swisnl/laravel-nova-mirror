@@ -153,6 +153,19 @@
                         </router-link>
                     </div>
                 </div>
+                <template slot="panel" slot-scope="{ fields }">
+                    <component
+                        :class="{ 'remove-bottom-border': index == fields.length - 1 }"
+                        :key="index"
+                        v-for="(field, index) in fields"
+                        :is="resolveComponentName(field)"
+                        :resource-name="resourceName"
+                        :resource-id="resourceId"
+                        :resource="resource"
+                        :field="field"
+                        @actionExecuted="actionExecuted"
+                    />
+                </template>
             </component>
         </div>
     </loading-view>
@@ -167,10 +180,12 @@ import {
     HasCards,
 } from 'laravel-nova'
 
+import InteractWithPanels from '@/util/InteractWithPanels'
+
 export default {
     props: ['resourceName', 'resourceId'],
 
-    mixins: [Deletable, HasCards, InteractsWithResourceInformation],
+    mixins: [Deletable, HasCards, InteractsWithResourceInformation, InteractWithPanels],
 
     data: () => ({
         initialLoading: true,
@@ -310,26 +325,7 @@ export default {
             await this.getActions()
         },
 
-        /**
-         * Create a new panel for the given field.
-         */
-        createPanelForField(field) {
-            return _.tap(_.find(this.panels, panel => panel.name == field.panel), panel => {
-                panel.fields = [field]
-            })
-        },
 
-        /**
-         * Create a new panel for the given relationship field.
-         */
-        createPanelForRelationship(field) {
-            return {
-                component: 'relationship-panel',
-                prefixComponent: true,
-                name: field.name,
-                fields: [field],
-            }
-        },
 
         /**
          * Show the confirmation modal for deleting or detaching a resource
@@ -430,32 +426,16 @@ export default {
         closeForceDeleteModal() {
             this.forceDeleteModalOpen = false
         },
+
+        /**
+         * Resolve the component name.
+         */
+        resolveComponentName(field) {
+            return field.prefixComponent ? 'detail-' + field.component : field.component
+        },
     },
 
     computed: {
-        /**
-         * Get the available field panels.
-         */
-        availablePanels() {
-            if (this.resource) {
-                var panels = {}
-
-                var fields = _.toArray(JSON.parse(JSON.stringify(this.resource.fields)))
-
-                fields.forEach(field => {
-                    if (field.listable) {
-                        return (panels[field.name] = this.createPanelForRelationship(field))
-                    } else if (panels[field.panel]) {
-                        return panels[field.panel].fields.push(field)
-                    }
-
-                    panels[field.panel] = this.createPanelForField(field)
-                })
-
-                return _.toArray(panels)
-            }
-        },
-
         /**
          * These are here to satisfy the parameter requirements for deleting the resource
          */
@@ -500,6 +480,10 @@ export default {
         cardsEndpoint() {
             return `/nova-api/${this.resourceName}/cards`
         },
+
+        fields() {
+            return this.resource ? this.resource.fields : []
+        }
     },
 }
 </script>

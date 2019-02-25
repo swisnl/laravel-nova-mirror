@@ -4,7 +4,7 @@ Vue.component('default-field', require('./components/Form/DefaultField.vue'))
 Vue.component('field-wrapper', require('./components/Form/FieldWrapper.vue'))
 
 // Panels...
-Vue.component('panel', require('./components/Detail/Panel.vue'))
+Vue.component('panel', require('./components/Panel.vue'))
 Vue.component('relationship-panel', require('./components/Detail/RelationshipPanel.vue'))
 
 // Info Field...

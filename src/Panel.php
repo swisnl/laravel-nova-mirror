@@ -22,6 +22,13 @@ class Panel extends MergeValue implements JsonSerializable
     public $data;
 
     /**
+     * The panel's component.
+     *
+     * @var string
+     */
+    public $component = 'panel';
+
+    /**
      * Indicates whether the detail toolbar should be visible on this panel.
      *
      * @var bool
@@ -56,17 +63,6 @@ class Panel extends MergeValue implements JsonSerializable
     }
 
     /**
-     * Get the default panel name for the given resource.
-     *
-     * @param  \Laravel\Nova\Resource  $resource
-     * @return string
-     */
-    public static function defaultNameFor(Resource $resource)
-    {
-        return $resource->singularLabel().' '.__('Details');
-    }
-
-    /**
      * Display the toolbar when showing this panel.
      *
      * @return $this
@@ -79,6 +75,16 @@ class Panel extends MergeValue implements JsonSerializable
     }
 
     /**
+     * Get the component name for the panel.
+     *
+     * @return string
+     */
+    public function component()
+    {
+        return $this->component;
+    }
+
+    /**
      * Prepare the panel for JSON serialization.
      *
      * @return array
@@ -86,7 +92,7 @@ class Panel extends MergeValue implements JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'component' => 'panel',
+            'component' => $this->component(),
             'name' => $this->name,
             'showToolbar' => $this->showToolbar,
         ];

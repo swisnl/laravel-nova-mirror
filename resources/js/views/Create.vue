@@ -3,42 +3,28 @@
         <heading class="mb-6">{{ __('New') }} {{ singularName }}</heading>
 
         <form v-if="fields" @submit.prevent="createResource" autocomplete="off">
-            <div v-for="panel in panels" :key="panel" class="mb-6">
-                <heading class="mb-3" :level="2">{{ panel }}</heading>
-
-                <card class="overflow-hidden">
-                    <div v-for="field in panelFields(panel)">
-                        <component
-                            :is="'form-' + field.component"
-                            :errors="validationErrors"
-                            :resource-name="resourceName"
-                            :field="field"
-                            :via-resource="viaResource"
-                            :via-resource-id="viaResourceId"
-                            :via-relationship="viaRelationship"
-                        />
-                    </div>
-                </card>
-            </div>
-
-            <div class="mb-6">
-                <heading class="mb-3" :level="2">{{ __('Other') }}</heading>
-
-                <card class="overflow-hidden">
-                    <div v-for="field in nonPanelFields(panel)">
-                        <component
-                            :is="'form-' + field.component"
-                            :errors="validationErrors"
-                            :resource-name="resourceName"
-                            :field="field"
-                            :via-resource="viaResource"
-                            :via-resource-id="viaResourceId"
-                            :via-relationship="viaRelationship"
-                        />
-                    </div>
-                </card>
-            </div>
-
+            <component
+                    v-for="panel in availablePanels"
+                    :key="panel.name"
+                    :is="panel.component"
+                    :panel="panel"
+                    class="mb-6"
+            >
+                <heading class="mb-3" :level="2">{{ panel.name }}</heading>
+                <template slot="panel" slot-scope="{ fields }">
+                    <component
+                        v-for="field in fields"
+                        :key="field.attribute"
+                        :is="'form-' + field.component"
+                        :errors="validationErrors"
+                        :resource-name="resourceName"
+                        :field="field"
+                        :via-resource="viaResource"
+                        :via-resource-id="viaResourceId"
+                        :via-relationship="viaRelationship"
+                    />
+                </template>
+            </component>
             <div class="rounded-lg bg-30 flex px-8 py-4">
                 <progress-button
                     class="ml-auto mr-3"
@@ -65,9 +51,10 @@
 
 <script>
 import { Errors, Minimum, InteractsWithResourceInformation } from 'laravel-nova'
+import InteractWithPanels from '@/util/InteractWithPanels'
 
 export default {
-    mixins: [InteractsWithResourceInformation],
+    mixins: [InteractsWithResourceInformation, InteractWithPanels],
 
     props: {
         resourceName: {
@@ -116,7 +103,7 @@ export default {
         async getFields() {
             this.fields = []
 
-            const { data: fields } = await Nova.request().get(
+            const { data: { fields, panels } } = await Nova.request().get(
                 `/nova-api/${this.resourceName}/creation-fields`,
                 {
                     params: {
@@ -127,6 +114,7 @@ export default {
                 }
             )
 
+            this.panels = panels
             this.fields = fields
             this.loading = false
         },
@@ -231,12 +219,22 @@ export default {
     },
 
     computed: {
-        panels() {
-            return this.fields
-                .map(field => field.panel)
-                .filter(panel => panel !== null)
-                .filter((panel, key, collection) => collection.indexOf(panel) === key)
-        },
+        // panels() {
+        //     let panels =  this.fields
+        //         .map(field => field.panel)
+        //         .filter(panel => panel !== null)
+        //         .filter((panel, key, collection) => collection.indexOf(panel) === key)
+        //         .map((panel) => ({
+        //             name: panel,
+        //             fields: this.fields.filter(field => field.panel === panel),
+        //         }))
+        //
+        //     let first = this.fields.filter(field => field.panel === null)
+        //
+        //     if (first.length > 0) panels.splice(0, 0, {name: null, fields: first})
+        //
+        //     return panels;
+        // },
 
         singularName() {
             if (this.relationResponse) {
