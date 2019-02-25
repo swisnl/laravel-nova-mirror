@@ -2,10 +2,10 @@
 
 namespace Laravel\Nova\Http\Controllers;
 
-use Illuminate\Support\Collection;
-use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Laravel\Nova\Resource;
+use Illuminate\Support\Collection;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 trait ResolvePanels
 {

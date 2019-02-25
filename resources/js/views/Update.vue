@@ -2,55 +2,55 @@
     <div v-if="!loading">
         <heading class="mb-3">{{ __('Edit') }} {{ singularName }}</heading>
 
-            <form v-if="fields" @submit.prevent="updateResource" autocomplete="off">
-                <!-- Fields -->
-                <component
-                        v-for="panel in availablePanels"
-                        :key="panel.name"
-                        :is="panel.component"
-                        :panel="panel"
-                        class="mb-6"
+        <form v-if="fields" @submit.prevent="updateResource" autocomplete="off">
+            <!-- Fields -->
+            <component
+                v-for="panel in availablePanels"
+                :key="panel.name"
+                :is="panel.component"
+                :panel="panel"
+                class="mb-6"
+            >
+                <heading class="mb-3" :level="2">{{ panel.name }}</heading>
+                <template slot="panel" slot-scope="{ fields }">
+                    <component
+                        v-for="field in fields"
+                        :key="field.attribute"
+                        :is="'form-' + field.component"
+                        :errors="validationErrors"
+                        :resource-id="resourceId"
+                        :resource-name="resourceName"
+                        :field="field"
+                        :via-resource="viaResource"
+                        :via-resource-id="viaResourceId"
+                        :via-relationship="viaRelationship"
+                        @file-deleted="updateLastRetrievedAtTimestamp"
+                    />
+                </template>
+            </component>
+
+            <!-- Update Button -->
+            <div class="bg-30 flex px-8 py-4">
+                <progress-button
+                    class="ml-auto mr-3"
+                    dusk="update-and-continue-editing-button"
+                    @click.native="updateAndContinueEditing"
+                    :disabled="isWorking"
+                    :processing="submittedViaUpdateAndContinueEditing"
                 >
-                    <heading class="mb-3" :level="2">{{ panel.name }}</heading>
-                    <template slot="panel" slot-scope="{ fields }">
-                        <component
-                                v-for="field in fields"
-                                :key="field.attribute"
-                                :is="'form-' + field.component"
-                                :errors="validationErrors"
-                                :resource-id="resourceId"
-                                :resource-name="resourceName"
-                                :field="field"
-                                :via-resource="viaResource"
-                                :via-resource-id="viaResourceId"
-                                :via-relationship="viaRelationship"
-                                @file-deleted="updateLastRetrievedAtTimestamp"
-                        />
-                    </template>
-                </component>
+                    {{ __('Update & Continue Editing') }}
+                </progress-button>
 
-                <!-- Update Button -->
-                <div class="bg-30 flex px-8 py-4">
-                    <progress-button
-                        class="ml-auto mr-3"
-                        dusk="update-and-continue-editing-button"
-                        @click.native="updateAndContinueEditing"
-                        :disabled="isWorking"
-                        :processing="submittedViaUpdateAndContinueEditing"
-                    >
-                        {{ __('Update & Continue Editing') }}
-                    </progress-button>
-
-                    <progress-button
-                        dusk="update-button"
-                        type="submit"
-                        :disabled="isWorking"
-                        :processing="submittedViaUpdateResource"
-                    >
-                        {{ __('Update') }} {{ singularName }}
-                    </progress-button>
-                </div>
-            </form>
+                <progress-button
+                    dusk="update-button"
+                    type="submit"
+                    :disabled="isWorking"
+                    :processing="submittedViaUpdateResource"
+                >
+                    {{ __('Update') }} {{ singularName }}
+                </progress-button>
+            </div>
+        </form>
     </div>
 </template>
 
@@ -116,7 +116,9 @@ export default {
 
             this.fields = []
 
-            const { data: {fields, panels} } = await Nova.request()
+            const {
+                data: { fields, panels },
+            } = await Nova.request()
                 .get(`/nova-api/${this.resourceName}/${this.resourceId}/update-fields`)
                 .catch(error => {
                     if (error.response.status == 404) {

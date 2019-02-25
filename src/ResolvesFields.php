@@ -16,7 +16,6 @@ use Laravel\Nova\Fields\FieldCollection;
 use Laravel\Nova\Contracts\ListableField;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Database\Eloquent\Relations\Pivot;
-use Laravel\Nova\Http\Requests\ResourceDetailRequest;
 
 trait ResolvesFields
 {

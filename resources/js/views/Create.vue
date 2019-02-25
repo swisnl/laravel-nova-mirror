@@ -4,11 +4,11 @@
 
         <form v-if="fields" @submit.prevent="createResource" autocomplete="off">
             <component
-                    v-for="panel in availablePanels"
-                    :key="panel.name"
-                    :is="panel.component"
-                    :panel="panel"
-                    class="mb-6"
+                v-for="panel in availablePanels"
+                :key="panel.name"
+                :is="panel.component"
+                :panel="panel"
+                class="mb-6"
             >
                 <heading class="mb-3" :level="2">{{ panel.name }}</heading>
                 <template slot="panel" slot-scope="{ fields }">
@@ -103,16 +103,15 @@ export default {
         async getFields() {
             this.fields = []
 
-            const { data: { fields, panels } } = await Nova.request().get(
-                `/nova-api/${this.resourceName}/creation-fields`,
-                {
-                    params: {
-                        viaResource: this.viaResource,
-                        viaResourceId: this.viaResourceId,
-                        viaRelationship: this.viaRelationship,
-                    },
-                }
-            )
+            const {
+                data: { fields, panels },
+            } = await Nova.request().get(`/nova-api/${this.resourceName}/creation-fields`, {
+                params: {
+                    viaResource: this.viaResource,
+                    viaResourceId: this.viaResourceId,
+                    viaRelationship: this.viaRelationship,
+                },
+            })
 
             this.panels = panels
             this.fields = fields

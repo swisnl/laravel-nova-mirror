@@ -325,8 +325,6 @@ export default {
             await this.getActions()
         },
 
-
-
         /**
          * Show the confirmation modal for deleting or detaching a resource
          */
@@ -483,7 +481,7 @@ export default {
 
         fields() {
             return this.resource ? this.resource.fields : []
-        }
+        },
     },
 }
 </script>

@@ -2,9 +2,9 @@
 
 namespace Laravel\Nova\Http\Controllers;
 
+use Laravel\Nova\Resource;
 use Illuminate\Routing\Controller;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Resource;
 
 class UpdateFieldController extends Controller
 {
