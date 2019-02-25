@@ -4,6 +4,7 @@ namespace Laravel\Nova\Filters;
 
 use JsonSerializable;
 use Laravel\Nova\Nova;
+use Laravel\Nova\Metable;
 use Illuminate\Http\Request;
 use Laravel\Nova\AuthorizedToSee;
 use Illuminate\Container\Container;
@@ -12,6 +13,7 @@ use Laravel\Nova\Contracts\Filter as FilterContract;
 
 abstract class Filter implements FilterContract, JsonSerializable
 {
+    use Metable;
     use AuthorizedToSee;
     use ProxiesCanSeeToGate;
 
@@ -28,13 +30,6 @@ abstract class Filter implements FilterContract, JsonSerializable
      * @var string
      */
     public $component = 'select-filter';
-
-    /**
-     * The meta data for the filter.
-     *
-     * @var array
-     */
-    public $meta = [];
 
     /**
      * Apply the filter to the given query.
@@ -92,29 +87,6 @@ abstract class Filter implements FilterContract, JsonSerializable
     public function default()
     {
         return '';
-    }
-
-    /**
-     * Get additional meta information to merge with the filter payload.
-     *
-     * @return array
-     */
-    public function meta()
-    {
-        return $this->meta;
-    }
-
-    /**
-     * Set additional meta information for the filter.
-     *
-     * @param  array  $meta
-     * @return $this
-     */
-    public function withMeta(array $meta)
-    {
-        $this->meta = array_merge($this->meta, $meta);
-
-        return $this;
     }
 
     /**

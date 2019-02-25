@@ -5,6 +5,7 @@ namespace Laravel\Nova\Actions;
 use Closure;
 use JsonSerializable;
 use Laravel\Nova\Nova;
+use Laravel\Nova\Metable;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\AuthorizedToSee;
@@ -15,6 +16,7 @@ use Laravel\Nova\Exceptions\MissingActionHandlerException;
 
 class Action implements JsonSerializable
 {
+    use Metable;
     use AuthorizedToSee;
     use ProxiesCanSeeToGate;
 
@@ -369,7 +371,7 @@ class Action implements JsonSerializable
      */
     public function jsonSerialize()
     {
-        return [
+        return array_merge([
             'component' => $this->component(),
             'destructive' => $this instanceof DestructiveAction,
             'name' => $this->name(),
@@ -380,6 +382,6 @@ class Action implements JsonSerializable
             'onlyOnDetail' => $this->onlyOnDetail,
             'onlyOnIndex' => $this->onlyOnIndex,
             'withoutConfirmation' => $this->withoutConfirmation,
-        ];
+        ], $this->meta());
     }
 }

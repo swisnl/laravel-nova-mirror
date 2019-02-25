@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 abstract class Element implements JsonSerializable
 {
+    use Metable;
     use AuthorizedToSee;
     use ProxiesCanSeeToGate;
 
@@ -23,13 +24,6 @@ abstract class Element implements JsonSerializable
      * @var bool
      */
     public $onlyOnDetail = false;
-
-    /**
-     * The meta data for the element.
-     *
-     * @var array
-     */
-    public $meta = [];
 
     /**
      * Create a new element.
@@ -81,29 +75,6 @@ abstract class Element implements JsonSerializable
     public function onlyOnDetail()
     {
         $this->onlyOnDetail = true;
-
-        return $this;
-    }
-
-    /**
-     * Get additional meta information to merge with the element payload.
-     *
-     * @return array
-     */
-    public function meta()
-    {
-        return $this->meta;
-    }
-
-    /**
-     * Set additional meta information for the element.
-     *
-     * @param  array  $meta
-     * @return $this
-     */
-    public function withMeta(array $meta)
-    {
-        $this->meta = array_merge($this->meta, $meta);
 
         return $this;
     }

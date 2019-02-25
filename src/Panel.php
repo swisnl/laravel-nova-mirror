@@ -7,6 +7,8 @@ use Illuminate\Http\Resources\MergeValue;
 
 class Panel extends MergeValue implements JsonSerializable
 {
+    use Metable;
+
     /**
      * The name of the panel.
      *
@@ -85,10 +87,10 @@ class Panel extends MergeValue implements JsonSerializable
      */
     public function jsonSerialize()
     {
-        return [
+        return array_merge([
             'component' => 'panel',
             'name' => $this->name,
             'showToolbar' => $this->showToolbar,
-        ];
+        ], $this->meta());
     }
 }
