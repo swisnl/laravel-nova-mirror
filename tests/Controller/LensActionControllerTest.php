@@ -55,11 +55,10 @@ class LensActionControllerTest extends IntegrationTest
         $this->assertEquals('Taylor Otwell', NoopAction::$appliedFields[0]->test);
     }
 
-    /**
-     * @expectedException LogicException
-     */
     public function test_lens_actions_cant_be_applied_to_entire_lens_if_lens_returns_resource()
     {
+        $this->expectException(\LogicException::class);
+
         $user = factory(User::class)->create();
         $user2 = factory(User::class)->create();
 

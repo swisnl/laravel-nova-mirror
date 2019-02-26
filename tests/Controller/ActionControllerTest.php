@@ -527,22 +527,19 @@ class ActionControllerTest extends IntegrationTest
         $this->assertEmpty(NoopAction::$applied);
     }
 
-    /**
-     * @expectedException \Laravel\Nova\Exceptions\MissingActionHandlerException
-     */
     public function test_exception_is_thrown_if_handle_method_is_missing()
     {
+        $this->expectException(\Laravel\Nova\Exceptions\MissingActionHandlerException::class);
         $response = $this->withoutExceptionHandling()
                         ->post('/nova-api/users/action?action='.(new EmptyAction)->uriKey(), [
                             'resources' => '1',
                         ]);
     }
 
-    /**
-     * @expectedException \Laravel\Nova\Exceptions\MissingActionHandlerException
-     */
     public function test_exception_is_thrown_if_handle_method_is_missing_for_entire_resource()
     {
+        $this->expectException(\Laravel\Nova\Exceptions\MissingActionHandlerException::class);
+
         $response = $this->withoutExceptionHandling()
                         ->post('/nova-api/users/action?action='.(new EmptyAction)->uriKey(), [
                             'resources' => 'all',

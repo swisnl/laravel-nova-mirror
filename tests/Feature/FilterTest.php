@@ -48,7 +48,7 @@ class FilterTest extends IntegrationTest
     {
         $filter = new CreateDateFilter;
 
-        $this->assertArraySubset([
+        $this->assertSubset([
             'class' => get_class($filter),
             'name' => $filter->name(),
             'component' => $filter->component(),
@@ -63,8 +63,15 @@ class FilterTest extends IntegrationTest
             'extraAttributes' => ['placeholder' => 'This is a placeholder'],
         ]);
 
-        $this->assertArraySubset([
+        $this->assertSubset([
             'extraAttributes' => ['placeholder' => 'This is a placeholder'],
         ], $filter->jsonSerialize());
+    }
+
+    public function assertSubset($subset, $array)
+    {
+        $values = collect($array)->only(array_keys($subset))->all();
+
+        $this->assertEquals($subset, $values, 'The expected subset does not match the given array.');
     }
 }

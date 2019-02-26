@@ -10,3 +10,4 @@ phpunit.xml
 /coverage
 yarn-error.log
 /webpack.mix.js
+.phpunit.result.cache
