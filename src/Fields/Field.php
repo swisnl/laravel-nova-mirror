@@ -57,6 +57,13 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     public $fillCallback;
 
     /**
+     * The callback to be used for computed field.
+     *
+     * @var callable
+     */
+    protected $computedCallback;
+
+    /**
      * The validation rules for creation and updates.
      *
      * @var array
@@ -123,15 +130,22 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
      * Create a new field.
      *
      * @param  string  $name
-     * @param  string|null  $attribute
-     * @param  mixed|null  $resolveCallback
+     * @param  string|callable|null  $attribute
+     * @param  callable|null  $resolveCallback
      * @return void
      */
-    public function __construct($name, $attribute = null, $resolveCallback = null)
+    public function __construct($name, $attribute = null, callable $resolveCallback = null)
     {
         $this->name = $name;
         $this->resolveCallback = $resolveCallback;
-        $this->attribute = $attribute ?? str_replace(' ', '_', Str::lower($name));
+
+        if ($attribute instanceof Closure ||
+            (is_callable($attribute) && is_object($attribute))) {
+            $this->computedCallback = $attribute;
+            $this->attribute = 'ComputedField';
+        } else {
+            $this->attribute = $attribute ?? str_replace(' ', '_', Str::lower($name));
+        }
     }
 
     /**
@@ -182,9 +196,10 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     {
         $attribute = $attribute ?? $this->attribute;
 
-        if ($attribute instanceof Closure ||
-           (is_callable($attribute) && is_object($attribute))) {
-            return $this->resolveComputedAttribute($attribute);
+        if ($attribute === 'ComputedField') {
+            $this->value = call_user_func($this->computedCallback);
+
+            return;
         }
 
         if (! $this->resolveCallback) {
@@ -208,19 +223,6 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     protected function resolveAttribute($resource, $attribute)
     {
         return data_get($resource, str_replace('->', '.', $attribute));
-    }
-
-    /**
-     * Resolve a computed attribute.
-     *
-     * @param  callable  $attribute
-     * @return void
-     */
-    protected function resolveComputedAttribute($attribute)
-    {
-        $this->value = $attribute();
-
-        $this->attribute = 'ComputedField';
     }
 
     /**
