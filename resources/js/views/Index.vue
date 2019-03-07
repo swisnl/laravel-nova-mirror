@@ -1056,6 +1056,13 @@ export default {
         totalPages() {
             return Math.ceil(this.allMatchingResourceCount / this.currentPerPage)
         },
+
+        /**
+         * Get the current per page value from the query string.
+         */
+        currentPerPage() {
+            return this.resourceResponse ? this.resourceResponse.per_page : 25
+        },
     },
 }
 </script>
