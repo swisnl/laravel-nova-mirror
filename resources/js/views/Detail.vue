@@ -506,9 +506,9 @@ export default {
          */
         extraCardParams() {
             return {
-                resourceId: this.resourceId
+                resourceId: this.resourceId,
             }
-        }
+        },
     },
 }
 </script>
