@@ -146,6 +146,17 @@ class Action implements JsonSerializable
     }
 
     /**
+     * Return an open new tab response from the action.
+     *
+     * @param  string  $url
+     * @return array
+     */
+    public static function openInNewTab($url)
+    {
+        return ['openInNewTab' => $url];
+    }
+
+    /**
      * Return a download response from the action.
      *
      * @param  string  $url

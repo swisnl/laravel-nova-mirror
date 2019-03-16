@@ -157,6 +157,8 @@ class UserResource extends Resource
     public function actions(Request $request)
     {
         return [
+            new OpensInNewTabAction,
+            new RedirectAction,
             new DestructiveAction,
             new EmptyAction,
             new ExceptionAction,

@@ -18,6 +18,7 @@ use Laravel\Nova\Tests\Fixtures\EmptyAction;
 use Laravel\Nova\Tests\Fixtures\QueuedAction;
 use Laravel\Nova\Tests\Fixtures\UserResource;
 use Laravel\Nova\Tests\Fixtures\FailingAction;
+use Laravel\Nova\Tests\Fixtures\RedirectAction;
 use Laravel\Nova\Tests\Fixtures\ExceptionAction;
 use Laravel\Nova\Tests\Fixtures\UnrunnableAction;
 use Laravel\Nova\Tests\Fixtures\DestructiveAction;
@@ -25,6 +26,7 @@ use Laravel\Nova\Tests\Fixtures\HandleResultAction;
 use Laravel\Nova\Tests\Fixtures\UnauthorizedAction;
 use Laravel\Nova\Tests\Fixtures\UpdateStatusAction;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Laravel\Nova\Tests\Fixtures\OpensInNewTabAction;
 use Laravel\Nova\Tests\Fixtures\RequiredFieldAction;
 use Laravel\Nova\Tests\Fixtures\QueuedResourceAction;
 use Laravel\Nova\Tests\Fixtures\QueuedUpdateStatusAction;
@@ -85,6 +87,30 @@ class ActionControllerTest extends IntegrationTest
         $this->assertEquals('Noop Action', $actionEvent->name);
         $this->assertEquals(['test' => 'Taylor Otwell'], unserialize($actionEvent->fields));
         $this->assertEquals('finished', $actionEvent->status);
+    }
+
+    public function test_actions_support_redirects()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->withExceptionHandling()
+                        ->post('/nova-api/users/action?action='.(new RedirectAction)->uriKey(), [
+                            'resources' => implode(',', [$user->id]),
+                        ]);
+
+        $this->assertEquals(['redirect' => 'http://yahoo.com'], $response->original);
+    }
+
+    public function test_actions_support_opening_in_a_new_tab()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->withExceptionHandling()
+                        ->post('/nova-api/users/action?action='.(new OpensInNewTabAction)->uriKey(), [
+                            'resources' => implode(',', [$user->id]),
+                        ]);
+
+        $this->assertEquals(['openInNewTab' => 'http://google.com'], $response->original);
     }
 
     public function test_action_fields_are_validated()

@@ -232,6 +232,8 @@ export default {
                 document.body.removeChild(link)
             } else if (response.redirect) {
                 window.location = response.redirect
+            } else if (response.openInNewTab) {
+                window.open(response.openInNewTab, '_blank')
             } else {
                 this.$emit('actionExecuted')
                 this.$toasted.show(this.__('The action ran successfully!'), { type: 'success' })

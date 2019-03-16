@@ -222,13 +222,23 @@
             </div>
 
             <!-- Pagination -->
-            <pagination-links
-                v-if="resourceResponse"
-                :resources="resources"
-                :resource-response="resourceResponse"
-                @previous="selectPreviousPage"
-                @next="selectNextPage"
-            ></pagination-links>
+            <component
+                :is="paginationComponent"
+                v-if="resourceResponse && resources.length > 0"
+                :next="hasNextPage"
+                :previous="hasPreviousPage"
+                @page="selectPage"
+                :pages="totalPages"
+                :page="currentPage"
+            >
+                <span
+                    v-if="resourceCountLabel"
+                    class="text-sm text-80 px-4"
+                    :class="{ 'ml-auto': paginationComponent == 'pagination-links' }"
+                >
+                    {{ resourceCountLabel }}
+                </span>
+            </component>
         </loading-card>
     </loading-view>
 </template>
