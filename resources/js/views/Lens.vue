@@ -438,6 +438,7 @@ export default {
                         viaResource: this.viaResource,
                         viaResourceId: this.viaResourceId,
                         viaRelationship: this.viaRelationship,
+                        relationshipType: this.relationshipType,
                     },
                 })
                 .then(response => {
