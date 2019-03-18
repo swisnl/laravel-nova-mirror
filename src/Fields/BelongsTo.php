@@ -7,7 +7,6 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\TrashedStatus;
 use Laravel\Nova\Rules\Relatable;
-use Illuminate\Database\Eloquent\Model;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Http\Requests\ResourceIndexRequest;
 
@@ -147,11 +146,14 @@ class BelongsTo extends Field
      */
     public function resolve($resource, $attribute = null)
     {
-        if ($resource instanceof Model && $resource->relationLoaded($this->attribute)) {
+        $value = null;
+
+        if ($resource->relationLoaded($this->attribute)) {
             $value = $resource->getRelation($this->attribute);
-        } else {
-            $value = $resource->{$this->attribute}()->withoutGlobalScopes()->first();
-            $resource->setRelation($this->attribute, $value);
+        }
+
+        if (! $value) {
+            $value = $resource->{$this->attribute}()->withoutGlobalScopes()->getResults();
         }
 
         if ($value) {
@@ -162,6 +164,18 @@ class BelongsTo extends Field
             $this->viewable = $this->viewable
                 && Nova::newResourceFromModel($value)->authorizedTo(request(), 'view');
         }
+    }
+
+    /**
+     * Resolve the field's value for display.
+     *
+     * @param  mixed  $resource
+     * @param  string|null  $attribute
+     * @return void
+     */
+    public function resolveForDisplay($resource, $attribute = null)
+    {
+        //
     }
 
     /**

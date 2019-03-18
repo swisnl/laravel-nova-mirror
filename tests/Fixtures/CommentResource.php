@@ -71,6 +71,22 @@ class CommentResource extends Resource
     }
 
     /**
+     * Build an "index" query for the given resource.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (isset($_SERVER['nova.comments.useEager'])) {
+            return $query->with('commentable', 'author');
+        }
+
+        return $query;
+    }
+
+    /**
      * Build a "relatable" query for the posts.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
