@@ -109,6 +109,8 @@ export default {
             const { data: fields } = await Nova.request()
                 .get(`/nova-api/${this.resourceName}/${this.resourceId}/update-fields`, {
                     params: {
+                        editing: true,
+                        editMode: 'update',
                         viaResource: this.viaResource,
                         viaResourceId: this.viaResourceId,
                         viaRelationship: this.viaRelationship,

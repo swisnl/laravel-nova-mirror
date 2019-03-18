@@ -67,11 +67,4 @@ class FilterTest extends IntegrationTest
             'extraAttributes' => ['placeholder' => 'This is a placeholder'],
         ], $filter->jsonSerialize());
     }
-
-    public function assertSubset($subset, $array)
-    {
-        $values = collect($array)->only(array_keys($subset))->all();
-
-        $this->assertEquals($subset, $values, 'The expected subset does not match the given array.');
-    }
 }

@@ -2,7 +2,7 @@
     <div>
         <default-field :field="field" :show-errors="false" :field-name="fieldName">
             <select
-                :disabled="isLocked"
+                :disabled="isLocked || isReadonly"
                 :data-testid="`${field.attribute}-type`"
                 :dusk="`${field.attribute}-type`"
                 slot="field"
@@ -33,9 +33,9 @@
         >
             <template slot="field">
                 <search-input
-                    v-if="isSearchable && !isLocked"
+                    v-if="isSearchable && !isLocked && !isReadonly"
                     :data-testid="`${field.attribute}-search-input`"
-                    :disabled="!resourceType || isLocked"
+                    :disabled="!resourceType || isLocked || isReadonly"
                     @input="performSearch"
                     @clear="clearSelection"
                     @selected="selectResource"
@@ -65,14 +65,16 @@
                     </div>
                 </search-input>
 
-                <select
+                <select-control
                     v-if="!isSearchable || isLocked"
-                    :data-testid="`${field.attribute}-select`"
-                    :dusk="`${field.attribute}-select`"
                     class="form-control form-select mb-3 w-full"
                     :class="{ 'border-danger': hasError }"
-                    :disabled="!resourceType || isLocked"
+                    :dusk="`${field.attribute}-select`"
                     @change="selectResourceFromSelectControl"
+                    :disabled="!resourceType || isLocked || isReadonly"
+                    :options="availableResources"
+                    :selected="selectedResourceId"
+                    label="display"
                 >
                     <option
                         value=""
@@ -81,16 +83,7 @@
                     >
                         {{ __('Choose') }} {{ fieldTypeName }}
                     </option>
-
-                    <option
-                        v-for="resource in availableResources"
-                        :key="resource.value"
-                        :value="resource.value"
-                        :selected="selectedResourceId == resource.value"
-                    >
-                        {{ resource.display }}
-                    </option>
-                </select>
+                </select-control>
 
                 <!-- Trashed State -->
                 <div v-if="softDeletes && !isLocked">
@@ -325,6 +318,13 @@ export default {
             }
 
             return ''
+        },
+
+        /**
+         * Determine if the field is set to readonly.
+         */
+        isReadonly() {
+            return this.field.readonly || _.get(this.field, 'extraAttributes.readonly')
         },
     },
 }

@@ -177,7 +177,13 @@ export default {
                     `/nova-api/${this.resourceName}/${this.resourceId}/update-pivot-fields/${
                         this.relatedResourceName
                     }/${this.relatedResourceId}`,
-                    { params: { viaRelationship: this.viaRelationship } }
+                    {
+                        params: {
+                            editing: true,
+                            editMode: 'update-attached',
+                            viaRelationship: this.viaRelationship,
+                        },
+                    }
                 )
                 .catch(error => {
                     if (error.response.status == 404) {

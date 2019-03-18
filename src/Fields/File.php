@@ -449,17 +449,17 @@ class File extends Field implements DeletableContract
     }
 
     /**
-     * Get additional meta information to merge with the element payload.
+     * Prepare the field for JSON serialization.
      *
      * @return array
      */
-    public function meta()
+    public function jsonSerialize()
     {
-        return array_merge([
+        return array_merge(parent::jsonSerialize(), [
             'thumbnailUrl' => $this->resolveThumbnailUrl(),
             'previewUrl' => $this->resolvePreviewUrl(),
             'downloadable' => $this->downloadsAreEnabled && isset($this->downloadResponseCallback) && ! empty($this->value),
             'deletable' => isset($this->deleteCallback) && $this->deletable,
-        ], $this->meta);
+        ]);
     }
 }

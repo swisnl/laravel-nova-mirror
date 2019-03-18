@@ -4,11 +4,12 @@
             <input
                 :id="field.attribute"
                 :dusk="field.attribute"
-                type="search"
+                type="text"
                 v-model="value"
                 class="w-full form-control form-input form-input-bordered"
                 :class="errorClasses"
                 :placeholder="field.name"
+                :disabled="isReadonly"
             />
         </template>
     </default-field>

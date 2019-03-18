@@ -838,6 +838,33 @@ textarea.form-input:read-only,
   stroke-width: 6px !important;
 }
 
+/* Trix
+---------------------------------------------------------------------------- */
+trix-editor {
+  @apply rounded-lg;
+}
+
+.disabled trix-editor,
+.disabled trix-toolbar {
+  pointer-events: none;
+}
+
+.disabled trix-editor {
+  background-color: var(--30);
+}
+
+.disabled trix-toolbar {
+  display: none !important;
+}
+
+trix-editor:empty:not(:focus)::before {
+  color: var(--70);
+}
+
+trix-editor.disabled {
+  pointer-events: none;
+}
+
 /* Tailwind Utilities
 ---------------------------------------------------------------------------- */
 @tailwind utilities;

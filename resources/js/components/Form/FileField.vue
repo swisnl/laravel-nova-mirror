@@ -46,22 +46,26 @@
                 </portal>
             </div>
 
-            <span class="form-file mr-4">
+            <span class="form-file mr-4" :class="{ 'opacity-75': isReadonly }">
                 <input
                     ref="fileField"
                     :dusk="field.attribute"
-                    class="form-file-input"
+                    class="form-file-input select-none"
                     type="file"
                     :id="idAttr"
                     name="name"
                     @change="fileChange"
+                    :disabled="isReadonly"
                 />
-                <label :for="labelFor" class="form-file-btn btn btn-default btn-primary">
+                <label
+                    :for="labelFor"
+                    class="form-file-btn btn btn-default btn-primary select-none"
+                >
                     {{ __('Choose File') }}
                 </label>
             </span>
 
-            <span class="text-gray-50"> {{ currentLabel }} </span>
+            <span class="text-gray-50 select-none"> {{ currentLabel }} </span>
 
             <p v-if="hasError" class="text-xs mt-2 text-danger">{{ firstError }}</p>
         </template>
@@ -157,10 +161,16 @@ export default {
     },
 
     computed: {
+        /**
+         * Determine if the field has an upload error.
+         */
         hasError() {
             return this.uploadErrors.has(this.fieldAttribute)
         },
 
+        /**
+         * Return the first error for the field.
+         */
         firstError() {
             if (this.hasError) {
                 return this.uploadErrors.first(this.fieldAttribute)
@@ -168,29 +178,28 @@ export default {
         },
 
         /**
-         * The current label of the file field
+         * The current label of the file field.
          */
         currentLabel() {
             return this.fileName || this.__('no file selected')
         },
 
         /**
-         * The ID attribute to use for the file field
+         * The ID attribute to use for the file field.
          */
         idAttr() {
             return this.labelFor
         },
 
         /**
-         * The label attribute to use for the file field
-         * @return {[type]} [description]
+         * The label attribute to use for the file field.
          */
         labelFor() {
             return `file-${this.field.attribute}`
         },
 
         /**
-         * Determine whether the field has a value
+         * Determine whether the field has a value.
          */
         hasValue() {
             return (
@@ -201,23 +210,29 @@ export default {
         },
 
         /**
-         * Determine whether the field should show the loader component
+         * Determine whether the field should show the loader component.
          */
         shouldShowLoader() {
             return !Boolean(this.deleted) && Boolean(this.imageUrl)
         },
 
         /**
-         * Determine whether the field should show the remove button
+         * Determine whether the field should show the remove button.
          */
         shouldShowRemoveButton() {
             return Boolean(this.field.deletable)
         },
 
+        /**
+         * Return the preview or thumbnail URL for the field.
+         */
         imageUrl() {
             return this.field.previewUrl || this.field.thumbnailUrl
         },
 
+        /**
+         * Determine the maximum width of the field.
+         */
         maxWidth() {
             return this.field.maxWidth || 320
         },

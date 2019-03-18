@@ -10,6 +10,7 @@
                 :class="errorClasses"
                 :placeholder="field.name"
                 autocomplete="off"
+                :disabled="isReadonly"
             />
         </template>
     </default-field>

@@ -88,6 +88,7 @@ export default {
                 lineNumbers: true,
                 theme: 'dracula',
                 viewportMargin: Infinity,
+                ...{ readOnly: this.isReadonly },
             },
             ...this.field.options,
         }

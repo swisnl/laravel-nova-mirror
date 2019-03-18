@@ -25,7 +25,7 @@ class ID extends Field
     }
 
     /**
-     * Create a new, resolved ID field for the givne model.
+     * Create a new, resolved ID field for the given model.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return static

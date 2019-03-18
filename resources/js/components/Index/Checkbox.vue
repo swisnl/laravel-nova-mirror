@@ -8,6 +8,7 @@
             :aria-checked="checked"
             @keydown.prevent.space.enter="toggle"
             @click="toggle"
+            :class="{ 'opacity-75': disabled }"
         >
             <input class="hidden" type="checkbox" :checked="checked" :disabled="disabled" />
 
@@ -80,7 +81,9 @@ export default {
 
     methods: {
         toggle(event) {
-            this.$emit('input', !this.checked)
+            if (!this.disabled) {
+                this.$emit('input', !this.checked)
+            }
         },
     },
 }

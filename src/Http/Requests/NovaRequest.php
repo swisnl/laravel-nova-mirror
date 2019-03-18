@@ -21,4 +21,24 @@ class NovaRequest extends FormRequest
             ['belongsToMany', 'morphToMany']
         );
     }
+
+    /**
+     * Determine if this request is an attach or create request.
+     *
+     * @return bool
+     */
+    public function isCreateOrAttachRequest()
+    {
+        return $this->editing && in_array($this->editMode, ['create', 'attach']);
+    }
+
+    /**
+     * Determine if this request is an update or update-attached request.
+     *
+     * @return bool
+     */
+    public function isUpdateOrUpdateAttachedRequest()
+    {
+        return $this->editing && in_array($this->editMode, ['update', 'update-attached']);
+    }
 }

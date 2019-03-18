@@ -207,7 +207,13 @@ export default {
                     '/nova-api/' +
                         this.resourceName +
                         '/creation-pivot-fields/' +
-                        this.relatedResourceName
+                        this.relatedResourceName,
+                    {
+                        params: {
+                            editing: true,
+                            editMode: 'attach',
+                        },
+                    }
                 )
                 .then(({ data }) => {
                     this.fields = data

@@ -120,6 +120,13 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     public static $customComponents = [];
 
     /**
+     * The callback used to determine if the field is readonly.
+     *
+     * @var Closure
+     */
+    public $readonlyCallback;
+
+    /**
      * Create a new field.
      *
      * @param  string  $name
@@ -527,6 +534,50 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     }
 
     /**
+     * Set the callback used to determin if the field is readonly.
+     *
+     * @param Closure|bool $callback
+     * @return void
+     */
+    public function readonly($callback)
+    {
+        $this->readonlyCallback = $callback;
+
+        return $this;
+    }
+
+    /**
+     * Determine if the field is readonly.
+     *
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @return bool
+     */
+    public function isReadonly(NovaRequest $request)
+    {
+        return with($this->readonlyCallback, function ($callback) use ($request) {
+            if (is_callable($callback) && call_user_func($callback, $request) || $callback === true) {
+                $this->setReadonlyAttribute();
+
+                return true;
+            }
+
+            return false;
+        });
+    }
+
+    /**
+     * Set the field to a readonly field.
+     *
+     * @return $this
+     */
+    protected function setReadonlyAttribute()
+    {
+        $this->withMeta(['extraAttributes' => ['readonly' => true]]);
+
+        return $this;
+    }
+
+    /**
      * Prepare the field for JSON serialization.
      *
      * @return array
@@ -543,6 +594,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
             'panel' => $this->panel,
             'sortable' => $this->sortable,
             'nullable' => $this->nullable,
+            'readonly' => $this->isReadonly(app(NovaRequest::class)),
             'textAlign' => $this->textAlign,
         ], $this->meta());
     }

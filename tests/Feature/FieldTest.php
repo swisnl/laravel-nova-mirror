@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Tests\Fixtures\UserResource;
 
 class FieldTest extends IntegrationTest
@@ -168,5 +169,33 @@ class FieldTest extends IntegrationTest
         ]);
 
         $this->assertJsonStringEqualsJsonString(json_encode($expected), json_encode($field->jsonSerialize()['options']));
+    }
+
+    public function test_field_can_be_set_to_readonly()
+    {
+        $field = Text::make('Avatar');
+        $field->readonly(true);
+
+        $this->assertTrue($field->isReadonly(NovaRequest::create('/', 'get')));
+    }
+
+    public function test_field_can_be_set_to_readonly_using_a_callback()
+    {
+        $field = Text::make('Avatar');
+        $field->readonly(function () {
+            return true;
+        });
+
+        $this->assertTrue($field->isReadonly(NovaRequest::create('/', 'get')));
+    }
+
+    public function test_field_can_be_set_to_not_be_readonly_using_a_callback()
+    {
+        $field = Text::make('Avatar');
+        $field->readonly(function () {
+            return false;
+        });
+
+        $this->assertFalse($field->isReadonly(NovaRequest::create('/', 'get')));
     }
 }

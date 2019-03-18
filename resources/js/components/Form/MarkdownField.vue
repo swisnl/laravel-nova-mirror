@@ -2,7 +2,7 @@
     <default-field :field="field" :errors="errors" :full-width-content="true">
         <template slot="field">
             <div
-                class="bg-white rounded-lg"
+                class="bg-white rounded-lg overflow-hidden"
                 :class="{
                     'markdown-fullscreen fixed pin z-50': isFullScreen,
                     'form-input form-input-bordered px-0': !isFullScreen,
@@ -10,7 +10,10 @@
                     'border-danger': errors.has('body'),
                 }"
             >
-                <header class="flex items-center content-center justify-between border-b border-60">
+                <header
+                    class="flex items-center content-center justify-between border-b border-60"
+                    :class="{ 'bg-30': isReadonly }"
+                >
                     <ul class="w-full flex items-center content-center list-reset">
                         <button
                             :class="{ 'text-primary font-bold': this.mode == 'write' }"
@@ -27,7 +30,8 @@
                             {{ __('Preview') }}
                         </button>
                     </ul>
-                    <ul class="flex items-center list-reset">
+
+                    <ul v-if="!isReadonly" class="flex items-center list-reset">
                         <button
                             :key="tool.action"
                             @click.prevent="callAction(tool.action)"
@@ -42,8 +46,12 @@
                     </ul>
                 </header>
 
-                <div v-show="mode == 'write'" class="flex markdown-content relative p-4">
-                    <textarea ref="theTextarea" />
+                <div
+                    v-show="mode == 'write'"
+                    class="flex markdown-content relative p-4"
+                    :class="{ 'readonly bg-30': isReadonly }"
+                >
+                    <textarea ref="theTextarea" :class="{ 'bg-30': isReadonly }" />
                 </div>
 
                 <div
@@ -143,6 +151,7 @@ export default {
                     return tool.action
                 }),
             },
+            ...{ readOnly: this.isReadonly },
         })
 
         _.each(keyMaps, (action, map) => {
@@ -229,8 +238,10 @@ export default {
         },
 
         callAction(action) {
-            this.focus()
-            actions[action].call(this)
+            if (!this.isReadonly) {
+                this.focus()
+                actions[action].call(this)
+            }
         },
     },
 
@@ -308,6 +319,10 @@ export default {
     font: 14px/1.5 Menlo, Consolas, Monaco, 'Andale Mono', monospace;
     box-sizing: border-box;
     width: 100%;
+}
+
+.readonly > .CodeMirror {
+    background-color: var(--30) !important;
 }
 
 .markdown-fullscreen .markdown-content {

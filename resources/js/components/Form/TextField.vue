@@ -7,6 +7,7 @@
                 :dusk="field.attribute"
                 v-model="value"
                 v-bind="extraAttributes"
+                :disabled="isReadonly"
             />
         </template>
     </default-field>

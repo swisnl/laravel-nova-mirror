@@ -13,6 +13,7 @@
                 :first-day-of-week="firstDayOfWeek"
                 :class="errorClasses"
                 @change="handleChange"
+                :disabled="isReadonly"
             />
         </template>
     </default-field>

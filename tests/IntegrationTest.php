@@ -171,4 +171,18 @@ abstract class IntegrationTest extends TestCase
             'prefix'   => '',
         ]);
     }
+
+    /**
+     * Assert a top-level subset for an array.
+     *
+     * @param array $subset
+     * @param array $array
+     * @return void
+     */
+    public function assertSubset($subset, $array)
+    {
+        $values = collect($array)->only(array_keys($subset))->all();
+
+        $this->assertEquals($subset, $values, 'The expected subset does not match the given array.');
+    }
 }

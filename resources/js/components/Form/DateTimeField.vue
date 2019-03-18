@@ -12,6 +12,7 @@
                     :first-day-of-week="firstDayOfWeek"
                     :class="errorClasses"
                     @change="handleChange"
+                    :disabled="isReadonly"
                 />
 
                 <span class="text-80 text-sm ml-2">({{ userTimezone }})</span>
@@ -27,16 +28,6 @@ export default {
     mixins: [HandlesValidationErrors, FormField, InteractsWithDates],
 
     data: () => ({ localizedValue: '' }),
-
-    computed: {
-        firstDayOfWeek() {
-            return this.field.firstDayOfWeek || 0
-        },
-
-        placeholder() {
-            return this.field.placeholder || moment().format('YYYY-MM-DD HH:mm:ss')
-        },
-    },
 
     methods: {
         /*
@@ -58,6 +49,16 @@ export default {
          */
         handleChange(value) {
             this.value = this.toAppTimezone(value)
+        },
+    },
+
+    computed: {
+        firstDayOfWeek() {
+            return this.field.firstDayOfWeek || 0
+        },
+
+        placeholder() {
+            return this.field.placeholder || moment().format('YYYY-MM-DD HH:mm:ss')
         },
     },
 }

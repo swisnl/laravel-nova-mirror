@@ -103,6 +103,8 @@ export default {
                 `/nova-api/${this.resourceName}/creation-fields`,
                 {
                     params: {
+                        editing: true,
+                        editMode: 'create',
                         viaResource: this.viaResource,
                         viaResourceId: this.viaResourceId,
                         viaRelationship: this.viaRelationship,
