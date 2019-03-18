@@ -2,7 +2,6 @@
 
 namespace Laravel\Nova\Fields;
 
-use Laravel\Nova\Nova;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\TrashedStatus;
@@ -159,10 +158,12 @@ class BelongsTo extends Field
         if ($value) {
             $this->belongsToId = $value->getKey();
 
-            $this->value = $this->formatDisplayValue($value);
+            $resource = new $this->resourceClass($value);
+
+            $this->value = $this->formatDisplayValue($resource);
 
             $this->viewable = $this->viewable
-                && Nova::newResourceFromModel($value)->authorizedTo(request(), 'view');
+                && $resource->authorizedToView(request());
         }
     }
 

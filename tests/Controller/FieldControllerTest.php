@@ -156,6 +156,7 @@ class FieldControllerTest extends IntegrationTest
         $user = factory(User::class)->create();
         $post = factory(Post::class)->create(['user_id' => $user->id]);
 
+        $_SERVER['nova.user.authorizable'] = true;
         $_SERVER['nova.user.viewable'] = false;
 
         $response = $this->withExceptionHandling()
@@ -165,7 +166,7 @@ class FieldControllerTest extends IntegrationTest
 
         $fields = collect(json_decode(json_encode($response->original['resource']['fields']), true));
 
-        unset($_SERVER['nova.user.viewable']);
+        unset($_SERVER['nova.user.viewable'], $_SERVER['nova.user.authorizable']);
 
         $this->assertFalse($fields->firstWhere('attribute', 'user')['viewable']);
     }
