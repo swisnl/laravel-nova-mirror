@@ -5,6 +5,8 @@ namespace Laravel\Nova;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Events\ServingNova;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Debug\ExceptionHandler;
+use Laravel\Nova\Exceptions\NovaExceptionHandler;
 
 class NovaApplicationServiceProvider extends ServiceProvider
 {
@@ -19,7 +21,7 @@ class NovaApplicationServiceProvider extends ServiceProvider
 
         Nova::serving(function (ServingNova $event) {
             $this->authorization();
-
+            $this->registerExceptionHandler();
             $this->resources();
             Nova::cards($this->cards());
             Nova::tools($this->tools());
@@ -87,6 +89,16 @@ class NovaApplicationServiceProvider extends ServiceProvider
     public function tools()
     {
         return [];
+    }
+
+    /**
+     * Register Nova's custom exception handler.
+     *
+     * @return void
+     */
+    protected function registerExceptionHandler()
+    {
+        $this->app->bind(ExceptionHandler::class, NovaExceptionHandler::class);
     }
 
     /**
