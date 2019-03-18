@@ -580,7 +580,7 @@ export default {
                         viaResourceId: this.viaResourceId,
                         viaRelationship: this.viaRelationship,
                         relationshipType: this.relationshipType,
-                    }
+                    },
                 })
                 .then(response => {
                     this.actions = _.filter(response.data.actions, action => {
