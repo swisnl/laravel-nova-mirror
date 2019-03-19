@@ -47,7 +47,7 @@ trait InteractsWithResources
      */
     public function resource()
     {
-        return tap(Nova::resourceForKey($this->resource), function ($resource) {
+        return tap(Nova::resourceForKey($this->route('resource')), function ($resource) {
             abort_if(is_null($resource), 404);
             abort_if(! $resource::authorizedToViewAny($this), 403);
         });
