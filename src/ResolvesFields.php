@@ -81,9 +81,9 @@ trait ResolvesFields
      */
     public function creationFields(NovaRequest $request)
     {
-        return $this->removeComputedFields($this->resolveFields($request, function ($fields) {
+        return $this->resolveFields($request, function ($fields) {
             return $this->removeNonCreationFields($fields);
-        }));
+        });
     }
 
     /**
@@ -111,21 +111,9 @@ trait ResolvesFields
         return $fields->reject(function ($field) {
             return $field instanceof ListableField ||
                    $field instanceof ResourceToolElement ||
+                   $field->attribute === 'ComputedField' ||
                    ($field instanceof ID && $field->attribute === $this->resource->getKeyName()) ||
                    ! $field->showOnCreation;
-        });
-    }
-
-    /**
-     * Remove computed fields from the given collection.
-     *
-     * @param \Illuminate\Support\Collection $fields
-     * @return \Illuminate\Support\Collection
-     */
-    protected function removeComputedFields(Collection $fields)
-    {
-        return $fields->reject(function ($field) {
-            return $field->attribute === 'ComputedField';
         });
     }
 
@@ -137,9 +125,9 @@ trait ResolvesFields
      */
     public function updateFields(NovaRequest $request)
     {
-        return $this->removeComputedFields($this->resolveFields($request, function ($fields) {
+        return $this->resolveFields($request, function ($fields) {
             return $this->removeNonUpdateFields($fields);
-        }));
+        });
     }
 
     /**
@@ -167,6 +155,7 @@ trait ResolvesFields
         return $fields->reject(function ($field) {
             return $field instanceof ListableField ||
                    $field instanceof ResourceToolElement ||
+                   $field->attribute === 'ComputedField' ||
                    ($field instanceof ID && $field->attribute === $this->resource->getKeyName()) ||
                    ! $field->showOnUpdate;
         });
