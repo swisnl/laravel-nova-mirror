@@ -130,6 +130,7 @@ class UserResource extends Resource
             }),
 
             new ResourceToolElement('component-name'),
+            new MyResourceTool(),
         ];
     }
 

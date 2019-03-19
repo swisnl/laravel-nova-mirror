@@ -21,7 +21,7 @@ class ResourceTool extends Panel
      *
      * @var string
      */
-    public $component;
+    public $toolComponent;
 
     /**
      * Create a new resource tool instance.
@@ -30,7 +30,7 @@ class ResourceTool extends Panel
      */
     public function __construct()
     {
-        parent::__construct($this->name(), [new ResourceToolElement($this->component())]);
+        parent::__construct($this->name(), [new ResourceToolElement($this->toolComponent())]);
 
         $this->element = $this->data[0];
     }
@@ -60,9 +60,9 @@ class ResourceTool extends Panel
      *
      * @return string
      */
-    public function component()
+    public function toolComponent()
     {
-        return $this->component ?? Str::kebab(class_basename(get_class($this)));
+        return $this->toolComponent ?? Str::kebab(class_basename(get_class($this)));
     }
 
     /**

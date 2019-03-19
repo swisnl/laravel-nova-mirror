@@ -4,6 +4,7 @@ namespace Laravel\Nova\Tests\Controller;
 
 use Laravel\Nova\Nova;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\ResourceToolElement;
 use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\Role;
 use Laravel\Nova\Tests\Fixtures\User;
@@ -175,5 +176,27 @@ class ResourceShowTest extends IntegrationTest
         $panels = $response->original['panels'];
         $this->assertEquals(1, count($panels));
         $this->assertEquals('RoleResource Details', $panels[0]->name);
+    }
+
+    public function test_resource_tool_component_name()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->withExceptionHandling()
+            ->getJson('/nova-api/users/'.$user->id);
+
+        $response->assertStatus(200);
+
+        $fields = $response->original['resource']['fields'];
+        $filed = collect($fields)->whereInstanceOf(ResourceToolElement::class)->firstWhere('panel', 'My Resource Tool');
+
+        $this->assertNotEmpty($filed);
+        $this->assertEquals('my-resource-tool', $filed->component);
+
+        $panels = $response->original['panels'];
+        $panel = collect($panels)->firstWhere('name', 'My Resource Tool');
+
+        $this->assertNotEmpty($panel);
+        $this->assertEquals('panel', $panel->component);
     }
 }
