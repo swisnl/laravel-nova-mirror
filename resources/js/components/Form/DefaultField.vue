@@ -4,7 +4,7 @@
             <slot>
                 <form-label
                     :label-for="field.attribute"
-                    :class="{ 'mb-2': field.helpText && showHelpText }"
+                    :class="{ 'mb-2': showHelpText && field.helpText }"
                 >
                     {{ fieldLabel }}
                 </form-label>
@@ -13,7 +13,7 @@
         <div class="py-6 px-8" :class="fieldClasses">
             <slot name="field" />
 
-            <help-text class="error-text mt-2 text-danger" v-if="hasError && showErrors">
+            <help-text class="error-text mt-2 text-danger" v-if="showErrors && hasError">
                 {{ firstError }}
             </help-text>
 
