@@ -207,7 +207,7 @@ trait PerformsValidation
     protected static function formatRules(NovaRequest $request, array $rules)
     {
         $replacements = array_filter([
-            '{{resourceId}}' => $request->resourceId,
+            '{{resourceId}}' => str_replace(['\'', '"', ',', '\\'], '', $request->resourceId),
         ]);
 
         if (empty($replacements)) {
