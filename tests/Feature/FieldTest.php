@@ -64,6 +64,19 @@ class FieldTest extends IntegrationTest
         $this->assertEquals('Computed', $field->value);
     }
 
+    public function test_computed_fields_resolve_with_resource()
+    {
+        $field = Text::make('InvokableComputed', function ($resource) {
+            return $resource->value;
+        });
+
+        $field->resolve((object) ['value' => 'Computed']);
+        $this->assertEquals('Computed', $field->value);
+
+        $field->resolveForDisplay((object) ['value' => 'Other value']);
+        $this->assertEquals('Computed', $field->value);
+    }
+
     public function test_can_see_when_proxies_to_gate()
     {
         unset($_SERVER['__nova.ability']);

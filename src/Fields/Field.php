@@ -204,7 +204,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
         $attribute = $attribute ?? $this->attribute;
 
         if ($attribute === 'ComputedField') {
-            $this->value = call_user_func($this->computedCallback);
+            $this->value = call_user_func($this->computedCallback, $resource);
 
             return;
         }
