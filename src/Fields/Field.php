@@ -539,7 +539,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
      * Set the callback used to determin if the field is readonly.
      *
      * @param Closure|bool $callback
-     * @return void
+     * @return $this
      */
     public function readonly($callback)
     {
