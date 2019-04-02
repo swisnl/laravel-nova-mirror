@@ -389,7 +389,7 @@ export default {
                     this.encodedFilters +
                     this.currentSearch +
                     this.currentPage +
-                    this.currentPerPage +
+                    this.perPage +
                     this.currentOrderBy +
                     this.currentOrderByDirection +
                     this.currentTrashed
@@ -508,6 +508,7 @@ export default {
                     this.resourceResponse = data
                     this.resources = data.resources
                     this.softDeletes = data.softDeletes
+                    this.perPage =data.per_page
 
                     this.loading = false
 
@@ -686,6 +687,13 @@ export default {
         selectPage(page) {
             this.updateQueryString({ [this.pageParameter]: page })
         },
+
+        /**
+         * Sync the per page values from the query string.
+         */
+        initializePerPageFromQueryString() {
+            this.perPage = this.$route.query[this.perPageParameter] || 25
+        },
     },
 
     computed: {
@@ -762,7 +770,7 @@ export default {
                 filters: this.encodedFilters,
                 orderBy: this.currentOrderBy,
                 orderByDirection: this.currentOrderByDirection,
-                perPage: this.currentPerPage,
+                perPage: this.perPage,
                 trashed: this.currentTrashed,
                 page: this.currentPage,
                 viaResource: this.viaResource,
@@ -1058,7 +1066,7 @@ export default {
          * Get the current per page value from the query string.
          */
         currentPerPage() {
-            return this.resourceResponse ? this.resourceResponse.per_page : 25
+            return this.perPage
         },
     },
 }
