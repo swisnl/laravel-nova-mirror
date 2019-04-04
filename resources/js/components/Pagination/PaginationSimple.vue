@@ -3,14 +3,14 @@
         <nav class="flex justify-between items-center">
             <!-- Previous Link -->
             <button
-                :disabled="!hasPreviousPages"
+                :disabled="!hasPreviousPages || linksDisabled"
                 class="btn btn-link py-3 px-4"
                 :class="{
                     'text-primary dim': hasPreviousPages,
-                    'text-80 opacity-50': !hasPreviousPages,
+                    'text-80 opacity-50': !hasPreviousPages || linksDisabled,
                 }"
                 rel="prev"
-                @click.prevent="selectPreviousPage()"
+                @click.prevent="selectPreviousPage"
                 dusk="previous"
             >
                 {{ __('Previous') }}
@@ -20,14 +20,14 @@
 
             <!-- Next Link -->
             <button
-                :disabled="!hasMorePages"
+                :disabled="!hasMorePages || linksDisabled"
                 class="btn btn-link py-3 px-4"
                 :class="{
                     'text-primary dim': hasMorePages,
-                    'text-80 opacity-50': !hasMorePages,
+                    'text-80 opacity-50': !hasMorePages || linksDisabled,
                 }"
                 rel="next"
-                @click.prevent="selectNextPage()"
+                @click.prevent="selectNextPage"
                 dusk="next"
             >
                 {{ __('Next') }}
@@ -57,6 +57,14 @@ export default {
         },
     },
 
+    data: () => ({ linksDisabled: false }),
+
+    mounted() {
+        Nova.$on('resources-loaded', () => {
+            this.linksDisabled = false
+        })
+    },
+
     methods: {
         /**
          * Select the previous page.
@@ -76,6 +84,7 @@ export default {
          * Select the page.
          */
         selectPage(page) {
+            this.linksDisabled = true
             this.$emit('page', page)
         },
     },

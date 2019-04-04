@@ -512,6 +512,8 @@ export default {
                     this.loading = false
 
                     this.getAllMatchingResourceCount()
+
+                    Nova.$emit('resources-loaded')
                 })
             })
         },
