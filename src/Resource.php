@@ -375,7 +375,7 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     public function jsonSerialize()
     {
         $this->serializeWithId($this->resolveFields(
-            resolve(Request::class)
+            resolve(NovaRequest::class)
         ));
     }
 
