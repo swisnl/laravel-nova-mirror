@@ -9,6 +9,7 @@ use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\IntegrationTest;
 use Laravel\Nova\Tests\Fixtures\Address;
 use Laravel\Nova\Tests\Fixtures\CustomKey;
+use Laravel\Nova\Tests\Fixtures\Recipient;
 use Laravel\Nova\Tests\Fixtures\UserPolicy;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
@@ -265,6 +266,23 @@ class ResourceCreationTest extends IntegrationTest
                         ]);
 
         $response->assertStatus(201);
+    }
+
+    public function test_resource_that_belongs_to_with_custom_owner_key()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->withExceptionHandling()
+            ->postJson('/nova-api/recipients', [
+                'user' => $user->id,
+                'name' => 'Fake Name',
+            ]);
+
+        $response->assertStatus(201);
+
+        $recipient = Recipient::query()->first();
+
+        $this->assertEquals($user->email, $recipient->email);
     }
 
     public function test_related_resource_cant_be_full_for_has_one_relationships()

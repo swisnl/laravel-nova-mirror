@@ -332,15 +332,25 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
         if ($request->exists($requestAttribute)) {
             $value = $request[$requestAttribute];
 
-            $isNull = false;
-
-            if ($this->nullable) {
-                $isNull = is_callable($this->nullValues)
-                    ? ($this->nullValues)($value)
-                    : in_array($value, (array) $this->nullValues);
-            }
-            $model->{$attribute} = $isNull ? null : $value;
+            $model->{$attribute} = $this->isNullValue($value) ? null : $value;
         }
+    }
+
+    /**
+     * Check value for null value.
+     *
+     * @param  mixed $value
+     * @return bool
+     */
+    protected function isNullValue($value)
+    {
+        if (! $this->nullable) {
+            return false;
+        }
+
+        return is_callable($this->nullValues)
+            ? ($this->nullValues)($value)
+            : in_array($value, (array) $this->nullValues);
     }
 
     /**
