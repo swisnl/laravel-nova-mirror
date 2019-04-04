@@ -145,7 +145,7 @@
                                     <heading :level="3" class="mb-3">Lenses</heading>
                                     <p class="text-90 leading-normal">
                                         Need to customize a resource list a little more than a
-                                        filter can provider? No problem. Add lenses to your resource
+                                        filter can provide? No problem. Add lenses to your resource
                                         to take full control over the entire Eloquent query.
                                     </p>
                                 </div>
