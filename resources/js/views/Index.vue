@@ -508,7 +508,7 @@ export default {
                     this.resourceResponse = data
                     this.resources = data.resources
                     this.softDeletes = data.softDeletes
-                    this.perPage =data.per_page
+                    this.perPage = data.per_page
 
                     this.loading = false
 
@@ -770,7 +770,7 @@ export default {
                 filters: this.encodedFilters,
                 orderBy: this.currentOrderBy,
                 orderByDirection: this.currentOrderByDirection,
-                perPage: this.perPage,
+                perPage: this.currentPerPage,
                 trashed: this.currentTrashed,
                 page: this.currentPage,
                 viaResource: this.viaResource,
