@@ -25,7 +25,7 @@ class Password extends Field
      */
     protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute)
     {
-        if (! empty($request->{$requestAttribute})) {
+        if (! empty($request[$requestAttribute])) {
             $model->{$attribute} = Hash::make($request[$requestAttribute]);
         }
     }

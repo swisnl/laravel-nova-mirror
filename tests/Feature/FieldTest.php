@@ -2,10 +2,13 @@
 
 namespace Laravel\Nova\Tests\Feature;
 
+use stdClass;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Tests\IntegrationTest;
@@ -210,5 +213,30 @@ class FieldTest extends IntegrationTest
         });
 
         $this->assertFalse($field->isReadonly(NovaRequest::create('/', 'get')));
+    }
+
+    public function test_collision_of_request_properties()
+    {
+        $request = new NovaRequest([], [
+            'query' => '',
+            'resource' => 'resource',
+        ]);
+
+        $request->setMethod('POST');
+        $request->setRouteResolver(function () use ($request) {
+            return tap(new Route('POST', '/{resource}', function () {
+            }), function (Route $route) use ($request) {
+                $route->bind($request);
+                $route->setParameter('resource', UserResource::class);
+            });
+        });
+
+        $model = new stdClass();
+
+        Text::make('Resource')->fill($request, $model);
+        Password::make('Query')->fill($request, $model);
+
+        $this->assertObjectNotHasAttribute('query', $model);
+        $this->assertEquals('resource', $model->resource);
     }
 }
