@@ -551,7 +551,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
      * @param Closure|bool $callback
      * @return $this
      */
-    public function readonly($callback)
+    public function readonly($callback = true)
     {
         $this->readonlyCallback = $callback;
 
@@ -567,7 +567,7 @@ abstract class Field extends FieldElement implements JsonSerializable, Resolvabl
     public function isReadonly(NovaRequest $request)
     {
         return with($this->readonlyCallback, function ($callback) use ($request) {
-            if (is_callable($callback) && call_user_func($callback, $request) || $callback === true) {
+            if ($callback === true || (is_callable($callback) && call_user_func($callback, $request))) {
                 $this->setReadonlyAttribute();
 
                 return true;
