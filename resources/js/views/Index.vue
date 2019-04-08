@@ -412,7 +412,9 @@ export default {
             })
 
             this.actionEventsRefresher = setInterval(() => {
-                this.getResources()
+                if (document.hasFocus()) {
+                    this.getResources()
+                }
             }, 15 * 1000)
         }
     },
