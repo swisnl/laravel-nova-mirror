@@ -30,6 +30,7 @@ class PartitionResult implements JsonSerializable
     public function __construct(array $value)
     {
         $this->value = $value;
+        $this->colors = new PartitionColors();
     }
 
     /**
@@ -55,7 +56,7 @@ class PartitionResult implements JsonSerializable
      */
     public function colors(array $colors)
     {
-        $this->colors = $colors;
+        $this->colors = new PartitionColors($colors);
 
         return $this;
     }
@@ -70,7 +71,7 @@ class PartitionResult implements JsonSerializable
         return [
             'value' => collect($this->value ?? [])->map(function ($value, $label) {
                 return array_filter([
-                    'color' => $this->colors[$label] ?? null,
+                    'color' => $this->colors->get($label),
                     'label' => $label,
                     'value' => $value,
                 ], function ($value) {
