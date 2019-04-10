@@ -6,7 +6,7 @@ class PartitionColors
 {
     /**
      * The color array to use for the chart.
-     * 
+     *
      * @var array
      */
     public $colors;
@@ -14,7 +14,7 @@ class PartitionColors
     /**
      * The pointer to the current color in the chart array.
      *
-     * @var integer
+     * @var int
      */
     private $pointer = 0;
 
