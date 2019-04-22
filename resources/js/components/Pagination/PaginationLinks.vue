@@ -118,8 +118,10 @@ export default {
          * Select the page.
          */
         selectPage(page) {
-            this.linksDisabled = true
-            this.$emit('page', page)
+            if (this.page != page) {
+                this.linksDisabled = true
+                this.$emit('page', page)
+            }
         },
 
         /**
