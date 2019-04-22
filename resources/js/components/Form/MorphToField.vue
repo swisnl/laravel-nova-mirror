@@ -41,6 +41,7 @@
                     @selected="selectResource"
                     :value="selectedResource"
                     :data="availableResources"
+                    :clearable="field.nullable"
                     trackBy="value"
                     searchBy="display"
                     class="mb-3"

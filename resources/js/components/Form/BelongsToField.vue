@@ -10,6 +10,7 @@
                 :error="hasError"
                 :value="selectedResource"
                 :data="availableResources"
+                :clearable="field.nullable"
                 trackBy="value"
                 searchBy="display"
                 class="mb-3"
@@ -64,7 +65,6 @@
 import _ from 'lodash'
 import storage from '@/storage/BelongsToFieldStorage'
 import { TogglesTrashed, PerformsSearches, HandlesValidationErrors } from 'laravel-nova'
-import { mixin as clickaway } from 'vue-clickaway'
 
 export default {
     mixins: [TogglesTrashed, PerformsSearches, HandlesValidationErrors],

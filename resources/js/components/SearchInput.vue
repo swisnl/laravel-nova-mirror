@@ -34,7 +34,7 @@
             <button
                 type="button"
                 @click.stop="clear"
-                v-if="value && !disabled"
+                v-if="!shouldShowDropdownArrow && !disabled"
                 tabindex="-1"
                 class="absolute p-2 inline-block"
                 style="right: 4px; top: 6px;"
@@ -124,6 +124,10 @@ export default {
         debounce: {
             type: Number,
             default: 500,
+        },
+        clearable: {
+            type: Boolean,
+            default: true,
         },
     },
 
@@ -265,7 +269,7 @@ export default {
 
     computed: {
         shouldShowDropdownArrow() {
-            return this.value == '' || this.value == null
+            return this.value == '' || this.value == null || !this.clearable
         },
     },
 }
