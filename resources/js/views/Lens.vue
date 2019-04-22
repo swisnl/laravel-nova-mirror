@@ -412,6 +412,7 @@ export default {
                     this.resourceResponse = data
                     this.resources = data.resources
                     this.softDeletes = data.softDeletes
+                    this.perPage = data.per_page
                     this.hasId = data.hasId
 
                     this.loading = false
@@ -527,6 +528,13 @@ export default {
          */
         selectPage(page) {
             this.updateQueryString({ [this.pageParameter]: page })
+        },
+
+        /**
+         * Sync the per page values from the query string.
+         */
+        initializePerPageFromQueryString() {
+            this.perPage = this.$route.query[this.perPageParameter] || 25
         },
     },
 
@@ -872,6 +880,13 @@ export default {
                     this.allMatchingResourceCount
                 }`
             )
+        },
+
+        /**
+         * Get the current per page value from the query string.
+         */
+        currentPerPage() {
+            return this.perPage
         },
     },
 }
