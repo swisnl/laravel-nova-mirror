@@ -1,0 +1,36 @@
+<template>
+    <panel-item :field="field">
+        <template slot="value">
+            <KeyValueTable :edit-mode="false" class="overflow-hidden">
+                <KeyValueHeader />
+
+                <div class="bg-white overflow-hidden">
+                    <KeyValueItem
+                        v-for="item in theData"
+                        :item="item"
+                        :disabled="true"
+                        :key="item.key"
+                    />
+                </div>
+            </KeyValueTable>
+        </template>
+    </panel-item>
+</template>
+
+<script>
+import KeyValueItem from '@/components/Form/KeyValueField/KeyValueItem'
+import KeyValueHeader from '@/components/Form/KeyValueField/KeyValueHeader'
+import KeyValueTable from '@/components/Form/KeyValueField/KeyValueTable'
+
+export default {
+    props: ['resource', 'resourceName', 'resourceId', 'field'],
+
+    components: { KeyValueTable, KeyValueHeader, KeyValueItem },
+
+    data: () => ({ theData: [] }),
+
+    created() {
+        this.theData = _.map(this.field.value || {}, (value, key) => ({ key, value }))
+    },
+}
+</script>

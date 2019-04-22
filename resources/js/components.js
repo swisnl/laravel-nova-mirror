@@ -1,6 +1,7 @@
 import Vue from 'vue'
 Vue.config.ignoredElements = ['trix-editor']
 
+import Add from '@/components/Icons/Add'
 import ActionSelector from '@/components/ActionSelector'
 import BasePartitionMetric from '@/components/Metrics/Base/PartitionMetric'
 import BaseTrendMetric from '@/components/Metrics/Base/TrendMetric'
@@ -19,6 +20,7 @@ import CustomDetailToolbar from '@/components/CustomDetailToolbar'
 import CustomIndexHeader from '@/components/CustomIndexHeader'
 import CustomIndexToolbar from '@/components/CustomIndexToolbar'
 import Delete from '@/components/Icons/Delete'
+import Menu from '@/components/Icons/Menu'
 import DeleteMenu from '@/components/DeleteMenu'
 import DeleteResourceModal from '@/components/Modals/DeleteResourceModal'
 import Download from '@/components/Icons/Download'
@@ -114,6 +116,7 @@ Vue.component('heading', Heading)
 Vue.component('help', HelpCard)
 Vue.component('help-text', HelpText)
 Vue.component('icon', Icon)
+Vue.component('icon-add', Add)
 Vue.component('icon-delete', Delete)
 Vue.component('icon-download', Download)
 Vue.component('icon-edit', Edit)
@@ -124,6 +127,7 @@ Vue.component('icon-refresh', Refresh)
 Vue.component('icon-restore', Restore)
 Vue.component('icon-search', Search)
 Vue.component('icon-view', View)
+Vue.component('icon-menu', Menu)
 Vue.component('lens', Lens)
 Vue.component('lens-selector', LensSelector)
 Vue.component('loader', Loader)

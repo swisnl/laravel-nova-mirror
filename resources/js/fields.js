@@ -32,6 +32,10 @@ Vue.component('index-code-field', require('./components/Index/TextField.vue'))
 Vue.component('detail-code-field', require('./components/Detail/CodeField.vue'))
 Vue.component('form-code-field', require('./components/Form/CodeField.vue'))
 
+// KeyValue Field...
+Vue.component('detail-key-value-field', require('./components/Detail/KeyValueField.vue'))
+Vue.component('form-key-value-field', require('./components/Form/KeyValueField/KeyValueField.vue'))
+
 // Date Field
 Vue.component('index-date', require('./components/Index/DateField.vue'))
 Vue.component('form-date', require('./components/Form/DateField.vue'))

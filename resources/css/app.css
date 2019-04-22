@@ -153,6 +153,14 @@ input[type='search']::-webkit-search-cancel-button {
   @apply .bg-white .border .border-60 .px-3 .text-80 .rounded-lg .shadow;
 }
 
+.form-input-row {
+  @apply bg-white px-3 text-80;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  height: 3rem;
+}
+
 .form-select {
   @apply .bg-white .border .border-60 .pl-3 .pr-8 .rounded-lg .text-80 .shadow;
   appearance: none;
@@ -179,6 +187,10 @@ textarea.form-input:read-only,
 .form-select:disabled {
   @apply .bg-30;
   cursor: not-allowed;
+}
+
+.\!bg-white {
+  @apply bg-white !important;
 }
 
 .form-select:focus {
@@ -863,6 +875,12 @@ trix-editor:empty:not(:focus)::before {
 
 trix-editor.disabled {
   pointer-events: none;
+}
+
+/* Cursor
+---------------------------------------------------------------------------- */
+.cursor-text {
+  cursor: text;
 }
 
 /* Tailwind Utilities

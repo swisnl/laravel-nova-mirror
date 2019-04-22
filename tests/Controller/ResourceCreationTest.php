@@ -360,4 +360,33 @@ class ResourceCreationTest extends IntegrationTest
 
         Relation::morphMap([], false);
     }
+
+    public function test_can_create_resources_with_key_value_field()
+    {
+        $response = $this->withoutExceptionHandling()
+                        ->postJson('/nova-api/users', [
+                            'name' => 'David Hemphill',
+                            'email' => 'david@laravel.com',
+                            'password' => 'secret',
+                            'meta' => json_encode([
+                                'age' => 34,
+                                'weight' => 170,
+                                'extra' => [
+                                    'nicknames' => ['Hempy', 'Hemp', 'Internet Ghost'],
+                                ],
+                            ]),
+                        ]);
+
+        $response->assertStatus(201);
+
+        $user = User::first();
+
+        $this->assertEquals([
+                'age' => 34,
+                'weight' => 170,
+                'extra' => ['nicknames' => ['Hempy', 'Hemp', 'Internet Ghost']],
+            ],
+            $user->meta
+        );
+    }
 }

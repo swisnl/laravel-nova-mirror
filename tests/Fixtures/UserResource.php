@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\ResourceToolElement;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -51,8 +52,6 @@ class UserResource extends Resource
      */
     public function authorizedToAdd(NovaRequest $request, $model)
     {
-        return parent::authorizedToAdd($request, $model);
-
         return $_SERVER['nova.user.relatable'] ?? parent::authorizedToAdd($request, $model);
     }
 
@@ -131,6 +130,8 @@ class UserResource extends Resource
 
             new ResourceToolElement('component-name'),
             new MyResourceTool(),
+
+            KeyValue::make('Meta'),
         ];
     }
 

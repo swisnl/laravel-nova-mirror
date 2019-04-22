@@ -35,6 +35,7 @@
         "vue-server-renderer": "^2.5.16"
     },
     "dependencies": {
+        "autosize": "^4.0.2",
         "chartist": "^0.11.0",
         "chartist-plugin-tooltips": "^0.0.17",
         "codemirror": "^5.36.0",
