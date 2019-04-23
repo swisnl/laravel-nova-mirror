@@ -40,7 +40,8 @@ trait SearchControllerTests
 
         $_SESSION['nova.user.cover'] = true;
 
-        $response = $this->withExceptionHandling()->getJson('/nova-api/search?search=1');
+        $response = $this->withExceptionHandling()
+            ->getJson('/nova-api/search?search=1');
 
         unset($_SESSION['nova.user.cover']);
 

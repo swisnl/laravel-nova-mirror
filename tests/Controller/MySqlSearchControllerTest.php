@@ -10,6 +10,12 @@ class MySqlSearchControllerTest extends MySqlIntegrationTest
 
     public function setUp() : void
     {
+        if (($_ENV['RUN_MYSQL_TESTS'] ?? false) === false) {
+            $this->markTestSkipped('MySQL tests not enabled.');
+
+            return;
+        }
+
         parent::setUp();
 
         $this->authenticate();

@@ -10,6 +10,12 @@ class PostgresSearchControllerTest extends PostgresIntegrationTest
 
     public function setUp() : void
     {
+        if (($_ENV['RUN_POSTGRES_TESTS'] ?? false) === false) {
+            $this->markTestSkipped('Postgres tests not enabled.');
+
+            return;
+        }
+
         parent::setUp();
 
         $this->authenticate();
