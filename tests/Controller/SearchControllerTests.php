@@ -2,12 +2,10 @@
 
 namespace Laravel\Nova\Tests\Controller;
 
-use Laravel\Nova\Nova;
 use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\User;
-use Laravel\Nova\Tests\IntegrationTest;
 
-class SearchControllerTest extends IntegrationTest
+trait SearchControllerTests
 {
     public function setUp() : void
     {
