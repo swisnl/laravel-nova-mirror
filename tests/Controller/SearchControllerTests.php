@@ -7,13 +7,6 @@ use Laravel\Nova\Tests\Fixtures\User;
 
 trait SearchControllerTests
 {
-    public function setUp() : void
-    {
-        parent::setUp();
-
-        $this->authenticate();
-    }
-
     public function test_can_retrieve_search_results_for_all_searchable_resources()
     {
         $user = factory(User::class)->create();
@@ -47,8 +40,7 @@ trait SearchControllerTests
 
         $_SESSION['nova.user.cover'] = true;
 
-        $response = $this->withExceptionHandling()
-            ->getJson('/nova-api/search?search=1');
+        $response = $this->withExceptionHandling()->getJson('/nova-api/search?search=1');
 
         unset($_SESSION['nova.user.cover']);
 
