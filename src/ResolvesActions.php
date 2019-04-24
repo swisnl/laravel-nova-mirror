@@ -26,20 +26,23 @@ trait ResolvesActions
      */
     public function resolveActions(NovaRequest $request)
     {
-        return collect(array_values($this->filter($this->actions($request))))
+        // return collect(array_values($this->filter($this->actions($request))))
+        //     ->map(function ($action) {
+        //         return $this->resolveAction($action);
+        //     })->filter();
+        return collect(array_values($this->actions($request)))
             ->map(function ($action) {
                 return $this->resolveAction($action);
+            })
+            ->reject(function ($action) {
+                return is_null($action);
             });
     }
 
     private function resolveAction($action)
     {
         if ($action instanceof Closure || (is_callable($action) && is_object($action))) {
-            info("hello");
-            info(
-                call_user_func($action)
-            );
-            return call_user_func($action);
+            return call_user_func($action) ?? null;
         }
 
         return $action;
