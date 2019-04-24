@@ -87,6 +87,20 @@ trait ResolvesFields
     }
 
     /**
+     * Return the creation fields excluding any readonly ones.
+     *
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @return \Illuminate\Support\Collection
+     */
+    public function creationFieldsWithoutReadonly(NovaRequest $request)
+    {
+        return $this->creationFields($request)
+                    ->reject(function ($field) use ($request) {
+                        return $field->isReadonly($request);
+                    });
+    }
+
+    /**
      * Resolve the creation pivot fields for a related resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
@@ -128,6 +142,20 @@ trait ResolvesFields
         return $this->resolveFields($request, function ($fields) {
             return $this->removeNonUpdateFields($fields);
         });
+    }
+
+    /**
+     * Return the update fields excluding any readonly ones.
+     *
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @return \Illuminate\Support\Collection
+     */
+    public function updateFieldsWithoutReadonly(NovaRequest $request)
+    {
+        return $this->updateFields($request)
+                    ->reject(function ($field) use ($request) {
+                        return $field->isReadonly($request);
+                    });
     }
 
     /**

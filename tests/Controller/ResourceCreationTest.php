@@ -389,4 +389,31 @@ class ResourceCreationTest extends IntegrationTest
             $user->meta
         );
     }
+
+    public function test_readonly_fields_are_not_validated()
+    {
+        $_SERVER['email-field.readonly'] = true;
+
+        // Send an anonymized 
+        // This would be an invalid attribute that'd normally be triggered by validation,
+        // but since validation is disabled for readonly fields, 
+        $response = $this->withoutExceptionHandling()
+                        ->postJson('/nova-api/users', [
+                            'name' => 'Taylor Otwell',
+                            'email' => '---', 
+                            'password' => 'secret',
+                        ]);
+
+        $response->assertStatus(201);
+
+        $user = User::first();
+        $this->assertNull($user->email);
+    }
+
+    public function tearDown() : void
+    {
+        unset($_SERVER['email-field.readonly']);
+
+        parent::tearDown();
+    }
 }

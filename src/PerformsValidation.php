@@ -43,6 +43,9 @@ trait PerformsValidation
     {
         return static::formatRules($request, (new static(static::newModel()))
                     ->creationFields($request)
+                    ->reject(function ($field) use ($request) {
+                        return $field->isReadonly($request);
+                    })
                     ->mapWithKeys(function ($field) use ($request) {
                         return $field->getCreationRules($request);
                     })->all());
@@ -101,6 +104,9 @@ trait PerformsValidation
     {
         return static::formatRules($request, (new static(static::newModel()))
                     ->updateFields($request)
+                    ->reject(function ($field) use ($request) {
+                        return $field->isReadonly($request);
+                    })
                     ->mapWithKeys(function ($field) use ($request) {
                         return $field->getUpdateRules($request);
                     })->all());

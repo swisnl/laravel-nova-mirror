@@ -260,4 +260,33 @@ class ResourceUpdateTest extends IntegrationTest
 
         Relation::morphMap([], false);
     }
+
+    public function test_readonly_fields_are_not_validated_nor_updated()
+    {
+        $_SERVER['email-field.readonly'] = true;
+
+        $user = factory(User::class)->create(['email' => 'taylor@laravel.com']);
+
+        // `email` would normally be an invalid attribute that'd trigger a validation error,
+        // but since validation is disabled for readonly fields, it won't
+        $this->withExceptionHandling()
+            ->putJson('/nova-api/users/'.$user->id, [
+                'name' => 'Taylor Otwell',
+                'email' => '---',
+                'password' => 'secret',
+            ])
+            ->assertOk();
+
+        $user = $user->fresh();
+
+        // Assert that the previous value did not change.
+        $this->assertEquals('taylor@laravel.com', $user->email);
+    }
+
+    public function tearDown() : void
+    {
+        unset($_SERVER['email-field.readonly']);
+
+        parent::tearDown();
+    }
 }

@@ -17,7 +17,7 @@ trait FillsFields
     {
         return static::fillFields(
             $request, $model,
-            (new static($model))->creationFields($request)
+            (new static($model))->creationFieldsWithoutReadonly($request)
         );
     }
 
@@ -32,7 +32,7 @@ trait FillsFields
     {
         return static::fillFields(
             $request, $model,
-            (new static($model))->updateFields($request)
+            (new static($model))->updateFieldsWithoutReadonly($request)
         );
     }
 
