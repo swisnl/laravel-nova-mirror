@@ -394,13 +394,13 @@ class ResourceCreationTest extends IntegrationTest
     {
         $_SERVER['email-field.readonly'] = true;
 
-        // Send an anonymized 
+        // Send an anonymized
         // This would be an invalid attribute that'd normally be triggered by validation,
-        // but since validation is disabled for readonly fields, 
+        // but since validation is disabled for readonly fields,
         $response = $this->withoutExceptionHandling()
                         ->postJson('/nova-api/users', [
                             'name' => 'Taylor Otwell',
-                            'email' => '---', 
+                            'email' => '---',
                             'password' => 'secret',
                         ]);
 
