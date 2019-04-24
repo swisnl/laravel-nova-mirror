@@ -35,10 +35,11 @@ trait ResolvesActions
     private function resolveAction($action)
     {
         if ($action instanceof Closure || (is_callable($action) && is_object($action))) {
-            info("hello");
+            info('hello');
             info(
                 call_user_func($action)
             );
+
             return call_user_func($action);
         }
 
