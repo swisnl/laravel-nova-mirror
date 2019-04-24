@@ -390,29 +390,72 @@ class ResourceCreationTest extends IntegrationTest
         );
     }
 
+    public function test_fields_are_not_validated_if_user_cant_see_them()
+    {
+        $_SERVER['weight-field.canSee'] = false;
+        $_SERVER['weight-field.readonly'] = false;
+
+        $this->withExceptionHandling()
+            ->postJson('/nova-api/users', [
+                'name' => 'Taylor Otwell',
+                'email' => 'taylor@laravel.com',
+                'password' => 'secret',
+            ])
+            ->assertStatus(201);
+    }
+
+    public function test_fields_are_not_stored_if_user_cant_see_them()
+    {
+        $_SERVER['weight-field.canSee'] = false;
+        $_SERVER['weight-field.readonly'] = false;
+
+        $this->withExceptionHandling()
+            ->postJson('/nova-api/users', [
+                'name' => 'Taylor Otwell',
+                'email' => 'taylor@laravel.com',
+                'weight' => 190,
+                'password' => 'secret',
+            ])
+            ->assertStatus(201);
+
+        $this->assertNull(User::first()->weight);
+    }
+
     public function test_readonly_fields_are_not_validated()
     {
-        $_SERVER['email-field.readonly'] = true;
+        $_SERVER['weight-field.canSee'] = true;
+        $_SERVER['weight-field.readonly'] = true;
 
-        // Send an anonymized
-        // This would be an invalid attribute that'd normally be triggered by validation,
-        // but since validation is disabled for readonly fields,
-        $response = $this->withoutExceptionHandling()
-                        ->postJson('/nova-api/users', [
-                            'name' => 'Taylor Otwell',
-                            'email' => '---',
-                            'password' => 'secret',
-                        ]);
+        $this->withExceptionHandling()
+            ->postJson('/nova-api/users', [
+                'name' => 'Taylor Otwell',
+                'email' => 'taylor@laravel.com',
+                'password' => 'secret',
+            ])
+            ->assertStatus(201);
+    }
 
-        $response->assertStatus(201);
+    public function test_readonly_fields_are_not_stored()
+    {
+        $_SERVER['weight-field.canSee'] = true;
+        $_SERVER['weight-field.readonly'] = true;
 
-        $user = User::first();
-        $this->assertNull($user->email);
+        $this->withExceptionHandling()
+            ->postJson('/nova-api/users', [
+                'name' => 'Taylor Otwell',
+                'email' => 'taylor@laravel.com',
+                'weight' => 190,
+                'password' => 'secret',
+            ])
+            ->assertStatus(201);
+
+        $this->assertNull(User::first()->weight);
     }
 
     public function tearDown() : void
     {
-        unset($_SERVER['email-field.readonly']);
+        unset($_SERVER['weight-field.readonly']);
+        unset($_SERVER['weight-field.canSee']);
 
         parent::tearDown();
     }

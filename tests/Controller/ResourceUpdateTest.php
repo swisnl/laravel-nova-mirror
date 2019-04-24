@@ -261,31 +261,82 @@ class ResourceUpdateTest extends IntegrationTest
         Relation::morphMap([], false);
     }
 
-    public function test_readonly_fields_are_not_validated_nor_updated()
+    public function test_fields_are_not_validated_if_user_cant_see_them()
     {
-        $_SERVER['email-field.readonly'] = true;
+        $_SERVER['weight-field.canSee'] = false;
+        $_SERVER['weight-field.readonly'] = false;
 
-        $user = factory(User::class)->create(['email' => 'taylor@laravel.com']);
+        $user = factory(User::class)->create(['weight' => 250]);
 
-        // `email` would normally be an invalid attribute that'd trigger a validation error,
-        // but since validation is disabled for readonly fields, it won't
         $this->withExceptionHandling()
             ->putJson('/nova-api/users/'.$user->id, [
                 'name' => 'Taylor Otwell',
-                'email' => '---',
+                'email' => 'taylor@laravel.com',
+                // 'weight' => 190,
+                'password' => 'secret',
+            ])
+            ->assertOk();
+    }
+
+    public function test_fields_are_not_updated_if_user_cant_see_them()
+    {
+        $_SERVER['weight-field.canSee'] = false;
+        $_SERVER['weight-field.readonly'] = false;
+
+        $user = factory(User::class)->create(['weight' => 250]);
+
+        $this->withExceptionHandling()
+            ->putJson('/nova-api/users/'.$user->id, [
+                'name' => 'Taylor Otwell',
+                'email' => 'taylor@laravel.com',
+                'weight' => 190,
                 'password' => 'secret',
             ])
             ->assertOk();
 
-        $user = $user->fresh();
+        $this->assertEquals(250, $user->fresh()->weight);
+    }
 
-        // Assert that the previous value did not change.
-        $this->assertEquals('taylor@laravel.com', $user->email);
+    public function test_readonly_fields_are_not_validated()
+    {
+        $_SERVER['weight-field.canSee'] = true;
+        $_SERVER['weight-field.readonly'] = true;
+
+        $user = factory(User::class)->create(['weight' => 250]);
+
+        $this->withExceptionHandling()
+            ->putJson('/nova-api/users/'.$user->id, [
+                'name' => 'Taylor Otwell',
+                'email' => 'taylor@laravel.com',
+                // 'weight' => 190,
+                'password' => 'secret',
+            ])
+            ->assertOk();
+    }
+
+    public function test_readonly_fields_are_not_updated()
+    {
+        $_SERVER['weight-field.canSee'] = true;
+        $_SERVER['weight-field.readonly'] = true;
+
+        $user = factory(User::class)->create(['weight' => 250]);
+
+        $this->withExceptionHandling()
+            ->putJson('/nova-api/users/'.$user->id, [
+                'name' => 'Taylor Otwell',
+                'email' => 'taylor@laravel.com',
+                'weight' => 190,
+                'password' => 'secret',
+            ])
+            ->assertOk();
+
+        $this->assertEquals(250, $user->fresh()->weight);
     }
 
     public function tearDown() : void
     {
-        unset($_SERVER['email-field.readonly']);
+        unset($_SERVER['weight-field.readonly']);
+        unset($_SERVER['weight-field.canSee']);
 
         parent::tearDown();
     }

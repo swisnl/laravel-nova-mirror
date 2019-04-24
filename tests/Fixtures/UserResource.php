@@ -72,13 +72,17 @@ class UserResource extends Resource
                             ->updateRules('required', 'string', 'max:255'),
             ]),
 
-            $this->when($_SERVER['email-field.readonly'] ?? false, function () {
-                return $this->emailField()->readonly()->resolveUsing(function ($value) {
-                    return '---';
-                });
-            }, function () {
-                return $this->emailField();
-            }),
+            Text::make('Email')
+                ->rules('required', 'email', 'max:254')
+                ->creationRules('unique:users,email')
+                ->updateRules('unique:users,email,{{resourceId}}'),
+
+            Text::make('Weight')
+                ->rules('required')
+                ->readonly($_SERVER['weight-field.readonly'] ?? true)
+                ->canSee(function() {
+                    return $_SERVER['weight-field.canSee'] ?? true;
+                }),
 
             Text::make('Password')
                                 ->onlyOnForms()
@@ -149,7 +153,10 @@ class UserResource extends Resource
             ->creationRules(function ($request) {
                 return ['unique:users,email'];
             })
-            ->updateRules('unique:users,email,{{resourceId}}');
+            ->updateRules('unique:users,email,{{resourceId}}')
+            ->canSee(function () {
+                return $_SERVER['email-field.canSee'] ?? true;
+            });
     }
 
     /**
