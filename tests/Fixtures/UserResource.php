@@ -80,7 +80,7 @@ class UserResource extends Resource
             Text::make('Weight')
                 ->rules('required')
                 ->readonly($_SERVER['weight-field.readonly'] ?? true)
-                ->canSee(function() {
+                ->canSee(function () {
                     return $_SERVER['weight-field.canSee'] ?? true;
                 }),
 
