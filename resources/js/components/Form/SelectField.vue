@@ -3,6 +3,7 @@
         <template slot="field">
             <select-control
                 :id="field.attribute"
+                :dusk="field.attribute"
                 v-model="value"
                 class="w-full form-control form-select"
                 :class="errorClasses"
