@@ -41,7 +41,6 @@ class LensController extends Controller
             'resources' => $request->toResources($paginator->getCollection()),
             'prev_page_url' => $paginator->previousPageUrl(),
             'next_page_url' => $paginator->nextPageUrl(),
-            'per_page' => $paginator->perPage(),
             'softDeletes' => $request->resourceSoftDeletes(),
             'hasId' => $lens->availableFields($request)->whereInstanceOf(ID::class)->isNotEmpty(),
         ]);
