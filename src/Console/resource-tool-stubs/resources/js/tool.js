@@ -1,3 +1,3 @@
 Nova.booting((Vue, router) => {
-    Vue.component('{{ component }}', require('./components/Tool'));
+    Vue.component('{{ component }}', require('./components/Tool'))
 })

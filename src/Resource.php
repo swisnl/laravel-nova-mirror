@@ -217,7 +217,6 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
      */
     public function subtitle()
     {
-        return null;
     }
 
     /**

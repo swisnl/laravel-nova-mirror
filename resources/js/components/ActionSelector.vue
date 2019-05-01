@@ -1,6 +1,9 @@
 <template>
     <div>
-        <div v-if="actions.length > 0 || availablePivotActions.length > 0" class="flex items-center mr-3">
+        <div
+            v-if="actions.length > 0 || availablePivotActions.length > 0"
+            class="flex items-center mr-3"
+        >
             <select
                 data-testid="action-select"
                 dusk="action-select"
@@ -8,12 +11,9 @@
                 v-model="selectedActionKey"
                 class="form-control form-select mr-2"
             >
-                <option value="" disabled selected>{{__('Select Action')}}</option>
+                <option value="" disabled selected>{{ __('Select Action') }}</option>
 
-                <optgroup
-                    v-if="actions.length > 0"
-                    :label="resourceInformation.singularLabel"
-                >
+                <optgroup v-if="actions.length > 0" :label="resourceInformation.singularLabel">
                     <option
                         v-for="action in actions"
                         :value="action.uriKey"
@@ -24,7 +24,11 @@
                     </option>
                 </optgroup>
 
-                <optgroup class="pivot-option-group" :label="pivotName" v-if="availablePivotActions.length > 0">
+                <optgroup
+                    class="pivot-option-group"
+                    :label="pivotName"
+                    v-if="availablePivotActions.length > 0"
+                >
                     <option
                         v-for="action in availablePivotActions"
                         :value="action.uriKey"
@@ -42,7 +46,7 @@
                 @click.prevent="openConfirmationModal"
                 :disabled="!selectedAction"
                 class="btn btn-default btn-primary flex items-center justify-center px-3"
-                :class="{ 'btn-disabled' : !selectedAction }"
+                :class="{ 'btn-disabled': !selectedAction }"
                 title="Run Action"
             >
                 <icon type="play" class="text-white" style="margin-left: 7px" />
@@ -51,17 +55,17 @@
 
         <!-- Action Confirmation Modal -->
         <!-- <portal to="modals"> -->
-            <transition name="fade">
-                <confirm-action-modal
-                    :working="working"
-                    v-if="confirmActionModalOpened"
-                    :resource-name="resourceName"
-                    :selected-action="selectedAction"
-                    :errors="errors"
-                    @confirm="executeAction"
-                    @close="confirmActionModalOpened = false"
-                />
-            </transition>
+        <transition name="fade">
+            <confirm-action-modal
+                :working="working"
+                v-if="confirmActionModalOpened"
+                :resource-name="resourceName"
+                :selected-action="selectedAction"
+                :errors="errors"
+                @confirm="executeAction"
+                @close="confirmActionModalOpened = false"
+            />
+        </transition>
         <!-- </portal> -->
     </div>
 </template>

@@ -12,7 +12,7 @@
             </slot>
         </div>
         <div class="w-1/2 px-8 py-6">
-            <slot name="field"/>
+            <slot name="field" />
         </div>
     </field-wrapper>
 </template>

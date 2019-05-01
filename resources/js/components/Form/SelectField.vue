@@ -8,7 +8,7 @@
                 :class="errorClasses"
             >
                 <option value="" selected disabled>
-                    {{__('Choose an option')}}
+                    {{ __('Choose an option') }}
                 </option>
 
                 <option

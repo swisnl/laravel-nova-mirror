@@ -2,11 +2,12 @@
     <div
         :data-testid="dataTestid"
         :dusk="dataTestid"
-        :class="{'opacity-75': disabled}"
+        :class="{ 'opacity-75': disabled }"
         v-on-clickaway="close"
     >
         <div class="relative">
-            <div ref="input"
+            <div
+                ref="input"
                 @click="open"
                 @focus="open"
                 @keydown.down.prevent="open"
@@ -15,26 +16,42 @@
                 class="flex items-center form-control form-input form-input-bordered pr-6"
                 :tabindex="show ? -1 : 0"
             >
-
                 <div
                     v-if="shouldShowDropdownArrow"
                     class="search-input-trigger absolute pin select-box"
                 />
 
                 <slot name="default">
-                    <div class="text-70">{{__('Click to choose')}}</div>
+                    <div class="text-70">{{ __('Click to choose') }}</div>
                 </slot>
             </div>
 
-            <button type="button" @click.stop="clear" v-if="value" tabindex="-1" class="absolute p-2 inline-block" style="right: 4px; top: 6px;">
-                <svg class="block fill-current icon h-2 w-2" xmlns="http://www.w3.org/2000/svg" viewBox="278.046 126.846 235.908 235.908">
-                    <path d="M506.784 134.017c-9.56-9.56-25.06-9.56-34.62 0L396 210.18l-76.164-76.164c-9.56-9.56-25.06-9.56-34.62 0-9.56 9.56-9.56 25.06 0 34.62L361.38 244.8l-76.164 76.165c-9.56 9.56-9.56 25.06 0 34.62 9.56 9.56 25.06 9.56 34.62 0L396 279.42l76.164 76.165c9.56 9.56 25.06 9.56 34.62 0 9.56-9.56 9.56-25.06 0-34.62L430.62 244.8l76.164-76.163c9.56-9.56 9.56-25.06 0-34.62z"/>
+            <button
+                type="button"
+                @click.stop="clear"
+                v-if="value"
+                tabindex="-1"
+                class="absolute p-2 inline-block"
+                style="right: 4px; top: 6px;"
+            >
+                <svg
+                    class="block fill-current icon h-2 w-2"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="278.046 126.846 235.908 235.908"
+                >
+                    <path
+                        d="M506.784 134.017c-9.56-9.56-25.06-9.56-34.62 0L396 210.18l-76.164-76.164c-9.56-9.56-25.06-9.56-34.62 0-9.56 9.56-9.56 25.06 0 34.62L361.38 244.8l-76.164 76.165c-9.56 9.56-9.56 25.06 0 34.62 9.56 9.56 25.06 9.56 34.62 0L396 279.42l76.164 76.165c9.56 9.56 25.06 9.56 34.62 0 9.56-9.56 9.56-25.06 0-34.62L430.62 244.8l76.164-76.163c9.56-9.56 9.56-25.06 0-34.62z"
+                    />
                 </svg>
             </button>
         </div>
 
-        <div v-if="show" ref="dropdown" class="form-input px-0 border border-60 absolute pin-t pin-l my-1 overflow-hidden" :style="{ width: inputWidth + 'px', zIndex: 2000 }">
-
+        <div
+            v-if="show"
+            ref="dropdown"
+            class="form-input px-0 border border-60 absolute pin-t pin-l my-1 overflow-hidden"
+            :style="{ width: inputWidth + 'px', zIndex: 2000 }"
+        >
             <div class="p-2 bg-grey-300">
                 <input
                     :disabled="disabled"
@@ -48,7 +65,8 @@
                     tabindex="-1"
                     type="text"
                     placeholder="Search…"
-                    spellcheck="false" />
+                    spellcheck="false"
+                />
             </div>
 
             <div
@@ -57,7 +75,6 @@
                 tabindex="-1"
                 style="max-height: 155px;"
             >
-
                 <div
                     v-for="(option, index) in data"
                     :dusk="dataTestid + '-result-' + index"
@@ -68,10 +85,9 @@
                     :class="{
                         [`search-input-item-${index}`]: true,
                         'hover:bg-30': index !== selected,
-                        'bg-primary text-white': index === selected
+                        'bg-primary text-white': index === selected,
                     }"
                 >
-
                     <slot name="option" :option="option" :selected="index === selected"></slot>
                 </div>
             </div>

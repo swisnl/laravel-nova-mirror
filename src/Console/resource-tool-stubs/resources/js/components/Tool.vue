@@ -5,11 +5,11 @@
 </template>
 
 <script>
-    export default {
-        props: ['resourceName', 'resourceId', 'field'],
+export default {
+    props: ['resourceName', 'resourceId', 'field'],
 
-        mounted() {
-            //
-        }
-    }
+    mounted() {
+        //
+    },
+}
 </script>

@@ -3,11 +3,17 @@
         <template slot="field">
             <div v-if="hasValue" class="mb-6">
                 <template v-if="shouldShowLoader">
-                    <ImageLoader :src="field.thumbnailUrl" class="max-w-xs" @missing="(value) => missing = value" />
+                    <ImageLoader
+                        :src="field.thumbnailUrl"
+                        class="max-w-xs"
+                        @missing="value => (missing = value)"
+                    />
                 </template>
 
                 <template v-if="field.value && !field.thumbnailUrl">
-                    <card class="flex item-center relative border border-lg border-50 overflow-hidden p-4">
+                    <card
+                        class="flex item-center relative border border-lg border-50 overflow-hidden p-4"
+                    >
                         {{ field.value }}
 
                         <DeleteButton
@@ -19,17 +25,14 @@
                     </card>
                 </template>
 
-                <p
-                    v-if="field.thumbnailUrl"
-                    class="mt-3 flex items-center text-sm"
-                >
+                <p v-if="field.thumbnailUrl" class="mt-3 flex items-center text-sm">
                     <DeleteButton
                         :dusk="field.attribute + '-delete-link'"
                         v-if="shouldShowRemoveButton"
                         @click="confirmRemoval"
                     >
                         <span class="class ml-2 mt-1">
-                            {{__('Delete')}}
+                            {{ __('Delete') }}
                         </span>
                     </DeleteButton>
                 </p>
@@ -56,7 +59,7 @@
                     @change="fileChange"
                 />
                 <label :for="labelFor" class="form-file-btn btn btn-default btn-primary">
-                    {{__('Choose File')}}
+                    {{ __('Choose File') }}
                 </label>
             </span>
 

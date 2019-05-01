@@ -19,7 +19,7 @@
                 <heading :level="2" class="pt-8 px-8">{{ selectedAction.name }}</heading>
 
                 <p v-if="selectedAction.fields.length == 0" class="text-80 px-8 my-8">
-                    {{__('Are you sure you want to run this action?')}}
+                    {{ __('Are you sure you want to run this action?') }}
                 </p>
 
                 <div v-else>
@@ -44,17 +44,27 @@
 
             <div class="bg-30 px-6 py-3 flex">
                 <div class="flex items-center ml-auto">
-                    <button dusk="cancel-action-button" type="button" @click.prevent="handleClose" class="btn text-80 font-normal h-9 px-3 mr-3 btn-link">Cancel</button>
+                    <button
+                        dusk="cancel-action-button"
+                        type="button"
+                        @click.prevent="handleClose"
+                        class="btn text-80 font-normal h-9 px-3 mr-3 btn-link"
+                    >
+                        Cancel
+                    </button>
 
                     <button
                         dusk="confirm-action-button"
                         :disabled="working"
                         type="submit"
                         class="btn btn-default"
-                        :class="{ 'btn-primary': ! selectedAction.destructive, 'btn-danger': selectedAction.destructive }"
+                        :class="{
+                            'btn-primary': !selectedAction.destructive,
+                            'btn-danger': selectedAction.destructive,
+                        }"
                     >
                         <loader v-if="working" width="30"></loader>
-                        <span v-else>{{__('Run Action')}}</span>
+                        <span v-else>{{ __('Run Action') }}</span>
                     </button>
                 </div>
             </div>

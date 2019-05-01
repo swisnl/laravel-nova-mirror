@@ -1,3 +1,3 @@
 Nova.booting((Vue, router) => {
-    Vue.component('{{ component }}', require('./components/Card'));
+    Vue.component('{{ component }}', require('./components/Card'))
 })

@@ -15,7 +15,7 @@
                 @change="handleChange"
                 @file-add="handleFileAdd"
                 @file-remove="handleFileRemove"
-                :class="{'border-danger': hasError}"
+                :class="{ 'border-danger': hasError }"
                 :with-files="field.withFiles"
             />
 

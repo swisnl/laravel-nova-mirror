@@ -10,7 +10,7 @@
                 @change="refreshResourcesForTypeChange"
                 class="block w-full form-control form-input form-input-bordered form-select mb-3"
             >
-                <option value="" disabled selected>{{__('Choose Type')}}</option>
+                <option value="" disabled selected>{{ __('Choose Type') }}</option>
 
                 <option
                     v-for="option in field.morphToTypes"
@@ -31,21 +31,24 @@
                     @input="performSearch"
                     @clear="clearSelection"
                     @selected="selectResource"
-                    :value='selectedResource'
-                    :data='availableResources'
-                    trackBy='value'
-                    searchBy='display'
+                    :value="selectedResource"
+                    :data="availableResources"
+                    trackBy="value"
+                    searchBy="display"
                     class="mb-3"
                 >
                     <div slot="default" v-if="selectedResource" class="flex items-center">
                         <div v-if="selectedResource.avatar" class="mr-3">
-                            <img :src="selectedResource.avatar" class="w-8 h-8 rounded-full block" />
+                            <img
+                                :src="selectedResource.avatar"
+                                class="w-8 h-8 rounded-full block"
+                            />
                         </div>
 
                         {{ selectedResource.display }}
                     </div>
 
-                    <div slot="option" slot-scope="{option, selected}" class="flex items-center">
+                    <div slot="option" slot-scope="{ option, selected }" class="flex items-center">
                         <div v-if="option.avatar" class="mr-3">
                             <img :src="option.avatar" class="w-8 h-8 rounded-full block" />
                         </div>
@@ -63,10 +66,9 @@
                     :disabled="!resourceType || isLocked"
                     @change="selectResourceFromSelectControl"
                 >
-                    <option
-                        value=""
-                        disabled
-                        :selected="selectedResourceId == ''">{{__('Choose')}} {{ field.name }}</option>
+                    <option value="" disabled :selected="selectedResourceId == ''"
+                        >{{ __('Choose') }} {{ field.name }}</option
+                    >
 
                     <option
                         v-for="resource in availableResources"
@@ -74,17 +76,24 @@
                         :value="resource.value"
                         :selected="selectedResourceId == resource.value"
                     >
-                        {{ resource.display}}
+                        {{ resource.display }}
                     </option>
                 </select>
 
                 <!-- Trashed State -->
                 <div v-if="softDeletes && !isLocked">
-                    <label class="flex items-center" @input="toggleWithTrashed" @keydown.prevent.space.enter="toggleWithTrashed">
-                        <checkbox :dusk="field.attribute + '-with-trashed-checkbox'" :checked="withTrashed" />
+                    <label
+                        class="flex items-center"
+                        @input="toggleWithTrashed"
+                        @keydown.prevent.space.enter="toggleWithTrashed"
+                    >
+                        <checkbox
+                            :dusk="field.attribute + '-with-trashed-checkbox'"
+                            :checked="withTrashed"
+                        />
 
                         <span class="ml-2">
-                            {{__('With Trashed')}}
+                            {{ __('With Trashed') }}
                         </span>
                     </label>
                 </div>

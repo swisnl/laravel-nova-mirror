@@ -25,19 +25,26 @@
             <ul class="list-reset flex items-center mb-3">
                 <li class="breadcrumb-item">
                     <router-link
-                        :to="{ name: 'index', params: {resourceName} }"
+                        :to="{ name: 'index', params: { resourceName } }"
                         class="cursor-pointer text-primary no-underline dim"
                     >
                         {{ resourceInformation.label }}
                     </router-link>
                 </li>
 
-                <li class="breadcrumb-item">{{ resourceInformation.singularLabel }} {{ __('Details') }}</li>
+                <li class="breadcrumb-item">
+                    {{ resourceInformation.singularLabel }} {{ __('Details') }}
+                </li>
             </ul>
         </nav>
 
         <!-- Resource Detail -->
-        <div :dusk="resourceName + '-detail-component'" class="mb-8" :key="panel.id" v-for="panel in availablePanels">
+        <div
+            :dusk="resourceName + '-detail-component'"
+            class="mb-8"
+            :key="panel.id"
+            v-for="panel in availablePanels"
+        >
             <component
                 :is="panel.component"
                 :resource-name="resourceName"
@@ -49,7 +56,6 @@
                     <h4 class="text-90 font-normal text-2xl">{{ panel.name }}</h4>
 
                     <div class="ml-auto flex">
-
                         <!-- Actions -->
                         <action-selector
                             v-if="resource"
@@ -64,13 +70,13 @@
                                 currentTrashed,
                                 viaResource,
                                 viaResourceId,
-                                viaRelationship
+                                viaRelationship,
                             }"
                             @actionExecuted="actionExecuted"
                         />
 
                         <button
-                            v-if="resource.authorizedToDelete && ! resource.softDeleted"
+                            v-if="resource.authorizedToDelete && !resource.softDeleted"
                             data-testid="open-delete-modal"
                             dusk="open-delete-modal-button"
                             @click="openDeleteModal"
@@ -138,11 +144,15 @@
                             v-if="resource.authorizedToUpdate"
                             data-testid="edit-resource"
                             dusk="edit-resource-button"
-                            :to="{ name: 'edit', params: {id: resource.id} }"
+                            :to="{ name: 'edit', params: { id: resource.id } }"
                             class="btn btn-default btn-icon bg-primary"
                             title="Edit"
                         >
-                            <icon type="edit" class="text-white" style="margin-top: -2px; margin-left: 3px" />
+                            <icon
+                                type="edit"
+                                class="text-white"
+                                style="margin-top: -2px; margin-left: 3px"
+                            />
                         </router-link>
                     </div>
                 </div>

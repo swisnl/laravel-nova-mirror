@@ -13,11 +13,7 @@
             height="14"
             viewBox="0 0 8 14"
         >
-            <g
-                id="sortable-icon"
-                fill="none"
-                fill-rule="evenodd"
-            >
+            <g id="sortable-icon" fill="none" fill-rule="evenodd">
                 <path
                     :class="descClass"
                     id="Path-2-Copy-3"
@@ -35,78 +31,78 @@
 </template>
 
 <script>
-    export default {
-        props: {
-            resourceName: String,
-            uriKey: String,
-        },
+export default {
+    props: {
+        resourceName: String,
+        uriKey: String,
+    },
 
-        methods: {
-            handleClick() {
-                this.$emit('sort', {
-                    key: this.uriKey,
-                    direction: this.direction
-                })
+    methods: {
+        handleClick() {
+            this.$emit('sort', {
+                key: this.uriKey,
+                direction: this.direction,
+            })
+        },
+    },
+
+    computed: {
+        /**
+         * The CSS class to apply to the ascending arrow icon
+         */
+        ascClass() {
+            if (this.isSorted && this.direction == 'desc') {
+                return 'fill-80'
             }
+
+            return 'fill-60'
         },
 
-        computed: {
-            /**
-             * The CSS class to apply to the ascending arrow icon
-             */
-            ascClass() {
-                if (this.isSorted && this.direction == 'desc') {
-                    return 'fill-80'
-                }
+        /**
+         * The CSS class to apply to the descending arrow icon
+         */
+        descClass() {
+            if (this.isSorted && this.direction == 'asc') {
+                return 'fill-80'
+            }
 
-                return 'fill-60'
-            },
-
-            /**
-             * The CSS class to apply to the descending arrow icon
-             */
-            descClass() {
-                if (this.isSorted && this.direction == 'asc') {
-                    return 'fill-80'
-                }
-
-                return 'fill-60'
-            },
-
-            /**
-             * Determine whether this column is being sorted
-             */
-            isSorted() {
-                return this.sortColumn == this.uriKey
-            },
-
-            /**
-             * The current order query parameter for this resource
-             */
-            sortKey() {
-                return `${this.resourceName}_order`
-            },
-
-            /**
-             * The current order query parameter value
-             */
-            sortColumn() {
-                return this.$route.query[this.sortKey]
-            },
-
-            /**
-             * The current direction query parameter for this resource
-             */
-            directionKey() {
-                return `${this.resourceName}_direction`
-            },
-
-            /**
-             * The current direction query parameter value
-             */
-            direction() {
-                return this.$route.query[this.directionKey]
-            },
+            return 'fill-60'
         },
-    }
+
+        /**
+         * Determine whether this column is being sorted
+         */
+        isSorted() {
+            return this.sortColumn == this.uriKey
+        },
+
+        /**
+         * The current order query parameter for this resource
+         */
+        sortKey() {
+            return `${this.resourceName}_order`
+        },
+
+        /**
+         * The current order query parameter value
+         */
+        sortColumn() {
+            return this.$route.query[this.sortKey]
+        },
+
+        /**
+         * The current direction query parameter for this resource
+         */
+        directionKey() {
+            return `${this.resourceName}_direction`
+        },
+
+        /**
+         * The current direction query parameter value
+         */
+        direction() {
+            return this.$route.query[this.directionKey]
+        },
+    },
+}
 </script>

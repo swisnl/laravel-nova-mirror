@@ -5,11 +5,12 @@
                 {{ filter.name }}
             </h3>
 
-            <select slot="select"
-                    :dusk="filter.name + '-filter-select'"
-                    class="block w-full form-control-sm form-select"
-                    v-model="filter.currentValue"
-                    @change="filterChanged(filter)"
+            <select
+                slot="select"
+                :dusk="filter.name + '-filter-select'"
+                class="block w-full form-control-sm form-select"
+                v-model="filter.currentValue"
+                @change="filterChanged(filter)"
             >
                 <option value="" selected>&mdash;</option>
 

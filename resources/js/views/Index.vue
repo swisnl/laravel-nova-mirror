@@ -20,7 +20,7 @@
 
         <div class="flex justify-between">
             <!-- Search -->
-            <div v-if="resourceInformation.searchable && ! viaHasOne" class="relative h-9 mb-6">
+            <div v-if="resourceInformation.searchable && !viaHasOne" class="relative h-9 mb-6">
                 <icon type="search" class="absolute search-icon-center ml-3 text-70" />
 
                 <input
@@ -32,7 +32,7 @@
                     v-model="search"
                     @keydown.stop="performSearch"
                     @search="performSearch"
-                >
+                />
             </div>
 
             <!-- Create / Attach Button -->
@@ -43,18 +43,21 @@
                 :via-resource-id="viaResourceId"
                 :via-relationship="viaRelationship"
                 :relationship-type="relationshipType"
-                :authorized-to-create="authorizedToCreate && ! resourceIsFull"
+                :authorized-to-create="authorizedToCreate && !resourceIsFull"
                 :authorized-to-relate="authorizedToRelate"
                 class="mb-6"
             />
         </div>
 
-        <loading-card :loading="loading" :class="{ 'overflow-hidden border border-50': !shouldShowToolbar }">
+        <loading-card
+            :loading="loading"
+            :class="{ 'overflow-hidden border border-50': !shouldShowToolbar }"
+        >
             <div v-if="shouldShowToolbar" class="py-3 flex items-center border-b border-50">
                 <div class="px-3" v-if="shouldShowCheckBoxes">
                     <!-- Select All -->
                     <dropdown dusk="select-all-dropdown">
-                        <dropdown-trigger slot-scope="{toggle}" :handle-click="toggle">
+                        <dropdown-trigger slot-scope="{ toggle }" :handle-click="toggle">
                             <fake-checkbox :checked="selectAllChecked" />
                         </dropdown-trigger>
 
@@ -70,7 +73,7 @@
                                             <checkbox :checked="selectAllChecked" />
 
                                             <span class="ml-2">
-                                                {{__('Select All')}}
+                                                {{ __('Select All') }}
                                             </span>
                                         </label>
                                     </li>
@@ -86,7 +89,7 @@
                                             />
 
                                             <span class="ml-2">
-                                                {{__('Select All Matching')}}
+                                                {{ __('Select All Matching') }}
                                                 <span>({{ allMatchingResourceCount }})</span>
                                             </span>
                                         </label>
@@ -98,7 +101,6 @@
                 </div>
 
                 <div class="flex items-center ml-auto px-3">
-
                     <!-- Action Selector -->
                     <action-selector
                         v-if="selectedResources.length > 0"
@@ -112,7 +114,7 @@
                             currentTrashed,
                             viaResource,
                             viaResourceId,
-                            viaRelationship
+                            viaRelationship,
                         }"
                         :selected-resources="selectedResourcesForActionSelector"
                         @actionExecuted="getResources"
@@ -120,9 +122,16 @@
 
                     <!-- Lenses -->
                     <dropdown class="bg-30 hover:bg-40 mr-3 rounded" v-if="lenses.length > 0">
-                        <dropdown-trigger slot-scope="{toggle}" :handle-click="toggle" class="px-3">
-                            <h3 slot="default" class="flex items-center font-normal text-base text-90 h-9">
-                                {{__('Lens')}}
+                        <dropdown-trigger
+                            slot-scope="{ toggle }"
+                            :handle-click="toggle"
+                            class="px-3"
+                        >
+                            <h3
+                                slot="default"
+                                class="flex items-center font-normal text-base text-90 h-9"
+                            >
+                                {{ __('Lens') }}
                             </h3>
                         </dropdown-trigger>
 
@@ -137,7 +146,11 @@
                         dusk="filter-selector"
                         class="bg-30 hover:bg-40 rounded"
                     >
-                        <dropdown-trigger slot-scope="{toggle}" :handle-click="toggle" class="px-3">
+                        <dropdown-trigger
+                            slot-scope="{ toggle }"
+                            :handle-click="toggle"
+                            class="px-3"
+                        >
                             <icon type="filter" class="text-80" />
                         </dropdown-trigger>
 
@@ -147,16 +160,21 @@
                                 :filters="filters"
                                 :current-filters.sync="currentFilters"
                                 @changed="filterChanged"
-                                v-if="! viaHasOne">
+                                v-if="!viaHasOne"
+                            >
                             </filter-selector>
 
                             <!-- Soft Deletes -->
                             <filter-select v-if="softDeletes">
-                                <h3 slot="default" class="text-sm uppercase tracking-wide text-80 bg-30 p-3">
+                                <h3
+                                    slot="default"
+                                    class="text-sm uppercase tracking-wide text-80 bg-30 p-3"
+                                >
                                     Trashed:
                                 </h3>
 
-                                <select slot="select"
+                                <select
+                                    slot="select"
                                     class="block w-full form-control-sm form-select"
                                     data-testid="trashed-select"
                                     dusk="trashed-select"
@@ -164,18 +182,22 @@
                                     @change="trashedChanged"
                                 >
                                     <option value="" selected>&mdash;</option>
-                                    <option value="with">{{__('With Trashed')}}</option>
-                                    <option value="only">{{__('Only Trashed')}}</option>
+                                    <option value="with">{{ __('With Trashed') }}</option>
+                                    <option value="only">{{ __('Only Trashed') }}</option>
                                 </select>
                             </filter-select>
 
                             <!-- Per Page -->
                             <filter-select v-if="!viaResource">
-                                <h3 slot="default" class="text-sm uppercase tracking-wide text-80 bg-30 p-3">
-                                    {{__('Per Page:')}}
+                                <h3
+                                    slot="default"
+                                    class="text-sm uppercase tracking-wide text-80 bg-30 p-3"
+                                >
+                                    {{ __('Per Page:') }}
                                 </h3>
 
-                                <select slot="select"
+                                <select
+                                    slot="select"
                                     dusk="per-page-select"
                                     class="block w-full form-control-sm form-select"
                                     v-model="perPage"
@@ -192,21 +214,26 @@
                     <delete-menu
                         v-if="shouldShowDeleteMenu"
                         dusk="delete-menu"
-
                         :soft-deletes="softDeletes"
                         :resources="resources"
                         :selected-resources="selectedResources"
                         :via-many-to-many="viaManyToMany"
                         :all-matching-resource-count="allMatchingResourceCount"
                         :all-matching-selected="selectAllMatchingChecked"
-
-                        :authorized-to-delete-selected-resources="authorizedToDeleteSelectedResources"
-                        :authorized-to-force-delete-selected-resources="authorizedToForceDeleteSelectedResources"
+                        :authorized-to-delete-selected-resources="
+                            authorizedToDeleteSelectedResources
+                        "
+                        :authorized-to-force-delete-selected-resources="
+                            authorizedToForceDeleteSelectedResources
+                        "
                         :authorized-to-delete-any-resources="authorizedToDeleteAnyResources"
-                        :authorized-to-force-delete-any-resources="authorizedToForceDeleteAnyResources"
-                        :authorized-to-restore-selected-resources="authorizedToRestoreSelectedResources"
+                        :authorized-to-force-delete-any-resources="
+                            authorizedToForceDeleteAnyResources
+                        "
+                        :authorized-to-restore-selected-resources="
+                            authorizedToRestoreSelectedResources
+                        "
                         :authorized-to-restore-any-resources="authorizedToRestoreAnyResources"
-
                         @deleteSelected="deleteSelectedResources"
                         @deleteAllMatching="deleteAllMatchingResources"
                         @forceDeleteSelected="forceDeleteSelectedResources"
@@ -220,10 +247,30 @@
 
             <div v-if="!resources.length" class="flex justify-center items-center px-6 py-8">
                 <div class="text-center">
-                    <svg class="mb-3" xmlns="http://www.w3.org/2000/svg" width="65" height="51" viewBox="0 0 65 51"><g id="Page-1" fill="none" fill-rule="evenodd"><g id="05-blank-state" fill="#A8B9C5" fill-rule="nonzero" transform="translate(-779 -695)"><path id="Combined-Shape" d="M835 735h2c.552285 0 1 .447715 1 1s-.447715 1-1 1h-2v2c0 .552285-.447715 1-1 1s-1-.447715-1-1v-2h-2c-.552285 0-1-.447715-1-1s.447715-1 1-1h2v-2c0-.552285.447715-1 1-1s1 .447715 1 1v2zm-5.364125-8H817v8h7.049375c.350333-3.528515 2.534789-6.517471 5.5865-8zm-5.5865 10H785c-3.313708 0-6-2.686292-6-6v-30c0-3.313708 2.686292-6 6-6h44c3.313708 0 6 2.686292 6 6v25.049375c5.053323.501725 9 4.765277 9 9.950625 0 5.522847-4.477153 10-10 10-5.185348 0-9.4489-3.946677-9.950625-9zM799 725h16v-8h-16v8zm0 2v8h16v-8h-16zm34-2v-8h-16v8h16zm-52 0h16v-8h-16v8zm0 2v4c0 2.209139 1.790861 4 4 4h12v-8h-16zm18-12h16v-8h-16v8zm34 0v-8h-16v8h16zm-52 0h16v-8h-16v8zm52-10v-4c0-2.209139-1.790861-4-4-4h-44c-2.209139 0-4 1.790861-4 4v4h52zm1 39c4.418278 0 8-3.581722 8-8s-3.581722-8-8-8-8 3.581722-8 8 3.581722 8 8 8z"/></g></g></svg>
+                    <svg
+                        class="mb-3"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="65"
+                        height="51"
+                        viewBox="0 0 65 51"
+                    >
+                        <g id="Page-1" fill="none" fill-rule="evenodd">
+                            <g
+                                id="05-blank-state"
+                                fill="#A8B9C5"
+                                fill-rule="nonzero"
+                                transform="translate(-779 -695)"
+                            >
+                                <path
+                                    id="Combined-Shape"
+                                    d="M835 735h2c.552285 0 1 .447715 1 1s-.447715 1-1 1h-2v2c0 .552285-.447715 1-1 1s-1-.447715-1-1v-2h-2c-.552285 0-1-.447715-1-1s.447715-1 1-1h2v-2c0-.552285.447715-1 1-1s1 .447715 1 1v2zm-5.364125-8H817v8h7.049375c.350333-3.528515 2.534789-6.517471 5.5865-8zm-5.5865 10H785c-3.313708 0-6-2.686292-6-6v-30c0-3.313708 2.686292-6 6-6h44c3.313708 0 6 2.686292 6 6v25.049375c5.053323.501725 9 4.765277 9 9.950625 0 5.522847-4.477153 10-10 10-5.185348 0-9.4489-3.946677-9.950625-9zM799 725h16v-8h-16v8zm0 2v8h16v-8h-16zm34-2v-8h-16v8h16zm-52 0h16v-8h-16v8zm0 2v4c0 2.209139 1.790861 4 4 4h12v-8h-16zm18-12h16v-8h-16v8zm34 0v-8h-16v8h16zm-52 0h16v-8h-16v8zm52-10v-4c0-2.209139-1.790861-4-4-4h-44c-2.209139 0-4 1.790861-4 4v4h52zm1 39c4.418278 0 8-3.581722 8-8s-3.581722-8-8-8-8 3.581722-8 8 3.581722 8 8 8z"
+                                />
+                            </g>
+                        </g>
+                    </svg>
 
                     <h3 class="text-base text-80 font-normal mb-6">
-                        No {{resourceInformation.label.toLowerCase()}} matched the given criteria.
+                        No {{ resourceInformation.label.toLowerCase() }} matched the given criteria.
                     </h3>
 
                     <create-resource-button
@@ -234,8 +281,9 @@
                         :via-resource-id="viaResourceId"
                         :via-relationship="viaRelationship"
                         :relationship-type="relationshipType"
-                        :authorized-to-create="authorizedToCreate && ! resourceIsFull"
-                        :authorized-to-relate="authorizedToRelate">
+                        :authorized-to-create="authorizedToCreate && !resourceIsFull"
+                        :authorized-to-relate="authorizedToRelate"
+                    >
                     </create-resource-button>
                 </div>
             </div>
@@ -270,7 +318,8 @@
                 :resources="resources"
                 :resource-response="resourceResponse"
                 @previous="selectPreviousPage"
-                @next="selectNextPage">
+                @next="selectNextPage"
+            >
             </pagination-links>
         </loading-card>
     </loading-view>

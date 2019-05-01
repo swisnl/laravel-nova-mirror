@@ -1,10 +1,12 @@
 <template>
     <tr :dusk="resource['id'].value + '-row'">
         <!-- Resource Selection Checkbox -->
-        <td :class="{
-            'w-16' : shouldShowCheckboxes,
-            'w-8' : !shouldShowCheckboxes
-        }">
+        <td
+            :class="{
+                'w-16': shouldShowCheckboxes,
+                'w-8': !shouldShowCheckboxes,
+            }"
+        >
             <checkbox
                 :data-testid="`${testId}-checkbox`"
                 :dusk="`${resource['id'].value}-checkbox`"
@@ -33,10 +35,13 @@
                     :data-testid="`${testId}-view-button`"
                     :dusk="`${resource['id'].value}-view-button`"
                     class="cursor-pointer text-70 hover:text-primary mr-3"
-                    :to="{ name: 'detail', params: {
-                        resourceName: resourceName,
-                        resourceId: resource['id'].value
-                    }}"
+                    :to="{
+                        name: 'detail',
+                        params: {
+                            resourceName: resourceName,
+                            resourceId: resource['id'].value,
+                        },
+                    }"
                     :title="__('View')"
                 >
                     <icon type="view" width="22" height="18" view-box="0 0 22 16" />
@@ -55,11 +60,11 @@
                             resourceName: viaResource,
                             resourceId: viaResourceId,
                             relatedResourceName: resourceName,
-                            relatedResourceId: resource['id'].value
+                            relatedResourceId: resource['id'].value,
                         },
                         query: {
-                            viaRelationship: viaRelationship
-                        }
+                            viaRelationship: viaRelationship,
+                        },
                     }"
                     :title="__('Edit Attached')"
                 >
@@ -71,10 +76,13 @@
                     v-else
                     class="cursor-pointer text-70 hover:text-primary mr-3"
                     :dusk="`${resource['id'].value}-edit-button`"
-                    :to="{ name: 'edit', params: {
-                        resourceName: resourceName,
-                        resourceId: resource['id'].value
-                    }}"
+                    :to="{
+                        name: 'edit',
+                        params: {
+                            resourceName: resourceName,
+                            resourceId: resource['id'].value,
+                        },
+                    }"
                     :title="__('Edit')"
                 >
                     <icon type="edit" />
@@ -86,7 +94,7 @@
                 :data-testid="`${testId}-delete-button`"
                 :dusk="`${resource['id'].value}-delete-button`"
                 class="appearance-none cursor-pointer text-70 hover:text-primary mr-3"
-                v-if="resource.authorizedToDelete && (! resource.softDeleted || viaManyToMany)"
+                v-if="resource.authorizedToDelete && (!resource.softDeleted || viaManyToMany)"
                 @click.prevent="openDeleteModal"
                 :title="__(viaManyToMany ? 'Detach' : 'Delete')"
             >
@@ -97,12 +105,12 @@
             <button
                 :dusk="`${resource['id'].value}-restore-button`"
                 class="appearance-none cursor-pointer text-70 hover:text-primary mr-3"
-                v-if="resource.authorizedToRestore && resource.softDeleted && ! viaManyToMany"
+                v-if="resource.authorizedToRestore && resource.softDeleted && !viaManyToMany"
                 @click.prevent="openRestoreModal"
                 :title="__('Restore')"
             >
                 <icon type="restore" with="20" height="21" />
-           </button>
+            </button>
 
             <portal to="modals">
                 <transition name="fade">
@@ -113,8 +121,12 @@
                         :mode="viaManyToMany ? 'detach' : 'delete'"
                     >
                         <div slot-scope="{ uppercaseMode, mode }" class="p-8">
-                            <heading :level="2" class="mb-6">{{ __(uppercaseMode+' Resource') }}</heading>
-                            <p class="text-80 leading-normal">{{__('Are you sure you want to '+mode+' this resource?')}}</p>
+                            <heading :level="2" class="mb-6">{{
+                                __(uppercaseMode + ' Resource')
+                            }}</heading>
+                            <p class="text-80 leading-normal">
+                                {{ __('Are you sure you want to ' + mode + ' this resource?') }}
+                            </p>
                         </div>
                     </delete-resource-modal>
                 </transition>
@@ -126,8 +138,10 @@
                         @close="closeRestoreModal"
                     >
                         <div class="p-8">
-                            <heading :level="2" class="mb-6">{{__('Restore Resource')}}</heading>
-                            <p class="text-80 leading-normal">{{__('Are you sure you want to restore this resource?')}}</p>
+                            <heading :level="2" class="mb-6">{{ __('Restore Resource') }}</heading>
+                            <p class="text-80 leading-normal">
+                                {{ __('Are you sure you want to restore this resource?') }}
+                            </p>
                         </div>
                     </restore-resource-modal>
                 </transition>

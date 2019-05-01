@@ -1,12 +1,12 @@
 <template>
     <router-link
-        v-if="field.value && ! isResourceBeingViewed"
+        v-if="field.value && !isResourceBeingViewed"
         :to="{
             name: 'detail',
             params: {
                 resourceName: field.resourceName,
-                resourceId: field.morphToId
-            }
+                resourceId: field.morphToId,
+            },
         }"
         class="dim no-underline text-primary font-bold"
     >

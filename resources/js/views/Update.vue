@@ -5,16 +5,17 @@
             <ul class="list-reset flex items-center mb-3">
                 <li v-else class="breadcrumb-item">
                     <router-link
-                        :to="{ name: 'index', params: {resourceName} }"
+                        :to="{ name: 'index', params: { resourceName } }"
                         class="cursor-pointer text-primary no-underline dim"
-                    >{{ resourceInformation.label }}</router-link>
+                        >{{ resourceInformation.label }}</router-link
+                    >
                 </li>
 
-                <li class="breadcrumb-item">{{__('Edit')}} {{ singularName }}</li>
+                <li class="breadcrumb-item">{{ __('Edit') }} {{ singularName }}</li>
             </ul>
         </nav>
 
-        <heading class="mb-3">{{__('Edit')}} {{ singularName }}</heading>
+        <heading class="mb-3">{{ __('Edit') }} {{ singularName }}</heading>
 
         <card class="overflow-hidden">
             <form v-if="fields" @submit.prevent="updateResource">
@@ -35,12 +36,17 @@
 
                 <!-- Update Button -->
                 <div class="bg-30 flex px-8 py-4">
-                    <button type="button" dusk="update-and-continue-editing-button" @click="updateAndContinueEditing" class="ml-auto btn btn-default btn-primary mr-3">
-                        {{__('Update &amp; Continue Editing')}}
+                    <button
+                        type="button"
+                        dusk="update-and-continue-editing-button"
+                        @click="updateAndContinueEditing"
+                        class="ml-auto btn btn-default btn-primary mr-3"
+                    >
+                        {{ __('Update &amp; Continue Editing') }}
                     </button>
 
                     <button dusk="update-button" class="btn btn-default btn-primary">
-                        {{__('Update')}} {{ singularName }}
+                        {{ __('Update') }} {{ singularName }}
                     </button>
                 </div>
             </form>

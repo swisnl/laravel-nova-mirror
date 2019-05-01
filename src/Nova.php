@@ -431,8 +431,6 @@ class Nova
         if (static::$userTimezoneCallback) {
             return call_user_func(static::$userTimezoneCallback, $request);
         }
-
-        return null;
     }
 
     /**

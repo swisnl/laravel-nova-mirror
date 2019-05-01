@@ -9,16 +9,17 @@
         <thead>
             <tr>
                 <!-- Select Checkbox -->
-                <th :class="{
-                    'w-16' : shouldShowCheckboxes,
-                    'w-8' : !shouldShowCheckboxes
-                }">&nbsp;</th>
+                <th
+                    :class="{
+                        'w-16': shouldShowCheckboxes,
+                        'w-8': !shouldShowCheckboxes,
+                    }"
+                >
+                    &nbsp;
+                </th>
 
                 <!-- Field Names -->
-                <th
-                    v-for="field in fields"
-                    :class="`text-${field.textAlign}`"
-                >
+                <th v-for="field in fields" :class="`text-${field.textAlign}`">
                     <sortable-icon
                         @sort="requestOrderByChange(field)"
                         :resource-name="resourceName"

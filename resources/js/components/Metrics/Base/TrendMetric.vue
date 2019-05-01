@@ -24,11 +24,7 @@
             <span v-if="suffix" class="ml-2 text-sm font-bold text-80">{{ formattedSuffix }}</span>
         </p>
 
-        <div
-            ref="chart"
-            class="z-40 absolute pin rounded-b-lg ct-chart"
-            style="top: 60%"
-        />
+        <div ref="chart" class="z-40 absolute pin rounded-b-lg ct-chart" style="top: 60%" />
     </loading-card>
 </template>
 

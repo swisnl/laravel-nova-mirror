@@ -9,30 +9,32 @@
                             name: 'detail',
                             params: {
                                 resourceName: viaResource,
-                                resourceId: viaResourceId
-                            }
+                                resourceId: viaResourceId,
+                            },
                         }"
                         class="cursor-pointer text-primary no-underline dim"
-                    >{{ viaResourceInformation.singularLabel }}</router-link>
+                        >{{ viaResourceInformation.singularLabel }}</router-link
+                    >
                 </li>
 
                 <li v-else class="breadcrumb-item">
                     <router-link
-                        :to="{ name: 'index', params: {resourceName} }"
+                        :to="{ name: 'index', params: { resourceName } }"
                         class="cursor-pointer text-primary no-underline dim"
-                    >{{ resourceInformation.label }}</router-link>
+                        >{{ resourceInformation.label }}</router-link
+                    >
                 </li>
 
-                <li class="breadcrumb-item">{{__('New')}} {{ singularName }}</li>
+                <li class="breadcrumb-item">{{ __('New') }} {{ singularName }}</li>
             </ul>
         </nav>
 
-        <heading class="mb-6">{{__('New')}} {{ singularName }}</heading>
+        <heading class="mb-6">{{ __('New') }} {{ singularName }}</heading>
 
         <card class="overflow-hidden">
             <form v-if="fields" @submit.prevent="createResource">
                 <!-- Validation Errors -->
-                <validation-errors :errors="validationErrors"/>
+                <validation-errors :errors="validationErrors" />
 
                 <!-- Fields -->
                 <div v-for="field in fields">
@@ -49,12 +51,17 @@
 
                 <!-- Create Button -->
                 <div class="bg-30 flex px-8 py-4">
-                    <button dusk="create-and-add-another-button" type="button" @click="createAndAddAnother" class="ml-auto btn btn-default btn-primary mr-3">
-                        {{__('Create &amp; Add Another')}}
+                    <button
+                        dusk="create-and-add-another-button"
+                        type="button"
+                        @click="createAndAddAnother"
+                        class="ml-auto btn btn-default btn-primary mr-3"
+                    >
+                        {{ __('Create &amp; Add Another') }}
                     </button>
 
                     <button dusk="create-button" class="btn btn-default btn-primary">
-                        {{__('Create')}} {{ singularName }}
+                        {{ __('Create') }} {{ singularName }}
                     </button>
                 </div>
             </form>

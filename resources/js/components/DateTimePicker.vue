@@ -35,7 +35,7 @@ export default {
         enableSeconds: {
             type: Boolean,
             default: true,
-        }
+        },
     },
 
     data: () => ({ flatpickr: null }),
@@ -62,15 +62,16 @@ export default {
 </script>
 
 <template>
-  <input
-    :disabled="disabled"
-    :dusk="field.attribute"
-    :class="{'!cursor-not-allowed': disabled}"
-    :value="value"
-    :name="field.name"
-    ref="datePicker"
-    type="text"
-    :placeholder="placeholder">
+    <input
+        :disabled="disabled"
+        :dusk="field.attribute"
+        :class="{ '!cursor-not-allowed': disabled }"
+        :value="value"
+        :name="field.name"
+        ref="datePicker"
+        type="text"
+        :placeholder="placeholder"
+    />
 </template>
 
 <style scoped>

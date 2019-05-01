@@ -1,6 +1,6 @@
 <template>
     <loading-view :loading="loading">
-        <heading class="mb-3">{{__('Update')}} {{ relatedResourceLabel }}</heading>
+        <heading class="mb-3">{{ __('Update') }} {{ relatedResourceLabel }}</heading>
 
         <card class="overflow-hidden">
             <form v-if="field" @submit.prevent="updateAttachedResource">
@@ -22,7 +22,9 @@
                             @change="selectResourceFromSelectControl"
                             disabled
                         >
-                            <option value="" disabled selected>{{__('Choose')}} {{ field.name }}</option>
+                            <option value="" disabled selected
+                                >{{ __('Choose') }} {{ field.name }}</option
+                            >
 
                             <option
                                 v-for="resource in availableResources"
@@ -30,7 +32,7 @@
                                 :value="resource.value"
                                 :selected="selectedResourceId == resource.value"
                             >
-                                {{ resource.display}}
+                                {{ resource.display }}
                             </option>
                         </select>
 
@@ -58,12 +60,17 @@
 
                 <!-- Attach Button -->
                 <div class="bg-30 flex px-8 py-4">
-                    <button dusk="update-and-continue-editing-button" type="button" @click="updateAndContinueEditing" class="ml-auto btn btn-default btn-primary mr-3">
-                        {{__('Update &amp; Continue Editing')}}
+                    <button
+                        dusk="update-and-continue-editing-button"
+                        type="button"
+                        @click="updateAndContinueEditing"
+                        class="ml-auto btn btn-default btn-primary mr-3"
+                    >
+                        {{ __('Update &amp; Continue Editing') }}
                     </button>
 
                     <button dusk="update-button" class="btn btn-default btn-primary">
-                        {{__('Update')}} {{ relatedResourceLabel }}
+                        {{ __('Update') }} {{ relatedResourceLabel }}
                     </button>
                 </div>
             </form>
@@ -170,17 +177,19 @@ export default {
         async getPivotFields() {
             this.fields = []
 
-            const { data } = await Nova.request().get(
-                `/nova-api/${this.resourceName}/${this.resourceId}/update-pivot-fields/${
-                    this.relatedResourceName
-                }/${this.relatedResourceId}`,
-                { params: { viaRelationship: this.viaRelationship } }
-            ).catch(error => {
-                if (error.response.status == 404) {
-                    this.$router.push({ name: '404' })
-                    return
-                }
-            })
+            const { data } = await Nova.request()
+                .get(
+                    `/nova-api/${this.resourceName}/${this.resourceId}/update-pivot-fields/${
+                        this.relatedResourceName
+                    }/${this.relatedResourceId}`,
+                    { params: { viaRelationship: this.viaRelationship } }
+                )
+                .catch(error => {
+                    if (error.response.status == 404) {
+                        this.$router.push({ name: '404' })
+                        return
+                    }
+                })
 
             this.fields = data
 
@@ -251,7 +260,9 @@ export default {
 
                 if (error.response.status == 409) {
                     this.$toasted.show(
-                        this.__('Another user has updated this resource since this page was loaded. Please refresh the page and try again.'),
+                        this.__(
+                            'Another user has updated this resource since this page was loaded. Please refresh the page and try again.'
+                        ),
                         { type: 'error' }
                     )
                 }
@@ -277,7 +288,9 @@ export default {
 
                 if (error.response.status == 409) {
                     this.$toasted.show(
-                        this.__('Another user has updated this resource since this page was loaded. Please refresh the page and try again.'),
+                        this.__(
+                            'Another user has updated this resource since this page was loaded. Please refresh the page and try again.'
+                        ),
                         { type: 'error' }
                     )
                 }

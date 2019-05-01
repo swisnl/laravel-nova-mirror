@@ -14,7 +14,13 @@
                         <loader width="30" />
                     </span>
 
-                    <p v-if="field.value" class="text-90" :class="{ 'text-danger': field.failedWords.includes(field.value) }">{{ field.value }}</p>
+                    <p
+                        v-if="field.value"
+                        class="text-90"
+                        :class="{ 'text-danger': field.failedWords.includes(field.value) }"
+                    >
+                        {{ field.value }}
+                    </p>
                     <p v-else>&mdash;</p>
                 </div>
             </slot>

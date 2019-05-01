@@ -1,5 +1,8 @@
 <template>
-    <a @click="handleClick" class="dropdown-trigger h-9 flex items-center cursor-pointer select-none">
+    <a
+        @click="handleClick"
+        class="dropdown-trigger h-9 flex items-center cursor-pointer select-none"
+    >
         <slot />
 
         <svg
