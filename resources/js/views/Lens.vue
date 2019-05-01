@@ -422,6 +422,8 @@ export default {
                         this.selectAllMatchingResources = true
                         this.selectAllResources()
                     }
+
+                    Nova.$emit('resources-loaded')
                 })
             })
         },
