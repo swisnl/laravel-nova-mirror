@@ -397,11 +397,6 @@ export default {
             },
             () => {
                 this.getResources()
-
-                this.initializeSearchFromQueryString()
-                this.initializePerPageFromQueryString()
-                this.initializeTrashedFromQueryString()
-                this.initializeOrderingFromQueryString()
             }
         )
 
