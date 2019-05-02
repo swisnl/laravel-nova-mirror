@@ -3,13 +3,20 @@
         <div class="flex mb-4">
             <h3 class="mr-3 text-base text-80 font-bold">{{ title }}</h3>
 
-            <select-control
+            <select
                 v-if="ranges.length > 0"
                 @change="handleChange"
                 class="ml-auto min-w-24 h-6 text-xs no-appearance bg-40"
-                :options="ranges"
-                :selected="selectedRangeKey"
-            />
+            >
+                <option
+                    v-for="option in ranges"
+                    :key="option.value"
+                    :value="option.value"
+                    :selected="selectedRangeKey == option.value"
+                >
+                    {{ option.label }}
+                </option>
+            </select>
         </div>
 
         <p class="flex items-center text-4xl mb-4">
