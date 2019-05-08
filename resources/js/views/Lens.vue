@@ -59,7 +59,10 @@
                                         >
                                     </li>
 
-                                    <li class="flex items-center" v-if="allMatchingResourceCount > 0">
+                                    <li
+                                        class="flex items-center"
+                                        v-if="allMatchingResourceCount > 0"
+                                    >
                                         <checkbox-with-label
                                             dusk="select-all-matching-button"
                                             :checked="selectAllMatchingChecked"
@@ -124,13 +127,19 @@
                         :via-many-to-many="viaManyToMany"
                         :all-matching-resource-count="allMatchingResourceCount"
                         :all-matching-selected="selectAllMatchingChecked"
-                        :authorized-to-delete-selected-resources="authorizedToDeleteSelectedResources"
+                        :authorized-to-delete-selected-resources="
+                            authorizedToDeleteSelectedResources
+                        "
                         :authorized-to-force-delete-selected-resources="
                             authorizedToForceDeleteSelectedResources
                         "
                         :authorized-to-delete-any-resources="authorizedToDeleteAnyResources"
-                        :authorized-to-force-delete-any-resources="authorizedToForceDeleteAnyResources"
-                        :authorized-to-restore-selected-resources="authorizedToRestoreSelectedResources"
+                        :authorized-to-force-delete-any-resources="
+                            authorizedToForceDeleteAnyResources
+                        "
+                        :authorized-to-restore-selected-resources="
+                            authorizedToRestoreSelectedResources
+                        "
                         :authorized-to-restore-any-resources="authorizedToRestoreAnyResources"
                         @deleteSelected="deleteSelectedResources"
                         @deleteAllMatching="deleteAllMatchingResources"
@@ -400,7 +409,8 @@ export default {
                 return Minimum(
                     Nova.request().get('/nova-api/' + this.resourceName + '/lens/' + this.lens, {
                         params: this.resourceRequestQueryString,
-                    }), 500
+                    }),
+                    500
                 ).then(({ data }) => {
                     this.resources = []
 

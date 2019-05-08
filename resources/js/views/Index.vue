@@ -508,7 +508,8 @@ export default {
                 return Minimum(
                     Nova.request().get('/nova-api/' + this.resourceName, {
                         params: this.resourceRequestQueryString,
-                    }), 500
+                    }),
+                    500
                 ).then(({ data }) => {
                     this.resources = []
 
