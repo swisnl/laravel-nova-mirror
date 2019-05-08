@@ -442,6 +442,7 @@ export default {
         handleKeydown(e) {
             // `c`
             if (
+                this.authorizedToCreate &&
                 !e.ctrlKey &&
                 !e.altKey &&
                 !e.metaKey &&
