@@ -363,6 +363,8 @@
     "Choose date": "Choose date",
     "The :resource was updated!": "The :resource was updated!",
     "The resource was updated!": "The resource was updated!",
+    "The :resource was deleted!": "The :resource was deleted!",
+    "The :resource was restored!": "The :resource was restored!",
     "Increase": "Increase",
     "Constant": "Constant",
     "Decrease": "Decrease",
