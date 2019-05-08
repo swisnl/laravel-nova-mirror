@@ -17,6 +17,11 @@
     @foreach(Nova::availableStyles(request()) as $name => $path)
         <link rel="stylesheet" href="/nova-api/styles/{{ $name }}">
     @endforeach
+
+    <!-- Theme Styles -->
+    @foreach(Nova::themeStyles() as $publicPath)
+        <link rel="stylesheet" href="{{ $publicPath }}">
+    @endforeach
 </head>
 <body class="min-w-site bg-40 text-black min-h-full">
     <div id="nova">

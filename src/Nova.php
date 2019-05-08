@@ -90,6 +90,13 @@ class Nova
     public static $styles = [];
 
     /**
+     * The theme CSS files applied to Nova.
+     *
+     * @var array
+     */
+    public static $themes = [];
+
+    /**
      * The variables that should be made available on the Nova JavaScript object.
      *
      * @var array
@@ -593,6 +600,16 @@ class Nova
     }
 
     /**
+     * Get all of the theme stylesheets that should be registered.
+     *
+     * @return array
+     */
+    public static function themeStyles()
+    {
+        return static::$themes;
+    }
+
+    /**
      * Register the given script file with Nova.
      *
      * @param  string  $name
@@ -629,6 +646,19 @@ class Nova
     public static function style($name, $path)
     {
         static::$styles[$name] = $path;
+
+        return new static;
+    }
+
+    /**
+     * Register the given theme CSS file with Nova.
+     *
+     * @param string $publicPath
+     * @return static
+     */
+    public static function theme($publicPath)
+    {
+        static::$themes[] = $publicPath;
 
         return new static;
     }

@@ -12,6 +12,11 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('app.css', 'vendor/nova') }}">
+
+    <!-- Theme Styles -->
+    @foreach(Nova::themeStyles() as $publicPath)
+        <link rel="stylesheet" href="{{ $publicPath }}">
+    @endforeach
 </head>
 <body class="bg-40 text-black h-full">
     <div class="h-full">
