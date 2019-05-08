@@ -14,7 +14,7 @@
             >
                 {{ field.value }}
             </router-link>
-            <p v-else-if="field.value" class="font-bold">{{ field.value }}</p>
+            <p v-else-if="field.value">{{ field.value }}</p>
             <p v-else>&mdash;</p>
         </template>
     </panel-item>
