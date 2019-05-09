@@ -1,6 +1,6 @@
 <template>
     <div v-if="!loading">
-        <heading class="mb-3">{{ __('Edit') }} {{ singularName }}</heading>
+        <heading class="mb-3">{{ __('Edit :resource', { resource: singularName }) }}</heading>
 
         <card class="overflow-hidden">
             <form v-if="fields" @submit.prevent="updateResource" autocomplete="off">
@@ -37,7 +37,7 @@
                         :disabled="isWorking"
                         :processing="submittedViaUpdateResource"
                     >
-                        {{ __('Update') }} {{ singularName }}
+                        {{ __('Update :resource', { resource: singularName }) }}
                     </progress-button>
                 </div>
             </form>

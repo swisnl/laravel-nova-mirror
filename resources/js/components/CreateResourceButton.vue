@@ -18,7 +18,7 @@
                 },
             }"
         >
-            <slot> {{ __('Attach') }} {{ singularName }} </slot>
+            <slot> {{ __('Attach :resource', { resource: singularName }) }}</slot>
         </router-link>
 
         <!-- Create Related Models -->
@@ -38,7 +38,7 @@
                 },
             }"
         >
-            {{ __('Create') }} {{ singularName }}
+            {{ __('Create :resource', { resource: singularName }) }}
         </router-link>
     </div>
 </template>

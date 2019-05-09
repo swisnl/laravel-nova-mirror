@@ -1,6 +1,6 @@
 <template>
     <loading-view :loading="loading">
-        <heading class="mb-3">{{ __('Attach') }} {{ relatedResourceLabel }}</heading>
+        <heading class="mb-3">{{ __('Attach', { resource: relatedResourceLabel }) }}</heading>
 
         <card class="overflow-hidden">
             <form v-if="field" @submit.prevent="attachResource" autocomplete="off">
@@ -54,9 +54,9 @@
                             :label="'display'"
                             :selected="selectedResourceId"
                         >
-                            <option value="" disabled selected
-                                >{{ __('Choose') }} {{ relatedResourceLabel }}</option
-                            >
+                            <option value="" disabled selected>{{
+                                __('Choose', { resource: relatedResourceLabel })
+                            }}</option>
                         </select-control>
 
                         <!-- Trashed State -->
@@ -103,7 +103,7 @@
                         :disabled="isWorking"
                         :processing="submittedViaAttachResource"
                     >
-                        {{ __('Attach') }} {{ relatedResourceLabel }}
+                        {{ __('Attach', { resource: relatedResourceLabel }) }}
                     </progress-button>
                 </div>
             </form>

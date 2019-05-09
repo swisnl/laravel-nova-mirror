@@ -1,6 +1,6 @@
 <template>
     <loading-view :loading="loading">
-        <heading class="mb-3">{{ __('New') }} {{ singularName }}</heading>
+        <heading class="mb-3">{{ __('New :resource', { resource: singularName }) }}</heading>
 
         <card class="overflow-hidden">
             <form v-if="fields" @submit.prevent="createResource" autocomplete="off">
@@ -38,7 +38,7 @@
                         :disabled="isWorking"
                         :processing="submittedViaCreateResource"
                     >
-                        {{ __('Create') }} {{ singularName }}
+                        {{ __('Create :resource', { resource: singularName }) }}
                     </progress-button>
                 </div>
             </form>
