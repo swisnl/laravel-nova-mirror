@@ -33,7 +33,7 @@ class ResourceIndexTest extends IntegrationTest
         $response = $this->withExceptionHandling()
                         ->getJson('/nova-api/users');
 
-        $this->assertEquals('UserResources', $response->original['label']);
+        $this->assertEquals('User Resources', $response->original['label']);
         $this->assertEquals($user->id, $response->original['resources'][0]['id']->value);
         $this->assertTrue($response->original['resources'][0]['authorizedToUpdate']);
         $this->assertTrue($response->original['resources'][0]['authorizedToDelete']);
