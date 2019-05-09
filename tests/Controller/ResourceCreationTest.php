@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Actions\ActionEvent;
 use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\User;
+use Laravel\Nova\Tests\Fixtures\UserResource;
 use Laravel\Nova\Tests\IntegrationTest;
 use Laravel\Nova\Tests\Fixtures\Address;
 use Laravel\Nova\Tests\Fixtures\CustomKey;
@@ -388,5 +389,29 @@ class ResourceCreationTest extends IntegrationTest
             ],
             $user->meta
         );
+    }
+
+    public function test_resource_can_redirect_to_default_uri_on_create()
+    {
+        $response = $this->withoutExceptionHandling()
+            ->postJson('/nova-api/users', [
+                'name' => 'Taylor Otwell',
+                'email' => 'taylor@laravel.com',
+                'password' => 'secret',
+            ]);
+
+        $response->assertJson(['redirect' => url('/nova/resources/users/1')]);
+    }
+
+    public function test_resource_can_redirect_to_custom_uri_on_create()
+    {
+        $response = $this->withoutExceptionHandling()
+            ->postJson('/nova-api/users-with-redirects', [
+                'name' => 'Taylor Otwell',
+                'email' => 'taylor@laravel.com',
+                'password' => 'secret',
+            ]);
+
+        $response->assertJson(['redirect' => 'https://yahoo.com']);
     }
 }

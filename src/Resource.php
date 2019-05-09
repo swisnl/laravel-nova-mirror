@@ -7,6 +7,8 @@ use JsonSerializable;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Http\Requests\CreateResourceRequest;
+use Laravel\Nova\Http\Requests\UpdateResourceRequest;
 use Laravel\Scout\Searchable;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -391,5 +393,15 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
             'id' => $fields->whereInstanceOf(ID::class)->first() ?: ID::forModel($this->resource),
             'fields' => $fields->all(),
         ];
+    }
+
+    public static function redirectAfterCreate(CreateResourceRequest $request, $resource)
+    {
+        return url(config('nova.path').'/resources/'.static::uriKey().'/'.$resource->getKey());
+    }
+
+    public static function redirectAfterUpdate(UpdateResourceRequest $request, $resource)
+    {
+        return url(config('nova.path').'/resources/'.static::uriKey().'/'.$resource->getKey());
     }
 }

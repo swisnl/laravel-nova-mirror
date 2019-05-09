@@ -43,6 +43,7 @@ class ResourceUpdateController extends Controller
         return response()->json([
             'id' => $model->getKey(),
             'resource' => $model->attributesToArray(),
+            'redirect' => $resource::redirectAfterUpdate($request, $request->newResourceWith($model)),
         ]);
     }
 

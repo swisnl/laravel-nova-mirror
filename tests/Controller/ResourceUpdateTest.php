@@ -260,4 +260,32 @@ class ResourceUpdateTest extends IntegrationTest
 
         Relation::morphMap([], false);
     }
+
+    public function test_resource_can_redirect_to_default_uri_on_update()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->withExceptionHandling()
+            ->putJson('/nova-api/users/'.$user->id, [
+                'name' => 'Taylor Otwell',
+                'email' => 'taylor@laravel.com',
+                'password' => 'secret',
+            ]);
+
+        $response->assertJson(['redirect' => url('/nova/resources/users/1')]);
+    }
+
+    public function test_resource_can_redirect_to_custom_uri_on_update()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->withExceptionHandling()
+            ->putJson('/nova-api/users-with-redirects/'.$user->id, [
+                'name' => 'Taylor Otwell',
+                'email' => 'taylor@laravel.com',
+                'password' => 'secret',
+            ]);
+
+        $response->assertJson(['redirect' => 'https://google.com']);
+    }
 }

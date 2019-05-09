@@ -46,6 +46,7 @@ class ResourceStoreController extends Controller
         return response()->json([
             'id' => $model->getKey(),
             'resource' => $model->attributesToArray(),
+            'redirect' => $resource::redirectAfterCreate($request, $request->newResourceWith($model)),
         ], 201);
     }
 }
