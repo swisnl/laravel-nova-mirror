@@ -21,11 +21,10 @@
                 </div>
 
                 <!-- Create Button -->
-                <div class="bg-30 flex px-8 py-4">
-
+                <div class="bg-30 flex items-center px-8 py-4">
                     <a
                         @click="$router.back()"
-                        class="btn btn-default btn-link dim cursor-pointer text-80 ml-auto mr-6"
+                        class="btn btn-link dim cursor-pointer text-80 ml-auto mr-6"
                     >
                         {{ __('Cancel') }}
                     </a>
