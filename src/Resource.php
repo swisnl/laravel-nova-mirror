@@ -392,4 +392,28 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
             'fields' => $fields->all(),
         ];
     }
+
+    /**
+     * Return the location to redirect the user after creation.
+     *
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @param \App\Nova\Resource $resource
+     * @return string
+     */
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return url(config('nova.path').'/resources/'.static::uriKey().'/'.$resource->getKey());
+    }
+
+    /**
+     * Return the location to redirect the user after update.
+     *
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @param \App\Nova\Resource $resource
+     * @return string
+     */
+    public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    {
+        return url(config('nova.path').'/resources/'.static::uriKey().'/'.$resource->getKey());
+    }
 }

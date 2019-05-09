@@ -23,6 +23,7 @@ use Laravel\Nova\Tests\Fixtures\RecipientResource;
 use Laravel\Nova\Tests\Fixtures\GroupedUserResource;
 use Laravel\Nova\Tests\Fixtures\ForbiddenUserResource;
 use Laravel\Nova\Tests\Fixtures\SoftDeletingFileResource;
+use Laravel\Nova\Tests\Fixtures\UserWithRedirectResource;
 
 abstract class IntegrationTest extends TestCase
 {
@@ -64,6 +65,7 @@ abstract class IntegrationTest extends TestCase
             SoftDeletingFileResource::class,
             TagResource::class,
             UserResource::class,
+            UserWithRedirectResource::class,
             ForbiddenUserResource::class,
             GroupedUserResource::class,
             CustomKeyResource::class,

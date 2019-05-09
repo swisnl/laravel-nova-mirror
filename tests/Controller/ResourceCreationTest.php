@@ -389,4 +389,28 @@ class ResourceCreationTest extends IntegrationTest
             $user->meta
         );
     }
+
+    public function test_resource_can_redirect_to_default_uri_on_create()
+    {
+        $response = $this->withoutExceptionHandling()
+            ->postJson('/nova-api/users', [
+                'name' => 'Taylor Otwell',
+                'email' => 'taylor@laravel.com',
+                'password' => 'secret',
+            ]);
+
+        $response->assertJson(['redirect' => url('/nova/resources/users/1')]);
+    }
+
+    public function test_resource_can_redirect_to_custom_uri_on_create()
+    {
+        $response = $this->withoutExceptionHandling()
+            ->postJson('/nova-api/users-with-redirects', [
+                'name' => 'Taylor Otwell',
+                'email' => 'taylor@laravel.com',
+                'password' => 'secret',
+            ]);
+
+        $response->assertJson(['redirect' => 'https://yahoo.com']);
+    }
 }
