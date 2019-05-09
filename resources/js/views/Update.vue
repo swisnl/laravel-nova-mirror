@@ -20,9 +20,16 @@
                 </div>
 
                 <!-- Update Button -->
-                <div class="bg-30 flex px-8 py-4">
+                <div class="bg-30 flex items-center px-8 py-4">
+                    <a
+                        @click="$router.back()"
+                        class="btn btn-link dim cursor-pointer text-80 ml-auto mr-6"
+                    >
+                        {{ __('Cancel') }}
+                    </a>
+
                     <progress-button
-                        class="ml-auto mr-3"
+                        class="mr-3"
                         dusk="update-and-continue-editing-button"
                         @click.native="updateAndContinueEditing"
                         :disabled="isWorking"
