@@ -147,8 +147,6 @@ export default {
                 )
 
                 this.$router.push(redirect)
-
-
             } catch (error) {
                 this.submittedViaUpdateResource = false
 

@@ -7,8 +7,6 @@ use JsonSerializable;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Http\Requests\CreateResourceRequest;
-use Laravel\Nova\Http\Requests\UpdateResourceRequest;
 use Laravel\Scout\Searchable;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -395,12 +393,26 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
         ];
     }
 
-    public static function redirectAfterCreate(CreateResourceRequest $request, $resource)
+    /**
+     * Return the location to redirect the user after creation.
+     *
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @param \App\Nova\Resource $resource
+     * @return string
+     */
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
     {
         return url(config('nova.path').'/resources/'.static::uriKey().'/'.$resource->getKey());
     }
 
-    public static function redirectAfterUpdate(UpdateResourceRequest $request, $resource)
+    /**
+     * Return the location to redirect the user after update.
+     *
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @param \App\Nova\Resource $resource
+     * @return string
+     */
+    public static function redirectAfterUpdate(NovaRequest $request, $resource)
     {
         return url(config('nova.path').'/resources/'.static::uriKey().'/'.$resource->getKey());
     }

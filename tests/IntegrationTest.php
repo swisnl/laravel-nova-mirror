@@ -2,7 +2,6 @@
 
 namespace Laravel\Nova\Tests;
 
-use Laravel\Nova\Tests\Fixtures\UserWithRedirectResource;
 use Mockery;
 use Laravel\Nova\Nova;
 use Orchestra\Testbench\TestCase;
@@ -24,6 +23,7 @@ use Laravel\Nova\Tests\Fixtures\RecipientResource;
 use Laravel\Nova\Tests\Fixtures\GroupedUserResource;
 use Laravel\Nova\Tests\Fixtures\ForbiddenUserResource;
 use Laravel\Nova\Tests\Fixtures\SoftDeletingFileResource;
+use Laravel\Nova\Tests\Fixtures\UserWithRedirectResource;
 
 abstract class IntegrationTest extends TestCase
 {

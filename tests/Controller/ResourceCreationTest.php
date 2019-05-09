@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Actions\ActionEvent;
 use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\User;
-use Laravel\Nova\Tests\Fixtures\UserResource;
 use Laravel\Nova\Tests\IntegrationTest;
 use Laravel\Nova\Tests\Fixtures\Address;
 use Laravel\Nova\Tests\Fixtures\CustomKey;
