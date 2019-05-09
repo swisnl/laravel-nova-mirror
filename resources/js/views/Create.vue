@@ -123,7 +123,7 @@ export default {
             this.submittedViaCreateResource = true
 
             try {
-                const { redirectTo } = await this.createRequest()
+                const { redirect } = await this.createRequest()
 
                 this.submittedViaCreateResource = false
 
@@ -134,7 +134,7 @@ export default {
                     { type: 'success' }
                 )
 
-                this.$router.push(redirectTo)
+                this.$router.push(redirect)
 
 
             } catch (error) {
