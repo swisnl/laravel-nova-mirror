@@ -26,7 +26,7 @@ class AddAttributesFieldToActionEventsTable extends Migration
     public function down()
     {
         Schema::table('action_events', function (Blueprint $table) {
-            $table->dropColumn('attributes');
+            $table->dropColumn('diff');
         });
     }
 }
