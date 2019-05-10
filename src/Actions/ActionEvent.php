@@ -92,6 +92,7 @@ class ActionEvent extends Model
             'target_id' => $model->getKey(),
             'model_type' => $model->getMorphClass(),
             'model_id' => $model->getKey(),
+            'fields' => '',
             'diff' => [
                 'original' => array_intersect_key($model->getOriginal(), $model->getDirty()),
                 'changes' => $model->getDirty(),
