@@ -1020,7 +1020,9 @@ export default {
         headingTitle() {
             return this.loading
                 ? '&nbsp;'
-                : this.isRelation && this.field ? this.field.name : this.resourceResponse.label
+                : this.isRelation && this.field
+                ? this.field.name
+                : this.resourceResponse.label
         },
 
         /**
