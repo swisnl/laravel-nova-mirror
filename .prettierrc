@@ -9,5 +9,14 @@
     "semi": false,
     "requirePragma": false,
     "proseWrap": "preserve",
-    "arrowParens": "avoid"
+    "arrowParens": "avoid",
+
+    "overrides": [
+        {
+            "files": "resources/css/**/*.css",
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
 }
