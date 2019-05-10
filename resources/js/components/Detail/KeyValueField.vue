@@ -2,7 +2,7 @@
     <panel-item :field="field">
         <template slot="value">
             <KeyValueTable :edit-mode="false" class="overflow-hidden">
-                <KeyValueHeader />
+                <KeyValueHeader :key-label="field.keyLabel" :value-label="field.valueLabel" />
 
                 <div class="bg-white overflow-hidden">
                     <KeyValueItem
