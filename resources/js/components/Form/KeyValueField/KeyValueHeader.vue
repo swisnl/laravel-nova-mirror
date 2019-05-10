@@ -21,6 +21,6 @@ export default {
         valueLabel: {
             type: String,
         },
-    }
+    },
 }
 </script>
