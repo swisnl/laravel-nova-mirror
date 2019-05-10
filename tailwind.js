@@ -200,6 +200,7 @@ module.exports = {
         '24': '6rem',
         site: '80rem',
         full: '100%',
+        'table-cell': '56px',
     },
 
     minHeight: {

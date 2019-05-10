@@ -109,7 +109,7 @@ input[type='search']::-webkit-search-cancel-button {
 }
 
 .table td {
-  @apply .font-light .text-90 .border-t .border-b .border-50 .px-3 .align-middle;
+  @apply .font-light .text-90 .border-t .border-b .border-50 .px-3 .align-middle min-w-table-cell;
   height: 3.8125rem;
 }
 
