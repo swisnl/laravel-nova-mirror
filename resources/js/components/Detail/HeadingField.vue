@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-20 flex border-b border-40">
+    <div class="bg-20 flex border-b border-40 -mx-6 px-2">
         <div class="w-full py-4 px-4">
             <slot name="value">
                 <p v-if="fieldValue && !shouldDisplayAsHtml" class="text-90">{{ fieldValue }}</p>
