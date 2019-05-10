@@ -26,7 +26,7 @@ class ActionEvent extends Model
      * @var array
      */
     protected $casts = [
-        'fields' => 'array'
+        'fields' => 'array',
     ];
 
     /**
