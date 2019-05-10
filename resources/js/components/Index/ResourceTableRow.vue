@@ -17,7 +17,7 @@
         </td>
 
         <!-- Fields -->
-        <td v-for="field in resource.fields" class="min-w-table-cell">
+        <td v-for="field in resource.fields">
             <component
                 :is="'index-' + field.component"
                 :class="`text-${field.textAlign}`"
