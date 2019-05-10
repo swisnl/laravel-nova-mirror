@@ -281,7 +281,7 @@ class ActionEvent extends Model
             'target_type' => $request->model()->getMorphClass(),
             'model_type' => $modelType,
             'fields' => serialize($request->resolveFieldsForStorage()),
-            'attributes' => [],
+            'diff' => [],
             'status' => $status,
             'exception' => '',
             'created_at' => new DateTime,
