@@ -26,7 +26,7 @@ class ActionEvent extends Model
      * @var array
      */
     protected $casts = [
-        'fields' => 'array',
+        'diff' => 'array',
     ];
 
     /**
@@ -64,7 +64,8 @@ class ActionEvent extends Model
             'target_id' => $model->getKey(),
             'model_type' => $model->getMorphClass(),
             'model_id' => $model->getKey(),
-            'fields' => [
+            'fields' => '',
+            'diff' => [
                 'original' => $model->attributesToArray(),
             ],
             'status' => 'finished',
@@ -91,7 +92,7 @@ class ActionEvent extends Model
             'target_id' => $model->getKey(),
             'model_type' => $model->getMorphClass(),
             'model_id' => $model->getKey(),
-            'fields' => [
+            'diff' => [
                 'original' => array_intersect_key($model->getOriginal(), $model->getDirty()),
                 'changes' => $model->getDirty(),
             ],
@@ -121,6 +122,7 @@ class ActionEvent extends Model
             'model_type' => $pivot->getMorphClass(),
             'model_id' => $pivot->getKey(),
             'fields' => '',
+            'diff' => [],
             'status' => 'finished',
             'exception' => '',
         ]);
@@ -174,6 +176,7 @@ class ActionEvent extends Model
                 'model_type' => $model->getMorphClass(),
                 'model_id' => $model->getKey(),
                 'fields' => '',
+                'diff' => [],
                 'status' => 'finished',
                 'exception' => '',
                 'created_at' => new DateTime,
@@ -207,6 +210,7 @@ class ActionEvent extends Model
                 'model_type' => $pivotClass,
                 'model_id' => null,
                 'fields' => '',
+                'diff' => [],
                 'status' => 'finished',
                 'exception' => '',
                 'created_at' => new DateTime,
@@ -276,6 +280,7 @@ class ActionEvent extends Model
             'target_type' => $request->model()->getMorphClass(),
             'model_type' => $modelType,
             'fields' => serialize($request->resolveFieldsForStorage()),
+            'attributes' => [],
             'status' => $status,
             'exception' => '',
             'created_at' => new DateTime,
