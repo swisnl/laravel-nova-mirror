@@ -21,6 +21,15 @@ class ActionEvent extends Model
     protected $guarded = [];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'fields' => 'array'
+    ];
+
+    /**
      * Get the user that initiated the action.
      */
     public function user()
@@ -55,7 +64,9 @@ class ActionEvent extends Model
             'target_id' => $model->getKey(),
             'model_type' => $model->getMorphClass(),
             'model_id' => $model->getKey(),
-            'fields' => '',
+            'fields' => [
+                'original' => $model->attributesToArray(),
+            ],
             'status' => 'finished',
             'exception' => '',
         ]);
@@ -80,7 +91,10 @@ class ActionEvent extends Model
             'target_id' => $model->getKey(),
             'model_type' => $model->getMorphClass(),
             'model_id' => $model->getKey(),
-            'fields' => '',
+            'fields' => [
+                'original' => array_intersect_key($model->getOriginal(), $model->getDirty()),
+                'changes' => $model->getDirty(),
+            ],
             'status' => 'finished',
             'exception' => '',
         ]);

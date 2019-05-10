@@ -33,11 +33,13 @@ class ResourceUpdateController extends Controller
 
             [$model, $callbacks] = $resource::fillForUpdate($request, $model);
 
-            return tap(tap($model)->save(), function ($model) use ($request, $callbacks) {
-                ActionEvent::forResourceUpdate($request->user(), $model)->save();
+            ActionEvent::forResourceUpdate($request->user(), $model)->save();
 
-                collect($callbacks)->each->__invoke();
-            });
+            $model->save();
+
+            collect($callbacks)->each->__invoke();
+
+            return $model;
         });
 
         return response()->json([
