@@ -29,7 +29,7 @@ export default {
             'remove-last-margin-bottom',
             'leading-normal',
             'w-full',
-            'py-6',
+            'py-4',
             'px-8',
         ],
 
