@@ -374,5 +374,8 @@
     "of": "of",
     "no file selected": "no file selected",
     "Sorry, your session has expired.": "Sorry, your session has expired.",
-    "Reload": "Reload"
+    "Reload": "Reload",
+    "Key": "Key",
+    "Value": "Value",
+    "Add row": "Add row"
 }

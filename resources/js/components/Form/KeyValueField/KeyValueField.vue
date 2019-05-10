@@ -21,7 +21,7 @@
                     class="appearance-none w-full font-semibold py-3 flex items-center justify-center text-80 hover:text-primary font-bold"
                 >
                     <icon type="add" width="24" height="24" view-box="0 0 24 24" />
-                    <span class="ml-1"> {{ __('Add row') }} </span>
+                    <span class="ml-1">{{ __('Add row') }}</span>
                 </button>
             </KeyValueTable>
         </template>
