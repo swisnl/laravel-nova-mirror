@@ -18,7 +18,7 @@
             />
         </div>
 
-        <heading v-if="resourceResponse" class="mb-3">{{ headingTitle }}</heading>
+        <heading class="mb-3" v-html="headingTitle" />
 
         <div class="flex">
             <!-- Search -->
@@ -1018,7 +1018,9 @@ export default {
          * Return the heading for the view
          */
         headingTitle() {
-            return this.isRelation && this.field ? this.field.name : this.resourceResponse.label
+            return this.loading
+                ? '&nbsp;'
+                : this.isRelation && this.field ? this.field.name : this.resourceResponse.label
         },
 
         /**
