@@ -402,7 +402,7 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
      */
     public static function redirectAfterCreate(NovaRequest $request, $resource)
     {
-        return url(config('nova.path').'/resources/'.static::uriKey().'/'.$resource->getKey());
+        return '/resources/'.static::uriKey().'/'.$resource->getKey();
     }
 
     /**
@@ -414,6 +414,6 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
      */
     public static function redirectAfterUpdate(NovaRequest $request, $resource)
     {
-        return url(config('nova.path').'/resources/'.static::uriKey().'/'.$resource->getKey());
+        return '/resources/'.static::uriKey().'/'.$resource->getKey();
     }
 }

@@ -142,7 +142,7 @@ export default {
             this.submittedViaUpdateResource = true
 
             try {
-                const { redirect } = await this.updateRequest()
+                const { data: {redirect} } = await this.updateRequest()
 
                 this.submittedViaUpdateResource = false
 
@@ -153,7 +153,7 @@ export default {
                     { type: 'success' }
                 )
 
-                this.$router.push(redirect)
+                this.$router.push({path: redirect})
             } catch (error) {
                 this.submittedViaUpdateResource = false
 
