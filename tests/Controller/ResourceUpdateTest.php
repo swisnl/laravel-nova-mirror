@@ -21,24 +21,32 @@ class ResourceUpdateTest extends IntegrationTest
 
     public function test_can_update_resources()
     {
-        $user = factory(User::class)->create();
+        $user = factory(User::class)->create([
+            'name' => 'Taylor Otwell',
+            'email' => 'taylor@laravel.com',
+        ]);
 
         $response = $this->withExceptionHandling()
                         ->putJson('/nova-api/users/'.$user->id, [
-                            'name' => 'Taylor Otwell',
-                            'email' => 'taylor@laravel.com',
+                            'name' => 'David Hemphill',
+                            'email' => 'david@laravel.com',
                             'password' => 'secret',
                         ]);
 
         $response->assertStatus(200);
 
         $user = $user->fresh();
-        $this->assertEquals('Taylor Otwell', $user->name);
-        $this->assertEquals('taylor@laravel.com', $user->email);
+        $this->assertEquals('David Hemphill', $user->name);
+        $this->assertEquals('david@laravel.com', $user->email);
 
         $this->assertCount(1, ActionEvent::all());
-        $this->assertEquals('Update', ActionEvent::first()->name);
-        $this->assertEquals($user->id, ActionEvent::first()->target->id);
+
+        $actionEvent = ActionEvent::first();
+
+        $this->assertEquals('Update', $actionEvent->name);
+        $this->assertEquals($user->id, $actionEvent->target->id);
+        $this->assertSubset(['name' => 'Taylor Otwell', 'email' => 'taylor@laravel.com'], $actionEvent->original);
+        $this->assertSubset(['name' => 'David Hemphill', 'email' => 'david@laravel.com'], $actionEvent->changes);
         $this->assertTrue($user->is(ActionEvent::first()->target));
     }
 

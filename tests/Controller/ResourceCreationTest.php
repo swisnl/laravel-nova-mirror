@@ -41,6 +41,11 @@ class ResourceCreationTest extends IntegrationTest
         $this->assertCount(1, ActionEvent::all());
         $this->assertEquals('Create', $actionEvent->name);
         $this->assertEquals($user->id, $actionEvent->target->id);
+        $this->assertEmpty($actionEvent->original);
+        $this->assertSubset([
+            'name' => 'Taylor Otwell',
+            'email' => 'taylor@laravel.com',
+        ], $actionEvent->changes);
         $this->assertTrue($user->is($actionEvent->target));
     }
 
