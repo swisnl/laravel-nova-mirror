@@ -280,7 +280,7 @@ class ResourceUpdateTest extends IntegrationTest
                 'password' => 'secret',
             ]);
 
-        $response->assertJson(['redirect' => url('/nova/resources/users/1')]);
+        $response->assertJson(['redirect' => '/resources/users/1']);
     }
 
     public function test_resource_can_redirect_to_custom_uri_on_update()
