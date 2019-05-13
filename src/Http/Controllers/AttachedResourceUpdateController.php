@@ -36,9 +36,9 @@ class AttachedResourceUpdateController extends Controller
 
             [$pivot, $callbacks] = $resource::fillPivot($request, $model, $pivot);
 
-            $pivot->save();
-
             ActionEvent::forAttachedResourceUpdate($request, $model, $pivot)->save();
+
+            $pivot->save();
 
             collect($callbacks)->each->__invoke();
         });
