@@ -26,7 +26,8 @@ class ActionEvent extends Model
      * @var array
      */
     protected $casts = [
-        'diff' => 'array',
+        // 'original' => 'array',
+        // 'changes' => 'array',
     ];
 
     /**
@@ -65,9 +66,8 @@ class ActionEvent extends Model
             'model_type' => $model->getMorphClass(),
             'model_id' => $model->getKey(),
             'fields' => '',
-            'diff' => [
-                'original' => $model->attributesToArray(),
-            ],
+            'original' => '',
+            'changes' => serialize($model->attributesToArray()),
             'status' => 'finished',
             'exception' => '',
         ]);
@@ -93,10 +93,8 @@ class ActionEvent extends Model
             'model_type' => $model->getMorphClass(),
             'model_id' => $model->getKey(),
             'fields' => '',
-            'diff' => [
-                'original' => array_intersect_key($model->getOriginal(), $model->getDirty()),
-                'changes' => $model->getDirty(),
-            ],
+            'original' => serialize(array_intersect_key($model->getOriginal(), $model->getDirty())),
+            'changes' => serialize($model->getDirty()),
             'status' => 'finished',
             'exception' => '',
         ]);
@@ -123,7 +121,8 @@ class ActionEvent extends Model
             'model_type' => $pivot->getMorphClass(),
             'model_id' => $pivot->getKey(),
             'fields' => '',
-            'diff' => [],
+            'original' => '',
+            'changes' => '',
             'status' => 'finished',
             'exception' => '',
         ]);
@@ -177,7 +176,8 @@ class ActionEvent extends Model
                 'model_type' => $model->getMorphClass(),
                 'model_id' => $model->getKey(),
                 'fields' => '',
-                'diff' => [],
+                'original' => '',
+                'changes' => '',
                 'status' => 'finished',
                 'exception' => '',
                 'created_at' => new DateTime,
@@ -211,7 +211,8 @@ class ActionEvent extends Model
                 'model_type' => $pivotClass,
                 'model_id' => null,
                 'fields' => '',
-                'diff' => [],
+                'original' => '',
+                'changes' => '',
                 'status' => 'finished',
                 'exception' => '',
                 'created_at' => new DateTime,
@@ -281,7 +282,8 @@ class ActionEvent extends Model
             'target_type' => $request->model()->getMorphClass(),
             'model_type' => $modelType,
             'fields' => serialize($request->resolveFieldsForStorage()),
-            'diff' => [],
+            'original' => '',
+            'changes' => '',
             'status' => $status,
             'exception' => '',
             'created_at' => new DateTime,

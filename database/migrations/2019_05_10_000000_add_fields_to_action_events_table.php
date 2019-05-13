@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddAttributesFieldToActionEventsTable extends Migration
+class AddFieldsToActionEventsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,8 @@ class AddAttributesFieldToActionEventsTable extends Migration
     public function up()
     {
         Schema::table('action_events', function (Blueprint $table) {
-            $table->json('diff')->nullable();
+            $table->text('original')->nullable();
+            $table->text('changes')->nullable();
         });
     }
 
@@ -26,7 +27,7 @@ class AddAttributesFieldToActionEventsTable extends Migration
     public function down()
     {
         Schema::table('action_events', function (Blueprint $table) {
-            $table->dropColumn('diff');
+            $table->dropColumn('original', 'changes');
         });
     }
 }
