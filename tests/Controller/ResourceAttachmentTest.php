@@ -3,6 +3,7 @@
 namespace Laravel\Nova\Tests\Controller;
 
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Actions\ActionEvent;
 use Laravel\Nova\Tests\Fixtures\Role;
 use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\IntegrationTest;
@@ -34,6 +35,21 @@ class ResourceAttachmentTest extends IntegrationTest
         $this->assertCount(1, $user->fresh()->roles);
         $this->assertEquals($role->id, $user->fresh()->roles->first()->id);
         $this->assertEquals('Y', $user->fresh()->roles->first()->pivot->admin);
+
+        $this->assertCount(1, ActionEvent::all());
+
+        $actionEvent = ActionEvent::first();
+        $this->assertEquals('Attach', $actionEvent->name);
+        $this->assertEquals('finished', $actionEvent->status);
+
+        $this->assertEquals($user->id, $actionEvent->target->id);
+        $this->assertEmpty($actionEvent->original);
+
+        $this->assertSubset([
+            'user_id' => $user->id,
+            'role_id' => $role->id,
+            'admin' => 'Y'
+        ], $actionEvent->changes);
     }
 
     public function test_cant_set_pivot_fields_that_arent_authorized()

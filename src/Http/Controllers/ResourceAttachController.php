@@ -5,6 +5,7 @@ namespace Laravel\Nova\Http\Controllers;
 use DateTime;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Laravel\Nova\Actions\ActionEvent;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -29,6 +30,8 @@ class ResourceAttachController extends Controller
                     $request, $model->{$request->viaRelationship}()
                 )
             );
+
+            ActionEvent::forAttachedResource($request, $model, $pivot)->save();
 
             $pivot->save();
 

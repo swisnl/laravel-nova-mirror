@@ -101,6 +101,34 @@ class ActionEvent extends Model
     }
 
     /**
+     * Create a new action event instance for an attached resource.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Illuminate\Database\Eloquent\Model  $parent
+     * @param  \Illuminate\Database\Eloquent\Model  $pivot
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public static function forAttachedResource(NovaRequest $request, $parent, $pivot)
+    {
+        return new static([
+            'batch_id' => (string) Str::orderedUuid(),
+            'user_id' => $request->user()->getAuthIdentifier(),
+            'name' => 'Attach',
+            'actionable_type' => $parent->getMorphClass(),
+            'actionable_id' => $parent->getKey(),
+            'target_type' => Nova::modelInstanceForKey($request->relatedResource)->getMorphClass(),
+            'target_id' => $parent->getKey(),
+            'model_type' => $pivot->getMorphClass(),
+            'model_id' => $pivot->getKey(),
+            'fields' => '',
+            'original' => null,
+            'changes' => $pivot->attributesToArray(),
+            'status' => 'finished',
+            'exception' => '',
+        ]);
+    }
+
+    /**
      * Create a new action event instance for an attached resource update.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request

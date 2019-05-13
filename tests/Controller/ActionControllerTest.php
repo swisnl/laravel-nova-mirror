@@ -82,8 +82,6 @@ class ActionControllerTest extends IntegrationTest
         $this->assertEquals('Taylor Otwell', NoopAction::$appliedFields[0]->test);
         $this->assertEquals('callback', NoopAction::$appliedFields[0]->callbacks()['callback']());
 
-        // Test for action diff
-
         $this->assertCount(2, ActionEvent::all());
         $actionEvent = ActionEvent::first();
         $this->assertEquals('Noop Action', $actionEvent->name);
