@@ -26,8 +26,8 @@ class ActionEvent extends Model
      * @var array
      */
     protected $casts = [
-        // 'original' => 'array',
-        // 'changes' => 'array',
+        'original' => 'array',
+        'changes' => 'array',
     ];
 
     /**
@@ -67,7 +67,7 @@ class ActionEvent extends Model
             'model_id' => $model->getKey(),
             'fields' => '',
             'original' => '',
-            'changes' => serialize($model->attributesToArray()),
+            'changes' => $model->attributesToArray(),
             'status' => 'finished',
             'exception' => '',
         ]);
@@ -93,8 +93,8 @@ class ActionEvent extends Model
             'model_type' => $model->getMorphClass(),
             'model_id' => $model->getKey(),
             'fields' => '',
-            'original' => serialize(array_intersect_key($model->getOriginal(), $model->getDirty())),
-            'changes' => serialize($model->getDirty()),
+            'original' => array_intersect_key($model->getOriginal(), $model->getDirty()),
+            'changes' => $model->getDirty(),
             'status' => 'finished',
             'exception' => '',
         ]);
