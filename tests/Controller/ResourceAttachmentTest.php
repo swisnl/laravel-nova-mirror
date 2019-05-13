@@ -48,7 +48,7 @@ class ResourceAttachmentTest extends IntegrationTest
         $this->assertSubset([
             'user_id' => $user->id,
             'role_id' => $role->id,
-            'admin' => 'Y'
+            'admin' => 'Y',
         ], $actionEvent->changes);
     }
 
