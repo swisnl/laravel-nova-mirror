@@ -76,10 +76,12 @@ class ActionResource extends Resource
                 return ucfirst($value);
             })->loadingWhen(['Waiting', 'Running'])->failedWhen(['Failed']),
 
-            KeyValue::make(__('Original'), 'diff->original'),
+            $this->when(isset($this->original), function () {
+                return KeyValue::make(__('Original'));
+            }),
 
-            $this->when(isset($this->diff['changes']), function () {
-                return KeyValue::make(__('Changes'), 'diff->changes');
+            $this->when(isset($this->changes), function () {
+                return KeyValue::make(__('Changes'));
             }),
 
             DateTime::make(__('Action Happened At'), 'created_at')->exceptOnForms(),
