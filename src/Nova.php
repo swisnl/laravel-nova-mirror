@@ -110,7 +110,7 @@ class Nova
      */
     public static function version()
     {
-        return '2.0.3';
+        return '2.0.5';
     }
 
     /**
