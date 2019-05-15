@@ -377,5 +377,12 @@
     "Reload": "Reload",
     "Key": "Key",
     "Value": "Value",
-    "Add row": "Add row"
+    "Add row": "Add row",
+    "Attach :resource": "Attach :resource",
+    "Create :resource": "Create :resource",
+    "Choose :resource": "Choose :resource",
+    "New :resource": "New :resource",
+    "Edit :resource": "Edit :resource",
+    "Update :resource": "Update :resource",
+    "Choose :field": "Choose :field"
 }

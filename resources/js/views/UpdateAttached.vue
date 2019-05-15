@@ -1,6 +1,8 @@
 <template>
     <loading-view :loading="loading">
-        <heading class="mb-3">{{ __('Update', { resource: relatedResourceLabel }) }}</heading>
+        <heading class="mb-3">{{
+            __('Update :resource', { resource: relatedResourceLabel })
+        }}</heading>
 
         <card class="overflow-hidden">
             <form v-if="field" @submit.prevent="updateAttachedResource" autocomplete="off">
@@ -66,7 +68,7 @@
                         :disabled="isWorking"
                         :processing="submittedViaUpdateAttachedResource"
                     >
-                        {{ __('Update', { resource: relatedResourceLabel }) }}
+                        {{ __('Update :resource', { resource: relatedResourceLabel }) }}
                     </progress-button>
                 </div>
             </form>
