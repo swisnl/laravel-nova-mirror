@@ -1,5 +1,7 @@
 <!-- Provide a general summary of the issue in the Title above -->
 
+### :warning: This repository is only a Nova mirroring tool. Nova issues can be reported on the [Nova issues repository](https://github.com/laravel/nova-issues) :warning:
+
 ## Detailed description
 
 Provide a detailed description of the change or addition you are proposing.
