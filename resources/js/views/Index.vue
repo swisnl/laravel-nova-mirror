@@ -560,7 +560,6 @@ export default {
          * Get the lenses available for the current resource.
          */
         getLenses() {
-            this.loading = true
             this.lenses = []
 
             if (this.viaResource) {
