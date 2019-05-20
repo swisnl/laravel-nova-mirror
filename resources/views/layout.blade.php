@@ -75,7 +75,7 @@
 
     <!-- Tool Scripts -->
     @foreach (Nova::availableScripts(request()) as $name => $path)
-        @if (starts_with($path, ['http://', 'https://']))
+        @if (Str::startsWith($path, ['http://', 'https://']))
             <script src="{!! $path !!}"></script>
         @else
             <script src="/nova-api/scripts/{{ $name }}"></script>
