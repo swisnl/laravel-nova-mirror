@@ -3,7 +3,7 @@
         <div class="w-full max-w-xl">
             <heading class="flex mb-3">Get Started</heading>
             <p class="text-90 leading-tight mb-8">
-                Welcome to Nova! Get familiar with Nova and explore it's features in the
+                Welcome to Nova! Get familiar with Nova and explore its features in the
                 documentation:
             </p>
 
