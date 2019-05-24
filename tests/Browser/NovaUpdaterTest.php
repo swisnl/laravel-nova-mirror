@@ -45,15 +45,15 @@ JS;
 
                 foreach ($elements as $element) {
                     $href = $element->getAttribute('href');
-                    $releaseTag = $updateService->getReleaseTag($href);
 
-                    if ($updateService->repositoryHasTag($releaseTag)) {
-                        fwrite(STDOUT, '>>> Skipping existing release'.PHP_EOL);
+                    $version = $updateService->getVersion($href);
+                    if ($updateService->repositoryHasTag('v'.$version)) {
+                        fwrite(STDOUT, '>>> Skipping existing version ' . $version .PHP_EOL);
                         continue;
                     }
 
-                    $releasePath = 'downloaded-releases/'.$releaseTag;
-                    if (Storage::disk('local')->exists('downloaded-releases/'.$releaseTag) === false) {
+                    $releasePath = 'downloaded-releases/'.$version;
+                    if (Storage::disk('local')->exists('downloaded-releases/'.$version) === false) {
                         fwrite(STDOUT, '>>> Downloading new release'.PHP_EOL);
                         $url = $browser->driver->getCommandExecutor()->getAddressOfRemoteServer();
                         $uri = '/session/'.$browser->driver->getSessionID().'/chromium/send_command';
@@ -66,13 +66,7 @@ JS;
                     }
 
                     $filesHelper = new NovaFilesHelper();
-                    $releaseFile = $filesHelper->waitForReleaseDownload($releaseTag);
-                    $version = $updateService->getVersionFromFilePath($releaseFile);
-
-                    if ($updateService->repositoryHasTag($version)) {
-                        fwrite(STDOUT, '>>> Skipping existing version ('.$version.')'.PHP_EOL);
-                        continue;
-                    }
+                    $releaseFile = $filesHelper->waitForReleaseDownload($version);
 
                     fwrite(STDOUT, '>>> Updating repository'.PHP_EOL);
                     $filesHelper->updateRepositoryFiles($releaseFile, $releasePath);
@@ -89,7 +83,7 @@ JS;
 
 
                     fwrite(STDOUT, '>>> Committing and tagging new release ('.$version.')'.PHP_EOL);
-                    $updateService->createRelease($version, $releaseTag, $markdown);
+                    $updateService->createRelease($version, $markdown);
 
                     if(env('NOVA_ENABLE_PUSH', true) === false) {
                         fwrite(STDOUT, '>>> Pushing changes to remote is disabled, skipping'.PHP_EOL);

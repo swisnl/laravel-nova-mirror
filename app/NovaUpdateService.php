@@ -42,16 +42,11 @@ class NovaUpdateService
         return $this->repository->getReferences()->hasTag($tag);
     }
 
-    public function getReleaseTag(string $href)
+    public function getVersion(string $href)
     {
-        return ltrim(parse_url($href, PHP_URL_PATH), '/');
-    }
+        $parts = explode('/', ltrim(parse_url($href, PHP_URL_PATH), '/'));
 
-    public function getVersionFromFilePath(string $filename)
-    {
-        $parts = explode('/', $filename);
-
-        return str_replace(['nova-', '.zip'], '', array_pop($parts));
+        return $parts[1];
     }
 
     /**
@@ -62,18 +57,19 @@ class NovaUpdateService
         $this->repository = $repository;
     }
 
-    public function createRelease($version, string $releaseTag, string $message)
+    public function createRelease($version, string $message)
     {
         $this->repository->run('add', ['.']);
-        $this->repository->run('commit',
+        $this->repository->run(
+            'commit',
             [
                 '-m',
-                'Nova release '.  str_replace("'","\\'",$version),
+                'Nova release '.str_replace("'", "\\'", $version),
                 '-m',
                 $message,
-            ]);
+            ]
+        );
         $this->repository->run('tag', ['v'.$version]);
-        $this->repository->run('tag', [$releaseTag]);
     }
 
     public function pushRelease()
