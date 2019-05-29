@@ -21,7 +21,7 @@ class BadgeTest extends IntegrationTest
         $result = $field->jsonSerialize();
 
         $this->assertEquals('danger', $result['value']);
-        $this->assertEquals('bg-red-200 text-red-600', $result['typeClass']);
+        $this->assertEquals('bg-danger-light text-danger-dark', $result['typeClass']);
         $this->assertEquals('Danger', $result['label']);
     }
 
@@ -36,7 +36,7 @@ class BadgeTest extends IntegrationTest
         $result = $field->jsonSerialize();
 
         $this->assertEquals('info', $field->value);
-        $this->assertEquals('bg-blue-100 text-blue-600', $result['typeClass']);
+        $this->assertEquals('bg-info-light text-info-dark', $result['typeClass']);
         $this->assertEquals('Info', $result['label']);
     }
 
@@ -52,7 +52,7 @@ class BadgeTest extends IntegrationTest
         $result = $field->jsonSerialize();
 
         $this->assertEquals('published', $field->value);
-        $this->assertEquals('bg-green-200 text-green-600', $result['typeClass']);
+        $this->assertEquals('bg-success-light text-success-dark', $result['typeClass']);
         $this->assertEquals('Published', $result['label']);
     }
 
@@ -70,7 +70,7 @@ class BadgeTest extends IntegrationTest
         $result = $field->jsonSerialize();
 
         $this->assertEquals('draft', $field->value);
-        $this->assertEquals('bg-yellow-200 text-yellow-700', $result['typeClass']);
+        $this->assertEquals('bg-warning-light text-warning-dark', $result['typeClass']);
         $this->assertEquals('Draft', $result['label']);
     }
 
@@ -119,7 +119,7 @@ class BadgeTest extends IntegrationTest
         $result = $field->jsonSerialize();
 
         $this->assertEquals('danger', $field->value);
-        $this->assertEquals('bg-red-200 text-red-600', $result['typeClass']);
+        $this->assertEquals('bg-danger-light text-danger-dark', $result['typeClass']);
         $this->assertEquals('Custom: danger', $result['label']);
     }
 }
