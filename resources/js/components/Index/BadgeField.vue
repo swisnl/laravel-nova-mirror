@@ -9,7 +9,7 @@ import Badge from '../badge'
 
 export default {
     components: {
-        Badge
+        Badge,
     },
 
     props: ['resourceName', 'viaResource', 'viaResourceId', 'field'],

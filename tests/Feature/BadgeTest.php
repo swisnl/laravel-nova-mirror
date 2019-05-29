@@ -79,7 +79,7 @@ class BadgeTest extends IntegrationTest
         $field = Badge::make('Status', function () {
             return 'draft';
         })->types([
-            'draft' => 'custom class names'
+            'draft' => 'custom class names',
         ]);
 
         $field->resolve((object) []);
@@ -95,7 +95,7 @@ class BadgeTest extends IntegrationTest
         $field = Badge::make('Status', function () {
             return 'draft';
         })->types([
-            'draft' => ['custom', 'class', 'names']
+            'draft' => ['custom', 'class', 'names'],
         ]);
 
         $field->resolve((object) []);
@@ -111,7 +111,7 @@ class BadgeTest extends IntegrationTest
         $field = Badge::make('Status', function () {
             return 'danger';
         })->label(function ($value) {
-            return 'Custom: ' . $value;
+            return 'Custom: '.$value;
         });
 
         $field->resolve((object) []);

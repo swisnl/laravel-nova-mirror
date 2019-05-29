@@ -11,7 +11,7 @@ import Badge from '../badge'
 
 export default {
     components: {
-        Badge
+        Badge,
     },
 
     props: ['resource', 'resourceName', 'resourceId', 'field'],
