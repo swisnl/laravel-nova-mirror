@@ -232,7 +232,7 @@
 
 <script>
 function link(path) {
-    return `https://nova.laravel.com/docs/1.0/${path}`
+    return `https://nova.laravel.com/docs/2.0/${path}`
 }
 
 export default {
