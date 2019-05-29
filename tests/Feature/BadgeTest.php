@@ -22,7 +22,7 @@ class BadgeTest extends IntegrationTest
 
         $this->assertEquals('danger', $result['value']);
         $this->assertEquals('bg-danger-light text-danger-dark', $result['typeClass']);
-        $this->assertEquals('Danger', $result['label']);
+        $this->assertEquals('danger', $result['label']);
     }
 
     public function test_computed_badge_resolves_correct_value_and_display_class()
@@ -37,7 +37,7 @@ class BadgeTest extends IntegrationTest
 
         $this->assertEquals('info', $field->value);
         $this->assertEquals('bg-info-light text-info-dark', $result['typeClass']);
-        $this->assertEquals('Info', $result['label']);
+        $this->assertEquals('info', $result['label']);
     }
 
     public function test_badge_with_custom_class_map_returns_correct_class()
@@ -53,7 +53,7 @@ class BadgeTest extends IntegrationTest
 
         $this->assertEquals('published', $field->value);
         $this->assertEquals('bg-success-light text-success-dark', $result['typeClass']);
-        $this->assertEquals('Published', $result['label']);
+        $this->assertEquals('published', $result['label']);
     }
 
     public function test_computed_badge_with_custom_class_map_returns_correct_class()
@@ -71,7 +71,7 @@ class BadgeTest extends IntegrationTest
 
         $this->assertEquals('draft', $field->value);
         $this->assertEquals('bg-warning-light text-warning-dark', $result['typeClass']);
-        $this->assertEquals('Draft', $result['label']);
+        $this->assertEquals('draft', $result['label']);
     }
 
     public function test_badge_can_be_customized_with_custom_css_classes()
@@ -104,6 +104,20 @@ class BadgeTest extends IntegrationTest
 
         $this->assertEquals('draft', $field->value);
         $this->assertEquals(['custom', 'class', 'names'], $result['typeClass']);
+    }
+
+    public function test_badge_can_set_custom_labels()
+    {
+        $field = Badge::make('Status')->labels([
+            'info' => 'Active',
+            'danger' => 'Refunded',
+        ]);
+
+        $field->resolve((object) ['status' => 'danger']);
+
+        $result = $field->jsonSerialize();
+
+        $this->assertEquals('Refunded', $result['label']);
     }
 
     public function test_badge_can_use_a_custom_label()

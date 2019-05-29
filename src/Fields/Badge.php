@@ -36,6 +36,13 @@ class Badge extends Field
     public $component = 'badge-field';
 
     /**
+     * The labels that should be applied to the field's possible values.
+     *
+     * @var array
+     */
+    public $labels;
+
+    /**
      * The callback used to determine the field's label.
      *
      * @var callable
@@ -70,6 +77,19 @@ class Badge extends Field
     public function types($types)
     {
         $this->types = $types;
+
+        return $this;
+    }
+
+    /**
+     * Set the labels for each possible field value.
+     *
+     * @param array $labels
+     * @return $this
+     */
+    public function labels($labels)
+    {
+        $this->labels = $labels;
 
         return $this;
     }
@@ -127,7 +147,7 @@ class Badge extends Field
             return call_user_func($this->labelCallback, $this->value);
         }
 
-        return ucfirst($this->value);
+        return $this->labels[$this->value] ?? $this->value;
     }
 
     /**
