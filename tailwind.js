@@ -24,6 +24,14 @@ let colors = {
     40: 'var(--40)',
     30: 'var(--30)',
     20: 'var(--20)',
+    'warning-light': 'var(--warning-light)',
+    'warning-dark': 'var(--warning-dark)',
+    'success-light': 'var(--success-light)',
+    'success-dark': 'var(--success-dark)',
+    'danger-light': 'var(--danger-light)',
+    'danger-dark': 'var(--danger-dark)',
+    'info-light': 'var(--info-light)',
+    'info-dark': 'var(--info-dark)',
 }
 
 let svgFillColors = global.Object.assign({ current: 'currentColor' }, colors)
