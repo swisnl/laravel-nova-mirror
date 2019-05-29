@@ -9,7 +9,7 @@
 
 <script>
 export default {
-    props : {
+    props: {
         label: {
             type: String,
             required: false,
@@ -18,7 +18,7 @@ export default {
         extraClasses: {
             type: [Array, String],
             required: false,
-        }
+        },
     },
 }
 </script>

@@ -60,7 +60,8 @@ class Badge extends Field
      * @param array $types
      * @return $this
      */
-    public function types($types) {
+    public function types($types)
+    {
         $this->types = $types;
 
         return $this;
