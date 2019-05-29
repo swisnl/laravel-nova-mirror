@@ -22,6 +22,13 @@ class Badge extends Field
     }
 
     /**
+     * The text alignment for the field's text in tables.
+     *
+     * @var string
+     */
+    public $textAlign = 'center';
+
+    /**
      * The field's component.
      *
      * @var string
