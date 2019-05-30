@@ -44,7 +44,7 @@
         "inflector-js": "^1.0.1",
         "laravel-nova": "^1.0.7",
         "markdown-it": "^8.4.1",
-        "marked": "^0.3.19",
+        "marked": "^0.6.2",
         "moment": "^2.22.2",
         "moment-timezone": "^0.5.21",
         "numeral": "^2.0.6",
