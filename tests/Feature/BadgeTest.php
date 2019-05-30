@@ -120,6 +120,29 @@ class BadgeTest extends IntegrationTest
         $this->assertEquals('Refunded', $result['label']);
     }
 
+    public function test_badge_with_custom_mapping_and_labels()
+    {
+        $field = Badge::make('Status')->map([
+            true => 'success',
+            false => 'danger',
+        ])->labels([
+            true => 'Yes',
+            false => 'No',
+        ]);
+
+        $field->resolve((object) ['status' => true]);
+
+        $result = $field->jsonSerialize();
+
+        $this->assertEquals('Yes', $result['label']);
+
+        $field->resolve((object) ['status' => false]);
+
+        $result = $field->jsonSerialize();
+
+        $this->assertEquals('No', $result['label']);
+    }
+
     public function test_badge_can_use_a_custom_label()
     {
         $field = Badge::make('Status', function () {
