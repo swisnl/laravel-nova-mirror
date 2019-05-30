@@ -70,6 +70,7 @@ export default {
     mixins: [TogglesTrashed, PerformsSearches, HandlesValidationErrors],
     props: {
         resourceName: String,
+        resourceId: {},
         field: Object,
         viaResource: {},
         viaResourceId: {},
@@ -256,6 +257,7 @@ export default {
                     first: this.initializingWithExistingResource,
                     search: this.search,
                     withTrashed: this.withTrashed,
+                    resourceId: this.resourceId,
                 },
             }
         },
