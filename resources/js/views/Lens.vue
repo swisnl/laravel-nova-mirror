@@ -405,7 +405,7 @@ export default {
                     Nova.request().get('/nova-api/' + this.resourceName + '/lens/' + this.lens, {
                         params: this.resourceRequestQueryString,
                     }),
-                    500
+                    300
                 ).then(({ data }) => {
                     this.resources = []
 
