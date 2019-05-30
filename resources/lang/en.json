@@ -384,5 +384,6 @@
     "New :resource": "New :resource",
     "Edit :resource": "Edit :resource",
     "Update :resource": "Update :resource",
-    "Choose :field": "Choose :field"
+    "Choose :field": "Choose :field",
+    "Download": "Download"
 }

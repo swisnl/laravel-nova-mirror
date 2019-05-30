@@ -31,7 +31,7 @@
                         width="16"
                         height="16"
                     />
-                    <span class="class mt-1"> Download </span>
+                    <span class="class mt-1">{{ __('Download') }}</span>
                 </a>
             </p>
         </div>
