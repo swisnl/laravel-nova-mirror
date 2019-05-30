@@ -27,6 +27,14 @@
   --80: #7c858e;
   --90: #252d37;
   --90-half: rgba(40, 54, 61, 0.5);
+  --warning-light: #fefcbf;
+  --warning-dark: #b7791f;
+  --success-light: #c6f6d5;
+  --success-dark: #38a169;
+  --danger-light: #fed7d7;
+  --danger-dark: #e53e3e;
+  --info-light: #bee3f8;
+  --info-dark: #3182ce;
 }
 
 /* Vue

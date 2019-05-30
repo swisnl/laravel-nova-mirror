@@ -71,6 +71,10 @@ Vue.component('index-markdown-field', require('./components/Detail/TextField.vue
 Vue.component('detail-markdown-field', require('./components/Detail/MarkdownField.vue'))
 Vue.component('form-markdown-field', require('./components/Form/MarkdownField.vue'))
 
+// Badge Field...
+Vue.component('index-badge-field', require('./components/Index/BadgeField.vue'))
+Vue.component('detail-badge-field', require('./components/Detail/BadgeField.vue'))
+
 // Trix Field
 Vue.component('detail-trix-field', require('./components/Detail/TrixField.vue'))
 Vue.component('form-trix-field', require('./components/Form/TrixField.vue'))
