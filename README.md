@@ -3,7 +3,9 @@
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/swisnl/laravel-nova-mirror.svg)](https://packagist.org/packages/swisnl/laravel-nova-mirror)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/swisnl/laravel-nova-mirror.svg)](https://packagist.org/packages/swisnl/laravel-nova-mirror)
 
-### :warning: Nova now officially supports [installing via Composer](https://nova.laravel.com/docs/1.0/installation.html#installing-nova-via-composer) :warning:
+### :warning: Nova now officially supports [installing via Composer](https://nova.laravel.com/docs/1.0/installation.html#installing-nova-via-composer). You can also get Git access with your account when you have licenses. Therefor, this package is now fully deprecated. :warning:
+
+
 
 > **This repository is not a public mirror. It can sync Nova downloads using your personal credentials to a private repository of your choice.**
 
